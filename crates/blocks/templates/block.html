@@ -1,0 +1,8 @@
+{% match block %}
+{% when Block::RichTextBlock with (RichTextTemplate { text}) %}
+{% include "rich_text.html" %}
+{% when Block::TabsBlock with (TabsTemplate { id, tabs}) %}
+{% include "tabs.html" %}
+{% else %}
+No block found
+{% endmatch %}

@@ -1,0 +1,19 @@
+{% let tabs_id = id %}
+
+<div class="toggable-buttons-container tabbed">
+    {% for tab in tabs %}
+    <button data-group="{{tabs_id}}" data-slide="{{loop.index}}" data-toggable-button="true" class="toggable-button">
+        {{tab.name}}
+    </button>
+    {% endfor %}
+
+</div>
+
+<div class="tabbed-top">
+    {% for tab in tabs -%}
+    <div class="toggable-container" data-group="{{tabs_id}}" data-slide="{{loop.index}}">
+        {{tab.tab_content.render().unwrap()}}
+    </div>
+    {% endfor %}
+
+</div>
