@@ -13,7 +13,9 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Adds files to myapp
-    Typegen { output_path: Option<String> },
+    Typegen { 
+        output_path: Option<String> 
+    },
 }
 
 fn main() -> eyre::Result<()> {

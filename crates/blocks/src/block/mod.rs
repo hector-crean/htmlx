@@ -38,7 +38,7 @@ impl BlocksProps {
 }                                                
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
-#[serde(tag = "type", content = "data")]
+#[serde(tag = "type", content = "props")]
 pub enum Block {
     RichTextBlock(RichTextProps),
     TabsBlock(TabsProps),
