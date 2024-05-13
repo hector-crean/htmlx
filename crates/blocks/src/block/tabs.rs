@@ -6,7 +6,7 @@ use askama::Template;
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 pub struct Tab {
     pub name: String,
-    pub tab_content: BlocksProps,
+    pub blocks: Vec<Block>,
 }
 
 #[derive(Template, Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]

@@ -11,3 +11,5 @@ specta = { workspace = true,  features = [
     "serde",
     "export"] }
 uuid = { workspace = true, features = ["serde", "v4"]}
+color-eyre = { worspace = true }
+strum = { workspace = true }

@@ -10,9 +10,11 @@
 </div>
 
 <div class="tabbed-top">
-    {% for tab in tabs -%}
+    {% for tab in tabs%}
     <div class="toggable-container" data-group="{{tabs_id}}" data-slide="{{loop.index}}">
-        {{tab.tab_content.render().unwrap()}}
+        {% for block in tab.blocks %}
+        {{block.render().unwrap()}}
+        {% endfor %}
     </div>
     {% endfor %}
 

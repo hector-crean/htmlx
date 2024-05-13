@@ -11,6 +11,9 @@ can create different implementations of a react components, which each take the 
 [x] Use specta to enforce shared types between rust and typescript
 [ ] create html templates for:
         [x] tabs
-        [x] 
+        [x] brain diagram: symptom/description/higlight
+        
 
         
+
+

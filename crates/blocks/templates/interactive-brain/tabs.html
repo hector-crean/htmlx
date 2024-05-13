@@ -1,0 +1,27 @@
+<div class="flex space-x-2">
+    {% for group in groups %}
+    <div class="flex-1 space-y-2">
+        <h2 class="text-center">{{group.name}}</h2>
+        {% for comment in group.comments %}
+        <button class="symptom text-with-icon"
+            data-regions="{{Self::highlighted_regions_str(comment.highlighted_regions)}}">
+            <img src="{{comment.icon}}" />
+            <span>{{comment.symptom}}</span>
+            <div class="info">
+                <h3 class="symptom-heading">{{comment.icon}}</h3>
+                <p>
+                    {{comment.description}}
+                </p>
+            </div>
+        </button>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+
+<p class="panel text-xs transition duration-500 ease-in-out" id="info-panel">
+    Click on each symptom to learn more about its involvement
+</p>
+
+<svg id="interactive-svg" class="rounded-lg shadow mt-4" width="100%" viewBox="0 0 960 400"
+    preserveAspectRatio="xMidYMid meet"></svg>
