@@ -5,3 +5,9 @@ edition = "2021"
 
 [dependencies]
 askama = "0.12.1"
+serde = { worspace = true, features = ["derive"]}
+specta = { workspace = true,  features = [ 
+    "typescript",
+    "serde",
+    "export"] }
+uuid = { workspace = true, features = ["serde", "v4"]}

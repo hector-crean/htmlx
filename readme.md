@@ -3,3 +3,14 @@
 render function, which renders the block. We can define our own render function, a bit like how we 
 can create different implementations of a react components, which each take the same props.
 
+
+
+[ ] Create `blocks` rooms using liveblocks. We create the initial data files (i.e. for more tricky things like tabs etc., which we haven't
+    yet got a ui editor for). User can update text
+[ ] When ready, we can export the room storage data, and generate an html page from it
+[x] Use specta to enforce shared types between rust and typescript
+[ ] create html templates for:
+        [x] tabs
+        [x] 
+
+        

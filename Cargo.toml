@@ -11,8 +11,8 @@ serde_json = { version = "1.0.116"}
 specta = {version="2.0.0-rc.12",  features = [
     "typescript",
     "serde",
-    "export"
+    "export",
+    "uuid"
 ] }
 color-eyre = { version = "0.6.3"}
-
-
+uuid = { version = "1.8.0", features=["serde", "v4"]}

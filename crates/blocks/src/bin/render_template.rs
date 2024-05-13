@@ -1,7 +1,7 @@
 use askama::Template;
-use blocks::block::BlocksTemplate;
+use blocks::block::BlocksProps;
 
 fn main() {
-    let blocks = BlocksTemplate::example_blocks(); // instantiate your struct
+    let blocks = BlocksProps::example_blocks(); // instantiate your struct
     println!("{}", blocks.render().unwrap()); // then render it.
 }
