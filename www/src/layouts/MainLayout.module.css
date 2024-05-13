@@ -1,0 +1,220 @@
+.page {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.dynamic_island {
+  position: fixed;
+  top: min(5%, 20px);
+  right: 0;
+  width: 100%;
+  height: 80px;
+  pointer-events: all;
+  z-index: 200;
+  background-color: transparent;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  * {
+    pointer-events: all;
+  }
+}
+
+.page_grid_container {
+  --editor-min-left-side-width: 20px;
+  --editor-min-right-side-width: 20px;
+  --gap: 0px;
+  --border_radius: 0px;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  display: grid;
+  height: 100dvh;
+  width: 100dvw;
+  grid-template-columns: [col-start] 0 [col-inner-start] minmax(0, 1fr) [col-inner-end] 0 [col-end];
+  grid-template-rows: [row-start] 0 [row-inner-start] 60px minmax(0, 1fr) min-content [row-inner-end] 0px [row-end];
+  grid-template-areas:
+    ". . ."
+    ". header ."
+    ". main ."
+    "footer footer footer"
+    ". . .";
+  gap: var(--gap);
+  min-height: 0;
+  min-width: 0;
+
+  background-color: rgb(30, 30, 30, 0.8);
+
+  .header_container {
+    padding: 20px 20px;
+    overflow: hidden;
+
+    border-radius: var(--border_radius);
+
+    padding: 0px 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 10px;
+    z-index: 200;
+
+    background-color: var(--mantine-color-grey-0);
+    color: var(--mantine-color-teal-9);
+
+    &[data-expanded="true"] {
+      grid-area: row-inner-start / col-inner-start / row-inner-end /
+        col-inner-end;
+    }
+    &[data-expanded="false"] {
+      grid-area: header;
+    }
+  }
+
+  .footer_container {
+    grid-area: footer;
+
+    overflow: hidden;
+
+    &[data-expanded="true"] {
+      z-index: 99;
+      grid-area: row-start / col-inner-start / row-end / col-inner-end;
+    }
+    &[data-expanded="false"] {
+      width: 100%;
+      height: 100%;
+      grid-area: footer;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+  }
+
+  .main_container {
+    position: relative;
+    grid-area: main;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap);
+    width: 100%;
+    height: 100%;
+
+    .main_content {
+      --badge-radius: 60px;
+      --space: 20px;
+
+      flex: 3;
+      height: 100%;
+
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: var(--border_radius);
+      background-color: #dedede;
+
+      overflow: hidden;
+
+      .cursors_container {
+        background-color: transparent;
+        pointer-events: none;
+        z-index: 200;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .main_content_inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .toggle_sidebar_btn {
+      background-color: transparent;
+      border: 0px transparent solid;
+
+      z-index: 20;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: var(--badge-radius);
+      height: var(--badge-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .modal_icon {
+      background-color: rgb(30, 30, 30);
+
+      z-index: 20;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: var(--badge-radius);
+      height: var(--badge-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .modal {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+
+      z-index: 200;
+
+      grid-area: row-inner-start / col-inner-start / row-inner-end /
+        col-inner-end;
+
+      .modal_content {
+        width: calc(100% - 10px);
+        height: calc(100% - 10px);
+      }
+    }
+
+    .sidepanel {
+      height: 100%;
+
+      flex: 1;
+
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--border_radius);
+      background-color: #322d2d;
+    }
+  }
+}

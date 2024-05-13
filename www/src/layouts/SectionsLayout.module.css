@@ -1,0 +1,25 @@
+.sections {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+
+  container: sections_container / inline-size;
+
+  display: grid;
+  grid-template-columns: 1fr min(60ch, calc(100% - 64px)) 1fr;
+  grid-column-gap: 32px;
+
+  background-color: var(--mantine-color-white-0);
+
+  .section {
+    min-height: 100qch;
+
+    /* background-color: grey; */
+
+    grid-column: 2 / 3;
+    &[full-bleed="true"] {
+      grid-column: 1 / -1;
+    }
+  }
+}

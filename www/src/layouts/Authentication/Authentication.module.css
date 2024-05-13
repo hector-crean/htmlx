@@ -1,0 +1,61 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    to right,
+    #4285f4 0%,
+    #34a853 100%
+  ); /* Gradient from Google brand blue to brand green */
+
+  .main {
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .title {
+    padding: 0 0 2rem 0;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+
+  .provider_btn {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    background-color: #dddddd; /* Google's brand blue */
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Subtle shadow */
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      box-shadow:
+        0 5px 10px 0 rgba(0, 0, 0, 0.25),
+        0 8px 25px 0 rgba(0, 0, 0, 0.22); /* More pronounced shadow on hover */
+      transform: translateY(-2px); /* Slight lift effect */
+    }
+  }
+}

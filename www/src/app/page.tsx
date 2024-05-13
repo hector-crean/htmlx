@@ -1,5 +1,5 @@
-import PageTemplate, { generateMetadata } from './(pages)/[slug]/page'
+const Page = async () => {
+  return <div>Home</div>;
+};
 
-export default PageTemplate
-
-export { generateMetadata }
+export default Page;
