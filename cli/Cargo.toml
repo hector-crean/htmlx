@@ -15,3 +15,5 @@ specta = { workspace = true,  features = [
 thiserror = { workspace = true }
 color-eyre = { workspace = true }
 blocks = { path = "../crates/blocks"}
+uuid = { workspace = true }
+blocks-macros = { path = '../crates/blocks-macros'}

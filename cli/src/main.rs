@@ -1,5 +1,5 @@
 use clap::{Parser, Subcommand};
-use cli::typegen::typegen;
+use cli::{render_html::render_html, typegen::typegen};
 use color_eyre::eyre::{self, Ok};
 
 #[derive(Parser)]
@@ -13,9 +13,10 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Adds files to myapp
-    Typegen { 
-        output_path: Option<String> 
+    Typegen {
+        output_path: Option<String>,
     },
+    RenderHtml {},
 }
 
 fn main() -> eyre::Result<()> {
@@ -33,6 +34,11 @@ fn main() -> eyre::Result<()> {
                 }
                 None => {}
             }
+            Ok(())
+        }
+        Commands::RenderHtml {} => {
+            render_html()?;
+
             Ok(())
         }
     }
