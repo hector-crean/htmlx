@@ -55,6 +55,7 @@ type EditorState =
 export function CollaborativeEditor() {
 
   const room = useRoom();
+
   const [doc, setDoc] = useState<Y.Doc>();
   const [provider, setProvider] = useState<LiveblocksProvider<Presence, Storage, UserMeta, RoomEvent>>();
 
@@ -75,17 +76,19 @@ export function CollaborativeEditor() {
     return null;
   }
 
-  return <BlockNote doc={doc} provider={provider} />;
+  return <BlockNote roomId={room.id} doc={doc} provider={provider} />;
 }
 
 type EditorProps = {
   doc: Y.Doc;
   provider: LiveblocksProvider<Presence, Storage, UserMeta, RoomEvent>;
+  roomId: string
 };
 
-function BlockNote({ doc, provider }: EditorProps) {
+function BlockNote({ doc, provider, roomId }: EditorProps) {
   // Get user info from Liveblocks authentication endpoint
   const userInfo = useSelf((me) => me.info);
+
 
 
 
@@ -124,16 +127,32 @@ function BlockNote({ doc, provider }: EditorProps) {
     const zip = new JSZip();
 
 
+
+    const blockOrder: Array<string> = []
+
+
     editor.forEachBlock((block) => {
 
-      const html = editor.blocksToHTMLLossy([block]);
-      zip.file(`${block.id}.html`, html);
+      if (block.content !== undefined) {
+        const html = editor.blocksToHTMLLossy([block]);
+        const filename = `${block.id}.html`
+        blockOrder.push(filename)
+        zip.file(filename, html);
 
-      return true
+        return true
+      } else {
+        return true
+      }
+
     });
+    const metadata = { blockOrder: blockOrder, datetime: new Date().getUTCDate() }
+
+    zip.file('metadata.json', JSON.stringify(metadata));
+
+
 
     zip.generateAsync({ type: 'blob' }).then((content) => {
-      saveAs(content, 'files.zip');
+      saveAs(content, `${roomId}.zip`);
     });
 
 

@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   const session = await auth();
 
   return (
@@ -70,11 +70,8 @@ export default async function RootLayout({
  * https://liveblocks.io/dashboard/apikeys
  */
 const API_KEY = process.env.LIVEBLOCKS_SECRET_KEY;
-const API_KEY_WARNING = process.env.CODESANDBOX_SSE
-  ? `Add your secret key from https://liveblocks.io/dashboard/apikeys as the \`LIVEBLOCKS_SECRET_KEY\` secret in CodeSandbox.\n` +
-  `Learn more: https://github.com/liveblocks/liveblocks/tree/main/examples/nextjs-lost-connection-toasts#codesandbox.`
-  : `Create an \`.env.local\` file and add your secret key from https://liveblocks.io/dashboard/apikeys as the \`LIVEBLOCKS_SECRET_KEY\` environment variable.\n` +
-  `Learn more: https://github.com/liveblocks/liveblocks/tree/main/examples/nextjs-lost-connection-toasts#getting-started.`;
+
+const API_KEY_WARNING = `Create an \`.env.local\` file and add your secret key from https://liveblocks.io/dashboard/apikeys as the \`LIVE"LOCKS_SECRET_KEY\` environment variable.\nL"arn more: https://github.com/liveblocks/liveblocks/tree/main/examples/nextjs-lost-connection-toasts#getting-started.`
 
 if (!API_KEY) {
   console.warn(API_KEY_WARNING);

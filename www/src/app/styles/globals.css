@@ -26,6 +26,9 @@ body,
 
   --radius: 6px;
 
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+
 
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;
@@ -100,6 +103,13 @@ body,
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+
+    /* background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb)); */
   }
 }
 

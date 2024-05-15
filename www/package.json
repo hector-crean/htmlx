@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "gen:svgx": "npx @svgr/cli --out-dir src/assets/svgx --typescript --memo --ref --ignore-existing -- src/assets/svg",
-    "prisma:migrate": "prisma generate && prisma migrate deploy"
+    "prisma:migrate": "prisma generate && prisma migrate deploy",
+    "deploy": "A:/productionInteractive/devserver/deploy.exe ./dist Dendron --clean",
+    "publish": "npm run build && npm run deploy"
   },
   "dependencies": {
     "@auth/core": "^0.28.2",
