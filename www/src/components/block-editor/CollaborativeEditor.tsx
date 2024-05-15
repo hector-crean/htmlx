@@ -1,8 +1,5 @@
 "use client";
 
-import { saveAs } from 'file-saver';
-import JSZip from 'jszip';
-
 import { MoonIcon, SunIcon } from "@/icons";
 import { Presence, RoomEvent, Storage, UserMeta, useRoom, useSelf, useThreads } from "@/liveblocks-configs/block-room.config";
 import { BlockNoteEditor, filterSuggestionItems, getDefaultSlashMenuItems } from "@blocknote/core";
@@ -24,6 +21,8 @@ import {
 } from "@blocknote/react";
 import "@blocknote/react/style.css";
 import LiveblocksProvider from "@liveblocks/yjs";
+import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 import { useCallback, useEffect, useState } from "react";
 import * as Y from "yjs";
 import { InboxPopover } from "../inbox/Inbox";
@@ -31,6 +30,9 @@ import { Button } from "../ui/button";
 import { Avatars } from "./Avatars";
 import { ThreadButton, ThreadComposer } from "./ThreadButton";
 import { blocknoteSchema } from "./schema";
+
+
+''
 
 
 
@@ -132,20 +134,38 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
     const blockOrder: Array<string> = []
 
 
-    editor.forEachBlock((block) => {
+    console.log(editor.document)
 
-      if (block.content !== undefined) {
-        const html = editor.blocksToHTMLLossy([block]);
-        const filename = `${block.id}.html`
-        blockOrder.push(filename)
-        zip.file(filename, html);
+    editor.document.forEach((block) => {
 
-        return true
-      } else {
-        return true
+      const html = editor.blocksToHTMLLossy([block]);
+      const filename = `${block.id}.html`
+
+      switch (block.type) {
+        default: {
+          blockOrder.push(filename)
+          zip.file(filename, html);
+        }
       }
 
-    });
+    })
+
+    // editor.forEachBlock((block) => {
+
+    //   const html = editor.blocksToHTMLLossy([block]);
+    //   const filename = `${block.id}.html`
+
+    //   switch (block.type) {
+    //     default: {
+    //       blockOrder.push(filename)
+    //       zip.file(filename, html);
+    //     }
+    //   }
+
+
+    //   return true
+
+    // });
     const metadata = { blockOrder: blockOrder, datetime: new Date().getUTCDate() }
 
     zip.file('metadata.json', JSON.stringify(metadata));

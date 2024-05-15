@@ -10,8 +10,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 const AuthenticationLayout = () => {
   return (
@@ -25,7 +23,7 @@ const AuthenticationLayout = () => {
             </p>
           </div>
           <div className="grid gap-4">
-            <div className="grid gap-2">
+            {/* <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -48,7 +46,7 @@ const AuthenticationLayout = () => {
             </div>
             <Button type="submit" className="w-full">
               Login
-            </Button>
+            </Button> */}
 
             {Object.values(providers).map((provider) => (
               <Button

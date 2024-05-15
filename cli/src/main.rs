@@ -1,6 +1,10 @@
+use std::path::PathBuf;
+
 use clap::{Parser, Subcommand};
-use cli::{render_html::render_html, typegen::typegen};
+use cli::{render_html::{render_html, PTSDSymptomsNode, Pagelike}, typegen::typegen};
 use color_eyre::eyre::{self, Ok};
+use cli::PROJECT_ROOT;
+
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -37,7 +41,12 @@ fn main() -> eyre::Result<()> {
             Ok(())
         }
         Commands::RenderHtml {} => {
-            render_html()?;
+
+            let output_path: PathBuf = [PROJECT_ROOT, "src", "outputs", "ptsd-symptoms-node.html"]
+            .iter()
+            .collect();
+
+            PTSDSymptomsNode::new(output_path).render_html()?;
 
             Ok(())
         }
