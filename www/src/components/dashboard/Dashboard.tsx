@@ -29,6 +29,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CreateRoomParamsType } from "@/lib/client/room/create";
+import { RoomsQueryResultType } from "@/lib/client/room/get";
+import { RoomInfoType } from "@/lib/types";
 import { File, ListFilter, MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,12 +38,12 @@ import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { CreateRoomForm } from "./CreateRoomForm";
 import { Header } from "./Header";
-import { DocumentFilter, RoomsQueryResult, docFilters } from "./types";
+import { DocumentFilter, docFilters } from "./types";
 
 interface DashboardProps {
-  rooms: RoomsQueryResult;
+  rooms: RoomsQueryResultType;
   filters: Array<DocumentFilter>;
-  createRoom: (params: CreateRoomParamsType) => Promise<void>;
+  createRoom: (params: CreateRoomParamsType) => Promise<RoomInfoType>;
 }
 const Dashboard = ({ rooms, filters, createRoom }: DashboardProps) => {
   const filter = useMemo(() => filters?.[0] ?? "all", [filters]);
@@ -63,7 +65,7 @@ const Dashboard = ({ rooms, filters, createRoom }: DashboardProps) => {
               <div className="flex items-center">
                 <TabsList>
                   {Object.keys(docFilters).map((key) => (
-                    <TabsTrigger key={key} value={docFilters["all"].id}>
+                    <TabsTrigger key={key} value={docFilters.all.id}>
                       <Link
                         href={`${key}`}
                         className="flex h-9 w-12 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"

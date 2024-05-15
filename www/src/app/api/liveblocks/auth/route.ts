@@ -5,8 +5,8 @@ import { auth } from "@/auth";
 import { prisma } from "@/prisma-client";
 import { IUserInfo } from "@liveblocks/node";
 import { Group, Organisation } from "@prisma/client";
-import type { NextApiRequest, NextApiResponse } from "next";
 import { User as NextAuthUser } from 'next-auth';
+import { NextRequest, NextResponse } from "next/server";
 
 
 export type UserInfo = IUserInfo & {
@@ -16,7 +16,7 @@ export type UserInfo = IUserInfo & {
 }
 
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
 
 
   const DEFAULT_NEXT_AUTH_USER: NextAuthUser = {}
@@ -73,7 +73,8 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
   } else {
 
 
-    return new Response(body, { status });
+  
+    // return new Response(body, { status });
   }
  
 

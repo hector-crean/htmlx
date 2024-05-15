@@ -30,7 +30,7 @@ import { InboxPopover } from "../inbox/Inbox";
 import { Button } from "../ui/button";
 import { Avatars } from "./Avatars";
 import { ThreadButton, ThreadComposer } from "./ThreadButton";
-import { blocknoteSchema, insertInteractiveBrain, insertKanban } from "./schema";
+import { blocknoteSchema } from "./schema";
 
 
 
@@ -92,6 +92,7 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
 
 
 
+  // @ts-ignore
   const editor: BlockNoteEditor = useCreateBlockNote({
     schema: blocknoteSchema,
     collaboration: {
@@ -100,8 +101,8 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
       fragment: doc.getXmlFragment("document-store"),
       // Information for this user:
       user: {
-        name: userInfo.name,
-        color: userInfo.color,
+        name: userInfo.name ?? '',
+        color: userInfo.color as string ?? 'red',
       },
 
 
@@ -196,7 +197,7 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
               getItems={async (query) =>
                 // Gets all default slash menu items and `insertAlert` item.
                 filterSuggestionItems(
-                  [...getDefaultSlashMenuItems(editor), insertInteractiveBrain(editor), insertKanban(editor)],
+                  [...getDefaultSlashMenuItems(editor)],
                   query
                 )
               }

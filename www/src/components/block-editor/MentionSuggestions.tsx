@@ -19,7 +19,7 @@ interface AvatarProps extends ComponentProps<"img"> {
 export function Avatar({ userId, className, ...props }: AvatarProps) {
     const { user } = useUser(userId);
 
-    return <img src={user.picture} alt={user.name} {...props} />;
+    return <img src={user.avatar} alt={user.name} {...props} />;
 }
 
 

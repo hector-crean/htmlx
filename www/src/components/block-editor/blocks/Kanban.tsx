@@ -7,9 +7,7 @@ const KanbanBlock = createReactBlockSpec(
     {
         type: "kanban",
         propSchema: {
-            cols: {
-                default: []
-            }
+
 
         },
         content: 'none',
@@ -20,7 +18,7 @@ const KanbanBlock = createReactBlockSpec(
 
             return (
                 <div className='flex-grow' >
-                    <KanbanBoard initialCols={block.props.cols} />
+                    <KanbanBoard initialCols={[]} />
                 </div>
             );
         },
@@ -29,3 +27,4 @@ const KanbanBlock = createReactBlockSpec(
 
 
 export { KanbanBlock };
+

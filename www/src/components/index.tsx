@@ -1,7 +1,7 @@
 /*React Component whose props can be serialised / deserialised*/
 
+import { Block } from "@/components/block-editor/blocks/types";
 import { ReactNode } from "react";
-import { Block } from "../../types";
 
 
 type UuidV4 = `${string}-${string}-${string}-${string}-${string}`;

@@ -25,7 +25,7 @@ const Avatar = ({ alt, src, color }: AvatarProps) => (
     <Tooltip.Provider>
         <Tooltip.Root>
             <Tooltip.Trigger asChild>
-                <RadixAvatar.Root key={alt} className={styles.AvatarRoot} style={{ '--ring-color': color }}>
+                <RadixAvatar.Root key={alt} className={styles.AvatarRoot} style={{ '--ring-color': color } as React.CSSProperties}>
                     <RadixAvatar.Image
                         className={styles.AvatarImage}
                         src={src}
@@ -47,3 +47,4 @@ const Avatar = ({ alt, src, color }: AvatarProps) => (
 
 
 export { Avatar };
+

@@ -8,15 +8,15 @@ const Avatars = () => {
     <div className='flex p-2'>
       {users.map(({ connectionId, info }) => {
         return (
-          <Avatar key={connectionId} picture={info.picture} name={info.name} />
+          <Avatar key={connectionId} picture={info.avatar ?? ''} name={info.name ?? 'anonymous'} />
         );
       })}
 
       {currentUser && (
         <div className="relative ml-8 first:ml-0">
           <Avatar
-            picture={currentUser.info.picture}
-            name={currentUser.info.name}
+            picture={currentUser.info.avatar ?? ''}
+            name={currentUser.info.name ?? 'anonymous'}
           />
         </div>
       )}

@@ -16,7 +16,7 @@ type RoomsQueryResultType = z.infer<typeof RoomsQueryResultSchema>;
 async function getRooms(): Promise<RoomsQueryResultType> {
 
     return axios
-        .get(`https://api.liveblocks.io/v2/rooms`, {
+        .get("https://api.liveblocks.io/v2/rooms", {
             headers: {
                 Authorization: `Bearer ${LIVEBLOCKS_SECRET_KEY}`,
             },
@@ -26,3 +26,4 @@ async function getRooms(): Promise<RoomsQueryResultType> {
 
 export { getRooms };
 
+    export type { RoomsQueryResultType };

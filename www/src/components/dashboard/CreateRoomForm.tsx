@@ -30,7 +30,7 @@ import {
   CreateRoomParamsSchema,
   CreateRoomParamsType,
 } from "@/lib/client/room/create";
-import { RoomTypeSchema } from "@/lib/types";
+import { RoomInfoType, RoomTypeSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircle } from "lucide-react";
 import { nanoid } from "nanoid";
@@ -40,7 +40,7 @@ import { Input } from "../ui/input";
 const wait = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
 type CreateRoomFormProps = {
-  createRoomQuery: (params: CreateRoomParamsType) => Promise<void>;
+  createRoomQuery: (params: CreateRoomParamsType) => Promise<RoomInfoType>;
 };
 
 const CreateRoomForm = ({ createRoomQuery }: CreateRoomFormProps) => {
@@ -110,7 +110,7 @@ const CreateRoomForm = ({ createRoomQuery }: CreateRoomFormProps) => {
                 <FormItem>
                   <FormLabel>Room Name</FormLabel>
                   <FormControl>
-                    <Input placeholder={defaultParams["id"]} {...field} />
+                    <Input placeholder={defaultParams.id} {...field} />
                   </FormControl>
                   <FormDescription>This is the Room id.</FormDescription>
                   <FormMessage />
@@ -140,7 +140,7 @@ const CreateRoomForm = ({ createRoomQuery }: CreateRoomFormProps) => {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormDescription></FormDescription>
+                  <FormDescription />
                   <FormMessage />
                 </FormItem>
               )}
@@ -205,3 +205,4 @@ const CreateRoomForm = ({ createRoomQuery }: CreateRoomFormProps) => {
 };
 
 export { CreateRoomForm };
+

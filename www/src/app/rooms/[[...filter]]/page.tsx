@@ -37,7 +37,7 @@ const Page = ({ params }: QueryParams) => {
   if (roomInfoQuery.isPending) return "Loading...";
 
   if (roomInfoQuery.error)
-    return "An error has occurred: " + roomInfoQuery.error.message;
+    return `An error has occurred: ${roomInfoQuery.error.message}`;
 
   if (roomInfoQuery.data) {
     return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useStatus } from "@/liveblocks-configs/flow-room.config";
+import { useStatus } from "@/liveblocks-configs/block-room.config";
 import styles from "./Status.module.css";
 
 export function Status() {

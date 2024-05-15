@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import type { Prisma } from '@prisma/client';
+import { z } from 'zod';
 
 /////////////////////////////////////////
 // HELPER FUNCTIONS
@@ -3578,87 +3578,36 @@ export const UserDeleteManyArgsSchema: z.ZodType<Prisma.UserDeleteManyArgs> = z.
   where: UserWhereInputSchema.optional(),
 }).strict() ;
 
-export const AccountCreateArgsSchema: z.ZodType<Prisma.AccountCreateArgs> = z.object({
-  select: AccountSelectSchema.optional(),
-  include: AccountIncludeSchema.optional(),
-  data: z.union([ AccountCreateInputSchema,AccountUncheckedCreateInputSchema ]),
-}).strict() ;
-
-export const AccountUpsertArgsSchema: z.ZodType<Prisma.AccountUpsertArgs> = z.object({
-  select: AccountSelectSchema.optional(),
-  include: AccountIncludeSchema.optional(),
-  where: AccountWhereUniqueInputSchema,
-  create: z.union([ AccountCreateInputSchema,AccountUncheckedCreateInputSchema ]),
-  update: z.union([ AccountUpdateInputSchema,AccountUncheckedUpdateInputSchema ]),
-}).strict() ;
 
 export const AccountCreateManyArgsSchema: z.ZodType<Prisma.AccountCreateManyArgs> = z.object({
   data: z.union([ AccountCreateManyInputSchema,AccountCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
 }).strict() ;
 
-export const AccountDeleteArgsSchema: z.ZodType<Prisma.AccountDeleteArgs> = z.object({
-  select: AccountSelectSchema.optional(),
-  include: AccountIncludeSchema.optional(),
-  where: AccountWhereUniqueInputSchema,
-}).strict() ;
 
-export const AccountUpdateArgsSchema: z.ZodType<Prisma.AccountUpdateArgs> = z.object({
-  select: AccountSelectSchema.optional(),
-  include: AccountIncludeSchema.optional(),
-  data: z.union([ AccountUpdateInputSchema,AccountUncheckedUpdateInputSchema ]),
-  where: AccountWhereUniqueInputSchema,
-}).strict() ;
 
 export const AccountUpdateManyArgsSchema: z.ZodType<Prisma.AccountUpdateManyArgs> = z.object({
   data: z.union([ AccountUpdateManyMutationInputSchema,AccountUncheckedUpdateManyInputSchema ]),
   where: AccountWhereInputSchema.optional(),
 }).strict() ;
 
-export const AccountDeleteManyArgsSchema: z.ZodType<Prisma.AccountDeleteManyArgs> = z.object({
-  where: AccountWhereInputSchema.optional(),
-}).strict() ;
 
-export const SessionCreateArgsSchema: z.ZodType<Prisma.SessionCreateArgs> = z.object({
-  select: SessionSelectSchema.optional(),
-  include: SessionIncludeSchema.optional(),
-  data: z.union([ SessionCreateInputSchema,SessionUncheckedCreateInputSchema ]),
-}).strict() ;
 
-export const SessionUpsertArgsSchema: z.ZodType<Prisma.SessionUpsertArgs> = z.object({
-  select: SessionSelectSchema.optional(),
-  include: SessionIncludeSchema.optional(),
-  where: SessionWhereUniqueInputSchema,
-  create: z.union([ SessionCreateInputSchema,SessionUncheckedCreateInputSchema ]),
-  update: z.union([ SessionUpdateInputSchema,SessionUncheckedUpdateInputSchema ]),
-}).strict() ;
+
+
 
 export const SessionCreateManyArgsSchema: z.ZodType<Prisma.SessionCreateManyArgs> = z.object({
   data: z.union([ SessionCreateManyInputSchema,SessionCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
 }).strict() ;
 
-export const SessionDeleteArgsSchema: z.ZodType<Prisma.SessionDeleteArgs> = z.object({
-  select: SessionSelectSchema.optional(),
-  include: SessionIncludeSchema.optional(),
-  where: SessionWhereUniqueInputSchema,
-}).strict() ;
 
-export const SessionUpdateArgsSchema: z.ZodType<Prisma.SessionUpdateArgs> = z.object({
-  select: SessionSelectSchema.optional(),
-  include: SessionIncludeSchema.optional(),
-  data: z.union([ SessionUpdateInputSchema,SessionUncheckedUpdateInputSchema ]),
-  where: SessionWhereUniqueInputSchema,
-}).strict() ;
 
 export const SessionUpdateManyArgsSchema: z.ZodType<Prisma.SessionUpdateManyArgs> = z.object({
   data: z.union([ SessionUpdateManyMutationInputSchema,SessionUncheckedUpdateManyInputSchema ]),
   where: SessionWhereInputSchema.optional(),
 }).strict() ;
 
-export const SessionDeleteManyArgsSchema: z.ZodType<Prisma.SessionDeleteManyArgs> = z.object({
-  where: SessionWhereInputSchema.optional(),
-}).strict() ;
 
 export const VerificationTokenCreateArgsSchema: z.ZodType<Prisma.VerificationTokenCreateArgs> = z.object({
   select: VerificationTokenSelectSchema.optional(),
@@ -3697,19 +3646,6 @@ export const VerificationTokenDeleteManyArgsSchema: z.ZodType<Prisma.Verificatio
   where: VerificationTokenWhereInputSchema.optional(),
 }).strict() ;
 
-export const AuthenticatorCreateArgsSchema: z.ZodType<Prisma.AuthenticatorCreateArgs> = z.object({
-  select: AuthenticatorSelectSchema.optional(),
-  include: AuthenticatorIncludeSchema.optional(),
-  data: z.union([ AuthenticatorCreateInputSchema,AuthenticatorUncheckedCreateInputSchema ]),
-}).strict() ;
-
-export const AuthenticatorUpsertArgsSchema: z.ZodType<Prisma.AuthenticatorUpsertArgs> = z.object({
-  select: AuthenticatorSelectSchema.optional(),
-  include: AuthenticatorIncludeSchema.optional(),
-  where: AuthenticatorWhereUniqueInputSchema,
-  create: z.union([ AuthenticatorCreateInputSchema,AuthenticatorUncheckedCreateInputSchema ]),
-  update: z.union([ AuthenticatorUpdateInputSchema,AuthenticatorUncheckedUpdateInputSchema ]),
-}).strict() ;
 
 export const AuthenticatorCreateManyArgsSchema: z.ZodType<Prisma.AuthenticatorCreateManyArgs> = z.object({
   data: z.union([ AuthenticatorCreateManyInputSchema,AuthenticatorCreateManyInputSchema.array() ]),
@@ -3722,12 +3658,7 @@ export const AuthenticatorDeleteArgsSchema: z.ZodType<Prisma.AuthenticatorDelete
   where: AuthenticatorWhereUniqueInputSchema,
 }).strict() ;
 
-export const AuthenticatorUpdateArgsSchema: z.ZodType<Prisma.AuthenticatorUpdateArgs> = z.object({
-  select: AuthenticatorSelectSchema.optional(),
-  include: AuthenticatorIncludeSchema.optional(),
-  data: z.union([ AuthenticatorUpdateInputSchema,AuthenticatorUncheckedUpdateInputSchema ]),
-  where: AuthenticatorWhereUniqueInputSchema,
-}).strict() ;
+
 
 export const AuthenticatorUpdateManyArgsSchema: z.ZodType<Prisma.AuthenticatorUpdateManyArgs> = z.object({
   data: z.union([ AuthenticatorUpdateManyMutationInputSchema,AuthenticatorUncheckedUpdateManyInputSchema ]),
