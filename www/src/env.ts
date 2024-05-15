@@ -1,8 +1,8 @@
 import './env-config';
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!;
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!
-const AUTH_SECRET = process.env.AUTH_SECRET!
+const GOOGLE_CLIENT_ID = process.env.NEXT_GOOGLE_CLIENT_ID!;
+const GOOGLE_CLIENT_SECRET = process.env.NEXT_GOOGLE_CLIENT_SECRET!
+const AUTH_SECRET = process.env.NEXT_AUTH_SECRET!
 
 
 
