@@ -1,8 +1,11 @@
 "use client";
 
+import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
+
 import { MoonIcon, SunIcon } from "@/icons";
 import { Presence, RoomEvent, Storage, UserMeta, useRoom, useSelf, useThreads } from "@/liveblocks-configs/block-room.config";
-import { BlockNoteEditor } from "@blocknote/core";
+import { BlockNoteEditor, filterSuggestionItems, getDefaultSlashMenuItems } from "@blocknote/core";
 import "@blocknote/core/fonts/inter.css";
 import {
   BasicTextStyleButton,
@@ -14,6 +17,7 @@ import {
   ImageCaptionButton,
   NestBlockButton,
   ReplaceImageButton,
+  SuggestionMenuController,
   TextAlignButton,
   UnnestBlockButton,
   useCreateBlockNote
@@ -26,7 +30,7 @@ import { InboxPopover } from "../inbox/Inbox";
 import { Button } from "../ui/button";
 import { Avatars } from "./Avatars";
 import { ThreadButton, ThreadComposer } from "./ThreadButton";
-import { blocknoteSchema } from "./spans";
+import { blocknoteSchema, insertInteractiveBrain, insertKanban } from "./schema";
 
 
 
@@ -49,6 +53,7 @@ type EditorState =
 
 // Collaborative text editor with simple rich text, live cursors, and live avatars
 export function CollaborativeEditor() {
+
   const room = useRoom();
   const [doc, setDoc] = useState<Y.Doc>();
   const [provider, setProvider] = useState<LiveblocksProvider<Presence, Storage, UserMeta, RoomEvent>>();
@@ -82,6 +87,8 @@ function BlockNote({ doc, provider }: EditorProps) {
   // Get user info from Liveblocks authentication endpoint
   const userInfo = useSelf((me) => me.info);
 
+
+
   const editor: BlockNoteEditor = useCreateBlockNote({
     schema: blocknoteSchema,
     collaboration: {
@@ -109,14 +116,37 @@ function BlockNote({ doc, provider }: EditorProps) {
   }, [theme]);
 
 
-  const [composerState, setComposerState] = useState<ThreadComposerState>({ type: 'hidden' })
-
   const { threads } = useThreads();
+
+
+  const handleExport = () => {
+
+    const zip = new JSZip();
+
+
+    editor.forEachBlock((block) => {
+
+      const html = editor.blocksToHTMLLossy([block]);
+      zip.file(`${block.id}.html`, html);
+
+      return true
+    });
+
+    zip.generateAsync({ type: 'blob' }).then((content) => {
+      saveAs(content, 'files.zip');
+    });
+
+
+
+  }
 
 
   return (
     <div className='flex flex-col bg-white absolute top-0 right-0 left-0 bottom-0'>
       <div className='top-0 right-0 left-0 bottom-0 flex flex-grow-0 flex-shrink-0 justify-between items-start bg-slate-50 p-4 z-50'>
+        <Button onClick={handleExport}>
+          Export
+        </Button>
         <Button
           variant='default'
           onClick={changeTheme}
@@ -135,11 +165,23 @@ function BlockNote({ doc, provider }: EditorProps) {
         <div className='flex flex-col h-full flex-1'>
           <BlockNoteView
             editor={editor}
+            slashMenu={false}
             formattingToolbar={false}
             className='relative min-h-full max-w-[900px]'
             theme={theme}
 
           >
+            {/* Replaces the default Slash Menu. */}
+            <SuggestionMenuController
+              triggerCharacter={"/"}
+              getItems={async (query) =>
+                // Gets all default slash menu items and `insertAlert` item.
+                filterSuggestionItems(
+                  [...getDefaultSlashMenuItems(editor), insertInteractiveBrain(editor), insertKanban(editor)],
+                  query
+                )
+              }
+            />
             <FormattingToolbarController
               formattingToolbar={(props) => (
                 <FormattingToolbar>

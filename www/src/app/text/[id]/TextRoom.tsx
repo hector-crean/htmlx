@@ -1,4 +1,4 @@
-import { CollaborativeEditor } from "@/components/richt-text-editor/CollaborativeEditor";
+import { CollaborativeEditor } from "@/components/block-editor/CollaborativeEditor";
 
 
 interface TextRoomProps {
