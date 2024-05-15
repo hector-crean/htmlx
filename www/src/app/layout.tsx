@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth } from "@/auth.server";
 import { } from "@/components";
 import { ReactQueryClientProvider } from "@/components/QueryClientProvider";
 import { Case, Default, Switch } from "@/components/Switch";

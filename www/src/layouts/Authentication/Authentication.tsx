@@ -1,6 +1,6 @@
 "use client";
 import { Google } from "@/assets/svgx";
-import { providers } from "@/auth";
+import { providers } from "@/auth.server";
 import { signIn } from "next-auth/react";
 
 import { BuiltInProviderType } from "next-auth/providers";
@@ -95,3 +95,4 @@ const renderProviderLogo = (
 };
 
 export { AuthenticationLayout };
+

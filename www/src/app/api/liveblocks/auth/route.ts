@@ -1,7 +1,7 @@
 
 
 import { liveblocks } from "@/app/api/liveblocks";
-import { auth } from "@/auth";
+import { auth } from "@/auth.server";
 import { prisma } from "@/prisma-client";
 import { IUserInfo } from "@liveblocks/node";
 import { Group, Organisation } from "@prisma/client";
