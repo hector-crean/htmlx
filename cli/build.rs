@@ -9,5 +9,10 @@ fn main() {
     let manifest_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
 
     let mut f = File::create(&dest_path).unwrap();
-    writeln!(f, "pub const PROJECT_ROOT: &'static str = {:?};", manifest_dir).unwrap();
+    writeln!(
+        f,
+        "pub const PROJECT_ROOT: &'static str = {:?};",
+        manifest_dir
+    )
+    .unwrap();
 }

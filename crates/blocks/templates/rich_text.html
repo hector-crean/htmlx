@@ -1,5 +1,4 @@
 {% match text %}
-{% when RichText::Html with (val) %}
-{{- val|escape -}}
-
+{% when RichText::Html with (html) %}
+{{- html -}}
 {% endmatch %}

@@ -15,3 +15,4 @@ specta = { workspace = true,  features = [
 uuid = { workspace = true, features = ["serde", "v4"]}
 color-eyre = { worspace = true }
 strum = { workspace = true }
+html-escape = "0.2.13"

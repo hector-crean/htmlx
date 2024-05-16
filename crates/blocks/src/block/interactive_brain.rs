@@ -1,6 +1,8 @@
 use askama::Template;
 use strum::IntoStaticStr;
 
+use super::{rich_text::{RichText, RichTextProps}, Block};
+
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type, Default)]
 #[serde(rename_all = "camelCase")]
 struct Vec2 {
@@ -25,7 +27,7 @@ impl Default for BrainRegionLabel {
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 #[serde(rename_all = "camelCase")]
-struct BrainRegion {
+pub struct BrainRegion {
     name: BrainRegionName,
     fill_color: String,
     label: BrainRegionLabel,
@@ -88,19 +90,30 @@ pub enum BrainRegionName {
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 #[serde(rename_all = "camelCase")]
 pub struct BrainComment {
-    icon: String,
-    symptom: String,
-    highlighted_regions: Vec<BrainRegion>,
-    description: String
+    pub icon: String,
+    pub symptom: RichTextProps,
+    pub highlighted_regions: Vec<BrainRegionName>,
+    pub description: Vec<Block>
+}
+
+impl BrainComment {
+    pub fn new<S: Into<String>>(icon: S,
+        symptom: RichTextProps,
+        highlighted_regions: Vec<BrainRegionName>,
+        description: Vec<Block>) -> Self {
+        Self {
+            icon: icon.into(), symptom, highlighted_regions, description
+        }
+    }
 }
 
 impl Default for BrainComment {
     fn default() -> Self {
         BrainComment {
             icon: String::from("🧠"),
-            symptom: String::from("General"),
-            highlighted_regions: vec![BrainRegion::default()],
-            description: String::from("No description provided."),
+            symptom: RichTextProps::default(),
+            highlighted_regions: vec![],
+            description: vec![]
         }
     }
 }
@@ -109,8 +122,16 @@ impl Default for BrainComment {
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 #[serde(rename_all = "camelCase")]
 pub struct CommentGroup {
-    name: String,
-    comments: Vec<BrainComment>
+    pub name: String,
+    pub comments: Vec<BrainComment>
+}
+
+impl CommentGroup {
+    pub fn new<S: Into<String>>(name: S, comments: Vec<BrainComment>) -> Self { 
+        Self {
+        name: name.into(),
+        comments
+    }}
 }
 
 impl Default for CommentGroup {
@@ -131,12 +152,12 @@ pub struct InteractiveBrainProps {
 }
 
 impl InteractiveBrainProps {
-    fn highlighted_regions_str(highlighted_regions: &Vec<BrainRegion>) -> String {
+    fn highlighted_regions_str(highlighted_regions: &Vec<BrainRegionName>) -> String {
         
         let regions = highlighted_regions
         .iter()
         .map(|region| { 
-            let region_name: &'static str = region.name.clone().into(); 
+            let region_name: &'static str = region.clone().into(); 
             return region_name.to_string()
         })
         .collect::<Vec<String>>().join(" ");

@@ -1,5 +1,5 @@
 use askama::Template;
-
+use std::fmt::Write;
 // #[derive(Debug, Serialize, Deserialize)]
 // pub struct Document {
 //     // pub type: String,
@@ -66,6 +66,11 @@ pub enum RichText {
     Html(String),
 }
 
+impl Default for RichText {
+    fn default() -> Self {
+        Self::Html(String::default())
+    }
+}
 // impl std::fmt::Display for RichText {
 //     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 //         match self {
@@ -76,8 +81,40 @@ pub enum RichText {
 //     }
 // }
 
+impl RichText {
+    // pub fn render(&self) -> Result<String, std::fmt::Error> {
+    //     let mut buf = String::new();
+
+    //     write!(&mut buf, "{}", self)?;
+
+    //     Ok(buf)
+    // }
+   
+}
+
 #[derive(Template, Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
-#[template(path = "rich_text.html", ext = "html", escape = "none")]
+#[template(path = "rich_text.html", escape="none")]
 pub struct RichTextProps {
     pub text: RichText,
+}
+
+impl Default for RichTextProps { 
+    fn default() -> Self {
+        Self { text: RichText::default()}
+    }
+}
+
+// impl std::fmt::Display for RichTextProps {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "{}", self.text)
+//     }
+// }
+
+impl RichTextProps { 
+    pub fn escaped_html(&self) -> String {
+        match &self.text {
+            RichText::Html(html) => html_escape::encode_safe(&html).into(),
+            _ => String::new(),
+        }
+    }
 }

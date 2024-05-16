@@ -9,9 +9,12 @@
             <span>{{comment.symptom}}</span>
             <div class="info">
                 <h3 class="symptom-heading">{{comment.icon}}</h3>
-                <p>
-                    {{comment.description}}
-                </p>
+
+                {% for block in comment.description %}
+                {{block.render().unwrap()}}
+                {% endfor %}
+
+
             </div>
         </button>
         {% endfor %}

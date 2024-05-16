@@ -1,8 +1,0 @@
-{% match block %}
-{% when Block::RichTextBlock with (RichTextProps { text}) %}
-{% include "rich_text.html" %}
-{% when Block::TabsBlock with (TabsProps { id, tabs}) %}
-{% include "tabs.html" %}
-{% else %}
-No block found
-{% endmatch %}
