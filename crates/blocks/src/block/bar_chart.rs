@@ -1,6 +1,6 @@
 
 
-use askama::Template;
+use maud::html;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 #[serde(rename_all = "camelCase")]
@@ -22,8 +22,7 @@ impl Default for BarDatum {
     }
 }
 
-#[derive(Template, Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
-#[template(path = "bar-chart.html",)]
+#[derive( Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 #[serde(rename_all = "camelCase")]
 pub struct BarChartProps {
     pub title: String,
@@ -40,5 +39,13 @@ impl Default for BarChartProps {
                 BarDatum::default()
             ],
         }
+    }
+}
+
+impl maud::Render for BarChartProps {
+    fn render(&self) -> maud::Markup {
+        html!( 
+            p {}
+        )
     }
 }

@@ -1,4 +1,4 @@
-use askama::Template;
+use maud::html;
 use core::fmt;
 use rich_text::{RichText, RichTextProps};
 use std::fmt::{write, Display, Write};
@@ -11,32 +11,26 @@ pub mod bar_chart;
 pub mod interactive_brain;
 pub mod rich_text;
 pub mod tabs;
-pub mod text_with_icon;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 pub struct BlocksProps {
     blocks: Vec<Block>,
 }
 
-impl fmt::Display for BlocksProps {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        for block in &self.blocks {
-            writeln!(f, "{:#}", block)?;
-        }
-        fmt::Result::Ok(())
+impl maud::Render for BlocksProps {
+    fn render(&self) -> maud::Markup {
+        html!(
+            @for block in &self.blocks {
+                (block)
+            }
+        )
     }
 }
+
 
 impl BlocksProps {
     pub fn new(blocks: Vec<Block>) -> Self {
         Self { blocks }
-    }
-    pub fn render(&self) -> Result<String, std::fmt::Error> {
-        let mut buf = String::new();
-
-        write!(&mut buf, "{}", self)?;
-
-        Ok(buf)
     }
 }
 
@@ -49,36 +43,25 @@ pub enum Block {
     BarChartBlock(BarChartProps),
 }
 
-impl fmt::Display for Block {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Block::RichTextBlock(rich_text) => {
-                let rendered = rich_text.render().map_err(|_| fmt::Error)?;
-                write!(f, "{}", rendered)
+impl maud::Render for Block {
+    fn render(&self) -> maud::Markup {
+        html!(
+            @match self {
+                Block::RichTextBlock(rich_text) => {
+                    (rich_text)
+                }
+                Block::TabsBlock(tabs) => {
+                    (tabs)
+                }
+    
+                Block::InteractiveBrainBlock(interactive_brain) => {
+                   (interactive_brain)
+                }
+                Block::BarChartBlock(bar_chart) => {
+                    (bar_chart)
+                }
             }
-            Block::TabsBlock(tabs) => {
-                let rendered = tabs.render().map_err(|_| fmt::Error)?;
-                write!(f, "{}", rendered)
-            }
-
-            Block::InteractiveBrainBlock(interactive_brain) => {
-                let rendered = interactive_brain.render().map_err(|_| fmt::Error)?;
-                write!(f, "{}", rendered)
-            }
-            Block::BarChartBlock(bar_chart) => {
-                let rendered = bar_chart.render().map_err(|_| fmt::Error)?;
-                write!(f, "{}", rendered)
-            }
-        }
+        )
     }
 }
 
-impl Block {
-    pub fn render(&self) -> Result<String, std::fmt::Error> {
-        let mut buf = String::new();
-
-        write!(&mut buf, "{}", self)?;
-
-        Ok(buf)
-    }
-}

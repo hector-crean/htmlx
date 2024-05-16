@@ -6,7 +6,6 @@ edition = "2021"
 
 
 [dependencies]
-askama = "0.12.1"
 serde = { worspace = true, features = ["derive"]}
 specta = { workspace = true,  features = [ 
     "typescript",
@@ -15,4 +14,4 @@ specta = { workspace = true,  features = [
 uuid = { workspace = true, features = ["serde", "v4"]}
 color-eyre = { worspace = true }
 strum = { workspace = true }
-html-escape = "0.2.13"
+maud = { workspace = true }
