@@ -32,10 +32,6 @@ import { ThreadButton, ThreadComposer } from "./ThreadButton";
 import { blocknoteSchema } from "./schema";
 
 
-''
-
-
-
 enum EditorMode {
   Edit = 0,
   Review = 1
@@ -125,7 +121,11 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
   const { threads } = useThreads();
 
 
-  const handleExport = () => {
+
+
+
+
+  const handleExport = async () => {
 
     const zip = new JSZip();
 
@@ -133,22 +133,30 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
 
     const blockOrder: Array<string> = []
 
+    for await (const block of editor.document) {
+      const html = await editor.blocksToHTMLLossy([block]);
+      const textEncoder = new TextEncoder();
 
-    console.log(editor.document)
+      const utf8 = textEncoder.encode(html)
 
-    editor.document.forEach((block) => {
-
-      const html = editor.blocksToHTMLLossy([block]);
       const filename = `${block.id}.html`
 
       switch (block.type) {
+        case 'paragraph':
+          if (block.children.length === 0 && block.content.length === 0) {
+          } else {
+            blockOrder.push(filename)
+            zip.file(filename, utf8);
+          }
+          break;
         default: {
           blockOrder.push(filename)
-          zip.file(filename, html);
+          zip.file(filename, utf8);
         }
       }
+    }
 
-    })
+
 
     // editor.forEachBlock((block) => {
 
