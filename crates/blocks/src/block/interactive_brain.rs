@@ -1,4 +1,4 @@
-use maud::{html, Markup};
+use maud::{html, Markup, PreEscaped};
 use strum::IntoStaticStr;
 use super::{rich_text::{RichText, RichTextProps}, Block};
 
@@ -187,6 +187,20 @@ impl maud::Render for InteractiveBrainProps {
             }
 
             svg id="interactive-svg" class="rounded-lg shadow mt-4" width="100%" viewBox="0 0 960 400" preserveAspectRatio="xMidYMid meet" {}
+
+            // Embedded JavaScript
+            script type="text/javascript" {
+                (PreEscaped(r#"
+                document.addEventListener('DOMContentLoaded', function() {
+                    const buttons = document.querySelectorAll('.symptom');
+                    buttons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            alert('Symptom clicked: ' + this.querySelector('span').textContent);
+                        });
+                    });
+                });
+                "#))
+            }
         }
     }
 }

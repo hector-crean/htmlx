@@ -6,12 +6,12 @@ edition = "2021"
 
 
 [dependencies]
-serde = { worspace = true, features = ["derive"]}
+serde = { workspace = true, features = ["derive"]}
 specta = { workspace = true,  features = [ 
     "typescript",
     "serde",
     "export"] }
 uuid = { workspace = true, features = ["serde", "v4"]}
-color-eyre = { worspace = true }
+color-eyre = { workspace = true }
 strum = { workspace = true }
 maud = { workspace = true }
