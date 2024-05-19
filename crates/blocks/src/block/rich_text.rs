@@ -1,7 +1,6 @@
 use maud::{html, PreEscaped};
 use std::fmt::Write;
 
-
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 #[serde(tag = "type", content = "data")]
 pub enum RichText {
@@ -26,19 +25,18 @@ impl maud::Render for RichText {
     }
 }
 
-
-
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 pub struct RichTextProps {
     pub text: RichText,
 }
 
-impl Default for RichTextProps { 
+impl Default for RichTextProps {
     fn default() -> Self {
-        Self { text: RichText::default()}
+        Self {
+            text: RichText::default(),
+        }
     }
 }
-
 
 impl maud::Render for RichTextProps {
     fn render(&self) -> maud::Markup {
@@ -47,7 +45,6 @@ impl maud::Render for RichTextProps {
         }
     }
 }
-
 
 // #[derive(Debug, Serialize, Deserialize)]
 // pub struct Document {

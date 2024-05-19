@@ -1,12 +1,11 @@
-use std::path::PathBuf;
-
+use blocks::node::Routes;
 use clap::{Parser, Subcommand};
+use cli::routes::App;
+use cli::typegen::typegen;
 use cli::PROJECT_ROOT;
-use cli::{
-    pages::{ptsd_symptoms_node::PTSDSymptomsNode, Pagelike},
-    typegen::typegen,
-};
 use color_eyre::eyre::{self, Ok};
+use std::fs;
+use std::io::Write;
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -43,11 +42,16 @@ fn main() -> eyre::Result<()> {
             Ok(())
         }
         Commands::RenderHtml {} => {
-            let output_path: PathBuf = [PROJECT_ROOT, "src", "outputs", "ptsd-symptoms-node.html"]
-                .iter()
-                .collect();
+            let app = App::new();
 
-            PTSDSymptomsNode::new(output_path).render_html()?;
+            let routes_json = app.root_node.generate_routes_json()?;
+
+            let routes = Routes::new(PROJECT_ROOT, app.root_node);
+
+            routes.build()?;
+
+            let mut file = fs::File::create(format!("{}/routes.json", PROJECT_ROOT))?;
+            file.write(routes_json.as_bytes())?;
 
             Ok(())
         }

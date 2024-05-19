@@ -1,16 +1,16 @@
-use maud::html;
+pub mod bar_chart;
+pub mod interactive_brain;
+pub mod nav;
+pub mod rich_text;
+pub mod tabs;
+
+use self::{bar_chart::BarChartProps, interactive_brain::InteractiveBrainProps, nav::NavProps};
 use core::fmt;
+use maud::html;
 use rich_text::{RichText, RichTextProps};
 use std::fmt::{write, Display, Write};
 use tabs::{Tab, TabsProps};
 use uuid::Uuid;
-
-use self::{bar_chart::BarChartProps, interactive_brain::InteractiveBrainProps};
-
-pub mod bar_chart;
-pub mod interactive_brain;
-pub mod rich_text;
-pub mod tabs;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 pub struct BlocksProps {
@@ -27,7 +27,6 @@ impl maud::Render for BlocksProps {
     }
 }
 
-
 impl BlocksProps {
     pub fn new(blocks: Vec<Block>) -> Self {
         Self { blocks }
@@ -41,6 +40,7 @@ pub enum Block {
     TabsBlock(TabsProps),
     InteractiveBrainBlock(InteractiveBrainProps),
     BarChartBlock(BarChartProps),
+    NavBlock(NavProps),
 }
 
 impl maud::Render for Block {
@@ -53,15 +53,17 @@ impl maud::Render for Block {
                 Block::TabsBlock(tabs) => {
                     (tabs)
                 }
-    
+
                 Block::InteractiveBrainBlock(interactive_brain) => {
                    (interactive_brain)
                 }
                 Block::BarChartBlock(bar_chart) => {
                     (bar_chart)
                 }
+                Block::NavBlock(nav) => {
+                    (nav)
+                }
             }
         )
     }
 }
-

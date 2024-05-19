@@ -1,6 +1,9 @@
+use super::{
+    rich_text::{RichText, RichTextProps},
+    Block,
+};
 use maud::{html, Markup, PreEscaped};
 use strum::IntoStaticStr;
-use super::{rich_text::{RichText, RichTextProps}, Block};
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type, Default)]
 #[serde(rename_all = "camelCase")]
@@ -26,7 +29,16 @@ pub struct BrainRegion {
     points: Vec<Vec2>,
 }
 
-#[derive(Debug, Default, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type, IntoStaticStr)]
+#[derive(
+    Debug,
+    Default,
+    Clone,
+    serde::Serialize,
+    serde::Deserialize,
+    PartialEq,
+    specta::Type,
+    IntoStaticStr,
+)]
 #[serde(rename_all = "camelCase")]
 pub enum BrainRegionName {
     #[default]
@@ -87,7 +99,7 @@ impl BrainComment {
     }
 }
 
-impl maud::Render for BrainComment { 
+impl maud::Render for BrainComment {
     fn render(&self) -> Markup {
         html! {
             button class="symptom text-with-icon"
@@ -96,7 +108,7 @@ impl maud::Render for BrainComment {
                 span { (self.symptom) }
                 div class="info" {
                     h3 class="symptom-heading" { (self.icon) }
-    
+
                     @for block in &self.description {
                         (block)
                     }
@@ -107,7 +119,12 @@ impl maud::Render for BrainComment {
 }
 
 impl BrainComment {
-    pub fn new<S: Into<String>>(icon: S, symptom: RichTextProps, highlighted_regions: Vec<BrainRegionName>, description: Vec<Block>) -> Self {
+    pub fn new<S: Into<String>>(
+        icon: S,
+        symptom: RichTextProps,
+        highlighted_regions: Vec<BrainRegionName>,
+        description: Vec<Block>,
+    ) -> Self {
         Self {
             icon: icon.into(),
             symptom,
@@ -158,8 +175,6 @@ pub struct InteractiveBrainProps {
     pub groups: Vec<CommentGroup>,
 }
 
-
-
 impl Default for InteractiveBrainProps {
     fn default() -> Self {
         InteractiveBrainProps {
@@ -204,4 +219,3 @@ impl maud::Render for InteractiveBrainProps {
         }
     }
 }
-

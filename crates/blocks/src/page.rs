@@ -4,11 +4,15 @@ use maud::{html, Render};
 
 use crate::block::Block;
 
-
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 pub struct Page {
-    pub id: uuid::Uuid,
-    pub blocks: Vec<Block>
+    pub blocks: Vec<Block>,
+}
+
+impl Page {
+    pub fn new(blocks: Vec<Block>) -> Self {
+        Self { blocks }
+    }
 }
 
 impl maud::Render for Page {

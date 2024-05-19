@@ -1,6 +1,6 @@
-use std::borrow::Cow;
-use maud::html;
 use crate::block::{Block, BlocksProps, RichTextProps};
+use maud::html;
+use std::borrow::Cow;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 pub struct Tab {
@@ -14,7 +14,6 @@ pub struct TabsProps {
     pub tabs: Vec<Tab>,
 }
 
-
 impl maud::Render for TabsProps {
     fn render(&self) -> maud::Markup {
         html! {
@@ -25,7 +24,7 @@ impl maud::Render for TabsProps {
                     }
                 }
             }
-    
+
             div class="tabbed-top" {
                 @for (index, tab) in self.tabs.iter().enumerate() {
                     div class="toggable-container" data-group=(self.id) data-slide=(index) {

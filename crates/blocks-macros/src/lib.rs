@@ -3,7 +3,7 @@ use blocks::block::Block;
 
 use proc_macro::TokenStream;
 use quote::{quote, ToTokens};
-use syn::{parse_macro_input, ExprArray, parse_quote};
+use syn::{parse_macro_input, parse_quote, ExprArray};
 // #[proc_macro]
 // pub fn rich_text(input: TokenStream) -> TokenStream {
 //     // Parse the input token stream
@@ -20,7 +20,6 @@ use syn::{parse_macro_input, ExprArray, parse_quote};
 
 //     TokenStream::from(expanded)
 // }
-
 
 // #[proc_macro]
 // pub fn rich_text_block(input: TokenStream) -> TokenStream {
@@ -42,10 +41,6 @@ use syn::{parse_macro_input, ExprArray, parse_quote};
 
 //     TokenStream::from(expanded)
 // }
-
-
-
-
 
 #[proc_macro]
 pub fn rich_text_block(input: TokenStream) -> TokenStream {
