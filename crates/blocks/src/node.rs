@@ -1,12 +1,16 @@
 use maud::Render;
 use serde_json::json;
 
+use rand::Rng;
+use std::collections::HashMap;
 use std::convert::AsRef;
 use std::fmt::Display;
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 use strum::AsRefStr;
+
+use crate::node_map::{self, to_sentence_case};
 
 #[derive(AsRefStr, Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 pub enum FileExtension {
@@ -108,8 +112,94 @@ impl<R: Render> Node<R> {
 
         serde_json::to_string_pretty(&routes)
     }
-}
+    pub fn node_map(&self) -> Result<String, serde_json::Error> {
+        let mut nodes = HashMap::new();
 
+        for (path, node) in self.iter() {
+            match &node.node_type {
+                NodeType::File {
+                    extension,
+                    renderable,
+                } => {
+                    let mut content = HashMap::new();
+                    content.insert(
+                        "default".to_string(),
+                        node_map::Content::new(Some(path.clone()), vec![path.clone()], vec![]),
+                    );
+
+                    // Create a random number generator
+                    let mut rng = rand::thread_rng();
+
+                    // Generate a random number between -100 and 100
+                    let x = rng.gen_range(-20..=20);
+                    let z = rng.gen_range(-20..=20);
+
+                    nodes.insert(
+                        String::from(&path),
+                        node_map::GraphNode {
+                            color: String::from("#260038"),
+                            position: node_map::Position { x, z },
+                            node_type: node_map::GraphNodeType::Secondary,
+                            category: None,
+                            connections: HashMap::new(),
+                            label: String::from(to_sentence_case(&path)),
+                            content: Some(content),
+                            distance: Some(32),
+                        },
+                    );
+                }
+                NodeType::Folder => {
+                    nodes.insert(
+                        String::from(&path),
+                        node_map::GraphNode {
+                            color: String::from("#260038"),
+                            position: node_map::Position { x: -48, z: 0 },
+                            node_type: node_map::GraphNodeType::Category,
+                            category: Some(true),
+                            connections: HashMap::new(),
+                            label: String::from(to_sentence_case(&node.path_segment)),
+                            content: Some(HashMap::new()),
+                            distance: Some(32),
+                        },
+                    );
+                }
+            }
+        }
+
+        print!("{:?}", &nodes);
+
+        let data = node_map::Data {
+            curve: node_map::Curve::new(String::from("#8f51f5")),
+            nodes,
+            map: node_map::Map {
+                settings: node_map::MapSettings {
+                    node_color: String::from("#ffffff"),
+                    selected_node_color: String::from("#ffffff"),
+                    connection_color: String::from("#ffffff"),
+                },
+                size: node_map::Size {
+                    min: 400,
+                    preferred: node_map::PreferredSize { x: 0.5, y: 0.15 },
+                    max: 720,
+                    ratio: 0.184,
+                },
+                nodes: HashMap::new(),
+            },
+            camera: node_map::Camera {
+                reference_width: 1920,
+                reference_height: 980,
+                initial_position: node_map::InitialPosition {
+                    x: -2,
+                    y: 85,
+                    z: 47,
+                },
+                initial_target: node_map::InitialTarget { x: -2, y: 0, z: 5 },
+            },
+        };
+
+        serde_json::to_string_pretty(&data)
+    }
+}
 pub struct Routes<R: Render> {
     root: Node<R>,
 }

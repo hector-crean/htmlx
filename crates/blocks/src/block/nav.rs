@@ -19,7 +19,7 @@ impl maud::Render for NavProps {
             html! {
                 nav class="flex flex-col items-start justify-start" {
                     @for (path, name) in self.routes.iter() {
-                        a href=(path) {(name)}
+                        a href=(format!("/{}", path)) {(path)}
                      }
                 }
             }
