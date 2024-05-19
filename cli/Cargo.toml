@@ -18,5 +18,5 @@ uuid = { workspace = true }
 blocks-macros = { path = '../crates/blocks-macros'}
 maud = { workspace = true }
 serde = { workspace = true}
-strum = { worksapce = true }
+strum = { workspace = true }
 serde_json = { workspace = true }
