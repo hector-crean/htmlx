@@ -3,11 +3,37 @@
     "color": "#8f51f5"
   },
   "nodes": {
+    "ptsd/clinical_presentation": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Clinical_presentation",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Ptsd",
+      "content": {},
+      "distance": 32
+    },
     "ptsd/clinical_presentation/symptoms/page": {
       "color": "#260038",
       "position": {
-        "x": -6,
-        "z": -18
+        "x": 8,
+        "z": -17
       },
       "type": "secondary",
       "category": null,
@@ -19,7 +45,9 @@
           "html": [
             "ptsd/clinical_presentation/symptoms/page"
           ],
-          "requires": []
+          "requires": [
+            "ptsd/clinical_presentation/symptoms/js/index.js"
+          ]
         }
       },
       "distance": 32
@@ -37,37 +65,11 @@
       "content": {},
       "distance": 32
     },
-    "ptsd/clinical_presentation/symptoms": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Symptoms",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Ptsd",
-      "content": {},
-      "distance": 32
-    },
     "ptsd/clinical_presentation/comorbidities/page": {
       "color": "#260038",
       "position": {
-        "x": -8,
-        "z": -2
+        "x": -15,
+        "z": -5
       },
       "type": "secondary",
       "category": null,
@@ -79,12 +81,14 @@
           "html": [
             "ptsd/clinical_presentation/comorbidities/page"
           ],
-          "requires": []
+          "requires": [
+            "ptsd/clinical_presentation/comorbidities/js/index.js"
+          ]
         }
       },
       "distance": 32
     },
-    "ptsd/clinical_presentation": {
+    "ptsd/clinical_presentation/symptoms": {
       "color": "#260038",
       "position": {
         "x": -48,
@@ -93,7 +97,7 @@
       "type": "category",
       "category": true,
       "connections": {},
-      "label": "Clinical_presentation",
+      "label": "Symptoms",
       "content": {},
       "distance": 32
     }

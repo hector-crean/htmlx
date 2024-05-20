@@ -122,9 +122,16 @@ impl<R: Render> Node<R> {
                     renderable,
                 } => {
                     let mut content = HashMap::new();
+
+                    let base = path.split("/").collect::<Vec<&str>>();
+                    let base = &base[0..base.len() - 1].join("/");
                     content.insert(
                         "default".to_string(),
-                        node_map::Content::new(Some(path.clone()), vec![path.clone()], vec![]),
+                        node_map::Content::new(
+                            Some(path.clone()),
+                            vec![path.clone()],
+                            vec![format!("{}/js/index.js", base)],
+                        ),
                     );
 
                     // Create a random number generator

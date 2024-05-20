@@ -1,4 +1,5 @@
 pub mod bar_chart;
+pub mod icon;
 pub mod interactive_brain;
 pub mod nav;
 pub mod rich_text;

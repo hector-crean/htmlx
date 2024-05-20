@@ -52,7 +52,7 @@ impl App {
                     NodeType::File {
                         extension: FileExtension::Html,
                         renderable: Page::new(
-                            "symptoms",
+                            "Symptoms",
                             None,
                             routes::clinical_presentation::symptoms::blocks(),
                         ),
@@ -63,7 +63,11 @@ impl App {
                         "page",
                         NodeType::File {
                             extension: FileExtension::Html,
-                            renderable: Page::new("comborbidities", None, vec![]),
+                            renderable: Page::new(
+                                "Comborbidities",
+                                None,
+                                routes::clinical_presentation::comorbidities::blocks(),
+                            ),
                         },
                     )),
                 ),

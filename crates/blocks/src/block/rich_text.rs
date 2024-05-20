@@ -1,10 +1,15 @@
 use maud::{html, PreEscaped};
+use maud::{Markup, Render};
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
+use std::collections::HashMap;
 use std::fmt::Write;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 #[serde(tag = "type", content = "data")]
 pub enum RichText {
     Html(String),
+    Tiptap(JSONContent),
 }
 
 impl Default for RichText {
@@ -19,7 +24,8 @@ impl maud::Render for RichText {
             @match &self {
                 RichText::Html(html) => {
                     (PreEscaped(html))
-                }
+                },
+                RichText::Tiptap(json) => (json)
             }
         }
     }
@@ -46,62 +52,83 @@ impl maud::Render for RichTextProps {
     }
 }
 
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct Document {
-//     // pub type: String,
-//     pub content: Vec<Node>,
-// }
-// #[derive(Debug, Serialize, Deserialize)]
-// #[serde(tag = "type")]
-// pub enum Node {
-//     Paragraph(Paragraph),
-//     Heading(Heading),
-//     BulletList(BulletList),
-//     OrderedList(OrderedList),
-//     ListItem(ListItem),
-//     Text(Text),
-//     // Add other node types as needed
-// }
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+struct Attrs {
+    #[serde(flatten)]
+    map: HashMap<String, Value>,
+}
+impl specta::Type for Attrs {
+    fn inline(type_map: &mut specta::TypeMap, generics: specta::Generics) -> specta::DataType {
+        specta::DataType::Any
+    }
+}
+impl Attrs {
+    fn new() -> Self {
+        Self {
+            map: HashMap::new(),
+        }
+    }
+}
 
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct Paragraph {
-//     pub content: Vec<Node>,
-// }
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, specta::Type)]
+pub struct JSONContent {
+    pub content_type: Option<String>,
+    pub attrs: Option<Attrs>,
+    pub content: Option<Vec<JSONContent>>,
+    pub marks: Option<Vec<Mark>>,
+    pub text: Option<String>,
+    pub other: Attrs,
+}
 
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct Heading {
-//     pub attrs: HeadingAttrs,
-//     pub content: Vec<Node>,
-// }
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, specta::Type)]
+pub struct Mark {
+    pub mark_type: String,
+    pub attrs: Option<Attrs>,
+    pub other: Attrs,
+}
 
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct HeadingAttrs {
-//     pub level: u8,
-// }
+impl JSONContent {
+    pub fn new() -> Self {
+        JSONContent {
+            content_type: None,
+            attrs: None,
+            content: None,
+            marks: None,
+            text: None,
+            other: Attrs::new(),
+        }
+    }
+}
 
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct BulletList {
-//     pub content: Vec<Node>,
-// }
+impl Mark {
+    pub fn new(mark_type: String) -> Self {
+        Mark {
+            mark_type,
+            attrs: None,
+            other: Attrs::new(),
+        }
+    }
+}
 
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct OrderedList {
-//     pub content: Vec<Node>,
-//     pub attrs: OrderedListAttrs,
-// }
+impl Render for JSONContent {
+    fn render(&self) -> Markup {
+        let tag = self
+            .content_type
+            .clone()
+            .unwrap_or_else(|| "div".to_string());
 
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct OrderedListAttrs {
-//     pub order: u32,
-// }
+        html! {
+            (maud::PreEscaped(format!("<{} ", tag)))
 
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct ListItem {
-//     pub content: Vec<Node>,
-// }
-
-// #[derive(Debug, Serialize, Deserialize)]
-// pub struct Text {
-//     pub text: String,
-//     pub marks: Option<Vec<Mark>>,
-// }
+            @match &self.content {
+                Some(blocks) => {
+                    @for block in blocks {
+                        (block)
+                    }
+                },
+                None => ("")
+            }
+            (maud::PreEscaped(format!("</{}>", tag)))
+        }
+    }
+}

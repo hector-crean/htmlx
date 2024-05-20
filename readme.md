@@ -17,3 +17,6 @@ can create different implementations of a react components, which each take the 
         
 
 
+maud! RichText renderer
+blocknote reference type (perhaps using @mention example?)
+blocknote type for graph/interactive brain? (pehraps best to look through other powerpoints)

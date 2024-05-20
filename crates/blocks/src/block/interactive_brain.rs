@@ -1,8 +1,10 @@
 use super::{
+    icon::IconProps,
     rich_text::{RichText, RichTextProps},
     Block,
 };
 use maud::{html, Markup, PreEscaped};
+use stringcase::Caser;
 use strum::IntoStaticStr;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type, Default)]
@@ -39,49 +41,84 @@ pub struct BrainRegion {
     specta::Type,
     IntoStaticStr,
 )]
-#[serde(rename_all = "camelCase")]
+
 pub enum BrainRegionName {
     #[default]
+    #[serde(rename = "fronto-subcortical")]
     Frontosubcortical,
+    #[serde(rename = "orbitofrontal")]
     Orbitofrontal,
+    #[serde(rename = "anterior-cingulated-gyrus")]
     AnteriorCingulatedGyrus,
+    #[serde(rename = "bilateral-temporal-cortex")]
     BilateralTemporalCortex,
+    #[serde(rename = "parietal-lobe")]
     ParietalLobe,
+    #[serde(rename = "thalmus")]
     Thalamus,
+    #[serde(rename = "hippocampus")]
     Hippocampus,
+    #[serde(rename = "amygdala")]
     Amygdala,
+    #[serde(rename = "hypothalamus")]
     Hypothalamus,
+    #[serde(rename = "anterior-cingulate-cortex")]
     AnteriorCingulateCortex,
+    #[serde(rename = "posterior-cingulate-cortex")]
     PosteriorCingulateCortex,
+    #[serde(rename = "striatum")]
     Striatum,
+    #[serde(rename = "prefrontal-cortex")]
     PrefrontalCortex,
+    #[serde(rename = "ventral-frontal-cortex")]
     VentralFrontalCortex,
+    #[serde(rename = "frontal-lobe")]
     FrontalLobe,
+    #[serde(rename = "dlpfc")]
     Dlpfc,
+    #[serde(rename = "vlpfc")]
     Vlpfc,
+    #[serde(rename = "nucleus-accumbens")]
     NucleusAccumbens,
+    #[serde(rename = "basal-forebrain")]
     BasalForebrain,
+    #[serde(rename = "anterior-caudate")]
     AnteriorCaudate,
+    #[serde(rename = "grey-matter")]
     GreyMatter,
+    #[serde(rename = "lateral-ventricle")]
     LateralVentricle,
+    #[serde(rename = "occipital-lobe")]
     OccipitalLobe,
+    #[serde(rename = "auditory-cortex")]
     AuditoryCortex,
+    #[serde(rename = "substantia-nigra")]
     SubstantiaNigra,
+    #[serde(rename = "nucleus-accumbens-area")]
     NucleusAccumbensArea,
+    #[serde(rename = "amyloid-stage-1-mild-region-1")]
     AmyloidStage1MildRegion1,
+    #[serde(rename = "amyloid-stage-2-moderate-region-1")]
     AmyloidStage2ModerateRegion1,
+    #[serde(rename = "amyloid-stage-2-mild-region-1")]
     AmyloidStage2MildRegion1,
+    #[serde(rename = "amyloid-stage-3-severe-region-1")]
     AmyloidStage3SevereRegion1,
+    #[serde(rename = "amyloid-stage-3-moderate-region-1")]
     AmyloidStage3ModerateRegion1,
+    #[serde(rename = "amyloid-stage-3-moderate-region-2")]
     AmyloidStage3ModerateRegion2,
+    #[serde(rename = "locus-coeruleus")]
     LocusCoeruleus,
+    #[serde(rename = "insula")]
+    Insula,
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 #[serde(rename_all = "camelCase")]
 pub struct BrainComment {
-    pub icon: String,
-    pub symptom: RichTextProps,
+    pub icon: IconProps,
+    pub symptom: String,
     pub highlighted_regions: Vec<BrainRegionName>,
     pub description: Vec<Block>,
 }
@@ -92,7 +129,7 @@ impl BrainComment {
             .iter()
             .map(|region| {
                 let region: &'static str = region.into();
-                region.to_string()
+                region.to_string().to_kebab_case()
             })
             .collect::<Vec<String>>()
             .join(" ")
@@ -102,9 +139,9 @@ impl BrainComment {
 impl maud::Render for BrainComment {
     fn render(&self) -> Markup {
         html! {
-            button class="symptom text-with-icon"
+            button class="flex flex-row items-center justify-start gap-2 symptom"
                 data-regions=(self.highlighted_regions_str()) {
-                img src=(self.icon) {}
+                div class="flex items-center justify-center w-10 h-10" { (self.icon) }
                 span { (self.symptom) }
                 div class="info" {
                     h3 class="symptom-heading" { (self.icon) }
@@ -120,14 +157,14 @@ impl maud::Render for BrainComment {
 
 impl BrainComment {
     pub fn new<S: Into<String>>(
-        icon: S,
-        symptom: RichTextProps,
+        icon: IconProps,
+        symptom: S,
         highlighted_regions: Vec<BrainRegionName>,
         description: Vec<Block>,
     ) -> Self {
         Self {
             icon: icon.into(),
-            symptom,
+            symptom: symptom.into(),
             highlighted_regions,
             description,
         }
@@ -137,8 +174,8 @@ impl BrainComment {
 impl Default for BrainComment {
     fn default() -> Self {
         BrainComment {
-            icon: String::from("🧠"),
-            symptom: RichTextProps::default(),
+            icon: IconProps::default(),
+            symptom: String::from(""),
             highlighted_regions: vec![],
             description: vec![],
         }
@@ -197,25 +234,53 @@ impl maud::Render for InteractiveBrainProps {
                 }
             }
 
-            p class="panel text-xs transition duration-500 ease-in-out" id="info-panel" {
+            p class="text-xs transition duration-500 ease-in-out panel" id="info-panel" {
                 "Click on each symptom to learn more about its involvement"
             }
 
-            svg id="interactive-svg" class="rounded-lg shadow mt-4" width="100%" viewBox="0 0 960 400" preserveAspectRatio="xMidYMid meet" {}
+            svg id="interactive-svg" class="mt-4 rounded-lg shadow" width="100%" viewBox="0 0 960 400" preserveAspectRatio="xMidYMid meet" {}
 
-            // Embedded JavaScript
-            script type="text/javascript" {
-                (PreEscaped(r#"
-                document.addEventListener('DOMContentLoaded', function() {
-                    const buttons = document.querySelectorAll('.symptom');
-                    buttons.forEach(button => {
-                        button.addEventListener('click', function() {
-                            alert('Symptom clicked: ' + this.querySelector('span').textContent);
-                        });
-                    });
-                });
-                "#))
-            }
+
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json;
+
+    #[test]
+    fn test_serialization() {
+        let region = BrainRegionName::Frontosubcortical;
+        let serialized = serde_json::to_string(&region).unwrap();
+        assert_eq!(serialized, "\"fronto-subcortical\"");
+
+        let region = BrainRegionName::Orbitofrontal;
+        let serialized = serde_json::to_string(&region).unwrap();
+        assert_eq!(serialized, "\"orbitofrontal\"");
+
+        let region = BrainRegionName::AnteriorCingulatedGyrus;
+        let serialized = serde_json::to_string(&region).unwrap();
+        assert_eq!(serialized, "\"anterior-cingulated-gyrus\"");
+
+        // Add more tests for other variants...
+    }
+
+    #[test]
+    fn test_deserialization() {
+        let serialized = "\"fronto-subcortical\"";
+        let deserialized: BrainRegionName = serde_json::from_str(serialized).unwrap();
+        assert_eq!(deserialized, BrainRegionName::Frontosubcortical);
+
+        let serialized = "\"orbitofrontal\"";
+        let deserialized: BrainRegionName = serde_json::from_str(serialized).unwrap();
+        assert_eq!(deserialized, BrainRegionName::Orbitofrontal);
+
+        let serialized = "\"anterior-cingulated-gyrus\"";
+        let deserialized: BrainRegionName = serde_json::from_str(serialized).unwrap();
+        assert_eq!(deserialized, BrainRegionName::AnteriorCingulatedGyrus);
+
+        // Add more tests for other variants...
     }
 }
