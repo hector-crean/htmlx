@@ -1,14 +1,17 @@
 use maud::html;
 
-use crate::{node::Node, page::Page};
+use crate::{
+    node::{Node, RouteTemplate},
+    page::Page,
+};
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 pub struct NavProps {
-    routes: Vec<(String, String)>,
+    pub routes: Vec<RouteTemplate>,
 }
 
 impl NavProps {
-    pub fn new(routes: Vec<(String, String)>) -> Self {
+    pub fn new(routes: Vec<RouteTemplate>) -> Self {
         Self { routes }
     }
 }
@@ -18,8 +21,8 @@ impl maud::Render for NavProps {
         {
             html! {
                 nav class="flex flex-col items-start justify-start" {
-                    @for (path, name) in self.routes.iter() {
-                        a href=(format!("/{}", path)) {(path)}
+                    @for RouteTemplate { path, template } in self.routes.iter() {
+                        a href=(format!("{}", path)) {(path)}
                      }
                 }
             }

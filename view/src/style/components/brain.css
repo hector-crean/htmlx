@@ -1,0 +1,69 @@
+/* Interactive Brain */
+.hovered {
+  fill: blue;
+}
+
+.region {
+  mix-blend-mode: soft-light;
+  stroke-width: 1.5;
+  stroke-dasharray: 6, 5;
+  stroke: white;
+  opacity: 1;
+}
+
+/* use normal blending on edge */
+@supports (-ms-ime-align: auto) {
+  .region {
+    mix-blend-mode: none;
+    opacity: 0.35;
+  }
+}
+
+.region:not(.active):hover {
+  cursor: pointer;
+  fill: #003169;
+  mix-blend-mode: screen;
+}
+
+.region.active {
+  animation: fadeinRegion 1s 0.1s infinite;
+  stroke-width: 0;
+  /* stroke-dasharray: 6, 5; */
+}
+
+/* Animation Keyframes*/
+@keyframes fadeinRegion {
+  25% {
+    fill: purple;
+  }
+}
+
+#region-info-container.active {
+  opacity: 1;
+}
+
+.region-label {
+  border-radius: 20em;
+  stroke: white;
+  fill: white;
+  rx: 1em;
+  ry: 1em;
+}
+
+.region-label-text {
+  font-weight: bold;
+  font-size: 11.5px;
+  fill: #777;
+  letter-spacing: 0.2em;
+}
+
+#regions-disc-paragraph {
+  transition: 0.75s;
+  background: white;
+}
+
+.vertical-separator {
+  @apply mx-2;
+  border-left: 1px solid #000;
+  height: 2em;
+}

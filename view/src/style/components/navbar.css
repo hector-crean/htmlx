@@ -1,0 +1,79 @@
+/*
+ * Top navigation bar
+ */
+
+#gui-titlebar.disabled {
+  @apply pointer-events-none;
+}
+#gui-titlebar.disabled .disease-state-button:not(.active) {
+  @apply opacity-50;
+}
+
+#logo {
+  @apply absolute w-64 opacity-50;
+  left: 1rem;
+  top: 1rem;
+}
+
+.navbar {
+  display: flex;
+}
+
+.navbar > div {
+  padding: 0.25em;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar > div:first-child > * {
+  margin-right: auto;
+}
+
+.navbar > div:last-child > * {
+  margin-left: auto;
+}
+
+#gui-nav-buttons {
+  @apply absolute bottom-0 flex flex-row pointer-events-auto p-2;
+}
+@screen lg {
+  #gui-nav-buttons {
+    @apply top-0 right-0 bottom-auto;
+  }
+}
+#gui-nav-buttons.disabled {
+  @apply pointer-events-none opacity-50;
+}
+
+.navbar-button {
+  @apply w-20 flex flex-col items-center;
+}
+
+.navbar-button > p {
+  font-size: 0.6625rem;
+}
+
+.navbar-button > img {
+  @apply w-12 h-12 inline;
+  transition: filter 0.25s;
+  filter: saturate(0) brightness(1.2);
+}
+
+.navbar-button > img:hover {
+  filter: saturate(1) brightness(1);
+}
+
+.disease-state-button {
+  @apply p-2 rounded;
+}
+.disease-state-button:hover {
+  @apply bg-blue-100;
+}
+.disease-state-button.active {
+  @apply text-purple-700;
+}
+.disease-state-button.active svg {
+  stroke: #6b46c1;
+}

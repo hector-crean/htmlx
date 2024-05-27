@@ -14,10 +14,11 @@ specta = { workspace = true,  features = [
 thiserror = { workspace = true }
 color-eyre = { workspace = true }
 blocks = { path = "../crates/blocks"}
+file_ops = { path = "../crates/file_ops"}
 uuid = { workspace = true }
 blocks-macros = { path = '../crates/blocks-macros'}
 maud = { workspace = true }
 serde = { workspace = true}
 strum = { workspace = true }
 serde_json = { workspace = true }
-svg = "0.17.0"
+usvg = "0.41.0"

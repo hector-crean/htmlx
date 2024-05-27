@@ -1,0 +1,82 @@
+[
+  {
+    "id": "9be658d7-f0cd-42dd-a588-c6d5cef8c4e5",
+    "shortTitle": "Dementia",
+    "fullTitle": "",
+    "icon": "",
+    "content": {
+      "type": "RichTextBlock",
+      "props": {
+        "text": {
+          "type": "Html",
+          "data": "<p class=\"bn-inline-content\"></p><h3 class=\"bn-inline-content\">Dementia</h3><p class=\"bn-inline-content\">Individuals with PTSD face a 1.55x higher risk of developing dementia [9]. The exact mechanisms linking PTSD to cognitive decline and dementia remain unclear [26]. However, research suggests that intrusive thoughts, a key symptom of PTSD, may predict cognitive impairment years later [26].</p>"
+        }
+      }
+    },
+    "percent": 0.0
+  },
+  {
+    "id": "9976404d-36d5-4d86-a972-df06a5e029a8",
+    "shortTitle": "Sleep Dysfunction",
+    "fullTitle": "",
+    "icon": "",
+    "content": {
+      "type": "RichTextBlock",
+      "props": {
+        "text": {
+          "type": "Html",
+          "data": "<p class=\"bn-inline-content\"></p>\r\n<h3 class=\"bn-inline-content\">Sleep dysfunction</h3>\r\n<p class=\"bn-inline-content\">70-87% of patients diagnosed with PTSD experience sleep disturbances, including insomnia,\r\n    posttraumatic nightmares, awakenings, periodic limb movement disorder (PLMD), and obstructive sleep apnea (OSA) [10]\r\n    [17] [18]. Posttraumatic nightmares often involve reliving the trauma and can lead to intense fear or anxiety upon\r\n    waking, making it difficult to return to sleep [19]. Awakenings in PTSD may not always be linked to distressing\r\n    dreams. About 33% of PTSD patients also suffer from PLMD, which can cause awakenings [18]. Insomnia symptoms are\r\n    reported by approximately 70% of patients and are often related to increased autonomic arousal and fear of sleep,\r\n    including fear of losing control or experiencing nightmares [18]. OSA is also common among PTSD patients, affecting\r\n    40-90% of patients [18].</p>"
+        }
+      }
+    },
+    "percent": 70.0
+  },
+  {
+    "id": "5af133ff-995f-4df7-9e78-344db25a65a5",
+    "shortTitle": "Chronic Pain",
+    "fullTitle": "",
+    "icon": "",
+    "content": {
+      "type": "RichTextBlock",
+      "props": {
+        "text": {
+          "type": "Html",
+          "data": "<p class=\"bn-inline-content\"></p><h3 class=\"bn-inline-content\">Chronic pain</h3><p class=\"bn-inline-content\">PTSD and chronic pain co-occur through various mechanisms. In PTSD, catastrophizing, characterized by magnifying pain or trauma severity, feeling overwhelmed, and expecting the worst outcome, amplifies trauma perception and emotional distress. Individuals experiencing this may exhibit less control over their pain and a greater emotional impact [20]. Additionally, dysregulated cortisol levels may increase sensitivity to pain [21]. Individuals experiencing both chronic pain and posttraumatic stress disorder (PTSD) tend to suffer from more intense pain and reduced quality of life compared to those solely dealing with chronic pain. Both conditions are closely linked, with high occurrences of chronic pain in PTSD patients and vice versa. Moreover, individuals with this dual diagnosis are commonly prescribed opioid medications for pain relief, putting them at a higher risk for opioid use [22].</p>"
+        }
+      }
+    },
+    "percent": 20.0
+  },
+  {
+    "id": "68c72f67-c510-4932-b67e-8150b16d7cdb",
+    "shortTitle": "Inflammation",
+    "fullTitle": "",
+    "icon": "",
+    "content": {
+      "type": "RichTextBlock",
+      "props": {
+        "text": {
+          "type": "Html",
+          "data": "<p class=\"bn-inline-content\"></p><h3 class=\"bn-inline-content\">Inflammation</h3><p class=\"bn-inline-content\">PTSD is characterized by notably heightened levels of proinflammatory markers, including interleukin-1ß, interleukin-6, tumor necrosis factor-a, and C-reactive protein [23]. This inflammatory dysregulation, coupled with cognitive impairment, may collectively contribute to the symptoms observed in PTSD [2].</p>"
+        }
+      }
+    },
+    "percent": 51.0
+  },
+  {
+    "id": "2b96ca34-ce85-4fb3-85ce-73b02f8c9e5c",
+    "shortTitle": "Cardiometabolic Disorders",
+    "fullTitle": "",
+    "icon": "",
+    "content": {
+      "type": "RichTextBlock",
+      "props": {
+        "text": {
+          "type": "Html",
+          "data": "<p class=\"bn-inline-content\"></p><h3 class=\"bn-inline-content\">Cardiometabolic disorders</h3><p class=\"bn-inline-content\">Studies have shown that PTSD is linked to higher rates of physical health issues related to immune dysregulation, including metabolic syndromes, diabetes, atherosclerotic cardiovascular disease, and autoimmune diseases [23]. Additionally, individuals with PTSD have an increased risk of hypertension, hyperlipidemia, obesity, and cardiovascular disease [24]. Specifically, research on female survivors of the 9/11 attacks with PTSD indicates a heightened risk of hospitalization due to heart disease [25].</p>"
+        }
+      }
+    },
+    "percent": 27.0
+  }
+]

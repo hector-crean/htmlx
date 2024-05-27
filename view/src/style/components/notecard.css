@@ -1,0 +1,23 @@
+.notecard {
+
+}
+
+/* .notecard[data-kind='instructions'] {
+border: 1px solid #175078;
+border-left: 4px solid #175078;
+border-radius: 2px;
+margin: 1rem 0;
+padding: 0.6rem 0.6rem 0.6rem 3rem;
+position: relative;
+} */
+
+
+.notecard[data-kind='instructions'] {
+    background-color: #d3e3ec;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+

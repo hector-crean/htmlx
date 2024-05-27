@@ -1,0 +1,37 @@
+#help {
+  @apply w-screen h-screen absolute pointer-events-none z-30 flex justify-center items-end;
+}
+#help .holder {
+  @apply absolute flex flex-col items-center bg-white text-center shadow-lg p-4 pt-8 rounded-lg w-auto overflow-hidden;
+  bottom: 5rem
+}
+@screen lg {
+  #help .holder {
+    @apply max-w-2xl;
+    bottom: 2.5rem
+  }
+}
+#help h1 {
+  @apply uppercase text-blue-800 text-lg font-bold mb-2;
+  letter-spacing: 0.25rem;
+  user-select: none;
+}
+
+#help button {
+  @apply pointer-events-auto;
+}
+#help .button:hover {
+  @apply bg-blue-700;
+}
+
+#help button.close {
+  @apply w-8 h-8 absolute top-0 right-0 m-1 bg-gray-200 rounded-full;
+}
+#help button.close:hover {
+  @apply bg-gray-300;
+}
+#help button.close svg {
+  @apply w-4 h-4 stroke-2;
+  fill: none;
+  stroke: gray;
+}

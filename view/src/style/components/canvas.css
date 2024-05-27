@@ -1,0 +1,66 @@
+.untouchable {
+    -webkit-touch-callout: none;
+    -ms-touch-action: none;
+    touch-action: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: grab;
+  }
+
+  /* $layers: (
+    "canvas-proxy": 0,
+    "webgl-canvas": 1,
+    "css-canvas": 2,
+    "img-labeller": 3,
+    "canvas-overlay": 4,
+  ); */
+
+  .canvas-proxy {
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    position: relative;
+    background-color: transparent;
+  }
+  .canvas-overlay {
+    z-index: 4;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .webgl-canvas {
+    z-index: 1;
+    background-color: grey;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+
+    cursor: grab;
+  }
+
+  .webgl-canvas:active {
+    cursor: grabbing;
+  }
+
+  .css-canvas {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }

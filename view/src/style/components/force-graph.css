@@ -1,0 +1,14 @@
+.force-graph-category-overview-panel[data-open='false'] {
+    max-height: 100px;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
+}
+
+.force-graph-category-overview-panel[data-open='true'] {
+    max-height: 105vh;
+    transition: max-height 0.25s ease-in;
+    padding: 2rem;
+}
+
+.force-graph-overview-content {
+}

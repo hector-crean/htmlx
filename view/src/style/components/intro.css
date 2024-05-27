@@ -1,0 +1,41 @@
+/* Intro Screen */
+
+#video-intro {
+  transition: all 0.5s;
+}
+
+#video-intro.postprocess {
+  filter: brightness(0.75) contrast(3);
+}
+
+.intro-container {
+  @apply flex flex-col justify-center left-0 top-0;
+  transition: opacity 1s;
+  background-image: radial-gradient(rgba(21, 28, 83, 0.75) 5%, rgba(21, 28, 83, 0.9) 5%);
+  background-position: 0 0;
+  background-size: 64px 64px;
+  height: 128px;
+  width: 100%;
+}
+
+.intro-header {
+  @apply text-6xl font-bold text-white;
+  letter-spacing: 0.4em;
+}
+
+.intro-paragraph {
+  @apply w-2/3 text-white;
+}
+.intro-paragraph > p {
+  @apply mb-4;
+}
+
+#button-intro-start {
+  @apply pointer-events-auto cursor-pointer py-1 mx-8 px-20 uppercase rounded-full text-white text-xl border-white border-2 relative;
+  letter-spacing: 0.25em;
+  background: rgb(67, 65, 144);
+  background: linear-gradient(0deg, rgba(67, 65, 144, 1) 0%, rgba(90, 103, 216, 1) 100%);
+}
+#button-intro-start:hover {
+  filter: brightness(1.33);
+}

@@ -1,0 +1,34 @@
+ /* Style the description list container */
+ dl {
+    font-size: small;
+    font-style: italic;
+    margin: 0;
+    padding: 2rem;
+    list-style: none;
+  }
+
+  /* Style the term (dt) elements */
+  dt {
+    display: inline;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+  }
+
+  /* Style the description (dd) elements */
+  dd {
+    display: inline;
+    margin-left: 0;
+    margin-bottom: 15px;
+  }
+  dd::after {
+    content: ";";
+    margin-right: 5px;
+
+  }
+
+  /* Add a separator between terms and descriptions */
+  dt::after {
+    content: ":";
+    margin-right: 5px;
+  }

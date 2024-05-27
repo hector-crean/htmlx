@@ -1,0 +1,82 @@
+[
+  {
+    "id": "c7e76689-b8d1-4da4-800f-7bdb700de772",
+    "shortTitle": "Substance use",
+    "fullTitle": "Substance use",
+    "icon": "",
+    "content": {
+      "type": "RichTextBlock",
+      "props": {
+        "text": {
+          "type": "Html",
+          "data": "<p class=\"bn-inline-content\"></p>\r\n<h3 class=\"bn-inline-content\">Substance use</h3>\r\n<p class=\"bn-inline-content\">The self-medication theory is the leading explanation for the connection between substance\r\n    use and PTSD. According to this theory, individuals with PTSD are more likely to turn to alcohol or drugs to cope\r\n    with the distressing symptoms and consequences of their condition, increasing their risk of substance use [11].\r\n    Substance use is more common among men than women [12]. Veterans with PTSD have an increased risk of substance use\r\n    disorders [13].</p>"
+        }
+      }
+    },
+    "percent": 46.0
+  },
+  {
+    "id": "93780dad-13c9-4aa6-b62a-d22093ac1434",
+    "shortTitle": "Alcohol use",
+    "fullTitle": "Alcohol use",
+    "icon": "",
+    "content": {
+      "type": "RichTextBlock",
+      "props": {
+        "text": {
+          "type": "Html",
+          "data": "<p class=\"bn-inline-content\"></p><h3 class=\"bn-inline-content\">Alcohol use</h3><p class=\"bn-inline-content\">The self-medication theory is the leading explanation for the connection between substance use and PTSD. According to this theory, individuals with PTSD are more likely to turn to alcohol or drugs to cope with the distressing symptoms and consequences of their condition, increasing their risk of substance use [11]. Research indicates a reciprocal relationship between PTSD and alcohol use: PTSD may lead to alcohol use due to self-medication, while alcohol use may increase vulnerability to traumatic events and subsequent PTSD [14].</p>"
+        }
+      }
+    },
+    "percent": 10.0
+  },
+  {
+    "id": "7a8a98af-0532-4f13-a86d-4b7a6121fd07",
+    "shortTitle": "Major Depressive Disorder",
+    "fullTitle": "Major Depressive Disorder",
+    "icon": "",
+    "content": {
+      "type": "RichTextBlock",
+      "props": {
+        "text": {
+          "type": "Html",
+          "data": "<p class=\"bn-inline-content\"></p><h3 class=\"bn-inline-content\">Major Depressive Disorder</h3><p class=\"bn-inline-content\">Approximately 50% of individuals with PTSD are reported to have MDD [3] [4]. Furthermore, comorbidity suggests an increased illness burden with a severe course of impairments and delay in treatment response. It is thought that depression may increase the risk of developing PTSD following a traumatic experience [15].</p>"
+        }
+      }
+    },
+    "percent": 50.0
+  },
+  {
+    "id": "f6690274-6d42-45d5-8a24-c2c5f64930d3",
+    "shortTitle": "Anxiety",
+    "fullTitle": "Anxiety",
+    "icon": "",
+    "content": {
+      "type": "RichTextBlock",
+      "props": {
+        "text": {
+          "type": "Html",
+          "data": "<p class=\"bn-inline-content\"></p><h3 class=\"bn-inline-content\">Anxiety</h3><p class=\"bn-inline-content\">Individuals with PTSD are more likely to have an anxiety disorder, with odds ranging from 2.4 to 7.1 times higher [4]. Anxiety is often triggered by reminders of the traumatic event and can result in pervasive feelings of worry and apprehension [2]. The most prevalent among these anxiety disorders include phobias such as simple, social, and agoraphobia, as well as generalized anxiety disorder [2] [4]. Research also indicates that individuals with PTSD may be at a higher risk of developing OCD. Experiences of trauma and violation may lead to heightened sensitivity to perceived mental contamination and a feeling of 'dirtiness’ that may contribute to the development or exacerbation of OCD symptoms [16].</p>"
+        }
+      }
+    },
+    "percent": 0.0
+  },
+  {
+    "id": "a176d0f0-7695-45e3-9aac-f3add61d762f",
+    "shortTitle": "Self-harm",
+    "fullTitle": "Self-harm",
+    "icon": "",
+    "content": {
+      "type": "RichTextBlock",
+      "props": {
+        "text": {
+          "type": "Html",
+          "data": "<p class=\"bn-inline-content\"></p><h3 class=\"bn-inline-content\">Self-harm</h3><p class=\"bn-inline-content\">Symptoms of PTSD have been identified as predictors of deliberate self-harm (DSH) [5]. Depression in patients with PTSD often co-exists with suicidal ideation [2]. Patients with substance use disorders (SUD) are of special interest, often showing elevated rates of suicide attempts and DSH [5].</p>"
+        }
+      }
+    },
+    "percent": 19.0
+  }
+]

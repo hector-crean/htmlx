@@ -1,0 +1,17 @@
+[package]
+name = "open_ai"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+reqwest = { version = "0.12.4", features = ["json"] }
+tokio = { version = "1", features = ["full"] }
+serde = { workspace = true  }
+serde_json = { workspace = true }
+walkdir = "2.5.0"
+color-eyre = { workspace = true }
+open_ai_client = { path = "../open_ai_client"}
+dotenv = "0.15.0"
+secrecy = "0.8.0"
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }

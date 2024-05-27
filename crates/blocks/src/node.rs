@@ -12,6 +12,12 @@ use strum::AsRefStr;
 
 use crate::node_map::{self, to_sentence_case};
 
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, specta::Type, PartialEq)]
+pub struct RouteTemplate {
+    pub path: String,
+    pub template: String,
+}
+
 #[derive(AsRefStr, Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 pub enum FileExtension {
     #[strum(serialize = "html")]
@@ -98,17 +104,23 @@ impl<R: Render> Node<R> {
         }
     }
 
-    pub fn generate_routes_json(&self) -> Result<String, serde_json::Error> {
-        let mut routes = vec![];
+    pub fn generate_routes(&self) -> Vec<RouteTemplate> {
+        let mut routes = Vec::<RouteTemplate>::new();
 
         for (path, node) in self.iter() {
             if let NodeType::File { extension, .. } = &node.node_type {
                 let template = format!("/{}.{}", path, extension.as_ref());
                 let path = format!("/{}", path);
 
-                routes.push(json!({ "path": path, "template": template }));
+                routes.push(RouteTemplate { path, template });
             }
         }
+
+        routes
+    }
+
+    pub fn generate_routes_json(&self) -> Result<String, serde_json::Error> {
+        let routes = self.generate_routes();
 
         serde_json::to_string_pretty(&routes)
     }
@@ -145,7 +157,7 @@ impl<R: Render> Node<R> {
                         String::from(&path),
                         node_map::GraphNode {
                             color: String::from("#260038"),
-                            position: node_map::Position { x, z },
+                            position: node_map::XYPosition { x, z },
                             node_type: node_map::GraphNodeType::Secondary,
                             category: None,
                             connections: HashMap::new(),
@@ -160,7 +172,7 @@ impl<R: Render> Node<R> {
                         String::from(&path),
                         node_map::GraphNode {
                             color: String::from("#260038"),
-                            position: node_map::Position { x: -48, z: 0 },
+                            position: node_map::XYPosition { x: -48, z: 0 },
                             node_type: node_map::GraphNodeType::Category,
                             category: Some(true),
                             connections: HashMap::new(),
@@ -175,7 +187,7 @@ impl<R: Render> Node<R> {
 
         print!("{:?}", &nodes);
 
-        let data = node_map::Data {
+        let data = node_map::NodeMapData {
             curve: node_map::Curve::new(String::from("#8f51f5")),
             nodes,
             map: node_map::Map {
@@ -195,7 +207,7 @@ impl<R: Render> Node<R> {
             camera: node_map::Camera {
                 reference_width: 1920,
                 reference_height: 980,
-                initial_position: node_map::InitialPosition {
+                initial_position: node_map::InitialXYZPosition {
                     x: -2,
                     y: 85,
                     z: 47,

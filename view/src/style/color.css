@@ -1,0 +1,111 @@
+.highlighter {
+  @apply text-white px-1;
+}
+
+.highlighter[data-id="blue"] {
+  background-color: #005278;
+}
+
+.highlighter[data-id="light-blue"] {
+  background-color: #5998cc;
+}
+.highlighter[data-id="dark-blue"] {
+  background-color: #015078;
+}
+
+.highlighter[data-id="frontosubcortical"] {
+  background-color: #526047;
+}
+.highlighter[data-id="orbitofrontal"] {
+  background-color: #914d44;
+}
+.highlighter[data-id="anterior-cingulated-gyrus"] {
+  background-color: #173657;
+}
+.highlighter[data-id="posterior-cingulate-cortex"] {
+  background-color: #aa3b19;
+}
+
+.highlighter[data-id="bilateral-temporal-cortex"] {
+  background-color: #55526e;
+}
+.highlighter[data-id="parietal-lobe"] {
+  background-color: #cd5250;
+}
+.highlighter[data-id="thalamus"] {
+  background-color: #ff0000;
+}
+.highlighter[data-id="hippocampus"] {
+  @apply text-black px-1;
+  background-color: #fcf803;
+}
+.highlighter[data-id="amygdala"] {
+  background-color: #3283a8;
+}
+.highlighter[data-id="hypothalamus"] {
+  background-color: #fa5900;
+}
+.highlighter[data-id="anterior-cingulate-cortex"] {
+  background-color: #ed0aff;
+}
+.highlighter[data-id="striatum"] {
+  background-color: #00ff00;
+}
+.highlighter[data-id="prefrontal-cortex"] {
+  background-color: #9c548c;
+}
+
+.highlighter[data-id="ventral-frontal-cortex"] {
+  background-color: #000080;
+}
+.highlighter[data-id="frontal-lobe"] {
+  @apply text-black px-1;
+  background-color: #e6c9a7;
+}
+.highlighter[data-id="dlpfc"] {
+  background-color: #2d0080;
+}
+.highlighter[data-id="vlpfc"] {
+  background-color: #005c80;
+}
+.highlighter[data-id="nucleus-accumbens"] {
+  background-color: #bc41b0;
+}
+
+.highlighter[data-id="basal-forebrain"] {
+  @apply text-black px-1;
+  background-color: #ffb442;
+}
+.highlighter[data-id="anterior-caudate"] {
+  background-color: #00ff00;
+}
+.highlighter[data-id="grey-matter"] {
+  @apply text-black px-1;
+  background-color: #999999;
+}
+.highlighter[data-id="lateral-ventricle"] {
+  background-color: #9003fc;
+}
+.highlighter[data-id="occipital-lobe"] {
+  @apply text-black px-1;
+  background-color: #e38585;
+}
+.highlighter[data-id="auditory-cortex"] {
+  background-color: #fa5900;
+}
+.highlighter[data-id="substantia-nigra"] {
+  background-color: #4f3c3c;
+}
+.highlighter[data-id="nucleus-accumbens-area"] {
+  @apply text-black px-1;
+
+  background-color: #d2ff1e;
+}
+
+.highlighter[data-id="left-insula"] {
+  @apply text-black px-1;
+  background-color: #61c6ff;
+}
+.highlighter[data-id="locus-coeruleus"] {
+  background-color: #27648f;
+}

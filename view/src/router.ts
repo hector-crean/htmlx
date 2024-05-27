@@ -1,3 +1,4 @@
+import initClinicalPresentationComorbidities from './init/clinical_presentation/comorbidities';
 import initClinicalPresentationSymptoms from './init/clinical_presentation/symptoms';
 // src/router.ts
 type Route = {
@@ -6,105 +7,115 @@ type Route = {
     init: () => void;
   };
   
+  
   const routes: Route[] = [
     {
-      path: "/PTSD/disease/trauma_types/page",
-      template: "/PTSD/disease/trauma_types/page.html", 
+      path: "/",
+      template: "/nav.html",
+      init: () => {}
+    },
+    {
+      path: "/ptsd/disease/trauma_types/page",
+      template: "/ptsd/disease/trauma_types/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/disease/pathophysiology_of_ptsd/page",
-      template: "/PTSD/disease/pathophysiology_of_ptsd/page.html", 
+      path: "/ptsd/disease/pathophysiology_of_ptsd/page",
+      template: "/ptsd/disease/pathophysiology_of_ptsd/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/specific_populations/civilian_vs_military/page",
-      template: "/PTSD/specific_populations/civilian_vs_military/page.html", 
+      path: "/ptsd/specific_populations/civilian_vs_military/page",
+      template: "/ptsd/specific_populations/civilian_vs_military/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/specific_populations/marginalized_groups/page",
-      template: "/PTSD/specific_populations/marginalized_groups/page.html", 
+      path: "/ptsd/specific_populations/marginalized_groups/page",
+      template: "/ptsd/specific_populations/marginalized_groups/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/clinical_presentation/symptoms/page",
-      template: "/PTSD/clinical_presentation/symptoms/page.html", 
-      init: initClinicalPresentationSymptoms,
+      path: "/ptsd/clinical_presentation/symptoms/page",
+      template: "/ptsd/clinical_presentation/symptoms/page.html", 
+      init: () => {
+        initClinicalPresentationSymptoms.init()
+      },
     },
     {
-      path: "/PTSD/clinical_presentation/comorbidities/page",
-      template: "/PTSD/clinical_presentation/comorbidities/page.html", 
+      path: "/ptsd/clinical_presentation/comorbidities/page",
+      template: "/ptsd/clinical_presentation/comorbidities/page.html", 
+      init: () => {
+        initClinicalPresentationComorbidities.init()
+      },
+    },
+    {
+      path: "/ptsd/disease_burden/personal_burden/page",
+      template: "/ptsd/disease_burden/personal_burden/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/disease_burden/personal_burden/page",
-      template: "/PTSD/disease_burden/personal_burden/page.html", 
+      path: "/ptsd/disease_burden/societal_burden/page",
+      template: "/ptsd/disease_burden/societal_burden/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/disease_burden/societal_burden/page",
-      template: "/PTSD/disease_burden/societal_burden/page.html", 
+      path: "/ptsd/diagnosis/assessment_and_diagnosis/page",
+      template: "/ptsd/diagnosis/assessment_and_diagnosis/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/diagnosis/assessment_and_diagnosis/page",
-      template: "/PTSD/diagnosis/assessment_and_diagnosis/page.html", 
+      path: "/ptsd/diagnosis/stigma/page",
+      template: "/ptsd/diagnosis/stigma/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/diagnosis/stigma/page",
-      template: "/PTSD/diagnosis/stigma/page.html", 
+      path: "/ptsd/diagnosis/interviews_with_clinicians/page",
+      template: "/ptsd/diagnosis/interviews_with_clinicians/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/diagnosis/interviews_with_clinicians/page",
-      template: "/PTSD/diagnosis/interviews_with_clinicians/page.html", 
+      path: "/ptsd/clinical_course/delayed_onset_ptsd/page",
+      template: "/ptsd/clinical_course/delayed_onset_ptsd/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/clinical_course/delayed_onset_ptsd/page",
-      template: "/PTSD/clinical_course/delayed_onset_ptsd/page.html", 
+      path: "/ptsd/clinical_course/chronic_ptsd/page",
+      template: "/ptsd/clinical_course/chronic_ptsd/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/clinical_course/chronic_ptsd/page",
-      template: "/PTSD/clinical_course/chronic_ptsd/page.html", 
+      path: "/ptsd/clinical_course/underdiagnosis/page",
+      template: "/ptsd/clinical_course/underdiagnosis/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/clinical_course/underdiagnosis/page",
-      template: "/PTSD/clinical_course/underdiagnosis/page.html", 
+      path: "/ptsd/treatment/guidelines/page",
+      template: "/ptsd/treatment/guidelines/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/treatment/guidelines/page",
-      template: "/PTSD/treatment/guidelines/page.html", 
+      path: "/ptsd/treatment/unmet_needs_and_barriers/page",
+      template: "/ptsd/treatment/unmet_needs_and_barriers/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/treatment/unmet_needs_and_barriers/page",
-      template: "/PTSD/treatment/unmet_needs_and_barriers/page.html", 
+      path: "/ptsd/treatment/trauma_informed_care/page",
+      template: "/ptsd/treatment/trauma_informed_care/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/treatment/trauma_informed_care/page",
-      template: "/PTSD/treatment/trauma_informed_care/page.html", 
+      path: "/ptsd/recovery/intermediate_recovery/page",
+      template: "/ptsd/recovery/intermediate_recovery/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/recovery/intermediate_recovery/page",
-      template: "/PTSD/recovery/intermediate_recovery/page.html", 
+      path: "/ptsd/recovery/long_term_reconstruction/page",
+      template: "/ptsd/recovery/long_term_reconstruction/page.html", 
       init: () => {},
     },
     {
-      path: "/PTSD/recovery/long_term_reconstruction/page",
-      template: "/PTSD/recovery/long_term_reconstruction/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/PTSD/home",
-      template: "/PTSD/home.html", 
+      path: "/ptsd/home",
+      template: "/ptsd/home.html", 
       init: () => {},
     }
   ]
@@ -125,10 +136,13 @@ type Route = {
     const target = event.target as HTMLAnchorElement;
     const path = target.getAttribute('href');
     history.pushState({}, '', path);
-    loadRoute(path);
-    const route = routes.find(route => route.path === path);
+    loadRoute(path).then(() => {
+      const route = routes.find(route => route.path === path);
+      console.log(route)
 
-    route?.init()
+      route?.init()
+    })
+   
 
 
   };
@@ -139,7 +153,16 @@ type Route = {
       document.querySelectorAll('a').forEach(anchor => {
         anchor.addEventListener('click', handleNavigation);
       });
-      loadRoute(location.pathname);
+
+      loadRoute(location.pathname).then(() => {
+        const route = routes.find(route => route.path === location.pathname);
+        console.log(route)
+  
+        route?.init()
+      })
+
+
+
     });
   };
   

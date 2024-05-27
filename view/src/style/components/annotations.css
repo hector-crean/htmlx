@@ -1,0 +1,30 @@
+
+
+.annotations .annotation circle.handle {
+    stroke-dasharray: 5;
+    stroke: #334d59;
+    fill: rgba(255, 255, 255, 0.2);
+    cursor: move;
+    stroke-opacity: 0.4;
+  }
+  .annotations .annotation path {
+    stroke: #334d59;
+    fill: none;
+  }
+  .annotations .annotation text {
+    fill: #334d59;
+  }
+  .annotations .annotation .annotation-subject {
+    cursor: move;
+  }
+  .annotations .annotation .annotation-note .annotation-note-content .annotation-note-title {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  .annotations .annotation .annotation-note .annotation-note-content .annotation-note-bg {
+    fill: rgba(0, 0, 0, 0);
+  }
+  
+  .annotation-note-content tspan {
+    font-size: small;
+  }

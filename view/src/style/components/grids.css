@@ -1,0 +1,175 @@
+
+  
+.caregiver-burden-grid {
+    display: grid;
+    grid-template-columns: 7fr 3fr 7fr;
+    grid-template-rows:  7fr 3fr 7fr;
+    grid-gap: 8px;
+    align-items: center;
+    margin: 2rem 0;
+    padding: 1rem;
+
+}
+
+.caregiver-burden-grid-item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex:1;
+    height: 100%;
+    /* align-items: flex-start; */
+    justify-content: center;
+    font-size: small;
+
+}
+
+
+.caregiver-burden-grid-item:nth-child(3){
+    flex-direction: row-reverse;
+}
+
+.caregiver-burden-grid-item:nth-child(9){
+    flex-direction: row-reverse;
+}
+
+@media (max-width: 850px) {
+ 
+
+    .caregiver-burden-grid-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex:1;
+        height: 100%;
+        /* align-items: flex-start; */
+        justify-content: center;
+        align-items: center;
+
+        font-size: small;
+    }
+
+    .caregiver-burden-grid-item:nth-child(3){
+        flex-direction: column;
+    }
+    
+    .caregiver-burden-grid-item:nth-child(9){
+        flex-direction: column;
+    }
+    
+
+   
+
+
+}
+
+
+
+
+.caregiver-burden-grid-item[data-position='top']{
+    align-items: flex-end;
+    justify-content: center
+}
+.caregiver-burden-grid-item[data-position='bottom']{
+    align-items: flex-start;
+    justify-content: center;
+}
+.caregiver-burden-grid-item[data-position='top'] p {
+    
+    /* align-self: flex-end; */
+}
+.caregiver-burden-grid-item[data-position='top'] p > span {
+    vertical-align: bottom;
+}
+.caregiver-burden-grid-item[data-position='bottom'] p{
+    align-self: flex-start;
+
+}
+
+.caregiver-burden-grid-item[data-position='top'] .caregiver-burden-grid-item-image-block  {
+    align-items: flex-end;
+}
+.caregiver-burden-grid-item[data-position='bottom'] .caregiver-burden-grid-item-image-block  {
+    align-items: flex-start;
+}
+
+.caregiver-burden-grid-item-image-block {
+    flex:2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+@media (max-width: 850px) {
+    .caregiver-burden-grid-item-image-block {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .caregiver-burden-grid-item-image-block img {
+        order: 2;
+    }
+    
+
+
+}
+
+
+.caregiver-burden-grid-item-text-block {
+    flex: 3;
+}
+.caregiver-burden-grid-item-image-block img {
+    width: 100%;
+    height: 100%;
+    width: 80px;
+    height: 80px;
+    aspect-ratio: 1;
+    /* margin: 6px; */
+}
+
+
+.caregiver-burden-grid-item-header {
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.caregiver-burden-grid-item-header > p {
+    display: block;
+    font-weight: bold;
+
+}
+.caregiver-burden-grid-item > p {
+    height: 100%;
+    padding: 0;
+
+
+}
+
+.caregiver-burden-grid-item > hr[data-type='vertical']{
+    height: 100%;
+    width: 2px;
+    border-left: 2px dashed white;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 0;
+
+}
+
+.caregiver-burden-grid-item > hr[data-type='horizontal']{
+    width: 100%;
+    height: 2px;
+    border-top:  2px dashed white;
+    position: absolute;
+    top: 50%;
+    margin-top: -3px;
+    left: 0;
+    
+}

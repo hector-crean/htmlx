@@ -1,0 +1,27 @@
+.tooltip {
+
+}
+.tooltip > *[data-tooltip-trigger]{
+  cursor: pointer;
+}
+
+.tooltip > *[data-tooltip-content] {
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+  max-height: 0;
+  transition: max-height 0.2s ease-out;
+  overflow: hidden;
+}
+
+.tooltip > *[data-tooltip-trigger]:hover ~ *[data-tooltip-content] {
+  opacity: 1;
+  display: block;
+  max-height: 500px;
+  transition: max-height 0.25s ease-in;
+  overflow: visible;
+  font-weight: bold;
+  /* writing-mode: vertical-rl; */
+/* text-orientation: mixed; */
+}
+

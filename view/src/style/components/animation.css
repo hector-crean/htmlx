@@ -1,0 +1,29 @@
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+		filter: contrast(1.5) hue-rotate(0) saturate(1.5);
+		border-radius: 100%;;
+	}
+
+	70% {
+		transform: scale(1.1);
+		filter: contrast(1.7) hue-rotate(10) saturate(1.7);
+		border-radius: 100%;;
+
+	}
+
+	100% {
+		transform: scale(1);
+		filter: contrast(1.5) hue-rotate(0) saturate(1.5);
+		border-radius: 100%;;
+
+	}
+}
+
+
+.animation-pulse {
+	filter: contrast(1.5) hue-rotate(0) saturate(1.5);
+    transform: scale(1);
+	animation: pulse 2s infinite;
+}

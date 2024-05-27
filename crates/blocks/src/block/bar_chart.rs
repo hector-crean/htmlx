@@ -52,12 +52,12 @@ impl maud::Render for BarChartProps {
             div class="panel" {
                 h2 {(self.title)}
                 svg id=(self.title.to_kebab_case()) width="100%" preserveAspectRatio="xMidYMid meet" {}
-                p class="panel" id=(format!("info-{}", self.title.to_kebab_case())) style="margin-bottom: 0; width: 100%;"{
-                    // @for bar in &self.bars {
-                    //     p data-bar-id=(bar.id) {
-                    //         (bar.content)
-                    //     }
-                    // }
+                div class="panel" id=(format!("info-{}", self.title.to_kebab_case())) {
+                    @for bar in &self.bars {
+                        div data-bar-id=(bar.id) {
+                            (bar.content)
+                        }
+                    }
                 }
             }
         )

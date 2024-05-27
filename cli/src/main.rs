@@ -1,9 +1,11 @@
+use blocks::block::nav::NavProps;
 use blocks::node::Routes;
 use clap::{Parser, Subcommand};
 use cli::routes::App;
 use cli::typegen::typegen;
 use cli::PROJECT_ROOT;
 use color_eyre::eyre::{self, Ok};
+use maud::Render;
 use std::fs;
 use std::io::Write;
 
@@ -23,10 +25,14 @@ enum Commands {
     },
     RenderHtml,
     GenerateNodeMap,
+    JsToTs {
+        root_directory_path: String,
+    },
 }
 
 const OTS_CONTENT_DIR: &'static str =
     r#"C:\Users\Hector.C\desktop\projects\OTS110_WebApp\src\content"#;
+const TEST_PUBLIC_DIR: &'static str = r#"C:\Users\Hector.C\rust\htmx\view\public"#;
 
 fn main() -> eyre::Result<()> {
     color_eyre::install()?;
@@ -50,8 +56,9 @@ fn main() -> eyre::Result<()> {
 
             let routes_json = app.root_node.generate_routes_json()?;
             let node_data = app.root_node.node_map()?;
+            let templates = app.root_node.generate_routes();
 
-            let routes = Routes::new(OTS_CONTENT_DIR, app.root_node);
+            let routes = Routes::new(TEST_PUBLIC_DIR, app.root_node);
 
             routes.build()?;
 
@@ -62,6 +69,14 @@ fn main() -> eyre::Result<()> {
             let mut data_file = fs::File::create(format!("{}/ptsd.json", PROJECT_ROOT))?;
 
             data_file.write(node_data.as_bytes())?;
+
+            let nav = NavProps {
+                routes: templates.clone(),
+            };
+
+            let mut nav_file = fs::File::create(format!("{}/nav.html", PROJECT_ROOT))?;
+
+            nav_file.write(nav.render().0.as_bytes())?;
 
             Ok(())
         }
@@ -74,6 +89,12 @@ fn main() -> eyre::Result<()> {
 
             data_file.write(node_map.as_bytes())?;
 
+            Ok(())
+        }
+        Commands::JsToTs {
+            root_directory_path,
+        } => {
+            file_ops::js_to_ts(root_directory_path)?;
             Ok(())
         }
     }

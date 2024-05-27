@@ -7,25 +7,25 @@ use crate::{
 };
 use strum::AsRefStr;
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct Position {
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
+pub struct XYPosition {
     pub x: i32,
     pub z: i32,
 }
 
-impl Position {
+impl XYPosition {
     pub fn new(x: i32, z: i32) -> Self {
-        Position { x, z }
+        XYPosition { x, z }
     }
 }
 
-impl Default for Position {
+impl Default for XYPosition {
     fn default() -> Self {
-        Position { x: 0, z: 0 }
+        XYPosition { x: 0, z: 0 }
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
 pub struct Content {
     pub label: Option<String>,
     pub html: Vec<String>,
@@ -67,10 +67,10 @@ pub enum GraphNodeType {
     Secondary,
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
 pub struct GraphNode {
     pub color: String,
-    pub position: Position,
+    pub position: XYPosition,
     #[serde(rename = "type")]
     pub node_type: GraphNodeType,
     pub category: Option<bool>,
@@ -83,7 +83,7 @@ pub struct GraphNode {
 impl GraphNode {
     pub fn new(
         color: String,
-        position: Position,
+        position: XYPosition,
         node_type: GraphNodeType,
         category: Option<bool>,
         label: String,
@@ -106,7 +106,7 @@ impl Default for GraphNode {
     fn default() -> Self {
         GraphNode {
             color: String::from("#000000"),
-            position: Position::default(),
+            position: XYPosition::default(),
             node_type: GraphNodeType::default(),
             category: None,
             connections: HashMap::new(),
@@ -117,7 +117,7 @@ impl Default for GraphNode {
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
 pub struct Curve {
     pub color: String,
 }
@@ -136,7 +136,7 @@ impl Default for Curve {
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
 pub struct MapSettings {
     pub node_color: String,
     pub selected_node_color: String,
@@ -163,7 +163,7 @@ impl Default for MapSettings {
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
 pub struct PreferredSize {
     pub x: f64,
     pub y: f64,
@@ -181,7 +181,7 @@ impl Default for PreferredSize {
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
 pub struct Size {
     pub min: i32,
     pub preferred: PreferredSize,
@@ -211,7 +211,7 @@ impl Default for Size {
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
 pub struct Map {
     pub settings: MapSettings,
     pub size: Size,
@@ -238,26 +238,26 @@ impl Default for Map {
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct InitialPosition {
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
+pub struct InitialXYZPosition {
     pub x: i32,
     pub y: i32,
     pub z: i32,
 }
 
-impl InitialPosition {
+impl InitialXYZPosition {
     pub fn new(x: i32, y: i32, z: i32) -> Self {
-        InitialPosition { x, y, z }
+        InitialXYZPosition { x, y, z }
     }
 }
 
-impl Default for InitialPosition {
+impl Default for InitialXYZPosition {
     fn default() -> Self {
-        InitialPosition { x: 0, y: 0, z: 0 }
+        InitialXYZPosition { x: 0, y: 0, z: 0 }
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
 pub struct InitialTarget {
     pub x: i32,
     pub y: i32,
@@ -276,11 +276,11 @@ impl Default for InitialTarget {
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
 pub struct Camera {
     pub reference_width: i32,
     pub reference_height: i32,
-    pub initial_position: InitialPosition,
+    pub initial_position: InitialXYZPosition,
     pub initial_target: InitialTarget,
 }
 
@@ -288,7 +288,7 @@ impl Camera {
     pub fn new(
         reference_width: i32,
         reference_height: i32,
-        initial_position: InitialPosition,
+        initial_position: InitialXYZPosition,
         initial_target: InitialTarget,
     ) -> Self {
         Camera {
@@ -305,23 +305,23 @@ impl Default for Camera {
         Camera {
             reference_width: 1920,
             reference_height: 1080,
-            initial_position: InitialPosition::default(),
+            initial_position: InitialXYZPosition::default(),
             initial_target: InitialTarget::default(),
         }
     }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct Data {
+#[derive(Debug, serde::Serialize, serde::Deserialize, specta::Type)]
+pub struct NodeMapData {
     pub curve: Curve,
     pub nodes: HashMap<String, GraphNode>,
     pub map: Map,
     pub camera: Camera,
 }
 
-impl Data {
+impl NodeMapData {
     pub fn new(curve: Curve, nodes: HashMap<String, GraphNode>, map: Map, camera: Camera) -> Self {
-        Data {
+        NodeMapData {
             curve,
             nodes,
             map,
@@ -330,9 +330,9 @@ impl Data {
     }
 }
 
-impl Default for Data {
+impl Default for NodeMapData {
     fn default() -> Self {
-        Data {
+        NodeMapData {
             curve: Curve::default(),
             nodes: HashMap::new(),
             map: Map::default(),

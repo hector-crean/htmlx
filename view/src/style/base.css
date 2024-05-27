@@ -1,0 +1,208 @@
+html,
+body,
+#app {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.TODO {
+  color: red;
+  background-color: grey;
+  display: none;
+  /* display:none; */
+}
+
+html {
+  font-size: 12px;
+}
+
+@screen sm {
+  html {
+    font-size: 14px;
+  }
+}
+@screen md {
+  html {
+    font-size: 15px;
+  }
+}
+@screen lg {
+  html {
+    font-size: 15px;
+  }
+}
+
+* {
+  /*Chrome, Safari and Opera */
+  /*Firefox*/
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: grey transparent; /* scroll thumb and track */
+}
+*::-webkit-scrollbar {
+  width: 12px; /* width of the entire scrollbar */
+}
+*::-webkit-scrollbar-track {
+  background: rgb(65, 64, 64); /* color of the tracking area */
+}
+*::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: grey; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 2px solid rgb(65, 64, 64); /* creates padding around scroll thumb */
+}
+
+button,
+button:focus,
+video,
+video:focus {
+  outline-style: none !important;
+}
+
+video::-internal-media-controls-download-button {
+  display: none;
+}
+
+video::-webkit-media-controls-enclosure {
+  overflow: hidden;
+}
+
+video::-webkit-media-controls-panel {
+  width: calc(100% + 30px); /* Adjust as needed */
+}
+
+svg {
+  display: inline-block !important;
+}
+
+object[type="application/pdf"] {
+  @apply w-full h-full;
+}
+
+#gui {
+  z-index: 30;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  pointer-events: none;
+}
+
+.list {
+  @apply list-inside pl-2;
+}
+.list li {
+  @apply m-1;
+}
+ul.list,
+ol.list {
+  list-style-position: outside;
+  margin-left: 1rem;
+}
+ul.list {
+  @apply list-disc;
+}
+ul.list.unstyled {
+  list-style-type: none;
+  margin-left: 0.5rem;
+}
+ol.list {
+  @apply list-decimal;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:link {
+  text-decoration: underline !important;
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  hyphens: auto;
+}
+a:visited {
+}
+a:hover {
+  cursor: pointer;
+}
+a:active {
+}
+a:focus {
+}
+
+.draft {
+  border: 4px solid green;
+}
+
+/* 
+@font-face {
+  font-family: "Exo";
+  src: url("../assets/fonts/exo2.woff") format("woff");
+} */
+
+/* exo-regular - latin */
+@font-face {
+  font-family: "Exo";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Exo Regular"), local("Exo-Regular"), url("../assets/fonts/exo-v9-latin-regular.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */ url("../assets/fonts/exo-v9-latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* exo-italic - latin */
+@font-face {
+  font-family: "Exo";
+  font-style: italic;
+  font-weight: 400;
+  src: local("Exo Italic"), local("Exo-Italic"), url("../assets/fonts/exo-v9-latin-italic.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */ url("../assets/fonts/exo-v9-latin-italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* exo-700 - latin */
+@font-face {
+  font-family: "Exo";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Exo Bold"), local("Exo-Bold"), url("../assets/fonts/exo-v9-latin-700.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */ url("../assets/fonts/exo-v9-latin-700.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* exo-900 - latin */
+@font-face {
+  font-family: "Exo";
+  font-style: normal;
+  font-weight: 900;
+  src: local("Exo Black"), local("Exo-Black"), url("../assets/fonts/exo-v9-latin-900.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */ url("../assets/fonts/exo-v9-latin-900.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+body,
+text {
+  font-family: "Exo", sans-serif;
+}
+
+@supports (-webkit-touch-callout: none) {
+  body,
+  text {
+    user-select: none;
+  }
+  .mobile-only {
+    display: unset;
+  }
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+@supports not (-webkit-touch-callout: none) {
+  .mobile-only {
+    display: none !important;
+  }
+  .desktop-only {
+    display: unset;
+  }
+}

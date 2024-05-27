@@ -17,19 +17,21 @@ pub struct TabsProps {
 impl maud::Render for TabsProps {
     fn render(&self) -> maud::Markup {
         html! {
-            div class="toggable-buttons-container tabbed" {
-                @for (index, tab) in self.tabs.iter().enumerate() {
-                    button data-group=(self.id) data-slide=(index) data-toggable-button="true" class="toggable-button" {
-                        (tab.name)
+            div data-full-bleed="true" class="flex flex-col items-center justify-center p-4 rounded-lg " {
+                div class="w-full toggable-buttons-container tabbed" {
+                    @for (index, tab) in self.tabs.iter().enumerate() {
+                        button data-group=(self.id) data-slide=(index) data-toggable-button="true" class="toggable-button" {
+                            (tab.name)
+                        }
                     }
                 }
-            }
 
-            div class="tabbed-top" {
-                @for (index, tab) in self.tabs.iter().enumerate() {
-                    div class="toggable-container" data-group=(self.id) data-slide=(index) {
-                        @for block in &tab.blocks {
-                            (block)
+                div class="w-full tabbed-top" {
+                    @for (index, tab) in self.tabs.iter().enumerate() {
+                        div class="toggable-container" data-group=(self.id) data-slide=(index) {
+                            @for block in &tab.blocks {
+                                (block)
+                            }
                         }
                     }
                 }

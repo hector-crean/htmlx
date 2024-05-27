@@ -1,0 +1,95 @@
+table[id='institutionalization-and-healthcare-costs'] {
+    caption-side: top;
+
+    /* border: none; */
+    border-collapse: collapse;
+    letter-spacing: 1px;
+
+    
+}
+  table[id='institutionalization-and-healthcare-costs'] caption {
+    /* padding: 10px; */
+  }
+
+  table[id='institutionalization-and-healthcare-costs'] tbody,   table[id='institutionalization-and-healthcare-costs'] thead  {
+    font-size: 0.75rem; /* 12px */
+    line-height: 1rem; /* 16px */
+  }
+
+  table[id='institutionalization-and-healthcare-costs'] tr:first-child {
+  }
+
+  table[id='institutionalization-and-healthcare-costs'] tbody th[scope=row][data-external=true] .bubble {
+    border-radius: 20px;
+    background-color: #3182ce;
+    padding: 20px;
+    color: white;
+  }
+  table[id='institutionalization-and-healthcare-costs'] td {
+    padding: 10px;
+    text-align: center;
+    /* border: 0; */
+
+  }
+  table[id='institutionalization-and-healthcare-costs'] th {
+    padding: 10px;
+    /* border: 0; */
+
+  }
+
+  table[id='institutionalization-and-healthcare-costs'] thead th[scope="col"] {
+    @apply p-2  bg-blue-600 text-white;
+
+    /* border: 0; */
+    text-align: center;
+  }
+
+
+table[id='institutionalization-and-healthcare-costs'] tbody tr:hover :not([data-inert='true']) td {
+  background-color: hsla(209, 62%, 50%, 0.74);
+}
+
+table[id='institutionalization-and-healthcare-costs'] td,
+table[id='institutionalization-and-healthcare-costs'] table th {
+  border: 1px white dotted;
+  border-bottom: 0px;
+  border-top: 0px;
+}
+
+
+
+
+
+  table[id='institutionalization-and-healthcare-costs'] tbody th[scope='row']{
+    background-color: transparent;
+    color: #4A5568;
+  }
+
+
+  table[id='institutionalization-and-healthcare-costs'] tbody tr:nth-child(even) {
+    background-color: #1a202c17;
+
+  }
+  table[id='institutionalization-and-healthcare-costs'] tbody tr:nth-child(even) th[scope='row']{
+    background-color: transparent;
+  }
+  table[id='institutionalization-and-healthcare-costs'] tbody tr:nth-child(even) th[scope='row'][data-external="true"]{
+    background-color: transparent;
+  }
+  table[id='institutionalization-and-healthcare-costs'] tbody tr:nth-child(odd) {
+    background-color: transparent;
+  }
+  table[id='institutionalization-and-healthcare-costs'] tbody tr:nth-child(odd) th[scope='row']{
+    background-color: transparent;
+  }
+  table[id='institutionalization-and-healthcare-costs'] tbody tr:nth-child(odd) th[scope='row'][data-external="true"]{
+    background-color: transparent;
+  }
+
+  /* table[id='institutionalization-and-healthcare-costs'] tbody th[scope=row][data-external]:not([data-external="true"]) {
+    background-color: yellow;
+  } */
+  table[id='institutionalization-and-healthcare-costs'] tbody th[scope=row][data-external=true] {
+    /* border: 0; */
+    background-color: transparent;
+  }

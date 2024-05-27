@@ -1,0 +1,9 @@
+[package]
+name = "svg_ops"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+usvg = "0.41.0"
+resvg = "0.41.0"
+svg = "0.17.0"

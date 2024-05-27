@@ -1,0 +1,18 @@
+
+
+.overlaid-images-frame {
+    position: relative;
+    width: 100%;;
+    aspect-ratio: var(--ar);
+    
+}
+
+.overlaid-images-frame img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    aspect-ratio: var(--ar);
+    width:100%;
+    object-fit: contain;
+}

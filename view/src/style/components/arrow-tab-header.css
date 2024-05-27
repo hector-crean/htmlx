@@ -1,0 +1,72 @@
+.arrows-container {
+  display: flex;
+  flex-direction: row;
+  width: calc(100% - 25px);
+  padding: 0;
+  margin: 0;
+  height: 60px;
+}
+
+.arrows-container button {
+  flex: 1;
+  width: calc(100% - 30px);
+  height: 100%;
+  position: relative;
+  background-color: var(--bg-color);
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  font-size: clamp(4px, 12px, 20px);
+  font-weight: 200;
+}
+
+.arrows-container button:after {
+  z-index: 999;
+  content: "";
+  position: absolute;
+  width: 0px;
+  height: 100%;
+  bottom: 0;
+  right: -20px;
+  border-left: 20px solid var(--bg-color);
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+}
+
+
+.arrows-container button:hover {
+  font-weight: 600;
+  color: white;
+}
+.arrows-container button:active {
+  font-weight: 600;
+  color: white;
+}
+
+.arrows-container button[class='active'] {
+  font-weight: 600;
+  color: white;
+}
+
+.arrow-item-title {
+  pointer-events: none;
+vertical-align: middle;
+text-align: center;
+}
+
+
+
+
+
+@keyframes pulse {
+  0% {
+    filter: contrast(100%);
+  }
+
+  70% {
+    filter: contrast(500%);
+  }
+
+  100% {
+    filter: contrast(100%);
+  }
+}

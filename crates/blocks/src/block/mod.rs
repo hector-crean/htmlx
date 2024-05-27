@@ -1,11 +1,17 @@
 pub mod bar_chart;
+pub mod definition;
 pub mod icon;
 pub mod interactive_brain;
 pub mod nav;
 pub mod rich_text;
 pub mod tabs;
 
-use self::{bar_chart::BarChartProps, interactive_brain::InteractiveBrainProps, nav::NavProps};
+use self::{
+    bar_chart::BarChartProps,
+    definition::{DefinitionListProps, DefinitionProps},
+    interactive_brain::InteractiveBrainProps,
+    nav::NavProps,
+};
 use core::fmt;
 use maud::html;
 use rich_text::{RichText, RichTextProps};
@@ -42,6 +48,8 @@ pub enum Block {
     InteractiveBrainBlock(InteractiveBrainProps),
     BarChartBlock(BarChartProps),
     NavBlock(NavProps),
+    DefinitionBlock(DefinitionProps),
+    DefinitionListBlock(DefinitionListProps),
 }
 
 impl maud::Render for Block {
@@ -63,6 +71,12 @@ impl maud::Render for Block {
                 }
                 Block::NavBlock(nav) => {
                     (nav)
+                }
+                Block::DefinitionBlock(def) => {
+                    (def)
+                }
+                Block::DefinitionListBlock(dlist) => {
+                    (dlist)
                 }
             }
         )

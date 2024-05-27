@@ -1,0 +1,21 @@
+.info-box {
+  margin: 2rem 0;
+    text-align: start;
+    border: 4px solid #e9ecf0;
+    display: flex;
+    flex-direction: row;
+}
+
+.info-box > .info-box-bar-header,.info-box-bar-content {
+padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align:center;
+
+  }
+
+  .info-box-bar-header {
+    background-color: #005178;
+    color: white;
+  }

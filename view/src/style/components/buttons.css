@@ -1,0 +1,112 @@
+/* Generic button */
+.button {
+  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded pointer-events-auto;
+}
+
+button[data-stateful="true"]:active > img {
+  background-color: #005178;
+  transition: background-color 1s;
+}
+button[data-stateful="true"]:focus > img {
+  background-color: #005178;
+  transition: background-color 1s;
+
+
+}
+
+.button:hover {
+  @apply bg-blue-700;
+}
+
+/* Timestamp button */
+.timestamp-button {
+  @apply pointer-events-auto cursor-pointer py-2 px-4 uppercase rounded-full text-blue-800 border-white border-2 text-sm shadow relative;
+  background: rgb(209, 231, 245);
+  background: linear-gradient(0deg, rgba(209, 231, 245, 1) 0%, rgba(229, 250, 255, 1) 100%);
+}
+.timestamp-button:hover {
+  background: rgb(190, 223, 245);
+  background: linear-gradient(0deg, rgba(190, 223, 245, 1) 0%, rgba(206, 244, 254, 1) 100%);
+}
+.timestamp-button.dotted-button:before,
+.timestamp-button.dotted-button:after {
+  @apply shadow border-white border-2 bg-gray-200;
+}
+
+/* Suggested node button */
+.suggested-node, .external-link {
+  @apply flex items-center justify-center my-4;
+}
+.suggested-node > button, .external-link > button {
+  @apply pointer-events-auto cursor-pointer py-2 px-8 uppercase rounded-full text-blue-800 border-white border-2 text-sm shadow relative text-xs w-1/2;
+  min-width: 18rem;
+  background: rgb(209, 231, 245);
+  background: linear-gradient(0deg, rgba(209, 231, 245, 1) 0%, rgba(229, 250, 255, 1) 100%);
+}
+.suggested-node > a, .external-link > a {
+  @apply pointer-events-auto cursor-pointer py-2 px-8 uppercase rounded-full text-blue-800 border-white border-2 text-sm shadow relative text-xs w-1/2;
+  min-width: 18rem;
+  background: rgb(209, 231, 245);
+  background: linear-gradient(0deg, rgba(209, 231, 245, 1) 0%, rgba(229, 250, 255, 1) 100%);
+}
+
+.suggested-node > button > p, .external-link > button > p {
+  @apply text-lg font-bold;
+}
+.suggested-node > button > p:after, .external-link > button > p:after {
+  content: "";
+  @apply w-4 h-4 p-2 ml-1 rounded-full bg-center bg-no-repeat;
+  background-image: url("../../assets/icons/arrow-right.svg");
+}
+.suggested-node > button:hover, .external-link > button:hover {
+  background: rgb(190, 223, 245);
+  background: linear-gradient(0deg, rgba(190, 223, 245, 1) 0%, rgba(206, 244, 254, 1) 100%);
+}
+.suggested-node > button.dotted-button:before,
+.suggested-node > button.dotted-button:after, .external-link > button.dotted-button:before,
+.external-link > button.dotted-button:after {
+  @apply shadow border-white border-2 bg-gray-200;
+} 
+
+.external-link {
+  text-decoration: none !important;
+  text-align: center;
+}
+
+.external-link a {
+  text-decoration: none !important;}
+
+.external-link > a > p {
+  @apply text-lg font-bold;
+}
+ .external-link > a > p:after {
+  content: "";
+  @apply w-4 h-4 p-2 ml-1 rounded-full bg-center bg-no-repeat;
+  background-image: url("../../assets/icons/arrow-right.svg");
+}
+.external-link > a:hover {
+  background: rgb(190, 223, 245);
+  background: linear-gradient(0deg, rgba(190, 223, 245, 1) 0%, rgba(206, 244, 254, 1) 100%);
+}
+ .external-link > a.dotted-button:before,
+.external-link > a.dotted-button:after {
+  @apply shadow border-white border-2 bg-gray-200;
+} 
+
+
+
+/* Symptoms buttons */
+button.symptom {
+  @apply w-full justify-start rounded-lg bg-white p-1 text-sm;
+}
+button.symptom.text-with-icon {
+  @apply text-left;
+}
+
+button.symptom:hover {
+  @apply bg-gray-200;
+}
+
+button.symptom.active {
+  @apply bg-blue-200;
+}

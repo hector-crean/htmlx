@@ -1,88 +1,116 @@
-import { InteractiveBrain } from '../../../components/interative-brain/index';
 
-import pathways from '../../../components/interative-brain/brain-pathways.json';
-import regions from '../../../components/interative-brain/brain-regions.json';
+import { InteractiveBrain, Pathways, Regions } from '@/components/interative-brain';
+import pathways from '@/components/interative-brain/brain-pathways.json';
+import regions from '@/components/interative-brain/brain-regions.json';
+import tabs from '@/components/tabs';
 
-const FIGURE_ID = "inbalanced-neurotransmitter-interactive-brain";
-const SELECTOR = `figure[data-id="${FIGURE_ID}"]`;
 
-const init = () => {
+const CONTAINER_IDS = [
+  "arousal-interactive-brain",
+  "intrusion-interactive-brain",
+  "avoidance-interactive-brain",
+  "negative-interactive-brain"
+]
 
-    const figureEl = document
 
-    const svg = figureEl?.querySelector('svg[id="interactive-svg"]');
-  
-    const infoPanel = figureEl.querySelector("figcaption[id=info-panel]");
-  
-    const buttons = figureEl.querySelectorAll("#symptom-btn");
+const initTabbedBrain = (containerId: string, regions: Regions, pathways: Pathways) => {
+  const containerEl = document.querySelector<HTMLElement>(`#${containerId}`);
 
-  // go through all the brain regions, keep only the ones that are featured in this section
-  const featuredRegions: string[] = [];
-  for (let i = 0; i < buttons.length; i++) {
-    const button = buttons[i];
-    const regions = (button.getAttribute("data-regions") || "").split(" ");
-    regions.forEach((region) => {
-      if (!featuredRegions.includes(region)) {
-        featuredRegions.push(region);
-      }
+  if (!containerEl) return;
+
+  const svg = containerEl.querySelector<SVGElement>('svg[id="interactive-svg"]');
+  const descriptionPanel = containerEl.querySelector<HTMLParagraphElement>('p[id="description-panel"]');
+  const overviewPanel = containerEl.querySelector<HTMLParagraphElement>('p[id="overview-panel"]');
+  const buttons = containerEl.querySelectorAll<HTMLButtonElement>('button[data-regions]');
+
+  const definitionEls = containerEl.querySelectorAll('[data-definition-id]');
+
+ 
+
+  const getUniqueAttributes = (attribute: string): string[] => {
+    const uniqueAttributes: string[] = [];
+    buttons.forEach((button) => {
+      const attributes = (button.getAttribute(attribute) || "").split(" ");
+      attributes.forEach((attr) => {
+        if (!uniqueAttributes.includes(attr)) {
+          uniqueAttributes.push(attr);
+        }
+      });
     });
-  }
+    return uniqueAttributes;
+  };
 
-  const featuredPathways: string[] = [];
-  for (let i = 0; i < buttons.length; i++) {
-    const button = buttons[i];
-    const pathways = (button.getAttribute("data-pathways") || "").split(" ");
-    pathways.forEach((pathway) => {
-      if (!featuredPathways.includes(pathway)) {
-        featuredPathways.push(pathway);
-      }
-    });
-  }
+  const featuredRegions = getUniqueAttributes("data-regions");
+  const featuredPathways = getUniqueAttributes("data-pathways");
 
   const selectedRegions = Object.keys(regions)
-    .filter((key) => featuredRegions.some((r) => r === key))
-    .reduce((obj, key) => ({ ...obj, [key]: regions[key] }), {});
+    .filter((key) => featuredRegions.includes(key))
+    .reduce<Regions>((obj, key) => ({ ...obj, [key]: regions[key] }), {});
 
   const selectedPathways = Object.keys(pathways)
-    .filter((key) => featuredPathways.some((r) => r === key))
-    .reduce((obj, key) => ({ ...obj, [key]: pathways[key] }), {});
+    .filter((key) => featuredPathways.includes(key))
+    .reduce<Pathways>((obj, key) => ({ ...obj, [key]: pathways[key] }), {});
 
-  const brain = new InteractiveBrain(svg, { regions: selectedRegions, selectedPathways, interactive: false });
 
-  for (let i = 0; i < buttons.length; i++) {
-    const button = buttons[i];
+  if (!svg) return;
 
-    const descriptionHolder = button.querySelector(".info");
-    descriptionHolder.style.display = "none";
-    const description = descriptionHolder.innerHTML;
+  const brain = new InteractiveBrain(svg, { regions: selectedRegions, pathways: selectedPathways, interactive: false });
 
-    button.addEventListener("click", (e) => {
-      for (const b of buttons) {
-        b.classList.remove("active");
+  
+  definitionEls.forEach(definitionEl => {
+    const defStr = definitionEl.getAttribute('data-definition-id')
+    if(defStr){
+      if(!featuredRegions.includes(defStr) ){
+        definitionEl.classList.add('hidden')
       }
+      definitionEl.addEventListener('click', (e) => {
+          brain.highlightRegions([defStr])
+      })
+
+    }
+    
+  })
+
+  buttons.forEach((button) => {
+    const descriptionContainer = button.querySelector<HTMLElement>('[data-kind="description"]');
+    const overviewContainer = button.querySelector<HTMLElement>('[data-kind="overview"]');
+
+    if (!descriptionContainer || !overviewContainer) return;
+
+    const description = descriptionContainer.innerHTML;
+    descriptionContainer.style.display = "none";
+
+    const overview = overviewContainer.innerHTML;
+    overviewContainer.style.display = "none";
+
+    button.addEventListener("click", () => {
+      buttons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
+      if (descriptionPanel) descriptionPanel.innerHTML = description;
+      if (overviewPanel) overviewPanel.innerHTML = overview;
 
       const regions = button.getAttribute("data-regions");
       if (regions) {
-        brain.highlightRegions(regions.split(" "));
+        const regioArr = regions.split(" ");
+        brain.highlightRegions(regioArr);
       }
 
       const pathways = button.getAttribute("data-pathways");
       if (pathways) {
-        brain.highlightPathways(pathways.split(" "));
+        const pathwayArr = pathways.split(" ")
+        brain.highlightPathways(pathwayArr);
       }
-
-      infoPanel.innerHTML = description;
     });
+  });
+};
+
+
+
+
+  export default {
+    init: () => {
+        tabs.init()
+        CONTAINER_IDS.forEach(id => initTabbedBrain(id, regions, pathways))
+    }
   }
-
-  brain.onRegionHighlightEnd = () => {
-    infoPanel.scrollIntoView({ block: "end", behavior: "smooth" });
-  };
-
-
-
-}
-
-
-export default init;
+  

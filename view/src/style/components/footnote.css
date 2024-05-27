@@ -1,0 +1,85 @@
+a[aria-describedby="footnote-label"] {
+  top: -0.5em;
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  text-underline-offset: 0.05em;
+  text-decoration: none !important;
+  color: red;
+}
+
+/* a[aria-describedby="footnote-label"]::before {
+  content: '['
+}
+a[aria-describedby="footnote-label"]::after {
+  content: ']'
+} */
+
+a[aria-describedby="footnote-label"]::after {
+  /* content: ','; */
+  /* margin-right: 4px; */
+}
+a[aria-describedby="footnote-label"]:last-of-type::after {
+  /* content: ''; */
+}
+
+a[aria-describedby="footnote-label"] {
+  /* content: ','; */
+}
+
+a[aria-describedby="footnote-label"] + a[aria-describedby="footnote-label"] {
+  /* margin-right: 4px; */
+}
+
+a:has(+ a)::after  {
+  /* CSS styles for the selected elements */
+  /* content: ','; */
+
+}
+
+
+
+
+a[aria-describedby="footnote-label"] {
+  /* margin: 0 2px; */
+}
+a[aria-describedby="footnote-label"]::after {
+  /* content: ' (PMID: ' attr(data-pmid) ') '; */
+
+}
+
+
+
+a[aria-describedby="footnote-label"]:visited {
+  text-decoration: none;
+}
+
+a[aria-describedby="footnote-label"]:hover {
+  filter: invert(30%);
+}
+
+a[aria-describedby="footnote-label"]:active {
+  filter: invert(30%);
+}
+
+/* li[aria-describedby="footnote"]:target::before { */
+/* font: 70% sans-serif;
+    content: "►";
+    color: limegreen;
+    margin-right: 0.25em; */
+/* } */
+
+/* li[aria-describedby="footnote"]:target span {
+  filter: invert(30%);
+} */
+
+a[class="footnote-backref"] {
+  display: none;
+}
+
+
+
+/* li[aria-describedby="footnote"] > a[class="footnote-backref"] {
+    display: none;
+  } */

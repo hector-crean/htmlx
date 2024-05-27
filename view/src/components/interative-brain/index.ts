@@ -1,9 +1,14 @@
 import { easeSinInOut } from "d3-ease";
 import { scaleLinear } from "d3-scale";
-import { pointer, select, Selection } from "d3-selection";
+import { pointer, select, Selection, selection } from "d3-selection";
 import { curveNatural, line } from "d3-shape";
 
 import defaultBackground from "./brain-background.jpg";
+
+import selection_interrupt from "../../../node_modules/d3-transition/src/selection/interrupt";
+import selection_transition from "../../../node_modules/d3-transition/src/selection/transition";
+selection.prototype.interrupt = selection_interrupt;
+selection.prototype.transition = selection_transition;
 
 
 
@@ -20,7 +25,6 @@ interface Region {
   centroid?: Point;
   fillColor?: string;
   label?: Label;
-  polygon?: SVGPolygonElement;
 }
 
 interface Pathway {
@@ -30,7 +34,6 @@ interface Pathway {
   width?: number;
   glow?: boolean;
   labels?: Label[];
-  path?: SVGPathElement;
 }
 
 interface Point {
@@ -46,7 +49,10 @@ interface Label {
   offset?: { x: number; y: number };
 }
 
-export class InteractiveBrain {
+type Regions = Record<string, Region>
+type Pathways = Record<string, Pathway>
+
+ class InteractiveBrain {
   private svg: Selection<SVGSVGElement, unknown, HTMLElement, any>;
   private layer0: Selection<SVGGElement, unknown, HTMLElement, any>;
   private pathwaysGroup: Selection<SVGGElement, unknown, HTMLElement, any>;
@@ -55,10 +61,10 @@ export class InteractiveBrain {
   private layer3: Selection<SVGGElement, unknown, HTMLElement, any>;
   private layer4: Selection<SVGGElement, unknown, HTMLElement, any>;
   private lastSelected: string | null = null;
-  private regions: Record<string, Region>;
-  private pathways: Record<string, Pathway>;
+  private regions: Regions;
+  private pathways: Pathways;
 
-  constructor(element: HTMLElement, params: Params) {
+  constructor(element: SVGElement, params: Params) {
     const defaults: Params = {
       regions: {},
       pathways: {},
@@ -88,7 +94,6 @@ export class InteractiveBrain {
 
     this.svg.on("pointerdown", function (event) {
       const [x, y] = pointer(event);
-      // console.log(`{"x":${x}, "y":${y}},`);
     });
 
     this.layer0
@@ -97,7 +102,7 @@ export class InteractiveBrain {
       .attr("y", 0)
       .attr("width", width)
       .attr("height", height)
-      .attr("xlink:href", params.background);
+      .attr("xlink:href", params.background ?? defaultBackground);
 
     this.layer0
       .selectAll("polygon")
@@ -108,16 +113,14 @@ export class InteractiveBrain {
       .attr("data-interactive", true)
       .attr("points", (d) => {
         const region = this.regions[d];
-        region.id = d;
         if (region.points) {
-          region.polygon = this;
           return region.points
             .map((p) => `${scaleX(p.x)},${scaleY(p.y)}`)
             .join(" ");
         }
         return "";
       })
-      .attr("fill", (d) => this.regions[d].fillColor)
+      .attr("fill", (d) => this.regions[d]?.fillColor ?? "")
       .on("pointerdown", (event, d) => {
         if (params.interactive) {
           this.highlightRegions([d]);
@@ -136,7 +139,6 @@ export class InteractiveBrain {
       .attr("d", (d) => {
         const pathway = this.pathways[d];
         pathway.id = d;
-        pathway.path = this;
         const points = pathway.points?.map((p) => [p.x, p.y]);
         return points ? curve(points as [number, number][]) : "";
       })
@@ -215,6 +217,7 @@ export class InteractiveBrain {
     regions.forEach((regionKey) => {
       const region = this.regions[regionKey];
       if (!region) return;
+
 
       const centroid = this.layer1.select("circle");
       if (centroid.empty() || regions.length > 1) {
@@ -300,11 +303,7 @@ export class InteractiveBrain {
           .attr("opacity", 1);
       }
 
-      const polygon = select(region.polygon);
-      if (polygon) {
-        polygon.classed("active", true);
-      }
-
+      
       this.onRegionHighlightStart(region);
     });
   }
@@ -367,11 +366,11 @@ export class InteractiveBrain {
             .attr("stroke", "white")
             .attr("fill", "none");
 
-          const totalLength = path.node().getTotalLength();
+          const totalLength = path?.node()?.getTotalLength();
 
           path
             .attr("stroke-dasharray", `${totalLength} ${totalLength}`)
-            .attr("stroke-dashoffset", totalLength)
+            .attr("stroke-dashoffset", totalLength ?? 0)
             .transition()
             .delay(400)
             .duration(500)
@@ -406,17 +405,23 @@ export class InteractiveBrain {
         });
       }
 
-      const path = select(pathway.path);
-      path.attr("stroke", pathway.color).attr("stroke-width", 0).transition().duration(500).attr("stroke-width", pathway.width);
+      // const path = select(pathway.path);
+      // path.attr("stroke", pathway.color).attr("stroke-width", 0).transition().duration(500).attr("stroke-width", pathway.width);
 
-      if (pathway.glow) {
-        path.style("filter", "url(#glow)");
-      }
+      // if (pathway.glow) {
+      //   path.style("filter", "url(#glow)");
+      // }
 
       this.onRegionHighlightStart(pathway);
     });
   }
 
-  onRegionHighlightStart(region: Region | Pathway) {}
-  onRegionHighlightEnd(region: Region | Pathway) {}
+  onRegionHighlightStart(regionOrPathway: Region | Pathway) {}
+  onRegionHighlightEnd(regionOrPathway: Region | Pathway) {}
 }
+
+
+export type { Label, Pathway, Pathways, Region, Regions };
+
+  export { InteractiveBrain };
+

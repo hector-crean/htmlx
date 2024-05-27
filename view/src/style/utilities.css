@@ -1,0 +1,50 @@
+.text-xxs {
+  font-size: 0.6625rem;
+  /* font-size: 0.575rem; */
+}
+
+.fullscreen {
+  @apply w-screen h-screen;
+}
+
+.w-half {
+  width: 50%;
+}
+
+.overlay {
+  @apply absolute pointer-events-none;
+}
+
+.centered {
+  @apply flex items-center justify-center;
+}
+
+.responsive-xs {
+  @apply mx-auto w-full max-w-xs;
+}
+.responsive-sm {
+  @apply mx-auto w-full max-w-sm;
+}
+.responsive-md {
+  @apply mx-auto w-full max-w-md;
+}
+.responsive-lg {
+  @apply mx-auto w-full max-w-lg;
+}
+.responsive-xl {
+  @apply mx-auto w-full max-w-xl;
+}
+.responsive-2xl {
+  @apply mx-auto w-full max-w-2xl;
+}
+.responsive-3xl {
+  @apply mx-auto w-full max-w-3xl;
+}
+.responsive-4xl {
+  @apply mx-auto w-full max-w-4xl;
+}
+
+
+.h-128 {
+  height: 32rem
+}

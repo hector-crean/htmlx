@@ -1,0 +1,33 @@
+.crosshatch {
+    /* width: 100%;
+    height: 100%; */
+    color: white;
+    background-image: linear-gradient(
+       45deg, 
+       rgba(255, 255, 255, 0.5) 25%, 
+       transparent 25%, 
+       transparent 50%, 
+       rgba(255, 255, 255, 0.5) 50%, 
+       rgba(255, 255, 255, 0.5) 75%, 
+       transparent 75%, 
+       transparent
+       );
+    background-size: 5px 5px;
+ }
+
+ .crosshatch-alt {
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-image: linear-gradient(
+       -45deg, 
+       rgba(255, 255, 255, 0.5) 25%, 
+       transparent 25%, 
+       transparent 50%, 
+       rgba(255, 255, 255, 0.5) 50%, 
+       rgba(255, 255, 255, 0.5) 75%, 
+       transparent 75%, 
+       transparent
+       );
+    background-size: 5px 5px;
+ }

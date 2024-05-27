@@ -1,0 +1,76 @@
+/*
+ * Figure
+ */
+
+figure {
+  @apply rounded overflow-hidden;
+  margin-left: 2em;
+  margin-right: 2em;
+  text-align: center;
+  background-color: transparent;
+  /* background-color: #c0d9e8; */
+padding: 1rem;
+
+}
+figure:not(:first-child) {
+  margin-top: 2em;
+}
+figure:not(:last-child) {
+  margin-bottom: 2em;
+}
+
+figure img {
+  @apply object-contain mx-auto;
+  background-color: #c0d9e8;
+
+
+}
+
+figure img:not([data-borderless='true']) {
+  @apply object-contain mx-auto w-full rounded-md p-2;
+  
+  background-color: #c0d9e8;
+}
+
+
+
+figure > * figcaption, figure > figcaption {
+
+
+
+}
+
+
+
+
+table > caption {
+  /* @apply px-6 py-4;
+  font-style: italic;
+  font-size: small; */
+
+  /* @apply text-lg my-2 font-bold; */
+
+}
+
+/* figure::after {
+  content: "figure " counter(figure)": ";
+
+}
+table::after {
+  content: "table "counter(table)": ";
+} */
+
+
+
+figcaption[data-role='title'], table > caption[data-role='title'] {
+  /* @apply my-2 font-bold text-base; 
+  color: #005077;
+  font-style:italic; */
+
+  @apply text-lg my-2 font-bold;
+
+}
+figcaption[data-role='detail'], table > caption[data-role='detail'] {
+  @apply my-4 text-sm italic;
+ }
+

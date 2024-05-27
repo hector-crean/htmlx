@@ -1,0 +1,8 @@
+.highlighted {
+    background-color: #015078;
+    color: white;
+}
+
+p[class*='highlighted'] {
+    text-align: center;
+}
