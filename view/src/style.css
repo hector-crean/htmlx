@@ -37,3 +37,14 @@
     grid-column: 1 / -1;
   }
 }
+
+
+#example-bar-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  
+}

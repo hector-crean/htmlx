@@ -2,6 +2,7 @@ import barChart from "@/components/charts/horizontal-correlation-chart";
 // import neuroComorbData from "./comorbs-neuro-data.json";
 // import physicalComorbData from "./comorbs-physical-data.json";
 
+import { BarChart, barChartOrd, data as exampleData } from "@/components/charts/generic-chart";
 import medical_comborbidities_bars from './medical_comorbidities_bars.json';
 import psychiatric_comborbidities_bars from './psychiatric_comborbidities_bars.json';
 
@@ -69,6 +70,12 @@ export default {
             },
             icons,
         );
+
+        const chartContainerEl = document.querySelector<HTMLElement>('#example-bar-chart')
+
+        new BarChart(exampleData, chartContainerEl!, barChartOrd);
+
+
 
     },
 };
