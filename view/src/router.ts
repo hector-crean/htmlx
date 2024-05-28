@@ -1,5 +1,7 @@
 import initClinicalPresentationComorbidities from './init/clinical_presentation/comorbidities';
 import initClinicalPresentationSymptoms from './init/clinical_presentation/symptoms';
+import sandboxInit from './init/sandbox';
+
 // src/router.ts
 type Route = {
     path: string;
@@ -13,6 +15,13 @@ type Route = {
       path: "/",
       template: "/nav.html",
       init: () => {}
+    },
+    {
+      path: "/sandbox",
+      template: "/sandbox/page.html",
+      init: () => {
+        sandboxInit.init()
+      }
     },
     {
       path: "/ptsd/disease/trauma_types/page",

@@ -9,13 +9,46 @@ import { Ord } from './ord';
 import pattern, { PatternFunction } from './textures';
 import { ChartSize, Margin } from './types';
 
+const blues = [
+               
+    "#7ea8cb",
+    "#8EC1D3",
+    "#9FD6DB",
+    "#AFE2DD",
+    "#C0E9DD",
+    "#D2F0E2",
+    "#E4F6EA"
+    ]
+
+
+const colors = [
+    "#FF5733", // Bright Red
+    "#FF8D33", // Orange
+    "#FFC733", // Yellow
+    "#E5FF33", // Lime
+    "#8DFF33", // Light Green
+    "#33FF57", // Green
+    "#33FF8D", // Mint
+    "#33FFC7", // Aqua
+    "#33E5FF", // Light Blue
+    "#338DFF", // Blue
+    "#5733FF", // Indigo
+    "#8D33FF", // Purple
+    "#C733FF", // Violet
+    "#FF33E5", // Pink
+    "#FF338D"  // Magenta
+  ];
+
+  
+
 /**
  * https://riccardoscalco.it/textures/
  */
 
 type StackedBarChartData = {
-    group: string
-} & {[key: string]: number}
+    group: string;
+    values: {[key: string]: number};
+};
 
 class StackedBarChart<T extends StackedBarChartData> {
     private container: HTMLElement;
@@ -47,59 +80,30 @@ class StackedBarChart<T extends StackedBarChartData> {
         this.size = this.calculateSize(container, margin);
 
         const groups = data.map(d => d.group)
-        const subgroups = Object.keys(data[0]).filter(x => x !== 'group')
+        const subgroups = Object.keys(data[0].values)
 
         this.scaleY = scaleBand()
             .domain(groups)
             .padding(0.1)
             .range([0, this.size.innerHeight]);
 
-            const xs = data.flatMap(datum => Object.values(datum).filter( x => typeof x === 'number').map(Number).reduce((sum, x) => sum + x, 0))
+        const xs = data.flatMap(datum => Object.values(datum.values).reduce((sum, x) => sum + x, 0))
 
         this.scaleX = scaleLinear()
             .domain([0, Math.max(...xs)])
             .nice()
             .range([0, this.size.innerWidth]);
 
-            const blues = [
-               
-                "#7ea8cb",
-                "#8EC1D3",
-                "#9FD6DB",
-                "#AFE2DD",
-                "#C0E9DD",
-                "#D2F0E2",
-                "#E4F6EA"
-                ]
-
-
-            const colors = [
-                "#FF5733", // Bright Red
-                "#FF8D33", // Orange
-                "#FFC733", // Yellow
-                "#E5FF33", // Lime
-                "#8DFF33", // Light Green
-                "#33FF57", // Green
-                "#33FF8D", // Mint
-                "#33FFC7", // Aqua
-                "#33E5FF", // Light Blue
-                "#338DFF", // Blue
-                "#5733FF", // Indigo
-                "#8D33FF", // Purple
-                "#C733FF", // Violet
-                "#FF33E5", // Pink
-                "#FF338D"  // Magenta
-              ];
-
+        
        
-            const colorScale = scaleOrdinal()
+        const colorScale = scaleOrdinal()
             .domain(subgroups)
             .range(blues);
 
-            this.colorScale = colorScale
+        this.colorScale = colorScale
         
 
-        const stackedData = stack().keys(subgroups)(sortedData)
+        const stackedData = stack().keys(subgroups)(sortedData.map(data => ({...data.values, group: data.group})))
         this.stackedData = stackedData
 
         const pattern1 = pattern.lines()
@@ -173,7 +177,6 @@ class StackedBarChart<T extends StackedBarChartData> {
             .attr('class', 'y-axis')
             .call(axisLeft(this.scaleY).ticks(10, 's'));
 
-            console.log(this.stackedData)
 
         g.selectAll('.bar')
 
@@ -181,8 +184,10 @@ class StackedBarChart<T extends StackedBarChartData> {
             .join("g")
             .attr("fill", d => {
                 switch(d.key){
-                    case 'A':
+                    case 'baseline':
                         return this.colorScale(d.key)
+                    case 'uncertainty':
+                        return this.pattern.url()
                     default:
                         return this.pattern.url()
                 }
@@ -250,19 +255,36 @@ class StackedBarChart<T extends StackedBarChartData> {
 
 }
 
-const data: BarChartData[] = [
-    { label: 'A', value: 30 },
-    { label: 'B', value: 80 },
-    { label: 'C', value: 45 },
-    { label: 'D', value: 60 },
-    { label: 'E', value: 20 },
-    { label: 'F', value: 90 },
-    { label: 'G', value: 55 },
-];
-const barChartOrd: Ord<BarChartData> = {
+const stackedData: Array<StackedBarChartData> = [
+    {
+        group: 'Self-harm',
+        values: {
+            baseline: 60,
+            uncertainty: 10,
+        }
+        
+    },
+    {
+        group: 'Anxiety',
+        values: {
+            baseline: 40,
+            uncertainty: 4,
+        }
+        
+    },
+    {
+        group: 'Major Depressive Disorder',
+        values: {
+            baseline: 38,
+            uncertainty: 7,
+        }
+      
+    }
+]
+const barChartOrd: Ord<StackedBarChartData> = {
     equals: (x, y) => x === y,
-    compare: (first, second) => first.value > second.value ? 1 : first.value < second.value ? -1 : 0
+    compare: (first, second) => first.values > second.values ? 1 : first.values < second.values ? -1 : 0
 }
 
-export { StackedBarChart, barChartOrd, data };
+export { StackedBarChart, barChartOrd, stackedData };
 
