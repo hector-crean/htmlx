@@ -1,23 +1,14 @@
 import { max } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
-import { scaleBand, scaleLinear } from 'd3-scale';
-import { select } from 'd3-selection';
-import { fromEvent, Observable } from 'rxjs';
+import { ScaleBand, ScaleLinear, scaleBand, scaleLinear } from 'd3-scale';
+import { Selection, select } from 'd3-selection';
+import { Observable, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { Ord } from './ord';
+import { ChartSize, Margin } from './types';
 
 
 
-
-
-
-type Margin = {
-    top: number; bottom: number; left: number; right: number
-}
-
-interface ChartSize {
-    innerWidth: number, innerHeight: number, outerWidth: number, outerHeight: number
-}
 
 interface BarChartData {
     label: string;
@@ -28,9 +19,9 @@ class BarChart<T extends BarChartData> {
     private container: HTMLElement;
     private margin: Margin;
     private data: BarChartData[];
-    private svg: d3.Selection<SVGSVGElement, unknown, null, any>;
-    private scaleX: d3.ScaleBand<string>;
-    private scaleY: d3.ScaleLinear<number, number, never>
+    private svg: Selection<SVGSVGElement, unknown, null, any>;
+    private scaleY: ScaleBand<string>;
+    private scaleX: ScaleLinear<number, number, never>
     private size: ChartSize
     private resizeObservable$: Observable<Event>;
 
@@ -42,15 +33,15 @@ class BarChart<T extends BarChartData> {
 
         this.size = this.calculateSize(container, margin);
 
-        this.scaleX = scaleBand()
+        this.scaleY = scaleBand()
             .domain(this.data.map(d => d.label))
             .padding(0.1)
-            .range([0, this.size.innerWidth]);
+            .range([0, this.size.innerHeight]);
 
-        this.scaleY = scaleLinear()
+        this.scaleX = scaleLinear()
             .domain([0, max(this.data, d => d.value)!])
             .nice()
-            .range([this.size.innerHeight, 0]);
+            .range([0, this.size.innerWidth]);
 
         this.svg = select(container)
             .append('svg')
@@ -84,13 +75,18 @@ class BarChart<T extends BarChartData> {
             .call(axisLeft(this.scaleY).ticks(10, 's'));
 
         g.selectAll('.bar')
+
             .data(this.data)
-            .enter().append('rect')
+            .enter()
+            .append('rect')
             .attr('class', 'bar')
-            .attr('x', d => this.scaleX(d.label)!)
-            .attr('y', d => this.scaleY(d.value))
-            .attr('width', this.scaleX.bandwidth())
-            .attr('height', d => this.size.innerHeight - this.scaleY(d.value));
+            .attr('x', d => 0)
+            .attr('y', d => this.scaleY(d.label)!)
+            .attr('height', this.scaleY.bandwidth()) 
+            .transition()
+            .duration(800)
+            .attr('width', d => this.scaleX(d.value))
+           
     }
 
     private onResize(): void {
