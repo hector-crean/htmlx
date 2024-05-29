@@ -1,14 +1,20 @@
-import { StackedBarChart, barChartOrd, stackedData } from "@/components/charts/stacked-bar-chart";
 
-
+import { penguinDotPlot, penguinRadarPlot, penguinStackPlot } from "@/components/plot/stack";
 
 const page = {
     init: () => {
         const sandboxContainer = document.querySelector<HTMLElement>('#sandbox-container')!;
        
-        const stackedContainer = sandboxContainer.querySelector<HTMLElement>('#stacked-bar-chart-1')!;
+        sandboxContainer.append(penguinStackPlot)
+        sandboxContainer.append(penguinDotPlot)
+        sandboxContainer.append(penguinRadarPlot)
+        // const stackedContainer = sandboxContainer.querySelector<HTMLElement>('#stacked-bar-chart-1')!;
+        // new StackedBarChart(stackedData, stackedContainer, barChartOrd)
 
-        new StackedBarChart(stackedData, stackedContainer, barChartOrd)
+
+       
+          
+
     },
 };
 

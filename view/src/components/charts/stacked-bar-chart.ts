@@ -1,13 +1,20 @@
 import { axisBottom, axisLeft } from 'd3-axis';
 import { } from 'd3-color';
+import { format } from 'd3-format';
 import { ScaleBand, ScaleLinear, ScaleOrdinal, scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale';
-import { Selection, select, selectAll } from 'd3-selection';
+import { Selection, select } from 'd3-selection';
 import { Series, stack } from 'd3-shape';
 import { Observable, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { Ord } from './ord';
-import pattern, { PatternFunction } from './textures';
+import pattern from './textures';
 import { ChartSize, Margin } from './types';
+function toKebabCase(str: string): string {
+    return str
+      .replace(/([a-z])([A-Z])/g, '$1-$2') // Add hyphen between lowercase and uppercase characters
+      .replace(/[\s_]+/g, '-')              // Replace spaces and underscores with hyphens
+      .toLowerCase();                       // Convert the entire string to lowercase
+  }
 
 const blues = [
                
@@ -45,15 +52,15 @@ const colors = [
  * https://riccardoscalco.it/textures/
  */
 
-type StackedBarChartData = {
+type StackedBarChartData<Datum extends Record<string,number> = Record<string,number>> = {
     group: string;
-    values: {[key: string]: number};
+    values: Datum
 };
 
-class StackedBarChart<T extends StackedBarChartData> {
+class StackedBarChart<Datum extends Record<string,number>, T extends StackedBarChartData<Datum>> {
     private container: HTMLElement;
     private margin: Margin;
-    private data: StackedBarChartData[];
+    private data: StackedBarChartData<Datum>[];
     private stackedData: Series<{
         [key: string]: number;
     }, string>[]
@@ -63,8 +70,6 @@ class StackedBarChart<T extends StackedBarChartData> {
     private colorScale: ScaleOrdinal<string, unknown, never>
     private size: ChartSize
     private resizeObservable$: Observable<Event>;
-    private mask: Selection<SVGMaskElement, unknown, null, any>
-    private pattern: PatternFunction
 
 
     constructor(data: T[], container: HTMLElement, ord: Ord<T>, margin: Margin = { top: 20, right: 30, bottom: 40, left: 200 }) {
@@ -80,7 +85,8 @@ class StackedBarChart<T extends StackedBarChartData> {
         this.size = this.calculateSize(container, margin);
 
         const groups = data.map(d => d.group)
-        const subgroups = Object.keys(data[0].values)
+        console.log(this.data[0])
+        const subgroups = Object.keys(this.data[0].values)
 
         this.scaleY = scaleBand()
             .domain(groups)
@@ -90,7 +96,8 @@ class StackedBarChart<T extends StackedBarChartData> {
         const xs = data.flatMap(datum => Object.values(datum.values).reduce((sum, x) => sum + x, 0))
 
         this.scaleX = scaleLinear()
-            .domain([0, Math.max(...xs)])
+            // .domain([0, Math.max(...xs)])
+            .domain([0, 100])
             .nice()
             .range([0, this.size.innerWidth]);
 
@@ -103,52 +110,23 @@ class StackedBarChart<T extends StackedBarChartData> {
         this.colorScale = colorScale
         
 
-        const stackedData = stack().keys(subgroups)(sortedData.map(data => ({...data.values, group: data.group})))
+        const ds = this.data.map(data => ({...data.values, group: data.group}))
+        const stackedData = stack().keys(subgroups)(ds)
         this.stackedData = stackedData
 
-        const pattern1 = pattern.lines()
-        .size(8)
-        .strokeWidth(2);
-
-
-
-        
-
+      
         const svg = select(container)
             .append('svg')
 
-        svg.call(pattern1)
-           
-
+         
+        
         svg.attr('width', '100%')
             .attr('height', '100%')
-            .attr('viewport', `"${0} ${0} ${this.size.innerWidth} ${this.size.innerHeight}"`);
-
-
-        const mask = svg.append("defs")
-        .append("mask")
-        .attr("id", "myMask");
-
-        console.log('mask', mask)
-
-        mask.append("rect")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", 800)
-        .attr("height", 500)
-        .style("fill", "white")
-        .style("opacity", 0.7);
-        
-      mask.append("circle")
-        .attr("cx", 400)
-        .attr("cy", 400)
-        .attr("r", 250);
+            .attr('viewport', `${0} ${0} ${this.size.innerWidth} ${this.size.innerHeight}`).attr('data-interactive', true)
 
 
 
         this.svg = svg
-        this.pattern = pattern1
-        this.mask = mask;
 
             
 
@@ -162,67 +140,133 @@ class StackedBarChart<T extends StackedBarChartData> {
     }
 
     private draw(): void {
-        this.svg.selectAll('.viz')
-        .remove();
 
-        const g = this.svg.append('g').attr('transform', `translate(${this.margin.left},${this.margin.top})`)
-        g.classed('viz');
+        this.svg.selectAll('*').remove();
 
-        g.append('g')
-            .attr('class', 'x-axis')
+        const defs = this.svg.append("defs");
+
+
+        const flowFilter = defs.append('filter').attr("id","glow");
+        flowFilter.append("feGaussianBlur")
+            .attr("stdDeviation","3.5")
+            .attr("result","coloredBlur");
+        const feMerge = flowFilter.append("feMerge");
+        feMerge.append("feMergeNode")
+            .attr("in","coloredBlur");
+        feMerge.append("feMergeNode")
+            .attr("in","SourceGraphic");
+
+        const pattern1 = pattern.lines()
+        .size(8)
+        .strokeWidth(2).stroke("#7ea8cb");
+        
+        this.svg.call(pattern1)
+
+        const vizLayer = this.svg.append('g').attr('transform', `translate(${this.margin.left},${this.margin.top})`)
+        vizLayer.classed('viz');
+
+       
+        const graphLayer = vizLayer.append("g")
+        graphLayer.classed("graphLayer", true);
+
+        const bgRect = graphLayer.append('rect')
+        bgRect
+        .attr('data-interactive', true)
+        .attr('width', this.size.innerWidth)
+        .attr('height', this.size.innerHeight)
+        .attr('fill', 'transparent')
+     
+
+        // Bind data to masks and append mask elements with unique IDs
+        
+        // const masks = defs.selectAll('mask').data(this.stackedData.flat())
+        // .join(
+        //     enter => enter
+        //     .append('mask')
+        //         .attr('id', (d, i) => toKebabCase(`mask-${d.data.group}`))
+        //     .append('g')
+        //         .attr('transform', `translate(${this.margin.left},${this.margin.top})`)
+        //     .append('rect')
+        //         .attr("x", (d,i) => this.scaleX(d[0]))
+        //         .attr("y", (d,i) => this.scaleY(d.data.group)!)
+        //         .attr("height", d => this.scaleY.bandwidth())
+        //         .attr("width", d => this.scaleX(d[1]) - this.scaleX(d[0]))
+        //         .attr("fill", "white"),
+        //     update =>  update,
+        //     exit => exit.remove()
+        // );
+
+
+
+
+      
+       
+       
+
+        const xAxisContainer = vizLayer.append('g')
+        const xAxis = axisBottom(this.scaleX).tickFormat(n => format(".0%")(n.valueOf()/100))
+        xAxisContainer.attr('class', 'x-axis')
             .attr('transform', `translate(0,${this.size.innerHeight})`)
-            .call(axisBottom(this.scaleX));
+            .call(xAxis);
 
-        g.append('g')
-            .attr('class', 'y-axis')
-            .call(axisLeft(this.scaleY).ticks(10, 's'));
+        
+        const yAxis = axisLeft(this.scaleY).ticks(10, 's')
+        const yAxisContainer = vizLayer.append('g')
+        yAxisContainer.attr('class', 'y-axis')
+            .call(yAxis);
+
+         
 
 
-        g.selectAll('.bar')
+        const stacks = graphLayer
+        .selectAll("g")
+        .data(this.stackedData)
+        .join("g")
+        .attr("fill",  (d) => {
+            switch(d.key){
+                case 'baseline':
+                    return this.colorScale(d.key)
+                case 'uncertainty':
+                    return pattern1.url()
+                default:
+                    return pattern1.url()
+            }
+        })
+        
+        const bars =  stacks.selectAll("rect")
+        .data(D => D)
+        .join('rect')
+        .attr('data-interactive', true)
+        .attr("x", d => this.scaleX(d[0]))
+        .attr("y", d => this.scaleY(d.data.group)!)
+        .attr("height", d => this.scaleY.bandwidth())
+        .attr("mask", d => `url(#${toKebabCase(`mask-${d.data.group}`)})`)
+        .attr('width', d => this.scaleX(d[1]) - this.scaleX(d[0]))
 
-            .data(this.stackedData)
-            .join("g")
-            .attr("fill", d => {
-                switch(d.key){
-                    case 'baseline':
-                        return this.colorScale(d.key)
-                    case 'uncertainty':
-                        return this.pattern.url()
-                    default:
-                        return this.pattern.url()
-                }
-            })
-            .attr("class", d => `myRect ${d.key}` ) // Add a class to each subgroup: their name
-            .selectAll("rect")
-            // enter a second time = loop subgroup per subgroup to add all rectangles
-            .data(d => d)
-            .join("rect")
-            .on('pointerdown', (e,d) => console.log(e))
-              .attr("x", d => this.scaleX(d[0]))
-              .attr("y", d => this.scaleY(d.data.group)!)
-              .attr("height", d => this.scaleY.bandwidth())
-              .attr("width", d => this.scaleX(d[1]) - this.scaleX(d[0]))
-              .attr("stroke", "grey")
-              .attr("mask", "url(#myMask)")
-              .on("mouseover", (event, d) => { // What happens when user hover a bar
       
-                console.log(event, d)
-                // what subgroup are we hovering?
-                const subGroupName = select(this.parentNode).datum().key
-      
-                // Reduce opacity of all rect to 0.2
-                 selectAll(".myRect").style("opacity", 0.2)
-      
-                // Highlight all rects of this subgroup with opacity 1. It is possible to select them since they have a specific class = their name.
-                 selectAll(`.${subGroupName}`).style("opacity",1)
-              })
-              .on("mouseleave", function (event,d) { // When user do not hover anymore
-      
-                // Back to normal opacity: 1
-                selectAll(".myRect")
-                .style("opacity",1)
-            })
-           
+               
+                
+        bars.on("pointerover", function (event, d) {
+            select(this).style("cursor", "pointer");
+        })
+        .on("pointerdown", function (event, d)  {
+            bars.attr('filter', null)
+            select(this).attr('filter', "url(#glow)");
+
+        });
+
+        bgRect .on("pointerdown", function (event, d)  {
+            bars.attr('filter', null)
+
+        });
+                
+              
+
+            
+         
+            
+             
+              
     }
 
     private onResize(): void {

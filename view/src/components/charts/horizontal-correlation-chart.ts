@@ -62,17 +62,17 @@ export default {
             barColor: "#4682b4",
         };
 
-        style = { ...defaultStyle, ...style };
+        const mergedStyle: Required<Style> = { ...defaultStyle, ...style };
 
-        const width = style.barWidth + style.textWidth;
+        const width = mergedStyle.barWidth + mergedStyle.textWidth;
         const height =
-            (style.barHeight + style.barPadding * 2) * data.length + style.axisSize;
+            (mergedStyle.barHeight + mergedStyle.barPadding * 2) * data.length + mergedStyle.axisSize;
 
         const y = scaleBand<string>()
-            .range([height - style.axisSize, 0])
-            .padding(style.barPadding);
+            .range([height - mergedStyle.axisSize, 0])
+            .padding(mergedStyle.barPadding);
 
-        const x = scaleLinear().range([10, style.barWidth]);
+        const x = scaleLinear().range([10, mergedStyle.barWidth]);
 
         const tooltip = select<HTMLDivElement, unknown>(tooltipId);
         tooltip.html(toolTipDefaultHTML);
@@ -99,10 +99,10 @@ export default {
             .append("path")
             .attr("data-interactive", true)
             .attr("class", "bar")
-            .style("fill", style.barColor)
+            .style("fill", mergedStyle.barColor)
             .attr("d", (d) =>
                 RightRoundedRect(
-                    style.textWidth,
+                    mergedStyle.textWidth,
                     y(d.shortTitle)!,
                     x(0),
                     y.bandwidth(),
@@ -113,7 +113,7 @@ export default {
             .duration(1500)
             .attr("d", (d) =>
                 RightRoundedRect(
-                    style.textWidth,
+                    mergedStyle.textWidth,
                     y(d.shortTitle)!,
                     x(d.percent),
                     y.bandwidth(),
@@ -129,9 +129,9 @@ export default {
             .attr("data-interactive", true)
             .attr("d", (d) =>
                 RightRoundedRect(
-                    style.textWidth,
+                    mergedStyle.textWidth,
                     y(d.shortTitle)!,
-                    style.barWidth,
+                    mergedStyle.barWidth,
                     y.bandwidth(),
                     15,
                 ),
@@ -147,9 +147,9 @@ export default {
             .attr("data-interactive", true)
             .attr("id", (d, i) => `touchBG${stringToSlug(d.shortTitle)}`)
             .attr("class", "bar")
-            .style("fill", style.barColor)
+            .style("fill", mergedStyle.barColor)
             .attr("opacity", 0.1)
-            .attr("width", style.textWidth)
+            .attr("width", mergedStyle.textWidth)
             .attr("x", 0)
             .attr("y", (d) => y(d.shortTitle)!)
             .attr("height", y.bandwidth());
@@ -162,10 +162,10 @@ export default {
                 .append("image")
                 .attr("data-interactive", true)
                 .attr("xlink:href", (d) => icons(`./${d.icon}`))
-                .attr("width", style.iconSize)
-                .attr("height", style.iconSize)
-                .attr("x", -style.iconSize / 2)
-                .attr("y", (d) => y(d.shortTitle)! - style.barPadding * 2)
+                .attr("width", mergedStyle.iconSize)
+                .attr("height", mergedStyle.iconSize)
+                .attr("x", -mergedStyle.iconSize / 2)
+                .attr("y", (d) => y(d.shortTitle)! - mergedStyle.barPadding * 2)
                 .style("fill", "#FFF").style('pointer', 'cursor');
         }
 
@@ -177,7 +177,7 @@ export default {
             .attr("data-interactive", true)
             .attr("class", "bar")
             .attr("opacity", 0)
-            .attr("width", style.textWidth + style.barWidth)
+            .attr("width", mergedStyle.textWidth + mergedStyle.barWidth)
             .attr("x", 0)
             .attr("y", (d) => y(d.shortTitle)! - 7)
             .attr("height", y.bandwidth() + 8)
@@ -200,17 +200,17 @@ export default {
                     .html(text.selected ? text.selected(d) : "selected");
             });
 
-        const axisHeight = height - style.axisSize;
+        const axisHeight = height - mergedStyle.axisSize;
 
         graphLayer
             .append("g")
-            .attr("transform", `translate(${style.textWidth}, ${axisHeight})`)
+            .attr("transform", `translate(${mergedStyle.textWidth}, ${axisHeight})`)
             .call(axisBottom(x));
 
         graphLayer
             .append("g")
-            .attr("transform", `translate(${style.textWidth}, 0)`)
-            .style("font-size", `${style.textSize}px`)
+            .attr("transform", `translate(${mergedStyle.textWidth}, 0)`)
+            .style("font-size", `${mergedStyle.textSize}px`)
             .call(axisLeft(y));
     },
 };
