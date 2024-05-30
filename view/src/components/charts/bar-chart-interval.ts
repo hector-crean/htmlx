@@ -179,37 +179,19 @@ const contentRenderFn = (p: SeriesPoint<PtsdComorbidities>, colorScale: ScaleOrd
 
 
 
-type ProcessedComborbidityDatum<T> = { baseline: T, uncertainty: T, stackId: string}
-type ComborbidityDatum<T> = { baseline: T, uncertainty: T, }
-
-
-type GroupMeta = {};
-
-type StackItem = {
-	value: number;
-};
-type StackedBarChartData<
-	Datum,
-> = {
-	stackId: string;
-	meta: GroupMeta;
-	stack: Datum;
-};
 
 class StackedBarChart<
-	T extends StackedBarChartData<ComborbidityDatum<number>>,
+	T extends PtsdComorbidities,
 > {
 	private margin: Margin;
-	private data: StackedBarChartData<ComborbidityDatum<number>>[];
-	private stackedData: Series<ProcessedComborbidityDatum<number>,string>[];
+	private series: PtsdComorbidities[];
 	private svg: Selection<SVGSVGElement, unknown, null, any>;
 	private scaleY: ScaleBand<string>;
 	private scaleX: ScaleLinear<number, number, never>;
 	private colorScale: ScaleOrdinal<string, unknown, never>;
 	private size: ChartSize;
 	private resizeObservable$: Observable<Event>;
-    private stackKeys: string[];
-    private substackKeys: string[];
+  
 
 	private parentContainer: HTMLElement;
 	private graphContainer: HTMLElement;
@@ -223,7 +205,7 @@ class StackedBarChart<
 		margin: Margin = { top: 20, right: 30, bottom: 40, left: 200 },
 	) {
 		const sortedData = data.sort(ord.compare);
-		this.data = sortedData;
+		this.series = sortedData;
 
 		this.margin = margin;
 
@@ -256,13 +238,11 @@ class StackedBarChart<
 
 		this.size = this.calculateSize(this.graphContainer, margin);
 
-		const stackKeys = data.map((d) => d.stackId);
-        this.stackKeys = stackKeys
-		const subStackKeys = Object.keys(this.data[0].stack);
-        this.substackKeys = subStackKeys
+		const names = this.series.map((d) => d.name);
+       
 
 		this.scaleY = scaleBand()
-			.domain(stackKeys)
+			.domain(names)
 			.padding(0.1)
 			.range([0, this.size.innerHeight]);
 
@@ -277,18 +257,11 @@ class StackedBarChart<
 			.range([0, this.size.innerWidth]);
         
 
-		const colorScale = scaleOrdinal().domain(stackKeys).range(colors);
+		const colorScale = scaleOrdinal().domain(names).range(colors);
 
 		this.colorScale = colorScale;
 
-        const remapStackData = (domain: StackedBarChartData<ComborbidityDatum<number>>) => createTypedObjectFromEntries(getTypedObjectEntries(domain.stack).map(([key, value]) => [key, value]))
-        
-		const remapedSubStacks: Array<ProcessedComborbidityDatum<number>> = this.data.map((data) => ({
-			...remapStackData(data),
-			stackId: data.stackId,
-		}));
-		const stackedData = stack().keys(subStackKeys)(remapedSubStacks)
-		this.stackedData = stackedData;
+       
 
 		const svg = select(this.graphContainer).append("svg");
 
@@ -398,33 +371,14 @@ class StackedBarChart<
 		const yAxisContainer = vizLayer.append("g");
 		yAxisContainer.attr("class", "y-axis").call(yAxis);
 
-		const stacks = graphLayer
-			.selectAll("g")
-			.data(this.stackedData)
-			.join("g")
-			.attr("opacity", (d) => {
-				switch (d.key) {
-					case "baseline":
-						return 1
-					case "uncertainty":
-						return 0.5;
-					default:
-						return 1;
-				}
-			});
-
-       
 
 
-		const bars = stacks
+		const bars = graphLayer
 			.selectAll("rect")
-			.data((D) => {
-                console.log(D)
-                return D
-            })
+			.data(this.series)
 			.join("rect")
 			.attr("data-interactive", true)
-			.attr("x", (d) => this.scaleX(d[0]))
+			.attr("x", (d) => this.scaleX(d.))
 			.attr("y", (d) => this.scaleY(d.data.stackId as unknown as string)!)
            
 			.attr("height", (d) => this.scaleY.bandwidth())
