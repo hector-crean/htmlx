@@ -1,10 +1,15 @@
 import * as Plot from '@observablehq/plot';
-import { svg } from "htl";
 
 
 import { penguins } from '@/data/penguin';
 import { geoCircle } from 'd3-geo';
 import { scalePoint } from 'd3-scale';
+
+
+
+
+
+
 
 const penguinStackPlot = Plot.barY(
   penguins,
@@ -12,8 +17,19 @@ const penguinStackPlot = Plot.barY(
 ).plot({ 
   color: { legend: true },
   marks: [
-    // Plot.dot(penguins, {x: "culmen_length_mm", y: "culmen_depth_mm", stroke: "sex"}),
-    // Plot.crosshair(penguins, {x: "culmen_length_mm", y: "culmen_depth_mm"})
+      Plot.dot(
+        penguins, 
+        {
+          x: "island", 
+          y: "count", 
+          stroke: "species", 
+          tip: {
+            fill: 'black'
+          }, 
+          channels: {species: "species", island: "island"},
+  
+        }),
+    
   ]
 })
 
@@ -127,15 +143,8 @@ const penguinRadarPlot = Plot.plot({
         maxRadius: 10
       })
     ),
-
-    // interactive opacity on the areas
-    () =>
-    svg`<style>
-          g[aria-label=area] path {fill-opacity: 0.1; transition: fill-opacity .2s;}
-          g[aria-label=area]:hover path:not(:hover) {fill-opacity: 0.05; transition: fill-opacity .2s;}
-          g[aria-label=area] path:hover {fill-opacity: 0.3; transition: fill-opacity .2s;}
-      `
-  ]
+    ]
+  
 })
 
 export { penguinDotPlot, penguinRadarPlot, penguinStackPlot };

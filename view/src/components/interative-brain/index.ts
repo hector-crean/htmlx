@@ -5,6 +5,7 @@ import { curveNatural, line } from "d3-shape";
 
 import defaultBackground from "./brain-background.jpg";
 
+import { zoom } from "d3-zoom";
 import selection_interrupt from "../../../node_modules/d3-transition/src/selection/interrupt";
 import selection_transition from "../../../node_modules/d3-transition/src/selection/transition";
 selection.prototype.interrupt = selection_interrupt;
@@ -54,6 +55,7 @@ type Pathways = Record<string, Pathway>
 
  class InteractiveBrain {
   private svg: Selection<SVGSVGElement, unknown, HTMLElement, any>;
+  private zoomableContainer: Selection<SVGGElement, unknown, HTMLElement, any>;
   private layer0: Selection<SVGGElement, unknown, HTMLElement, any>;
   private pathwaysGroup: Selection<SVGGElement, unknown, HTMLElement, any>;
   private layer1: Selection<SVGGElement, unknown, HTMLElement, any>;
@@ -82,12 +84,27 @@ type Pathways = Record<string, Pathway>
 
     this.svg = select(element).attr("data-interactive", true);
 
-    this.layer0 = this.svg.append("g").classed("regions", true);
-    this.pathwaysGroup = this.svg.append("g").classed("pathways", true);
-    this.layer1 = this.svg.append("g").classed("centroids", true);
-    this.layer2 = this.svg.append("g").classed("lines", true);
-    this.layer3 = this.svg.append("g").classed("labels", true);
-    this.layer4 = this.svg.append("g").classed("infoArea", true);
+    this.zoomableContainer = this.svg.append("g").classed("zoomable", true).attr("cursor", "grab");;
+  
+    const zoomed = ({transform}) => {
+      this.zoomableContainer.attr("transform", transform);
+    }
+
+
+  
+
+    this.svg.call(zoom()
+      .extent([[0, 0], [width, height]])
+      .scaleExtent([1, 20])
+      .on("zoom", zoomed));
+
+
+    this.layer0 = this.zoomableContainer.append("g").classed("regions", true);
+    this.pathwaysGroup = this.zoomableContainer.append("g").classed("pathways", true);
+    this.layer1 = this.zoomableContainer.append("g").classed("centroids", true);
+    this.layer2 = this.zoomableContainer.append("g").classed("lines", true);
+    this.layer3 = this.zoomableContainer.append("g").classed("labels", true);
+    this.layer4 = this.zoomableContainer.append("g").classed("infoArea", true);
 
     const scaleX = scaleLinear().domain([0, 960]).range([0, width]);
     const scaleY = scaleLinear().domain([0, 540]).range([0, height]);

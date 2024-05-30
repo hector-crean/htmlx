@@ -19,41 +19,6 @@ import { Ord } from "./ord";
 import pattern from "./textures";
 import { ChartSize, Margin } from "./types";
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~ Utils ~~~~~~~~~~~~~~~~~~~~~~~~
-
-type ObjectType = Record<PropertyKey, unknown>;
-type PickByValue<OBJ_T, VALUE_T> // From https://stackoverflow.com/a/55153000
-    = Pick<OBJ_T, { [K in keyof OBJ_T]: OBJ_T[K] extends VALUE_T ? K : never }[keyof OBJ_T]>;
-type ObjectEntries<OBJ_T> // From https://stackoverflow.com/a/60142095
-    = { [K in keyof OBJ_T]: [keyof PickByValue<OBJ_T, OBJ_T[K]>, OBJ_T[K]] }[keyof OBJ_T][];
-
-// ~~~~~~~~~~~~~~~~~~~~ Typed Function ~~~~~~~~~~~~~~~~~~~~
-
-function getTypedObjectEntries<OBJ_T extends ObjectType>(obj: OBJ_T): ObjectEntries<OBJ_T> {
-    return Object.entries(obj) as ObjectEntries<OBJ_T>;
-}
-
-// Data Types
-type EntriesType = [PropertyKey, unknown][] | ReadonlyArray<readonly [PropertyKey, unknown]>;
-
-// Existing Utils
-type DeepWritable<OBJ_T> = { -readonly [P in keyof OBJ_T]: DeepWritable<OBJ_T[P]> };
-type UnionToIntersection<UNION_T> // From https://stackoverflow.com/a/50375286
-    = (UNION_T extends any ? (k: UNION_T) => void : never) extends ((k: infer I) => void) ? I : never;
-
-// New Utils
-type UnionObjectFromArrayOfPairs<ARR_T extends EntriesType> =
-    DeepWritable<ARR_T> extends (infer R)[] ? R extends [infer key, infer val] ? { [prop in key & PropertyKey]: val } : never : never;
-type MergeIntersectingObjects<ObjT> = {[key in keyof ObjT]: ObjT[key]};
-type EntriesToObject<ARR_T extends EntriesType> = MergeIntersectingObjects<UnionToIntersection<UnionObjectFromArrayOfPairs<ARR_T>>>;
-
-// ~~~~~~~~~~~~~~~~~~~~~ Typed Functions ~~~~~~~~~~~~~~~~~~~~~
-
-function createTypedObjectFromEntries<ARR_T extends EntriesType>(arr: ARR_T): EntriesToObject<ARR_T> {
-    return Object.fromEntries(arr) as EntriesToObject<ARR_T>;
-}
-
-
 
 
 function toKebabCase(str: string): string {
@@ -92,17 +57,98 @@ const colors = [
 ];
 
 
+type Range = { lower: number, higher: number}
+type ComborbidityKind = 'PSYCHIATRIC'|'MEDICAL'
+interface PtsdComorbidities {
+    name: string,
+    kind: ComborbidityKind,
+    comorbidity_percentage_range: Range | null,
+    risk_multiplier_range: Range | null,
+    explaination?: string;
+}
 
-const tooltipRenderFn = (p: SeriesPoint<ComborbidityDatum<number>>) => html`<div class="relative">
-  <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-32 bg-gray-800 text-white text-center text-sm rounded-lg py-2 px-3   transition-opacity duration-300">
-  <span>${p.data.baseline + p.data.uncertainty/2}<span class="px-2">&#177;</span>${p.data.uncertainty/2}%</span></span>
-  </div>
-</div>`;
+export const comorbidities: Array<PtsdComorbidities> = [
+    {
+        name: 'Substance use',
+        kind: 'PSYCHIATRIC',
+        comorbidity_percentage_range: { lower: 46, higher: 46},
+        risk_multiplier_range: null
+    },
+    {
+        name: 'Alcohol use',
+        kind: 'PSYCHIATRIC',
+        comorbidity_percentage_range: { lower: 10, higher: 10},
+        risk_multiplier_range: null
+    },
+    {
+        name: 'Major Depressive Disorder (MDD)',
+        kind: 'PSYCHIATRIC',
+        comorbidity_percentage_range: { lower: 50, higher: 50},
+        risk_multiplier_range: null
+    },
+    {
+        name: 'Anxiety',
+        kind: 'PSYCHIATRIC',
+        comorbidity_percentage_range: { lower: 10, higher: 10},
+        risk_multiplier_range: null
+    },
+    {
+        name: 'Self-harm',
+        kind: 'PSYCHIATRIC',
+        comorbidity_percentage_range: { lower: 5, higher: 19},
+        risk_multiplier_range: null
+    },
+    {
+        name: 'Chronic pain',
+        kind: 'MEDICAL',
+        comorbidity_percentage_range: { lower: 20, higher: 20},
+        risk_multiplier_range: null
+    },
+    {
+        name: 'Inflammation',
+        kind: 'MEDICAL',
+        comorbidity_percentage_range: { lower: 51, higher: 51},
+        risk_multiplier_range: { lower: 2, higher: 2}
+    },
+    {
+        name: 'Cardiometabolic disorders',
+        kind: 'MEDICAL',
+        comorbidity_percentage_range: null,
+        risk_multiplier_range: { lower: 1.27, higher: 1.53}
+    },
+    {
+        name: 'Dementia',
+        kind: 'MEDICAL',
+        comorbidity_percentage_range: null,
+        risk_multiplier_range: { lower: 1.61, higher: 1.61}
+    },
+    {
+        name: 'Sleep dysfunction',
+        kind: 'MEDICAL',
+        comorbidity_percentage_range: { lower: 70, higher: 87},
+        risk_multiplier_range: null
+    },
+]
 
-const contentRenderFn = (p: SeriesPoint<ComborbidityDatum<number>>, colorScale:ScaleOrdinal<string, unknown, never> ) => {
+
+
+
+
+const tooltipRenderFn = (p: SeriesPoint<PtsdComorbidities>) => {
+
+    const range = p.data.comorbidity_percentage_range; 
+
+    return html`<div class="relative">
+    <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-32 bg-gray-800 text-white text-center text-sm rounded-lg py-2 px-3   transition-opacity duration-300">
+    <span>${0}<span class="px-2">-</span>${0}%</span></span>
+    </div>
+  </div>`
+};
+
+const contentRenderFn = (p: SeriesPoint<PtsdComorbidities>, colorScale: ScaleOrdinal<string, unknown, never> ) => {
 
     const spanStyle: Readonly<StyleInfo> = {
-        backgroundColor: colorScale(p.data.stackId) as string,
+        backgroundColor: colorScale(p.data.name) as string,
       }; 
 
     return html`
@@ -110,8 +156,8 @@ const contentRenderFn = (p: SeriesPoint<ComborbidityDatum<number>>, colorScale:S
     <div>
         <div><span class="text-3xl">
                     <svg preserveAspectRatio="xMidYMid meet" width="1em" height="1em" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.5 1C11.7761 1 12 1.22386 12 1.5V13.5C12 13.7761 11.7761 14 11.5 14C11.2239 14 11 13.7761 11 13.5V1.5C11 1.22386 11.2239 1 11.5 1ZM9.5 3C9.77614 3 10 3.22386 10 3.5V13.5C10 13.7761 9.77614 14 9.5 14C9.22386 14 9 13.7761 9 13.5V3.5C9 3.22386 9.22386 3 9.5 3ZM13.5 3C13.7761 3 14 3.22386 14 3.5V13.5C14 13.7761 13.7761 14 13.5 14C13.2239 14 13 13.7761 13 13.5V3.5C13 3.22386 13.2239 3 13.5 3ZM5.5 4C5.77614 4 6 4.22386 6 4.5V13.5C6 13.7761 5.77614 14 5.5 14C5.22386 14 5 13.7761 5 13.5V4.5C5 4.22386 5.22386 4 5.5 4ZM1.5 5C1.77614 5 2 5.22386 2 5.5V13.5C2 13.7761 1.77614 14 1.5 14C1.22386 14 1 13.7761 1 13.5V5.5C1 5.22386 1.22386 5 1.5 5ZM7.5 5C7.77614 5 8 5.22386 8 5.5V13.5C8 13.7761 7.77614 14 7.5 14C7.22386 14 7 13.7761 7 13.5V5.5C7 5.22386 7.22386 5 7.5 5ZM3.5 7C3.77614 7 4 7.22386 4 7.5V13.5C4 13.7761 3.77614 14 3.5 14C3.22386 14 3 13.7761 3 13.5V7.5C3 7.22386 3.22386 7 3.5 7Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-                    <span>${p.data.baseline + p.data.uncertainty/2}<span class="px-2">&#177;</span>${p.data.uncertainty/2}%</span></span></div>
-            <div class="mt-4"><span>of patients with currently active PTSD and past PTSD had <span style=${styleMap(spanStyle)} class='text-white rounded-sm px-1'>${p.data.stackId}</span> as a comorbidity</span></div>
+                    <span>${0}<span class="px-2">&#177;</span>${0}%</span></span></div>
+            <div class="mt-4"><span>of patients with currently active PTSD and past PTSD had <span style=${styleMap(spanStyle)} class='text-white rounded-sm px-1'>${p.data.name}</span> as a comorbidity</span></div>
         </div>
         <div>
             <div><span class="text-3xl"><svg focusable="false" preserveAspectRatio="xMidYMid meet"
@@ -121,11 +167,9 @@ const contentRenderFn = (p: SeriesPoint<ComborbidityDatum<number>>, colorScale:S
                     </svg><span>200%</span></span></div>
             <div class="mt-4"><span>Increased risk</span></div>
         </div>
-        <div>
-            <h4>What is this?</h4>
-            <p>
-            Symptoms of PTSD have been identified as predictors of deliberate self-harm (DSH) [5]. Depression in patients with PTSD often co-exists with suicidal ideation [2]. Patients with substance use disorders (SUD) are of special interest, often showing elevated rates of suicide attempts and DSH [5].        </p>
-        </div>
+       <div>
+        ${p.data.explaination}
+    </div>
     </div>`
 };
 
@@ -493,122 +537,7 @@ const psychiatricComorbidities: Array<StackedBarChartData<ComborbidityDatum<numb
 
 
 
-type Range = { lower: number, higher: number}
-type ComborbidityKind = 'PSYCHIATRIC'|'MEDICAL'
-interface PtsdComorbidities {
-    name: string,
-    kind: ComborbidityKind,
-    comorbidity_percentage_range: Range | null,
-    risk_multiplier_range: Range | null, 
-}
 
-export const comorbidities: Array<PtsdComorbidities> = [
-    {
-        name: 'Substance use',
-        kind: 'PSYCHIATRIC',
-        comorbidity_percentage_range: { lower: 46, higher: 46},
-        risk_multiplier_range: null
-    },
-    {
-        name: 'Alcohol use',
-        kind: 'PSYCHIATRIC',
-        comorbidity_percentage_range: { lower: 10, higher: 10},
-        risk_multiplier_range: null
-    },
-    {
-        name: 'Major Depressive Disorder (MDD)',
-        kind: 'PSYCHIATRIC',
-        comorbidity_percentage_range: { lower: 50, higher: 50},
-        risk_multiplier_range: null
-    },
-    {
-        name: 'Anxiety',
-        kind: 'PSYCHIATRIC',
-        comorbidity_percentage_range: { lower: 10, higher: 10},
-        risk_multiplier_range: null
-    },
-    {
-        name: 'Self-harm',
-        kind: 'PSYCHIATRIC',
-        comorbidity_percentage_range: { lower: 5, higher: 19},
-        risk_multiplier_range: null
-    },
-    {
-        name: 'Chronic pain',
-        kind: 'MEDICAL',
-        comorbidity_percentage_range: { lower: 20, higher: 20},
-        risk_multiplier_range: null
-    },
-    {
-        name: 'Inflammation',
-        kind: 'MEDICAL',
-        comorbidity_percentage_range: { lower: 51, higher: 51},
-        risk_multiplier_range: { lower: 2, higher: 2}
-    },
-    {
-        name: 'Cardiometabolic disorders',
-        kind: 'MEDICAL',
-        comorbidity_percentage_range: null,
-        risk_multiplier_range: { lower: 1.27, higher: 1.53}
-    },
-    {
-        name: 'Dementia',
-        kind: 'MEDICAL',
-        comorbidity_percentage_range: null,
-        risk_multiplier_range: { lower: 1.61, higher: 1.61}
-    },
-    {
-        name: 'Sleep dysfunction',
-        kind: 'MEDICAL',
-        comorbidity_percentage_range: { lower: 70, higher: 87},
-        risk_multiplier_range: null
-    },
-]
-
-
-
-const medicalCormidities: Array<StackedBarChartData<ComborbidityDatum<number>>> = [
-	{
-		stackId: "Chronic pain",
-        meta: {},
-		stack: {
-			baseline: 20,
-			uncertainty: 0
-		},
-	},
-	{
-		stackId: "Inflamation",
-        meta: {},
-		stack: {
-			baseline: 51,
-			uncertainty: 0
-		},
-	},
-	{
-		stackId: "Cardiometabolic disorders",
-        meta: {},
-		stack: {
-			baseline: 27,
-			uncertainty: 26
-		},
-	},
-    {
-		stackId: "Dementia",
-        meta: {},
-		stack: {
-			baseline: 5,
-			uncertainty: 14
-		},
-	},
-    {
-		stackId: "Sleep dysfunction",
-        meta: {},
-		stack: {
-			baseline: 5,
-			uncertainty: 14
-		},
-	},
-];
 
 
 const barChartOrd: Ord<StackedBarChartData<ComborbidityDatum<number>>> = {
