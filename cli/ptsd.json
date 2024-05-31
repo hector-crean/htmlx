@@ -16,11 +16,24 @@
       "content": {},
       "distance": 32
     },
+    "ptsd/clinical_presentation/symptoms": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Symptoms",
+      "content": {},
+      "distance": 32
+    },
     "ptsd/clinical_presentation/symptoms/page": {
       "color": "#260038",
       "position": {
-        "x": -8,
-        "z": -5
+        "x": -4,
+        "z": 19
       },
       "type": "secondary",
       "category": null,
@@ -39,11 +52,37 @@
       },
       "distance": 32
     },
+    "ptsd/clinical_presentation": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Clinical_presentation",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/comorbidities": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Comorbidities",
+      "content": {},
+      "distance": 32
+    },
     "ptsd/clinical_presentation/comorbidities/page": {
       "color": "#260038",
       "position": {
-        "x": -11,
-        "z": 16
+        "x": 1,
+        "z": -11
       },
       "type": "secondary",
       "category": null,
@@ -60,45 +99,6 @@
           ]
         }
       },
-      "distance": 32
-    },
-    "ptsd/clinical_presentation": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Clinical_presentation",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/clinical_presentation/symptoms": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Symptoms",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/clinical_presentation/comorbidities": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Comorbidities",
-      "content": {},
       "distance": 32
     }
   },

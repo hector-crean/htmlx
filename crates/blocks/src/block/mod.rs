@@ -3,6 +3,7 @@ pub mod definition;
 pub mod icon;
 pub mod interactive_brain;
 pub mod nav;
+pub mod placeholder_container;
 pub mod rich_text;
 pub mod tabs;
 
@@ -14,6 +15,7 @@ use self::{
 };
 use core::fmt;
 use maud::html;
+use placeholder_container::PlaceholderContainerProps;
 use rich_text::{RichText, RichTextProps};
 use std::fmt::{write, Display, Write};
 use tabs::{Tab, TabsProps};
@@ -50,6 +52,7 @@ pub enum Block {
     NavBlock(NavProps),
     DefinitionBlock(DefinitionProps),
     DefinitionListBlock(DefinitionListProps),
+    PlaceholderContainerBlock(PlaceholderContainerProps),
 }
 
 impl maud::Render for Block {
@@ -77,6 +80,9 @@ impl maud::Render for Block {
                 }
                 Block::DefinitionListBlock(dlist) => {
                     (dlist)
+                }
+                Block::PlaceholderContainerBlock(container) => {
+                    (container)
                 }
             }
         )

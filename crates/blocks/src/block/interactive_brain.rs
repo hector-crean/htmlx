@@ -251,12 +251,14 @@ impl maud::Render for InteractiveBrainProps {
                         (self.description)
                     }
 
-                    div class="flex flex-row w-full bg-[#ffffff7a] p-2 rounded-lg" {
-                        @for group in &self.groups {
-                            div class="flex flex-row gap-2" {
-                                @for comment in &group.comments {
-                                    (comment)
-                                }
+
+                    div class="text-md transition duration-500 ease-in-out rounded-lg bg-[#ffffff7a] col-span-1 flex flex-col p-2 items-center jusify-center" {
+                        @match &self.definitionList {
+                            Some(def_list) => {
+                                (def_list)
+                            }
+                            None => {
+
                             }
                         }
                     }
@@ -273,16 +275,17 @@ impl maud::Render for InteractiveBrainProps {
 
                     }
 
-                    div class="text-md transition duration-500 ease-in-out rounded-lg bg-[#ffffff7a] col-span-1 flex flex-col p-2 items-center jusify-center" {
-                        @match &self.definitionList {
-                            Some(def_list) => {
-                                (def_list)
-                            }
-                            None => {
-
+                    div class="flex flex-row w-full bg-[#ffffff7a] p-2 rounded-lg" {
+                        @for group in &self.groups {
+                            div class="flex flex-row gap-2" {
+                                @for comment in &group.comments {
+                                    (comment)
+                                }
                             }
                         }
                     }
+
+
                 }
 
 

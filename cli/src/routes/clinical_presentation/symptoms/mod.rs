@@ -40,10 +40,10 @@ pub fn blocks() -> Vec<Block> {
             definition: RichText::Html(String::from("involved in emotional and behavioral regulation, regulates fear [1]"))
         },
         DefinitionProps {
-            id: String::from("insula"),
+            id: String::from("striatum"),
             color: Some(String::from("green")),
-            term: RichText::Html(String::from("Insula")),
-            definition: RichText::Html(String::from("responsible for sensory processing, emotions, and motivation [2]."))
+            term: RichText::Html(String::from("Striatum")),
+            definition: RichText::Html(String::from("plays a central role in the motor and reward systems [2]"))
         },
         DefinitionProps {
             id: String::from("anterior-cingulate-cortex"),
@@ -72,7 +72,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::SleepDisturbance},
                                         symptom: String::from("Sleep disturbance"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Insula, BrainRegionName::PrefrontalCortex],
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
                                         overview: vec![
                 
                                         ],
@@ -83,7 +83,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::AvoidDistressingThoughts},
                                         symptom: String::from("Problems with concentration"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Insula, BrainRegionName::PrefrontalCortex],
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
                                         overview: vec![
                 
                                         ],
@@ -94,7 +94,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::AvoidDistressingThoughts},
                                         symptom: String::from("Reckless or self-destructive behavior"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Insula, BrainRegionName::PrefrontalCortex],
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
                                         overview: vec![
                 
                                         ],
@@ -105,7 +105,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::Hypervigilance},
                                         symptom: String::from("Hypervigilance"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Insula, BrainRegionName::PrefrontalCortex],
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
                                         overview: vec![
                 
                                         ],
@@ -116,7 +116,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::IrritbaleBehaviour},
                                         symptom: String::from("Irritable behavior and  angry outbursts"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Insula, BrainRegionName::PrefrontalCortex],
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
                                         overview: vec![
                 
                                         ],
@@ -127,7 +127,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::ExageratedStartleResponse},
                                         symptom: String::from("Exaggerated startle response"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Insula, BrainRegionName::PrefrontalCortex],
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
                                         overview: vec![
                                             rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/294fe3f1-093a-4699-bed3-3ae3b35a7512.html"),
                 
@@ -230,7 +230,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::AvoidDistressingThoughts},
                                         symptom: String::from("Avoidance of or efforts to avoid distressing memories, thoughts, or feelings"),
-                                        highlighted_regions: vec![BrainRegionName::Hippocampus, BrainRegionName::Amygdala, BrainRegionName::PrefrontalCortex, BrainRegionName::Insula],
+                                        highlighted_regions: vec![BrainRegionName::Hippocampus, BrainRegionName::Amygdala, BrainRegionName::PrefrontalCortex, BrainRegionName::Striatum],
                                         overview: vec![
                 
                                         ],
@@ -241,7 +241,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::AvoidReminders},
                                         symptom: String::from("Avoidance of or efforts to avoid external reminders that arouse distressing memories, thoughts, or feelings"),
-                                        highlighted_regions: vec![BrainRegionName::Hippocampus, BrainRegionName::Amygdala, BrainRegionName::PrefrontalCortex, BrainRegionName::Insula],
+                                        highlighted_regions: vec![BrainRegionName::Hippocampus, BrainRegionName::Amygdala, BrainRegionName::PrefrontalCortex, BrainRegionName::Striatum],
                                         overview: vec![
                 
                                         ],
@@ -271,7 +271,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::AvoidDistressingThoughts},
                                         symptom: String::from("Feelings of detachment or estrangement from others"),
-                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Insula, BrainRegionName::Amygdala],
+                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
                                             
                 
@@ -283,7 +283,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::AvoidDistressingThoughts},
                                         symptom: String::from("Inability to remember"),
-                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Insula, BrainRegionName::Amygdala],
+                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
                 
                                         ],
@@ -294,7 +294,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::AvoidDistressingThoughts},
                                         symptom: String::from("Persistent, distorted cognitions"),
-                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Insula, BrainRegionName::Amygdala],
+                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
                 
                                         ],
@@ -305,7 +305,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::AvoidDistressingThoughts},
                                         symptom: String::from("Persistent negative emotional state"),
-                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Insula, BrainRegionName::Amygdala],
+                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
                 
                                         ],
@@ -316,7 +316,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::AvoidDistressingThoughts},
                                         symptom: String::from("Persistent or exaggerated bad feelings"),
-                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Insula, BrainRegionName::Amygdala],
+                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
                 
                                         ],
@@ -327,7 +327,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::AvoidDistressingThoughts},
                                         symptom: String::from("Persistent inability to experience positive emotions"),
-                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Insula, BrainRegionName::Amygdala],
+                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
                 
                                         ],
@@ -338,7 +338,7 @@ pub fn blocks() -> Vec<Block> {
                                     BrainComment {
                                         icon: IconProps { name: IconName::AvoidDistressingThoughts},
                                         symptom: String::from("Marked diminished interest"),
-                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Insula, BrainRegionName::Amygdala],
+                                        highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
                 
                                         ],

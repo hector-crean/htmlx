@@ -1,5 +1,6 @@
 use blocks::block::{
     bar_chart::{BarChartProps, BarDatum},
+    placeholder_container::PlaceholderContainerProps,
     rich_text::{RichText, RichTextProps},
     Block,
 };
@@ -101,15 +102,18 @@ fn medical_comorbidities_bars() -> Vec<BarDatum> {
 pub fn blocks() -> Vec<Block> {
     vec![
         rich_text_block!("../../../input/clinical_presentation_comorbidities/fc9c5804-9b7a-420c-8e82-a28be4076d56.html"),
-        Block::BarChartBlock(BarChartProps {
-            title: String::from("Psychiatric Comorbidities"),
-            bars: psychiatric_comborbidities_bars()
+        // Block::BarChartBlock(BarChartProps {
+        //     title: String::from("Psychiatric Comorbidities"),
+        //     bars: psychiatric_comborbidities_bars()
+        // }),
+        Block::PlaceholderContainerBlock(PlaceholderContainerProps {
+            id: String::from("ptsd-comorbidities-bar-chart")
         }),
 
-        Block::BarChartBlock(BarChartProps {
-            title: String::from("Medical Comorbidities"),
-            bars: medical_comorbidities_bars()
-        }),
+        // Block::BarChartBlock(BarChartProps {
+        //     title: String::from("Medical Comorbidities"),
+        //     bars: medical_comorbidities_bars()
+        // }),
 
         // rich_text_block!("../../../input/clinical_presentation_comorbidities/ef31ae84-3c15-4fe3-a4c2-fc5fc3bbba00.html"),
         // rich_text_block!("../../../input/clinical_presentation_comorbidities/a9c28646-8a85-4451-b325-84f66b4bd3b0.html"),

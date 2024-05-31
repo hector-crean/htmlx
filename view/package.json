@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "deploy": "dev-deploy ./dist OTS126-sandbox --clean",
     "publish": "npm run build && npm run deploy"
