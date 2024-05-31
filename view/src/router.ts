@@ -1,177 +1,109 @@
-import initClinicalPresentationComorbidities from './init/clinical_presentation/comorbidities';
-import initClinicalPresentationSymptoms from './init/clinical_presentation/symptoms';
-import sandboxInit from './init/sandbox';
-
-// src/router.ts
-type Route = {
-    path: string;
-    template: string;
-    init: () => void;
+import { appEl } from "./main";
+export type Routes = {
+  [key: string]: {
+    title: string;
+    content?: Promise<string>;
+    scripts?: (() => void)[];
+    condition?: () => boolean;
+    fallback?: string;
   };
-  
-  
-  const routes: Route[] = [
-    {
-      path: "/",
-      template: "/nav.html",
-      init: () => {}
-    },
-    {
-      path: "/sandbox",
-      template: "/sandbox/page.html",
-      init: () => {
-        sandboxInit.init()
-      }
-    },
-    {
-      path: "/ptsd/disease/trauma_types/page",
-      template: "/ptsd/disease/trauma_types/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/disease/pathophysiology_of_ptsd/page",
-      template: "/ptsd/disease/pathophysiology_of_ptsd/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/specific_populations/civilian_vs_military/page",
-      template: "/ptsd/specific_populations/civilian_vs_military/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/specific_populations/marginalized_groups/page",
-      template: "/ptsd/specific_populations/marginalized_groups/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/clinical_presentation/symptoms/page",
-      template: "/ptsd/clinical_presentation/symptoms/page.html", 
-      init: () => {
-        initClinicalPresentationSymptoms.init()
-      },
-    },
-    {
-      path: "/ptsd/clinical_presentation/comorbidities/page",
-      template: "/ptsd/clinical_presentation/comorbidities/page.html", 
-      init: () => {
-        initClinicalPresentationComorbidities.init()
-      },
-    },
-    {
-      path: "/ptsd/disease_burden/personal_burden/page",
-      template: "/ptsd/disease_burden/personal_burden/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/disease_burden/societal_burden/page",
-      template: "/ptsd/disease_burden/societal_burden/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/diagnosis/assessment_and_diagnosis/page",
-      template: "/ptsd/diagnosis/assessment_and_diagnosis/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/diagnosis/stigma/page",
-      template: "/ptsd/diagnosis/stigma/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/diagnosis/interviews_with_clinicians/page",
-      template: "/ptsd/diagnosis/interviews_with_clinicians/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/clinical_course/delayed_onset_ptsd/page",
-      template: "/ptsd/clinical_course/delayed_onset_ptsd/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/clinical_course/chronic_ptsd/page",
-      template: "/ptsd/clinical_course/chronic_ptsd/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/clinical_course/underdiagnosis/page",
-      template: "/ptsd/clinical_course/underdiagnosis/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/treatment/guidelines/page",
-      template: "/ptsd/treatment/guidelines/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/treatment/unmet_needs_and_barriers/page",
-      template: "/ptsd/treatment/unmet_needs_and_barriers/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/treatment/trauma_informed_care/page",
-      template: "/ptsd/treatment/trauma_informed_care/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/recovery/intermediate_recovery/page",
-      template: "/ptsd/recovery/intermediate_recovery/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/recovery/long_term_reconstruction/page",
-      template: "/ptsd/recovery/long_term_reconstruction/page.html", 
-      init: () => {},
-    },
-    {
-      path: "/ptsd/home",
-      template: "/ptsd/home.html", 
-      init: () => {},
-    }
-  ]
-  
-  const loadRoute = async (path: string) => {
-    const route = routes.find(route => route.path === path);
-    if (route) {
-      const response = await fetch(route.template);
-      const html = await response.text();
-      document.getElementById('app')!.innerHTML = html;
+};
+
+let routes: Routes = {};
+
+/**
+ * Sets the routes; this function must be called before using the router.
+ * @param newRoutes - The new routes.
+ */
+export const setRoutes = (newRoutes: Routes) => {
+  routes = newRoutes;
+};
+
+/**
+ * Gets the content of a file from the public folder.
+ * @param location - The location of the file in the public folder.
+ * @returns Promise<string> - The content of the file.
+ */
+export const getFile = async (location: string): Promise<string> => {
+  const response = await fetch(location);
+  return response.text();
+};
+
+/**
+ * Renders the given route.
+ * @param route - The route to render.
+ */
+const render = async (route: string) => {
+  const validRoute = routes[route];
+  if (!appEl) return;
+
+
+  if (!validRoute) {
+    appEl.innerHTML = "404";
+    return;
+  }
+
+  if (validRoute.condition && !validRoute.condition()) {
+    if (validRoute.fallback) {
+      goTo(validRoute.fallback);
     } else {
-      document.getElementById('app')!.innerHTML = '<h1>Page Not Found</h1>';
+      window.history.pushState({}, "", "/");
+      render(window.location.pathname || "/");
     }
-  };
-  
-  export const handleNavigation = (event: Event) => {
-    event.preventDefault();
-    const target = event.target as HTMLAnchorElement;
-    const path = target.getAttribute('href');
-    history.pushState({}, '', path);
-    loadRoute(path).then(() => {
-      const route = routes.find(route => route.path === path);
-      console.log(route)
+    return;
+  }
 
-      route?.init()
-    })
-   
+  document.title = validRoute.title;
 
+  if (validRoute.content) {
+    try {
+      const content = await validRoute.content;
+      appEl.innerHTML = content;
+    } catch (error) {
+      console.error("Error loading content:", error);
+      appEl.innerHTML = "Error loading content";
+    }
+  } else {
+    appEl.innerHTML = "";
+  }
 
-  };
-  
-  export const initializeRouter = () => {
-    window.addEventListener('popstate', () => loadRoute(location.pathname));
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('a').forEach(anchor => {
-        anchor.addEventListener('click', handleNavigation);
-      });
-
-      loadRoute(location.pathname).then(() => {
-        const route = routes.find(route => route.path === location.pathname);
-        console.log(route)
-  
-        route?.init()
-      })
-
-
-
+  if (validRoute.scripts) {
+    validRoute.scripts.forEach((script) => {
+      script();
     });
+  }
+};
+
+/**
+ * Sets the route to go to.
+ * @param route - The route to navigate to.
+ */
+export const goTo = (route: string) => {
+  history.pushState({}, "", route);
+  render(route);
+};
+
+/**
+ * Gets the value of a parameter from the URL.
+ * @param name - The name of the parameter.
+ * @returns The value of the parameter.
+ */
+export const getParam = (name: string): string | null => {
+  return new URLSearchParams(window.location.search).get(name);
+};
+
+window.onpopstate = () => {
+  render(window.location.pathname || "/");
+};
+
+/**
+ * Initializes the router.
+ */
+const router = () => {
+  render(window.location.pathname || "/"); // Render the initial route
+  window.onpopstate = () => {
+    render(window.location.pathname || "/");
   };
-  
+};
+
+export default router;
