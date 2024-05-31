@@ -1,105 +1,48 @@
-import barChart from "@/components/charts/horizontal-correlation-chart";
-// import neuroComorbData from "./comorbs-neuro-data.json";
-// import physicalComorbData from "./comorbs-physical-data.json";
 
-import { barChartOrd } from "@/components/charts/bar-chart";
-import { StackedBarChart } from "@/components/charts/stacked-bar-chart";
-import medical_comborbidities_bars from './medical_comorbidities_bars.json';
-import psychiatric_comborbidities_bars from './psychiatric_comborbidities_bars.json';
+import { BarChart, barChartOrd } from '@/components/charts/bar-chart-interval';
+import { comorbidities } from '@/data/comborbidities';
+import * as Plot from '@observablehq/plot';
 
-
-const renderRichText = (block) => {
-    switch (block.type) {
-        case 'RichTextBlock':
-            switch (block.props.text.type) {
-                case 'Html': {
-                    return `${block.props.text.data}`
-                }
-                default:
-                    return ''
-            }
-        default:
-            return ''
-    }
-}
-
-export default {
+const page = {
     init: () => {
-        const style = {
-            barWidth: 320,
-            textWidth: 256,
-            textSize: 12,
-            barHeight: 42,
-            iconSize: 36,
-            barPadding: 0.2,
-            axisSize: 20,
-        };
 
-        const icons = (str: string) => ''
+        const stackedContainer = document.querySelector<HTMLElement>('#ptsd-comorbidities-bar-chart')!
 
-        const tooltip1 = "Tap or click on a condition for more information";
+        new BarChart(comorbidities, stackedContainer, barChartOrd);
 
+        const covariancePlot = Plot.plot({
 
-        const selectedText = (d) =>
-            `<b>${d.percent}%</b> of patients with currently active PTSD and past PTSD had <b>${d.shortTitle}</b> as a comorbidity.<br><br><div class="text-left"><span>${renderRichText(d.content)}</span>`;
+            marks: [
+                Plot.dot(
+                    comorbidities,
+                    {
 
+                        x: 'comorbidity_percentage_lower',
+                        y: 'risk_multiplier_lower',
 
+                        stroke: "kind",
+                        tip: {
+                            fill: 'black'
+                        },
+                        channels: { name: "name", kind: "kind" },
 
-        barChart.GenerateGraph(
-            "#psychiatric-comorbidities",
-            "#info-psychiatric-comorbidities",
-            psychiatric_comborbidities_bars,
-            style,
-            {
-                tooltip: tooltip1,
-                selected: selectedText,
-            },
-            icons,
-        );
+                    }),
+                Plot.crosshair(comorbidities, {
+                    x: 'comorbidity_percentage_lower',
+                    y: 'risk_multiplier_lower',
+                })
+            ]
+        })
 
-        const tooltip2 = "Tap or click on a condition for more information";
+        sandboxContainer.append(covariancePlot)
 
 
-        barChart.GenerateGraph(
-            "#medical-comorbidities",
-            "#info-medical-comorbidities",
-            medical_comborbidities_bars,
-            style,
-            {
-                tooltip: tooltip2,
-                selected: selectedText,
-            },
-            icons,
-        );
-
-        const chartContainerEl = document.querySelector<HTMLElement>('#example-bar-chart')
-
-        // new BarChart(exampleData, chartContainerEl!, barChartOrd);
-
-        const stackedData = [
-            {
-                group: 'Self-harm',
-                A: 1,
-                B: 2,
-                
-            },
-            {
-                group: 'Anxiety',
-                A: 2,
-                B: 4,
-                
-            },
-            {
-                group: 'Major Depressive Disorder',
-                A: 3,
-                B: 2,
-              
-            }
-        ]
-
-        new StackedBarChart(stackedData, chartContainerEl!, barChartOrd)
 
 
 
     },
 };
+
+
+
+export default page

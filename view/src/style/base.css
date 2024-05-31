@@ -90,6 +90,8 @@ object[type="application/pdf"] {
   pointer-events: none;
 }
 
+
+
 .list {
   @apply list-inside pl-2;
 }
