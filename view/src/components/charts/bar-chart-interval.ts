@@ -125,8 +125,8 @@ const contentRenderFn = (p: PtsdComorbidities, colorScale: ScaleOrdinal<string, 
 	<div class="grid grid-cols-3 gap-12">
 	<div class="col-span-1">
        ${headlineRendered(p)}
-	   <div class="mt-4">
-            <span style=${styleMap(headingStyle)} class="text-lg">${p.name}</span>
+	   <div class="mt-4 px-2 " style=${styleMap(headingStyle)}>
+            <span class="text-lg">${p.name}</span>
 		</div>
     </div>
     <div class="col-span-1">
@@ -139,7 +139,7 @@ const contentRenderFn = (p: PtsdComorbidities, colorScale: ScaleOrdinal<string, 
                         fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
                 </svg>
                 ${when(p.comorbidity_percentage_lower !== p.comorbidity_percentage_higher,
-		() => html`<span>${p.comorbidity_percentage_lower}<span
+		() => html`<span>${p.comorbidity_percentage_lower == null ? 'unknown' : p.comorbidity_percentage_lower}<span
                         class="px-2">-</span>${p.comorbidity_percentage_higher}%</span></span>`,
 		() => html`<span>${p.comorbidity_percentage_lower}%</span></span>`
 	)}
@@ -317,6 +317,7 @@ class BarChart<
 		const graphContainer = this.graphContainer;
 		const contextContainer = this.contextContainer;
 		const colorScaleFn = this.colorScale
+		const combirbidityTypeColorScale = this.combirbidityTypeColorScale
 
 
 		const comborbidityKinds: Array<ComborbidityKind> = ['MEDICAL', 'PSYCHIATRIC']
@@ -327,7 +328,7 @@ class BarChart<
 			.data(comborbidityKinds)
 			.enter()
 			.append("div")
-			.attr('class', 'color-white rounded-lg px-2 cursor-pointer')
+			.attr('class', 'text-white rounded-lg px-4 py-2 cursor-pointer shadow-lg hover:bg-blue-500 transition-all duration-200')
 			.style('background-color', d => this.combirbidityTypeColorScale(d)!)
 			.style('opacity', d => this.kindSelected.includes(d) ? 1 : 0.5)
 			.html(d => d)
@@ -416,6 +417,11 @@ class BarChart<
 
 		const lowerBoundLayer = graphLayer.append('g');
 
+		const placeholderLayer = graphLayer.append('g');
+
+		const touchBgLayer =  graphLayer.append('g')
+
+
 
 		const bars = lowerBoundLayer
 			.selectAll("rect")
@@ -428,7 +434,7 @@ class BarChart<
 			.attr("height", (d) => this.scaleY.bandwidth())
 			.attr("mask", (d) => `url(#${toKebabCase(`mask-${d.name}`)})`)
 			.style("fill", (d) => {
-				return colorScaleFn(d.name) as string
+				return combirbidityTypeColorScale(d.kind) as string
 			})
 
 		bars.transition()
@@ -447,7 +453,7 @@ class BarChart<
 			.attr("mask", (d) => `url(#${toKebabCase(`mask-${d.name}`)})`)
 			.style("fill", (d) => {
 				// return pattern1.url()
-				return colorScaleFn(d.name) as string
+				return combirbidityTypeColorScale(d.kind) as string
 			})
 			.style("stroke", (d) => {
 				// return pattern1.url()
@@ -457,6 +463,83 @@ class BarChart<
 
 		errorMarginBars.transition()
 			.attr("width", (d) => this.scaleX(d.comorbidity_percentage_higher ?? 0));
+
+		const placeholderBars = placeholderLayer
+			.selectAll("rect")
+			.data(this.filteredSeries.filter(d => d.comorbidity_percentage_lower === null))
+			.join("rect")
+			.attr("data-interactive", true)
+			.attr("x", (d) => this.scaleX(0))
+			.attr("y", (d) => this.scaleY(d.name)!)
+			.attr("height", (d) => this.scaleY.bandwidth())
+			.attr("mask", (d) => `url(#${toKebabCase(`mask-${d.name}`)})`)
+			.style("fill", (d) => {
+				return pattern1.url()
+			})
+			.style('opacity', 0.8)
+
+			placeholderBars.transition()
+			.attr("width", (d) => this.scaleX(100))
+
+
+			placeholderBars.on("pointerover", function (event, d) {
+				select(this).style("cursor", "pointer");
+			});
+
+			placeholderBars
+			.on("pointerdown", function (event, d) {
+				bars.attr("filter", null);
+				const bar = select(this);
+				bar.attr("filter", "url(#glow)");
+
+				select(tooltipContainer).transition().style("opacity", 0);
+
+
+				render(contentRenderFn(d, colorScaleFn), contextContainer);
+
+
+
+				
+			})
+
+			errorMarginBars.on("pointerover", function (event, d) {
+				select(this).style("cursor", "pointer");
+			});
+
+			errorMarginBars
+			.on("pointerdown", function (event, d) {
+				bars.attr("filter", null);
+				const bar = select(this);
+				bar.attr("filter", "url(#glow)");
+
+				render(contentRenderFn(d, colorScaleFn), contextContainer);
+
+				const [x, y] = pointer(event, graphContainer);
+
+				select(tooltipContainer).style("opacity", 1);
+
+				select(tooltipContainer)
+					.transition()
+					.style("top", `${y}px`)
+					.style("left", `${x}px`);
+			})
+
+
+			const touchBgRects = touchBgLayer
+			.selectAll("rect")
+			.data(this.filteredSeries)
+			.join("rect")
+			.attr("data-interactive", true)
+			.attr("x", (d) => -this.margin.left)
+			.attr("y", (d) => this.scaleY(d.name)!)
+			.attr("height", (d) => this.scaleY.bandwidth())
+			.style("fill", (d) => {
+				return colorScaleFn(d.name) as string
+			})
+			.attr('opacity', 0.9)
+
+			touchBgRects.transition()
+			.attr("width", (d) => this.margin.left)
 
 
 
