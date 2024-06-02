@@ -11,6 +11,7 @@ import {
 	scaleOrdinal,
 } from "d3-scale";
 import { Selection, pointer, select } from "d3-selection";
+import { curveCatmullRom, line } from "d3-shape";
 import { html, nothing, render } from "lit-html";
 import { StyleInfo, styleMap } from "lit-html/directives/style-map.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
@@ -31,9 +32,9 @@ function toKebabCase(str: string): string {
 }
 
 const blues = [
-	"#7ea8cb",
-	"#8EC1D3",
-	"#9FD6DB",
+	"#7438C3",
+	"#3576C6",
+	"#CC91D3",
 	"#AFE2DD",
 	"#C0E9DD",
 	"#D2F0E2",
@@ -84,6 +85,7 @@ const contentRenderFn = (p: PtsdComorbidities, colorScale: ScaleOrdinal<string, 
 	};
 	const headingStyle: Readonly<StyleInfo> = {
 		color: colorScale(p.name) as string,
+		backgroundColor: '#374151'
 	};
 
 	const infoStyle: Readonly<StyleInfo> = {
@@ -139,7 +141,7 @@ const contentRenderFn = (p: PtsdComorbidities, colorScale: ScaleOrdinal<string, 
                         fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
                 </svg>
                 ${when(p.comorbidity_percentage_lower !== p.comorbidity_percentage_higher,
-		() => html`<span>${p.comorbidity_percentage_lower == null ? 'unknown' : p.comorbidity_percentage_lower}<span
+		() => html`<span>${p.comorbidity_percentage_lower === null ? 'unknown' : p.comorbidity_percentage_lower}<span
                         class="px-2">-</span>${p.comorbidity_percentage_higher}%</span></span>`,
 		() => html`<span>${p.comorbidity_percentage_lower}%</span></span>`
 	)}
@@ -202,7 +204,7 @@ class BarChart<
 		data: T[],
 		parentContainer: HTMLElement,
 		ord: Ord<T>,
-		margin: Margin = { top: 20, right: 30, bottom: 40, left: 200 },
+		margin: Margin = { top: 50, right: 30, bottom: 100, left: 200 },
 	) {
 		const sortedData = data.sort(ord.compare);
 		this.kindSelected = ['MEDICAL', 'PSYCHIATRIC'];
@@ -324,6 +326,7 @@ class BarChart<
 		const filterContainerSelection = select(this.filterContainer);
 		filterContainerSelection.selectAll("*").remove();
 
+
 		const btns = filterContainerSelection.selectAll("div")
 			.data(comborbidityKinds)
 			.enter()
@@ -334,11 +337,12 @@ class BarChart<
 			.html(d => d)
 			.on('pointerdown', (event, d) => {
 				if (this.kindSelected.includes(d)) {
-					this.kindSelected = this.kindSelected.filter(x => x === d)
+					this.kindSelected = this.kindSelected.filter(x => x !== d);
 				} else {
 					this.kindSelected = [...new Set([...this.kindSelected, d])]
-
 				}
+
+
 				this.filteredSeries = this.series.filter(d => this.kindSelected.includes(d.kind));
 
 				this.draw()
@@ -346,9 +350,33 @@ class BarChart<
 
 
 
+
+
 		this.svg.selectAll("*").remove();
 
 		const defs = this.svg.append("defs");
+
+
+		const markerUnit = 10;
+		const markerBoxWidth = markerUnit;
+		const markerBoxHeight = markerUnit;
+		const refX = markerUnit;
+		const refY = markerBoxWidth / 2;
+		const markerWidth = markerBoxHeight / 2;
+		const markerHeight = markerBoxHeight / 2;
+		const arrowPoints = [[0, 0], [0, markerUnit], [markerUnit * 2, markerUnit]];
+
+		defs.append('marker')
+			.attr('id', 'arrow')
+			.attr('viewBox', [0, 0, markerBoxWidth, markerBoxHeight])
+			.attr('refX', refX)
+			.attr('refY', refY)
+			.attr('markerWidth', markerBoxWidth)
+			.attr('markerHeight', markerBoxHeight)
+			.attr('orient', 'auto-start-reverse')
+			.append('path')
+			.attr('d', line()(arrowPoints))
+			.attr('stroke', 'black');
 
 		const flowFilter = defs.append("filter").attr("id", "glow");
 		flowFilter
@@ -359,9 +387,12 @@ class BarChart<
 		feMerge.append("feMergeNode").attr("in", "coloredBlur");
 		feMerge.append("feMergeNode").attr("in", "SourceGraphic");
 
-		const pattern1 = pattern.lines().size(8).strokeWidth(2).stroke("#7ea8cb");
+		const errorPattern = pattern.lines().size(8).strokeWidth(2);
+		const circlePattern = pattern.circles().size(5).complement().lighter()
 
-		this.svg.call(pattern1);
+		this.svg.call(errorPattern);
+		this.svg.call(circlePattern);
+
 
 		const vizLayer = this.svg
 			.append("g")
@@ -413,13 +444,20 @@ class BarChart<
 		yAxisContainer.attr("class", "y-axis").call(yAxis);
 
 
+
+		const touchBgLayer = graphLayer.append('g')
+
+
 		const upperBoundLayer = graphLayer.append('g')
 
 		const lowerBoundLayer = graphLayer.append('g');
 
 		const placeholderLayer = graphLayer.append('g');
 
-		const touchBgLayer =  graphLayer.append('g')
+		const annotationsLayer = graphLayer.append('g')
+
+
+
 
 
 
@@ -436,6 +474,8 @@ class BarChart<
 			.style("fill", (d) => {
 				return combirbidityTypeColorScale(d.kind) as string
 			})
+			.style('pointer-events', 'none'); // Add this line to disable pointer and touch events
+
 
 		bars.transition()
 			.attr("width", (d) => this.scaleX(d.comorbidity_percentage_lower ?? 0));
@@ -452,17 +492,20 @@ class BarChart<
 			.attr("height", (d) => this.scaleY.bandwidth())
 			.attr("mask", (d) => `url(#${toKebabCase(`mask-${d.name}`)})`)
 			.style("fill", (d) => {
-				// return pattern1.url()
-				return combirbidityTypeColorScale(d.kind) as string
+				return errorPattern.url()
+				// return combirbidityTypeColorScale(d.kind) as string
 			})
 			.style("stroke", (d) => {
-				// return pattern1.url()
-				return colorScaleFn(d.name) as string
+				// return errorPattern.url()
+				return combirbidityTypeColorScale(d.kind) as string
 			})
-			.style('opacity', 0.2)
+			.style('stroke-width', 2)
+			.style('pointer-events', 'none'); // Add this line to disable pointer and touch events
+
 
 		errorMarginBars.transition()
 			.attr("width", (d) => this.scaleX(d.comorbidity_percentage_higher ?? 0));
+
 
 		const placeholderBars = placeholderLayer
 			.selectAll("rect")
@@ -474,39 +517,22 @@ class BarChart<
 			.attr("height", (d) => this.scaleY.bandwidth())
 			.attr("mask", (d) => `url(#${toKebabCase(`mask-${d.name}`)})`)
 			.style("fill", (d) => {
-				return pattern1.url()
+				return circlePattern.url()
 			})
 			.style('opacity', 0.8)
+			.style('pointer-events', 'none'); // Add this line to disable pointer and touch events
 
-			placeholderBars.transition()
+
+		placeholderBars.transition()
 			.attr("width", (d) => this.scaleX(100))
 
 
-			placeholderBars.on("pointerover", function (event, d) {
-				select(this).style("cursor", "pointer");
-			});
 
-			placeholderBars
-			.on("pointerdown", function (event, d) {
-				bars.attr("filter", null);
-				const bar = select(this);
-				bar.attr("filter", "url(#glow)");
+		errorMarginBars.on("pointerover", function (event, d) {
+			select(this).style("cursor", "pointer");
+		});
 
-				select(tooltipContainer).transition().style("opacity", 0);
-
-
-				render(contentRenderFn(d, colorScaleFn), contextContainer);
-
-
-
-				
-			})
-
-			errorMarginBars.on("pointerover", function (event, d) {
-				select(this).style("cursor", "pointer");
-			});
-
-			errorMarginBars
+		errorMarginBars
 			.on("pointerdown", function (event, d) {
 				bars.attr("filter", null);
 				const bar = select(this);
@@ -525,7 +551,7 @@ class BarChart<
 			})
 
 
-			const touchBgRects = touchBgLayer
+		const touchBgRects = touchBgLayer
 			.selectAll("rect")
 			.data(this.filteredSeries)
 			.join("rect")
@@ -536,11 +562,32 @@ class BarChart<
 			.style("fill", (d) => {
 				return colorScaleFn(d.name) as string
 			})
-			.attr('opacity', 0.9)
+			.attr('opacity', 0.1);
 
-			touchBgRects.transition()
-			.attr("width", (d) => this.margin.left)
+		touchBgRects.transition()
+			.attr("width", (d) => this.size.innerWidth + this.margin.left)
 
+
+		touchBgRects.on("pointerover", function (event, d) {
+			select(this).style("cursor", "pointer");
+		});
+
+		touchBgRects
+			.on("pointerdown", function (event, d) {
+				touchBgRects.attr("opacity", 0.1);
+
+				const touchBgRect = select(this);
+				touchBgRect.attr('opacity', 1)
+
+
+
+				select(tooltipContainer).transition().style("opacity", 0);
+				render(contentRenderFn(d, colorScaleFn), contextContainer);
+
+
+
+
+			})
 
 
 		bars.on("pointerover", function (event, d) {
@@ -571,6 +618,108 @@ class BarChart<
 			bars.attr("filter", null);
 			select(tooltipContainer).transition().style("opacity", 0);
 		});
+
+
+
+		const annotationLine = line<[number, number]>()
+			.x(d => d[0])
+			.y(d => d[1])
+			.curve(curveCatmullRom.alpha(0.5));
+
+
+
+
+
+		// No Data annotation
+		// const noDataPathData = annotationLine([
+		// 	[this.scaleX(45), this.size.innerHeight - this.scaleY.bandwidth() / 2],
+		// 	[this.scaleX(47), this.size.innerHeight + this.margin.bottom / 2],
+		// 	[this.scaleX(54), this.size.innerHeight + this.margin.bottom / 2]
+		// ]);
+
+		// annotationsLayer
+		// 	.append('path')
+		// 	.attr('d', noDataPathData)
+		// 	.attr('stroke-width', 1)
+		// 	.attr('stroke', 'gray')
+		// 	// .attr('marker-start', 'url(#arrow)')
+		// 	// .attr('marker-end', 'url(#arrow)')
+		// 	.attr('fill', 'transparent');
+
+		// annotationsLayer.append('circle').attr('cx', this.scaleX(45)).attr('cy', this.size.innerHeight - this.scaleY.bandwidth() / 2).attr('r', 4).style('fill', 'white').style('stroke', 'black');
+		// annotationsLayer.append('rect').attr('x', this.scaleX(54.5)).attr('y', (this.size.innerHeight + this.margin.bottom / 2 - 15)).attr('width', 30).attr('height', 30).attr('fill', circlePattern.url())
+		// annotationsLayer.append('text').attr('x', this.scaleX(54.5) + 35).attr('y', (this.size.innerHeight + this.margin.bottom / 2 + 4)).text('No Data');
+
+		// Interval annotation: 
+		// const START = 12;
+		// const MIDPOINT = 14;
+		// const END = 21;
+		// const SQUARE_WIDTH = 30;
+
+		// const intervalAnnotationPathData = annotationLine([
+		// 	[this.scaleX(START), this.size.innerHeight - 3 * this.scaleY.bandwidth()],
+		// 	[this.scaleX(MIDPOINT), this.size.innerHeight + this.margin.bottom / 2],
+		// 	[this.scaleX(END), this.size.innerHeight + this.margin.bottom / 2]
+		// ]);
+
+		// annotationsLayer
+		// 	.append('path')
+		// 	.attr('d', intervalAnnotationPathData)
+		// 	.attr('stroke-width', 1)
+		// 	.attr('stroke', 'gray')
+		// 	// .attr('marker-start', 'url(#arrow)')
+		// 	// .attr('marker-end', 'url(#arrow)')
+		// 	.attr('fill', 'transparent');
+
+		// annotationsLayer.append('circle').attr('cx', this.scaleX(START)).attr('cy', this.size.innerHeight - 3 * this.scaleY.bandwidth()).attr('r', 4).style('fill', 'white').style('stroke', 'black');
+		// annotationsLayer.append('rect').attr('x', this.scaleX(END + 0.5)).attr('y', (this.size.innerHeight + this.margin.bottom / 2 - SQUARE_WIDTH / 2)).attr('width', SQUARE_WIDTH).attr('height', SQUARE_WIDTH).attr('fill', errorPattern.url())
+		// annotationsLayer.append('text').attr('x', this.scaleX(END + 0.5) + SQUARE_WIDTH + 5).attr('y', (this.size.innerHeight + this.margin.bottom / 2 + 4)).text('Uncertainty');
+
+
+
+		const START = 12;
+		const MIDPOINT = 14;
+		const END = 21;
+		const SQUARE_WIDTH = this.margin.top / 2
+
+
+
+		const intervalAnnotationPathData = annotationLine([
+			[this.scaleX(START), this.size.innerHeight - 3 * this.scaleY.bandwidth()],
+			[this.scaleX(MIDPOINT), this.size.innerHeight + this.margin.bottom / 2],
+			[this.scaleX(END), this.size.innerHeight + this.margin.bottom / 2]
+		]);
+
+		annotationsLayer
+			.append('path')
+			.attr('d', intervalAnnotationPathData)
+			.attr('stroke-width', 1)
+			.attr('stroke', 'gray')
+			// .attr('marker-start', 'url(#arrow)')
+			// .attr('marker-end', 'url(#arrow)')
+			.attr('fill', 'transparent');
+
+		annotationsLayer.append('circle').attr('cx', this.scaleX(START)).attr('cy', this.size.innerHeight - 3 * this.scaleY.bandwidth()).attr('r', 4).style('fill', 'white').style('stroke', 'black');
+		annotationsLayer
+			.append('text')
+			.attr('x', this.scaleX(END + 0.5) + 5)
+			.attr('y', (this.size.innerHeight + this.margin.bottom / 2 + 4))
+			.text('Click on a bar to reveal more');
+
+
+		const legend = annotationsLayer.append('g').attr("transform", `translate(${0},${-this.margin.top + SQUARE_WIDTH})`)
+
+
+
+		legend.append('rect').attr('x', this.scaleX(0)).attr('y', (- SQUARE_WIDTH / 2)).attr('width', SQUARE_WIDTH).attr('height', SQUARE_WIDTH).attr('fill', errorPattern.url())
+		legend.append('text').attr('x', this.scaleX(0) + SQUARE_WIDTH + 5).attr('y', (4)).text('Uncertainty');
+
+
+		legend.append('rect').attr('x', this.scaleX(50)).attr('y', (- SQUARE_WIDTH / 2)).attr('width', SQUARE_WIDTH).attr('height', SQUARE_WIDTH).attr('fill', circlePattern.url())
+		legend.append('text').attr('x', this.scaleX(50) + SQUARE_WIDTH + 5).attr('y', (+ 4)).text('No % Data');
+
+
+
 	}
 
 	private onResize(): void {
