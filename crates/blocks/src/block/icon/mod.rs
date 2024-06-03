@@ -53,6 +53,6 @@ impl Default for IconProps {
 
 impl maud::Render for IconProps {
     fn render(&self) -> maud::Markup {
-        html!((PreEscaped(self.name.svg())))
+        html!(icon-container style="width:100%;height:100%;" { (PreEscaped(self.name.svg()))})
     }
 }

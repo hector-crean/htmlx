@@ -142,12 +142,12 @@ impl maud::Render for BrainComment {
     fn render(&self) -> Markup {
         html! {
             button
-                class="symptom"
+                class="flex flex-col items-start w-full symptom"
                 data-symptom="true"
                 data-regions=(self.highlighted_regions_str()) {
-                    div class="grid grid-cols-1 lg:grid-cols-[min-content_1fr_1fr] grid-rows-1 items-center justify-center" {
+                    div class="w-full grid grid-cols-1 2xl:grid-cols-[min-content_1fr_1fr] grid-rows-1 items-center justify-center" {
                         div class="flex items-center justify-center w-full h-12 col-span-1 aspect-square" { (self.icon) }
-                        div class="flex-1 hidden col-span-2 px-2 text-sm text-left text-gray-700 lg:block" { (self.symptom) }
+                        div class="flex-1 col-span-2 px-1 text-xs text-center text-gray-700 break-words hyphens-auto 2xl:block" { (self.symptom) }
                     }
 
                     div data-kind="description" {
@@ -243,13 +243,13 @@ impl maud::Render for InteractiveBrainProps {
     fn render(&self) -> Markup {
         html! {
         div id=(self.id) {
-                div class="flex flex-col w-full gap-2" {
+                div class="flex flex-col w-full gap-2 xl:flex-row xl:h-full xl:flex-1" {
 
                     div class="w-full swiper" {
                         // Additional required wrapper
                         div class="swiper-wrapper" {
 
-                            div class="swiper-slide " {
+                            div class="mb-12 swiper-slide " {
                                 div class="w-full h-full py-2"{
 
                                     div class="@container w-full h-min p-2 rounded-lg" {
@@ -276,7 +276,7 @@ impl maud::Render for InteractiveBrainProps {
 
                                 }
                              }
-                            div class="swiper-slide" {
+                            div class="mb-12 swiper-slide" {
                                 div class="w-full h-full py-2"{
                                     div class="@container w-full h-min  p-2 rounded-lg" {
                                         div class="flex flex-col justify-center gap-2 align-center presentation_wrapper" {
@@ -289,7 +289,7 @@ impl maud::Render for InteractiveBrainProps {
                                             div class="flex flex-row w-full p-2 " data-full-bleed="true" {
 
                                                 @for group in &self.groups {
-                                                    div class="flex flex-row gap-2" {
+                                                    div class="flex flex-row grid-cols-5 gap-2 2xl:grid" {
                                                         @for comment in &group.comments {
                                                             (comment)
                                                         }

@@ -2,9 +2,8 @@ import './style.css';
 import './style/components.css';
 
 // core version + navigation, pagination modules:
+import '@/components/svg-container';
 import 'swiper/css/bundle';
-
-
 
 
 
@@ -43,3 +42,4 @@ router();
 
 
 export { appEl };
+

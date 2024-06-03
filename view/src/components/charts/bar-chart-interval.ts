@@ -165,7 +165,7 @@ const contentRenderFn = (p: PtsdComorbidities, colorScale: ScaleOrdinal<string, 
 
 
 	
-    <div class='col-span-3 flex flex-col items-center justify-center'>
+    <div class='col-span-3 md:col-span-2 xl:col-span-1 flex flex-col items-center justify-center'>
         <div class='border-l-4  pl-2' style=${styleMap(infoStyle)}>${unsafeHTML(p.explanation)}</div>
     </div>
 </div>`

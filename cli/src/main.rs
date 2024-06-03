@@ -30,9 +30,7 @@ enum Commands {
     },
 }
 
-const OTS_CONTENT_DIR: &'static str =
-    r#"C:\Users\Hector.C\desktop\projects\OTS110_WebApp\src\content"#;
-const TEST_PUBLIC_DIR: &'static str = r#"/Users/hectorcrean/Rust/htmlx/view/public"#;
+const TEST_PUBLIC_DIR: &'static str = r#"C:\Users\Hector.C\rust\htmx\view\public"#;
 
 fn main() -> eyre::Result<()> {
     color_eyre::install()?;

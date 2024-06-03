@@ -34,7 +34,7 @@ fn write_string_to_file<P: AsRef<Path>>(path: P, content: &str) -> Result<(), io
     Ok(())
 }
 
-const ROOT_DIR: &str = r#"C:\Users\Hector.C\javascript\AST249_VideoPlayer\src"#;
+const ROOT_DIR: &str = r#"C:\Users\Hector.C\rust\htmx\crates\blocks\src\block\icon\icons"#;
 
 fn open_ai_client() -> OpenAiClient {
     dotenv().ok();
@@ -70,7 +70,7 @@ async fn code_refactor(open_ai: &OpenAiClient, code: &str) -> Result<String, Ope
                     role: OpenAiRole::System,
                     content: Some(String::from(
                         r#"
-                        You are refactoring code from JavaScript into TypeScript. Please do not give any steps. Just refactor the code, and send exclusively that in a message back"#,
+                        You are refactoring this svg to only use inline stroke/fill etc, rather than classes. Please do not give any steps. Just refactor the code, and send exclusively that in a message back"#,
                     )),
                     function_call: None,
                     name: None,
@@ -140,7 +140,7 @@ async fn main() -> eyre::Result<()> {
         let path = entry.path().to_path_buf();
 
         // Check if the entry is a file with a .ts extension
-        if path.is_file() && path.extension().and_then(|s| s.to_str()) == Some("js") {
+        if path.is_file() && path.extension().and_then(|s| s.to_str()) == Some("svg") {
             info!("Processing file: {:?}", path);
 
             match read_file_to_string(&path) {

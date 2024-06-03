@@ -261,7 +261,6 @@ pub fn blocks() -> Vec<Block> {
                     
                     Block::InteractiveBrainBlock(InteractiveBrainProps {
                         id: String::from("negative-interactive-brain"),
-                        
                         description: rich_text!("../../../input/OTS126_PTSD_Symptoms_Node/c4ea547c-d129-4bf9-9399-b540bf1746ac.html"),
                         definitionList: Some( DefinitionListProps { definitions: definitions.clone() }),
                         groups: vec![
