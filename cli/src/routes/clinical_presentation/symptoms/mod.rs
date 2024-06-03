@@ -59,90 +59,6 @@ pub fn blocks() -> Vec<Block> {
         representation: TabsRepresentation::Standard,
         tabs: vec![
             Tab { 
-                name: String::from("Arousal"),
-                blocks: vec![
-                    Block::InteractiveBrainBlock(InteractiveBrainProps {
-                        id: String::from("arousal-interactive-brain"),
-                        description: rich_text!("../../../input/OTS126_PTSD_Symptoms_Node/294fe3f1-093a-4699-bed3-3ae3b35a7512.html"),
-                        definitionList: Some( DefinitionListProps { definitions: definitions.clone() }),
-                        groups: vec![
-                            CommentGroup {
-                                name: "Arousal".into(),
-                                comments: vec![
-                                    BrainComment {
-                                        icon: IconProps { name: IconName::SleepDisturbance},
-                                        symptom: String::from("Sleep disturbance"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
-                                        overview: vec![
-                
-                                        ],
-                                        description: vec![
-                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/1994f39c-b9ac-41e4-9672-2cbb6b243cfb.html")
-                                        ]
-                                    },
-                                    BrainComment {
-                                        icon: IconProps { name: IconName::AvoidDistressingThoughts},
-                                        symptom: String::from("Problems with concentration"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
-                                        overview: vec![
-                
-                                        ],
-                                        description: vec![
-                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/6f52f3e7-2f5c-4f9b-b50e-a7ecfa058b1f.html")
-                                        ]
-                                    },
-                                    BrainComment {
-                                        icon: IconProps { name: IconName::AvoidDistressingThoughts},
-                                        symptom: String::from("Reckless or self-destructive behavior"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
-                                        overview: vec![
-                
-                                        ],
-                                        description: vec![
-                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/b60e70ed-a2f3-4002-ae16-b4b970214a25.html")
-                                        ]
-                                    },
-                                    BrainComment {
-                                        icon: IconProps { name: IconName::Hypervigilance},
-                                        symptom: String::from("Hypervigilance"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
-                                        overview: vec![
-                
-                                        ],
-                                        description: vec![
-                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/f1c46da1-827f-4ffe-a1f8-41215bef7893.html"),
-                                        ]
-                                    },
-                                    BrainComment {
-                                        icon: IconProps { name: IconName::IrritbaleBehaviour},
-                                        symptom: String::from("Irritable behavior and  angry outbursts"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
-                                        overview: vec![
-                
-                                        ],
-                                        description: vec![
-                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/176f8394-f50a-4ea8-ba06-91d296aa5792.html"),
-                                        ]
-                                    },
-                                    BrainComment {
-                                        icon: IconProps { name: IconName::ExageratedStartleResponse},
-                                        symptom: String::from("Exaggerated startle response"),
-                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
-                                        overview: vec![
-                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/294fe3f1-093a-4699-bed3-3ae3b35a7512.html"),
-                
-                                        ],
-                                        description: vec![
-                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/2cf015f8-c45d-4796-8d9f-552cff4a231f.html"),
-                                        ]
-                                    },
-                                ]
-                            }                                    
-                        ]
-                    })
-                ]
-            },
-            Tab { 
                 name: String::from("Intrusion"),
                 blocks: vec![
                     
@@ -255,6 +171,92 @@ pub fn blocks() -> Vec<Block> {
                     })
                 ]
             },
+            Tab { 
+                name: String::from("Arousal"),
+                blocks: vec![
+                    Block::InteractiveBrainBlock(InteractiveBrainProps {
+                        id: String::from("arousal-interactive-brain"),
+                        description: rich_text!("../../../input/OTS126_PTSD_Symptoms_Node/294fe3f1-093a-4699-bed3-3ae3b35a7512.html"),
+                        definitionList: Some( DefinitionListProps { definitions: definitions.clone() }),
+                        groups: vec![
+                            CommentGroup {
+                                name: "Arousal".into(),
+                                comments: vec![
+                                    BrainComment {
+                                        icon: IconProps { name: IconName::SleepDisturbance},
+                                        symptom: String::from("Sleep disturbance"),
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
+                                        overview: vec![
+                
+                                        ],
+                                        description: vec![
+                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/1994f39c-b9ac-41e4-9672-2cbb6b243cfb.html")
+                                        ]
+                                    },
+                                    BrainComment {
+                                        icon: IconProps { name: IconName::AvoidDistressingThoughts},
+                                        symptom: String::from("Problems with concentration"),
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
+                                        overview: vec![
+                
+                                        ],
+                                        description: vec![
+                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/6f52f3e7-2f5c-4f9b-b50e-a7ecfa058b1f.html")
+                                        ]
+                                    },
+                                    BrainComment {
+                                        icon: IconProps { name: IconName::AvoidDistressingThoughts},
+                                        symptom: String::from("Reckless or self-destructive behavior"),
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
+                                        overview: vec![
+                
+                                        ],
+                                        description: vec![
+                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/b60e70ed-a2f3-4002-ae16-b4b970214a25.html")
+                                        ]
+                                    },
+                                    BrainComment {
+                                        icon: IconProps { name: IconName::Hypervigilance},
+                                        symptom: String::from("Hypervigilance"),
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
+                                        overview: vec![
+                
+                                        ],
+                                        description: vec![
+                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/f1c46da1-827f-4ffe-a1f8-41215bef7893.html"),
+                                        ]
+                                    },
+                                    BrainComment {
+                                        icon: IconProps { name: IconName::IrritbaleBehaviour},
+                                        symptom: String::from("Irritable behavior and  angry outbursts"),
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
+                                        overview: vec![
+                
+                                        ],
+                                        description: vec![
+                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/176f8394-f50a-4ea8-ba06-91d296aa5792.html"),
+                                        ]
+                                    },
+                                    BrainComment {
+                                        icon: IconProps { name: IconName::ExageratedStartleResponse},
+                                        symptom: String::from("Exaggerated startle response"),
+                                        highlighted_regions: vec![ BrainRegionName::Amygdala, BrainRegionName::Striatum, BrainRegionName::PrefrontalCortex],
+                                        overview: vec![
+                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/294fe3f1-093a-4699-bed3-3ae3b35a7512.html"),
+                
+                                        ],
+                                        description: vec![
+                                            rich_text_block!("../../../input/OTS126_PTSD_Symptoms_Node/2cf015f8-c45d-4796-8d9f-552cff4a231f.html"),
+                                        ]
+                                    },
+                                ]
+                            }                                    
+                        ]
+                    })
+                ]
+            },
+          
+         
             Tab { 
                 name: String::from("Negative"),
                 blocks: vec![
