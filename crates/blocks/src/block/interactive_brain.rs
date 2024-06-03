@@ -319,7 +319,11 @@ impl maud::Render for InteractiveBrainProps {
                         div class="swiper-scrollbar" {}
                     }
 
-                    svg id="interactive-svg" class="col-span-2 rounded-lg shadow" width="100%" viewBox="0 0 960 400" preserveAspectRatio="xMidYMid meet" {}
+                    div class="flex flex-col justify-center w-full col-span-2 p-2"{
+                        svg id="interactive-svg" class="rounded-lg shadow" width="100%" viewBox="0 0 960 400" preserveAspectRatio="xMidYMid meet" {}
+                    }
+
+
 
 
 

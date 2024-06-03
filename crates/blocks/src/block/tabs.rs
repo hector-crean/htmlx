@@ -26,7 +26,7 @@ impl maud::Render for TabsProps {
         html! {
             @match self.representation {
                 TabsRepresentation::Standard => {
-                    div data-full-bleed="true" class="flex flex-col items-center justify-center bg-[#313231]  gap-2 text-white rounded-lg" {
+                    div data-full-bleed="true" class="flex flex-col items-center justify-center bg-[#313231]  gap-2 text-white" {
 
                         div class="w-full border-b border-[#5C96CA] " {
                             div class="flex flex-wrap gap-1 px-1 pt-1 -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400" {

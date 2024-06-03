@@ -23,6 +23,16 @@ a[aria-describedby="ref-marker"] {
 
   }
 
+  a[aria-describedby="ref-marker"]::before {
+    content: "[";
+    opacity: 0.3;
+  }
+
+
+  a[aria-describedby="ref-marker"]::after {
+    content: "]";
+    opacity: 0.3;
+  }
 
   a[aria-describedby="ref-marker"]:focus {
     text-decoration: underline;
