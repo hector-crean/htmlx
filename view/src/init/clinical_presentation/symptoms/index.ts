@@ -3,6 +3,15 @@ import { InteractiveBrain, Pathways, Regions } from '@/components/interative-bra
 import pathways from '@/components/interative-brain/brain-pathways.json';
 import regions from '@/components/interative-brain/brain-regions.json';
 import tabs from '@/components/tabs';
+import Swiper from 'swiper/bundle';
+
+
+
+
+
+
+
+
 
 
 const CONTAINER_IDS = [
@@ -25,7 +34,7 @@ const initTabbedBrain = (containerId: string, regions: Regions, pathways: Pathwa
 
   const definitionEls = containerEl.querySelectorAll('[data-definition-id]');
 
- 
+
 
   const getUniqueAttributes = (attribute: string): string[] => {
     const uniqueAttributes: string[] = [];
@@ -56,19 +65,19 @@ const initTabbedBrain = (containerId: string, regions: Regions, pathways: Pathwa
 
   const brain = new InteractiveBrain(svg, { regions: selectedRegions, pathways: selectedPathways, interactive: false });
 
-  
+
   definitionEls.forEach(definitionEl => {
     const defStr = definitionEl.getAttribute('data-definition-id')
-    if(defStr){
-      if(!featuredRegions.includes(defStr) ){
+    if (defStr) {
+      if (!featuredRegions.includes(defStr)) {
         definitionEl.classList.add('hidden')
       }
       definitionEl.addEventListener('click', (e) => {
-          brain.highlightRegions([defStr])
+        brain.highlightRegions([defStr])
       })
 
     }
-    
+
   })
 
   buttons.forEach((button) => {
@@ -107,10 +116,22 @@ const initTabbedBrain = (containerId: string, regions: Regions, pathways: Pathwa
 
 
 
-  export default {
-    init: () => {
-        tabs.init()
-        CONTAINER_IDS.forEach(id => initTabbedBrain(id, regions, pathways))
-    }
+export default {
+  init: () => {
+    // init Swiper:
+    const swiper = new Swiper('.swiper', {
+      // configure Swiper to use modules
+      pagination: {
+        el: ".swiper-pagination",
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+    tabs.init()
+    CONTAINER_IDS.forEach(id => initTabbedBrain(id, regions, pathways))
+
+
   }
-  
+}

@@ -24,9 +24,9 @@ export default {
 			return result;
 		};
 
-		const containers = document.getElementsByClassName(
-			"toggable-container",
-		) as HTMLCollectionOf<Container>;
+		const containers = document.querySelectorAll(
+			"#toggable-container",
+		) as NodeListOf<Container>;
 		const containerGroups = Array.from(containers).reduce(reduceToGroups, {});
 
 		const buttons = document.querySelectorAll(
@@ -102,9 +102,8 @@ export default {
 				container.style.removeProperty("display");
 				if (container.dataset.animation !== "none") {
 					container.style.opacity = "0.25";
-					container.style.transform = `translateX(${
-						index < prev ? "-" : ""
-					}25%)`;
+					container.style.transform = `translateX(${index < prev ? "-" : ""
+						}25%)`;
 					window.requestAnimationFrame(() => {
 						window.getComputedStyle(container).opacity;
 						container.style.opacity = "1";

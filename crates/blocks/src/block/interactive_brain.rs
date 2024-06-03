@@ -147,7 +147,7 @@ impl maud::Render for BrainComment {
                 data-regions=(self.highlighted_regions_str()) {
                     div class="grid grid-cols-1 lg:grid-cols-[min-content_1fr_1fr] grid-rows-1 items-center justify-center" {
                         div class="flex items-center justify-center w-full h-12 col-span-1 aspect-square" { (self.icon) }
-                        div class="flex-1 hidden col-span-2 px-2 text-sm text-left lg:block" { (self.symptom) }
+                        div class="flex-1 hidden col-span-2 px-2 text-sm text-left text-gray-700 lg:block" { (self.symptom) }
                     }
 
                     div data-kind="description" {
@@ -243,57 +243,93 @@ impl maud::Render for InteractiveBrainProps {
     fn render(&self) -> Markup {
         html! {
         div id=(self.id) {
+                div class="flex flex-col w-full gap-2" {
+
+                    div class="w-full swiper" {
+                        // Additional required wrapper
+                        div class="swiper-wrapper" {
+
+                            div class="swiper-slide " {
+                                div class="w-full h-full py-2"{
+
+                                    div class="@container w-full h-min p-2 rounded-lg" {
+
+                                        div class="flex flex-col justify-center gap-2 align-center" {
+                                            div class="flex flex-col items-center col-span-1 p-2 transition duration-500 ease-in-out rounded-lg presentation_wrapper text-md jusify-center" {
+                                                h3  { "Brain Regions"}
+
+                                                (self.description)
 
 
-                div class="flex flex-col gap-2" {
+                                                @match &self.definitionList {
+                                                    Some(def_list) => {
+                                                        (def_list)
+                                                    }
+                                                    None => {
 
-                    div class="mt-2 p-2 rounded-lg bg-[#ffffff7a]" {
-                        (self.description)
-                    }
+                                                    }
+                                                }
+                                            }
+                                        }
 
+                                    }
 
-                    div class="text-md transition duration-500 ease-in-out rounded-lg bg-[#ffffff7a] col-span-1 flex flex-col p-2 items-center jusify-center" {
-                        @match &self.definitionList {
-                            Some(def_list) => {
-                                (def_list)
-                            }
-                            None => {
-
-                            }
-                        }
-                    }
-
-                    div class="@container w-full h-min" {
-                        div class="flex flex-col align-center justify-center @5xl:grid  @5xl:grid-cols-3 gap-2" {
-                            svg id="interactive-svg" class="col-span-2 rounded-lg shadow" width="100%" viewBox="0 0 960 400" preserveAspectRatio="xMidYMid meet" {}
-
-
-                            p id="description-panel" class="text-md transition duration-500 ease-in-out rounded-lg bg-[#ffffff7a] col-span-1 flex flex-col p-2 items-center jusify-center"  {
-                                "Click on each symptom to learn more about its involvement"
-                            }
-                        }
-
-                    }
-
-                    div class="flex flex-row w-full bg-[#ffffff7a] p-2 rounded-lg" {
-                        @for group in &self.groups {
-                            div class="flex flex-row gap-2" {
-                                @for comment in &group.comments {
-                                    (comment)
                                 }
-                            }
+                             }
+                            div class="swiper-slide" {
+                                div class="w-full h-full py-2"{
+                                    div class="@container w-full h-min  p-2 rounded-lg" {
+                                        div class="flex flex-col justify-center gap-2 align-center presentation_wrapper" {
+
+                                            div class="w-full" {
+                                                h3 class="px-2" { "Symptoms"}
+                                            }
+
+
+                                            div class="flex flex-row w-full p-2 " data-full-bleed="true" {
+
+                                                @for group in &self.groups {
+                                                    div class="flex flex-row gap-2" {
+                                                        @for comment in &group.comments {
+                                                            (comment)
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            div class="flex flex-col items-center justify-center p-2 transition duration-500 ease-in-out" {
+                                                p id="description-panel" class="text-md"  {
+                                                    "Click on each symptom to learn more about its involvement"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                             }
+
                         }
+                        // If we need pagination
+                        div class="p-4 swiper-pagination" {}
+
+                        // If we need navigation buttons
+                        div class="swiper-button-prev" {}
+                        div class="swiper-button-next" {}
+
+                        // If we need scrollbar
+                        div class="swiper-scrollbar" {}
                     }
+
+                    svg id="interactive-svg" class="col-span-2 rounded-lg shadow" width="100%" viewBox="0 0 960 400" preserveAspectRatio="xMidYMid meet" {}
+
+
+
+
+
+
+
 
 
                 }
-
-
-
-
-
-
-
 
             }
 

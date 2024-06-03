@@ -66,7 +66,7 @@ svg *[data-interactive="true"]{
   fill: none;
 } */
 
-circle {
+/* circle {
   transition: filter 1s;
 }
 
@@ -80,7 +80,6 @@ g > circle[data-interactive="true"]:hover ~ circle {
 circle[data-interactive="true"]:hover {
   filter: brightness(1.2);
   cursor: pointer;
-  /* fill: #005278; */
 }
 
 circle[data-active="true"] {
@@ -90,10 +89,10 @@ circle[data-active="true"] {
 
 g > circle[data-interactive="true"][data-active="true"] ~ circle { 
   filter:contrast(200%);;
-}
+} */
 
 
-path {
+/* path {
   transition: filter 1s;
 }
 
@@ -107,7 +106,6 @@ g > path[data-interactive="true"]:hover ~ circle {
 path[data-interactive="true"]:hover {
   filter: brightness(1.2);
   cursor: pointer;
-  /* fill: #005278; */
 }
 
 path[data-active="true"] {
@@ -118,7 +116,7 @@ path[data-active="true"] {
 g > path[data-interactive="true"][data-active="true"] ~ circle { 
   filter:contrast(200%);;
 }
-
+ */
 
 
 

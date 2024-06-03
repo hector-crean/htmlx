@@ -7,7 +7,7 @@ use blocks::block::interactive_brain::{
 };
 use blocks::block::rich_text::{RichText, RichTextProps};
 use  blocks::block::icon::IconName;
-use blocks::block::tabs::{Tab, TabsProps};
+use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation};
 use blocks::block::{Block, BlocksProps};
 use color_eyre::eyre;
 use std::fs::File;
@@ -56,11 +56,11 @@ pub fn blocks() -> Vec<Block> {
 
     let tabs = TabsProps {
         id: uuid::Uuid::new_v4(),
+        representation: TabsRepresentation::Standard,
         tabs: vec![
             Tab { 
                 name: String::from("Arousal"),
                 blocks: vec![
-                   
                     Block::InteractiveBrainBlock(InteractiveBrainProps {
                         id: String::from("arousal-interactive-brain"),
                         description: rich_text!("../../../input/OTS126_PTSD_Symptoms_Node/294fe3f1-093a-4699-bed3-3ae3b35a7512.html"),

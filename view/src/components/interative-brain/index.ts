@@ -5,7 +5,6 @@ import { curveNatural, line } from "d3-shape";
 
 import defaultBackground from "./brain-background.jpg";
 
-import { zoom } from "d3-zoom";
 import selection_interrupt from "../../../node_modules/d3-transition/src/selection/interrupt";
 import selection_transition from "../../../node_modules/d3-transition/src/selection/transition";
 selection.prototype.interrupt = selection_interrupt;
@@ -53,7 +52,7 @@ interface Label {
 type Regions = Record<string, Region>
 type Pathways = Record<string, Pathway>
 
- class InteractiveBrain {
+class InteractiveBrain {
   private svg: Selection<SVGSVGElement, unknown, HTMLElement, any>;
   private zoomableContainer: Selection<SVGGElement, unknown, HTMLElement, any>;
   private layer0: Selection<SVGGElement, unknown, HTMLElement, any>;
@@ -85,18 +84,18 @@ type Pathways = Record<string, Pathway>
     this.svg = select(element).attr("data-interactive", true);
 
     this.zoomableContainer = this.svg.append("g").classed("zoomable", true).attr("cursor", "grab");;
-  
-    const zoomed = ({transform}) => {
+
+    const zoomed = ({ transform }) => {
       this.zoomableContainer.attr("transform", transform);
     }
 
 
-  
 
-    this.svg.call(zoom()
-      .extent([[0, 0], [width, height]])
-      .scaleExtent([1, 20])
-      .on("zoom", zoomed));
+
+    // this.svg.call(zoom()
+    //   .extent([[0, 0], [width, height]])
+    //   .scaleExtent([1, 20])
+    //   .on("zoom", zoomed));
 
 
     this.layer0 = this.zoomableContainer.append("g").classed("regions", true);
@@ -320,7 +319,7 @@ type Pathways = Record<string, Pathway>
           .attr("opacity", 1);
       }
 
-      
+
       this.onRegionHighlightStart(region);
     });
   }
@@ -433,12 +432,12 @@ type Pathways = Record<string, Pathway>
     });
   }
 
-  onRegionHighlightStart(regionOrPathway: Region | Pathway) {}
-  onRegionHighlightEnd(regionOrPathway: Region | Pathway) {}
+  onRegionHighlightStart(regionOrPathway: Region | Pathway) { }
+  onRegionHighlightEnd(regionOrPathway: Region | Pathway) { }
 }
 
 
 export type { Label, Pathway, Pathways, Region, Regions };
 
-  export { InteractiveBrain };
+export { InteractiveBrain };
 

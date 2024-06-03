@@ -1,6 +1,12 @@
 import './style.css';
 import './style/components.css';
 
+// core version + navigation, pagination modules:
+import 'swiper/css/bundle';
+
+
+
+
 
 import comborbs_init from '@/init/clinical_presentation/comorbidities';
 import symptoms_init from '@/init/clinical_presentation/symptoms';

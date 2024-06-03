@@ -101,13 +101,16 @@ fn medical_comorbidities_bars() -> Vec<BarDatum> {
 }
 pub fn blocks() -> Vec<Block> {
     vec![
-        rich_text_block!("../../../input/clinical_presentation_comorbidities/fc9c5804-9b7a-420c-8e82-a28be4076d56.html"),
+        // rich_text_block!("../../../input/clinical_presentation_comorbidities/fc9c5804-9b7a-420c-8e82-a28be4076d56.html"),
         // Block::BarChartBlock(BarChartProps {
         //     title: String::from("Psychiatric Comorbidities"),
         //     bars: psychiatric_comborbidities_bars()
         // }),
+        
         Block::PlaceholderContainerBlock(PlaceholderContainerProps {
-            id: String::from("ptsd-comorbidities-bar-chart")
+            id: String::from("ptsd-comorbidities-bar-chart"),
+            full_bleed: true,
+            class: String::from("round-lg")
         }),
 
         // Block::BarChartBlock(BarChartProps {
