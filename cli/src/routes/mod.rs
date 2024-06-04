@@ -64,7 +64,7 @@ impl App {
                         NodeType::File {
                             extension: FileExtension::Html,
                             renderable: Page::new(
-                                "Comborbidities",
+                                "Comorbidities",
                                 None,
                                 routes::clinical_presentation::comorbidities::blocks(),
                             ),

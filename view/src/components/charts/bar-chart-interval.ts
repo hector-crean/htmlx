@@ -22,6 +22,14 @@ import { Ord } from "./ord";
 import pattern from "./textures";
 import { ChartSize, Margin } from "./types";
 
+import { icons } from "@/assets/icons";
+
+const iconsMap = (comorbidity: string) => {
+	switch(comorbidity){
+		default:
+			return icons.AvoidDistressingThoughts
+	}
+}
 
 
 function toKebabCase(str: string): string {
@@ -122,52 +130,65 @@ const contentRenderFn = (p: PtsdComorbidities, colorScale: ScaleOrdinal<string, 
 		    <span class="text-lg">${p.kind}</span>
 		</span>`
 
+	const comorbidityText = (comorb: PtsdComorbidities) => {
+
+		
+		return html`${when(
+			['Dementia', 'Cardiometabolic disorders', 'Inflammation'].includes(comorb.name), 
+			() => html`<span> increased risk of developing <span style=${styleMap(spanStyle)}
+			class='px-1 text-white rounded-sm'>${comorb.name}</span>, if diagnosed with PTSD</span>`,
+			() => html`<span>of patients with PTSD had <span style=${styleMap(spanStyle)}
+			class='px-1 text-white rounded-sm'>${comorb.name}</span> as a comorbidity</span>`
+		)
+		}`
+	}
+
 
 	return html`
-	<div class="grid grid-cols-3 gap-12">
-	<div class="col-span-1">
-       ${headlineRendered(p)}
-	   <div class="mt-4 px-2 " style=${styleMap(headingStyle)}>
-            <span class="text-lg">${p.name}</span>
-		</div>
-    </div>
-    <div class="col-span-1">
-        <div>
-            <span class="text-3xl">
-                <svg preserveAspectRatio="xMidYMid meet" width="1em" height="1em" viewBox="0 0 15 15" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M11.5 1C11.7761 1 12 1.22386 12 1.5V13.5C12 13.7761 11.7761 14 11.5 14C11.2239 14 11 13.7761 11 13.5V1.5C11 1.22386 11.2239 1 11.5 1ZM9.5 3C9.77614 3 10 3.22386 10 3.5V13.5C10 13.7761 9.77614 14 9.5 14C9.22386 14 9 13.7761 9 13.5V3.5C9 3.22386 9.22386 3 9.5 3ZM13.5 3C13.7761 3 14 3.22386 14 3.5V13.5C14 13.7761 13.7761 14 13.5 14C13.2239 14 13 13.7761 13 13.5V3.5C13 3.22386 13.2239 3 13.5 3ZM5.5 4C5.77614 4 6 4.22386 6 4.5V13.5C6 13.7761 5.77614 14 5.5 14C5.22386 14 5 13.7761 5 13.5V4.5C5 4.22386 5.22386 4 5.5 4ZM1.5 5C1.77614 5 2 5.22386 2 5.5V13.5C2 13.7761 1.77614 14 1.5 14C1.22386 14 1 13.7761 1 13.5V5.5C1 5.22386 1.22386 5 1.5 5ZM7.5 5C7.77614 5 8 5.22386 8 5.5V13.5C8 13.7761 7.77614 14 7.5 14C7.22386 14 7 13.7761 7 13.5V5.5C7 5.22386 7.22386 5 7.5 5ZM3.5 7C3.77614 7 4 7.22386 4 7.5V13.5C4 13.7761 3.77614 14 3.5 14C3.22386 14 3 13.7761 3 13.5V7.5C3 7.22386 3.22386 7 3.5 7Z"
-                        fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-                </svg>
-                ${when(p.comorbidity_percentage_lower !== p.comorbidity_percentage_higher,
-		() => html`<span>${p.comorbidity_percentage_lower === null ? 'unknown' : p.comorbidity_percentage_lower}<span
-                        class="px-2">-</span>${p.comorbidity_percentage_higher}%</span></span>`,
+<div class="flex flex-col gap-4 rounded-lg bg-[#e6f0f6] p-8">
+
+
+<div class="col-span-1">
+	<div>
+		<span class="text-3xl">
+			<svg preserveAspectRatio="xMidYMid meet" width="1em" height="1em" viewBox="0 0 15 15" fill="none"
+				xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M11.5 1C11.7761 1 12 1.22386 12 1.5V13.5C12 13.7761 11.7761 14 11.5 14C11.2239 14 11 13.7761 11 13.5V1.5C11 1.22386 11.2239 1 11.5 1ZM9.5 3C9.77614 3 10 3.22386 10 3.5V13.5C10 13.7761 9.77614 14 9.5 14C9.22386 14 9 13.7761 9 13.5V3.5C9 3.22386 9.22386 3 9.5 3ZM13.5 3C13.7761 3 14 3.22386 14 3.5V13.5C14 13.7761 13.7761 14 13.5 14C13.2239 14 13 13.7761 13 13.5V3.5C13 3.22386 13.2239 3 13.5 3ZM5.5 4C5.77614 4 6 4.22386 6 4.5V13.5C6 13.7761 5.77614 14 5.5 14C5.22386 14 5 13.7761 5 13.5V4.5C5 4.22386 5.22386 4 5.5 4ZM1.5 5C1.77614 5 2 5.22386 2 5.5V13.5C2 13.7761 1.77614 14 1.5 14C1.22386 14 1 13.7761 1 13.5V5.5C1 5.22386 1.22386 5 1.5 5ZM7.5 5C7.77614 5 8 5.22386 8 5.5V13.5C8 13.7761 7.77614 14 7.5 14C7.22386 14 7 13.7761 7 13.5V5.5C7 5.22386 7.22386 5 7.5 5ZM3.5 7C3.77614 7 4 7.22386 4 7.5V13.5C4 13.7761 3.77614 14 3.5 14C3.22386 14 3 13.7761 3 13.5V7.5C3 7.22386 3.22386 7 3.5 7Z"
+					fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+			</svg>
+			${when(p.comorbidity_percentage_lower !== p.comorbidity_percentage_higher,
+			() => html`<span>${p.comorbidity_percentage_lower === null ? 'unknown' :
+				p.comorbidity_percentage_lower}<span
+					class="px-2">-</span>${p.comorbidity_percentage_higher}%</span></span>`,
 		() => html`<span>${p.comorbidity_percentage_lower}%</span></span>`
-	)}
-            </span>
-        </div>
-        <div class="mt-4"><span>of patients with currently active PTSD and past PTSD had <span
-                    style=${styleMap(spanStyle)} class='px-1 text-white rounded-sm'>${p.name}</span> as a
-                comorbidity</span></div>
-    </div>
+		)}
+		</span>
+	</div>
+	<div class="mt-4">${comorbidityText(p)}</div>
+</div>
 
-    <div class="col-span-1">
-        <div>
-            ${when(Boolean(p.risk_multiplier_lower) && Boolean(p.risk_multiplier_higher), () => riskRendered, () =>
+<div class="col-span-1">
+	<div>
+		${when(Boolean(p.risk_multiplier_lower) && Boolean(p.risk_multiplier_higher), () => riskRendered, () =>
 		nothing)}
-        </div>
-        ${when(Boolean(p.risk_multiplier_lower) && Boolean(p.risk_multiplier_higher), () => html`<div class="mt-4">
-            <span>increased risk of developing <span style=${styleMap(spanStyle)}
-                    class='px-1 text-white rounded-sm'>${p.name}</span>, if diagnosed with PTSD</span></div>`, () =>
-			nothing)}
-    </div>
+	</div>
+	${when(Boolean(p.risk_multiplier_lower) && Boolean(p.risk_multiplier_higher), () => html`<div class="mt-4">
+		<span> increased risk of developing <span style=${styleMap(spanStyle)}
+				class='px-1 text-white rounded-sm'>${p.name}</span>, if diagnosed with PTSD</span>`, () =>
+		nothing)}
+	</div>
+
+	<!-- <div class="col-span-1">
+		${headlineRendered(p)}
+		
+	</div> -->
 
 
-	
-    <div class='col-span-3 md:col-span-2 xl:col-span-1 flex flex-col items-center justify-center'>
-        <div class='border-l-4  pl-2' style=${styleMap(infoStyle)}>${unsafeHTML(p.explanation)}</div>
-    </div>
+
+	<div class='flex flex-col items-center justify-center col-span-1'>
+		<div class='pl-2 border-l-4' style=${styleMap(infoStyle)}>${unsafeHTML(p.explanation)}</div>
+	</div>
 </div>`
 };
 
@@ -192,6 +213,7 @@ class BarChart<
 	private combirbidityTypeColorScale: ScaleOrdinal<string, unknown, never>;
 	private size: ChartSize;
 	private resizeObservable$: Observable<Event>;
+	private iconsMap: (comorbidity: string) => string; 
 
 
 	private parentContainer: HTMLElement;
@@ -202,10 +224,13 @@ class BarChart<
 
 	constructor(
 		data: T[],
-		parentContainer: HTMLElement,
+	parentContainer: HTMLElement,
 		ord: Ord<T>,
 		margin: Margin = { top: 50, right: 30, bottom: 100, left: 200 },
 	) {
+		
+		this.iconsMap = iconsMap;
+		
 		const sortedData = data.sort(ord.compare);
 		this.kindSelected = ['MEDICAL', 'PSYCHIATRIC'];
 		this.series = sortedData;
@@ -213,7 +238,7 @@ class BarChart<
 
 		this.margin = margin;
 
-		parentContainer.classList.add("grid", "grid-cols-1", "grid-rows-[min-content_400px_min-content]", "p-4", "bg-black-900", "items-start", 'justify-between');
+		parentContainer.classList.add("grid", "grid-cols-1", "grid-rows-[min-content_400px_min-content]", "p-4", "bg-black-900", "items-start", 'justify-between', 'bg-[#d4e4ee]', 'rounded-lg', 'mt-2', 'mx-2');
 
 		this.parentContainer = parentContainer;
 
@@ -238,7 +263,7 @@ class BarChart<
 
 
 		const contextContainer = document.createElement("div");
-		contextContainer.classList.add("w-full");
+		contextContainer.classList.add("presentation_wrapper");
 		this.parentContainer.append(contextContainer);
 		this.contextContainer = contextContainer;
 
@@ -462,14 +487,19 @@ class BarChart<
 
 
 		const bars = lowerBoundLayer
-			.selectAll("rect")
+			.selectAll("path")
 			.data(this.filteredSeries)
-			.join("rect")
+			.join("path")
 			.attr("data-interactive", true)
-			.attr("x", (d) => this.scaleX(0))
-			.attr("y", (d) => this.scaleY(d.name)!)
-
-			.attr("height", (d) => this.scaleY.bandwidth())
+			.attr("d", (d) =>
+                RightRoundedRect(
+                    this.scaleX(0),
+                    this.scaleY(d.name)!,
+                    this.scaleX(0),
+                    this.scaleY.bandwidth(),
+                    this.scaleY.bandwidth()/2,
+                ),
+            )
 			.attr("mask", (d) => `url(#${toKebabCase(`mask-${d.name}`)})`)
 			.style("fill", (d) => {
 				return combirbidityTypeColorScale(d.kind) as string
@@ -478,18 +508,31 @@ class BarChart<
 
 
 		bars.transition()
-			.attr("width", (d) => this.scaleX(d.comorbidity_percentage_lower ?? 0));
+			.attr("d", (d) =>
+                RightRoundedRect(
+					this.scaleX(0),
+                    this.scaleY(d.name)!,
+                    this.scaleX(d.comorbidity_percentage_lower ?? 0),
+                    this.scaleY.bandwidth(),
+                    this.scaleY.bandwidth()/2,
+                ),
+            );
 
 
 		const errorMarginBars = upperBoundLayer
-			.selectAll("rect")
+			.selectAll("path")
 			.data(this.filteredSeries)
-			.join("rect")
+			.join("path")
 			.attr("data-interactive", true)
-			.attr("x", (d) => this.scaleX(0))
-			.attr("y", (d) => this.scaleY(d.name)!)
-
-			.attr("height", (d) => this.scaleY.bandwidth())
+			.attr("d", (d) =>
+                RightRoundedRect(
+                    this.scaleX(0),
+                    this.scaleY(d.name)!,
+                    this.scaleX(0),
+                    this.scaleY.bandwidth(),
+                    this.scaleY.bandwidth()/2,
+                ),
+            )
 			.attr("mask", (d) => `url(#${toKebabCase(`mask-${d.name}`)})`)
 			.style("fill", (d) => {
 				return errorPattern.url()
@@ -504,7 +547,15 @@ class BarChart<
 
 
 		errorMarginBars.transition()
-			.attr("width", (d) => this.scaleX(d.comorbidity_percentage_higher ?? 0));
+			.attr("d", (d) =>
+                RightRoundedRect(
+					this.scaleX(0),
+                    this.scaleY(d.name)!,
+                    this.scaleX(d.comorbidity_percentage_higher ?? 0),
+                    this.scaleY.bandwidth(),
+                    this.scaleY.bandwidth()/2,
+                ),
+            );
 
 
 		const placeholderBars = placeholderLayer
@@ -566,6 +617,18 @@ class BarChart<
 
 		touchBgRects.transition()
 			.attr("width", (d) => this.size.innerWidth + this.margin.left)
+
+			// touchBgLayer
+			// .selectAll("image")
+			// .data(this.filteredSeries)
+			// .join("image")
+			// .attr("data-interactive", true)
+			// .attr("xlink:href", (d) => this.iconsMap(d.name))
+			// .attr("width", this.scaleY.bandwidth())
+			// .attr("height", this.scaleY.bandwidth())
+			// .attr("x", -this.margin.left)
+			// .attr("y", (d) => this.scaleY(d.name)!)
+
 
 
 		touchBgRects.on("pointerover", function (event, d) {
@@ -677,7 +740,7 @@ class BarChart<
 
 
 
-		const START = 12;
+		const START = 5;
 		const MIDPOINT = 14;
 		const END = 21;
 		const SQUARE_WIDTH = this.margin.top / 2
@@ -712,11 +775,11 @@ class BarChart<
 
 
 		legend.append('rect').attr('x', this.scaleX(0)).attr('y', (- SQUARE_WIDTH / 2)).attr('width', SQUARE_WIDTH).attr('height', SQUARE_WIDTH).attr('fill', errorPattern.url())
-		legend.append('text').attr('x', this.scaleX(0) + SQUARE_WIDTH + 5).attr('y', (4)).text('Uncertainty');
+		legend.append('text').attr('x', this.scaleX(0) + SQUARE_WIDTH + 5).attr('y', (4)).text('Range');
 
 
-		legend.append('rect').attr('x', this.scaleX(50)).attr('y', (- SQUARE_WIDTH / 2)).attr('width', SQUARE_WIDTH).attr('height', SQUARE_WIDTH).attr('fill', circlePattern.url())
-		legend.append('text').attr('x', this.scaleX(50) + SQUARE_WIDTH + 5).attr('y', (+ 4)).text('No % Data');
+		// legend.append('rect').attr('x', this.scaleX(50)).attr('y', (- SQUARE_WIDTH / 2)).attr('width', SQUARE_WIDTH).attr('height', SQUARE_WIDTH).attr('fill', circlePattern.url())
+		// legend.append('text').attr('x', this.scaleX(50) + SQUARE_WIDTH + 5).attr('y', (+ 4)).text('No % Data');
 
 
 
@@ -763,5 +826,13 @@ const barChartOrd: Ord<PtsdComorbidities> = {
 	}
 };
 
-export { BarChart, barChartOrd, comorbidities };
+export { BarChart, barChartOrd };
 
+
+
+
+function RightRoundedRect(x: number, y: number, width: number, height: number, radius: number): string {
+    return (
+        `M${x},${y}h${(width - radius)}a${radius},${radius} 0 0 1 ${radius},${radius}v${(height - 2 * radius)}a${radius},${radius} 0 0 1 ${-radius},${radius}h${(radius - width)}z`
+    );
+}

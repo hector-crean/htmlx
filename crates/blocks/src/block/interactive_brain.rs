@@ -243,7 +243,7 @@ impl maud::Render for InteractiveBrainProps {
     fn render(&self) -> Markup {
         html! {
         div id=(self.id) {
-                div class="flex flex-col w-full gap-2 xl:flex-row xl:h-full xl:flex-1" {
+                div class="flex flex-col w-full gap-2 rounded-lg xl:flex-row xl:h-full xl:flex-1" {
 
                     div class="w-full swiper" {
                         // Additional required wrapper
@@ -319,7 +319,7 @@ impl maud::Render for InteractiveBrainProps {
                         div class="swiper-scrollbar" {}
                     }
 
-                    div class="flex flex-col justify-center w-full col-span-2 p-2"{
+                    div class="flex flex-col items-center justify-center w-full col-span-2 p-2"{
                         svg id="interactive-svg" class="rounded-lg shadow" width="100%" viewBox="0 0 960 400" preserveAspectRatio="xMidYMid meet" {}
                     }
 

@@ -4,6 +4,7 @@ pub mod icon;
 pub mod interactive_brain;
 pub mod nav;
 pub mod placeholder_container;
+pub mod references;
 pub mod rich_text;
 pub mod tabs;
 
@@ -16,6 +17,7 @@ use self::{
 use core::fmt;
 use maud::html;
 use placeholder_container::PlaceholderContainerProps;
+use references::ReferencesProps;
 use rich_text::{RichText, RichTextProps};
 use std::fmt::{write, Display, Write};
 use tabs::{Tab, TabsProps};
@@ -53,12 +55,16 @@ pub enum Block {
     DefinitionBlock(DefinitionProps),
     DefinitionListBlock(DefinitionListProps),
     PlaceholderContainerBlock(PlaceholderContainerProps),
+    ReferencesBlock(Box<ReferencesProps>),
 }
 
 impl maud::Render for Block {
     fn render(&self) -> maud::Markup {
         html!(
             @match self {
+                Block::ReferencesBlock(references) => {
+                    (references)
+                }
                 Block::RichTextBlock(rich_text) => {
                     (rich_text)
                 }

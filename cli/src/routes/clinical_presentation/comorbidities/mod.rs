@@ -1,8 +1,5 @@
 use blocks::block::{
-    bar_chart::{BarChartProps, BarDatum},
-    placeholder_container::PlaceholderContainerProps,
-    rich_text::{RichText, RichTextProps},
-    Block,
+    bar_chart::{BarChartProps, BarDatum}, placeholder_container::PlaceholderContainerProps, references::ReferencesProps, rich_text::{RichText, RichTextProps}, Block
 };
 
 use crate::rich_text_block;
@@ -129,7 +126,11 @@ pub fn blocks() -> Vec<Block> {
         // rich_text_block!("../../../input/clinical_presentation_comorbidities/f49aea70-5faa-4d15-9f1f-c461a474f83c.html"),
         // rich_text_block!("../../../input/clinical_presentation_comorbidities/89a0070f-52df-4323-926e-cf76f526ced9.html"),
         // rich_text_block!("../../../input/clinical_presentation_comorbidities/f9f9d6ac-a315-469a-b56c-d61606380c5b.html"),
-        rich_text_block!("../../../input/clinical_presentation_comorbidities/e0c2fb34-6776-4a5e-bc6f-cbaacfc675b2.html")
+        
+        Block::ReferencesBlock(Box::new(ReferencesProps {
+            references: rich_text_block!("../../../input/clinical_presentation_comorbidities/e0c2fb34-6776-4a5e-bc6f-cbaacfc675b2.html")
+        })),
+
 
 
     ]

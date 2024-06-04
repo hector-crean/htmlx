@@ -5,7 +5,8 @@ use blocks::block::icon::IconProps;
 use blocks::block::interactive_brain::{
     BrainComment, BrainRegion, BrainRegionName, CommentGroup, InteractiveBrainProps,
 };
-use blocks::block::rich_text::{RichText, RichTextProps};
+use blocks::block::references::ReferencesProps;
+use blocks::block::rich_text::{self, RichText, RichTextProps};
 use  blocks::block::icon::IconName;
 use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation};
 use blocks::block::{Block, BlocksProps};
@@ -255,8 +256,6 @@ pub fn blocks() -> Vec<Block> {
                     })
                 ]
             },
-          
-         
             Tab { 
                 name: String::from("Negative"),
                 blocks: vec![
@@ -270,7 +269,7 @@ pub fn blocks() -> Vec<Block> {
                                 name: "Negative".into(),
                                 comments: vec![
                                     BrainComment {
-                                        icon: IconProps { name: IconName::AvoidDistressingThoughts},
+                                        icon: IconProps { name: IconName::Disassociation},
                                         symptom: String::from("Feelings of detachment or estrangement from others"),
                                         highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
@@ -282,7 +281,7 @@ pub fn blocks() -> Vec<Block> {
                                         ]
                                     },
                                     BrainComment {
-                                        icon: IconProps { name: IconName::AvoidDistressingThoughts},
+                                        icon: IconProps { name: IconName::AvoidReminders},
                                         symptom: String::from("Inability to remember"),
                                         highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
@@ -293,7 +292,7 @@ pub fn blocks() -> Vec<Block> {
                                         ]
                                     },
                                     BrainComment {
-                                        icon: IconProps { name: IconName::AvoidDistressingThoughts},
+                                        icon: IconProps { name: IconName::Hypervigilance},
                                         symptom: String::from("Persistent, distorted cognitions"),
                                         highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
@@ -304,7 +303,7 @@ pub fn blocks() -> Vec<Block> {
                                         ]
                                     },
                                     BrainComment {
-                                        icon: IconProps { name: IconName::AvoidDistressingThoughts},
+                                        icon: IconProps { name: IconName::DistressingMemories},
                                         symptom: String::from("Persistent negative emotional state"),
                                         highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
@@ -315,7 +314,7 @@ pub fn blocks() -> Vec<Block> {
                                         ]
                                     },
                                     BrainComment {
-                                        icon: IconProps { name: IconName::AvoidDistressingThoughts},
+                                        icon: IconProps { name: IconName::IrritbaleBehaviour},
                                         symptom: String::from("Persistent or exaggerated bad feelings"),
                                         highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
@@ -337,7 +336,7 @@ pub fn blocks() -> Vec<Block> {
                                         ]
                                     },
                                     BrainComment {
-                                        icon: IconProps { name: IconName::AvoidDistressingThoughts},
+                                        icon: IconProps { name: IconName::PsychologicalReactions},
                                         symptom: String::from("Marked diminished interest"),
                                         highlighted_regions: vec![BrainRegionName::PrefrontalCortex, BrainRegionName::AnteriorCingulateCortex, BrainRegionName::Striatum, BrainRegionName::Amygdala],
                                         overview: vec![
@@ -374,11 +373,15 @@ pub fn blocks() -> Vec<Block> {
         // rich_text_block!(
         //     "../../../input/OTS126_PTSD_Symptoms_Node/89201c17-fefc-4470-997d-494c226ad740.html"
         // ),
+        
         Block::TabsBlock(tabs),
         //References
-        rich_text_block!(
-            "../../../input/OTS126_PTSD_Symptoms_Node/38c6fe92-2267-4814-ac2a-f4313f037a44.html"
-        ),
+        
+        Block::ReferencesBlock(Box::new(ReferencesProps {
+            references: rich_text_block!(
+                "../../../input/OTS126_PTSD_Symptoms_Node/38c6fe92-2267-4814-ac2a-f4313f037a44.html"
+            )
+        })),
     ]
 }
 
