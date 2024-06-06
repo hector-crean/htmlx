@@ -34,7 +34,6 @@ const page = {
             ]
         })
 
-        sandboxContainer.append(covariancePlot)
 
 
 

@@ -11,11 +11,14 @@ interface Button extends HTMLElement {
 }
 
 export default {
+
 	init(): void {
+
+		
 		const reduceToGroups = (
-			result: Record<string, Container[]>,
+			result: Record<string, HTMLElement[]>,
 			container: Container,
-		): Record<string, Container[]> => {
+		): Record<string, HTMLElement[]> => {
 			const group = container.getAttribute("data-group") || "default";
 			if (!(group in result)) {
 				result[group] = [];
@@ -26,12 +29,12 @@ export default {
 
 		const containers = document.querySelectorAll(
 			"#toggable-container",
-		) as NodeListOf<Container>;
-		const containerGroups = Array.from(containers).reduce(reduceToGroups, {});
+		) as NodeListOf<HTMLElement>;
+		const containerGroups: Record<string, Container[]> = Array.from(containers).reduce(reduceToGroups, {});
 
 		const buttons = document.querySelectorAll(
 			"[data-toggable-button]",
-		) as NodeListOf<Button>;
+		) as NodeListOf<HTMLElement>;
 		const buttonGroups = Array.from(buttons).reduce(reduceToGroups, {});
 
 		Object.keys(buttonGroups).forEach((group) => {
@@ -102,7 +105,7 @@ export default {
 				container.style.removeProperty("display");
 				if (container.dataset.animation !== "none") {
 					container.style.opacity = "0.25";
-					container.style.transform = `translateX(${index < prev ? "-" : ""
+					container.style.transform = `translateX(${index < (prev ?? 0) ? "-" : ""
 						}25%)`;
 					window.requestAnimationFrame(() => {
 						window.getComputedStyle(container).opacity;
@@ -123,7 +126,7 @@ export default {
 
 				const object = container.querySelector("object");
 				if (object) {
-					object.contentDocument?.location.reload(true);
+					object.contentDocument?.location.reload();
 				}
 			}
 			container.dispatchEvent(

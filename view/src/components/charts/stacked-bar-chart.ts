@@ -2,12 +2,12 @@ import { axisBottom, axisLeft } from "d3-axis";
 import { } from "d3-color";
 import { format } from "d3-format";
 import {
-    ScaleBand,
-    ScaleLinear,
-    ScaleOrdinal,
-    scaleBand,
-    scaleLinear,
-    scaleOrdinal,
+	ScaleBand,
+	ScaleLinear,
+	ScaleOrdinal,
+	scaleBand,
+	scaleLinear,
+	scaleOrdinal,
 } from "d3-scale";
 import { Selection, pointer, select } from "d3-selection";
 import { Series, SeriesPoint, stack } from "d3-shape";
@@ -99,7 +99,7 @@ const tooltipRenderFn = (p: SeriesPoint<ComborbidityDatum<number>>) => html`<div
   </div>
 </div>`;
 
-const contentRenderFn = (p: SeriesPoint<ComborbidityDatum<number>>, colorScale:ScaleOrdinal<string, unknown, never> ) => {
+const contentRenderFn = (p: SeriesPoint<ProcessedComborbidityDatum<number>>, colorScale:ScaleOrdinal<string, unknown, never> ) => {
 
     const spanStyle: Readonly<StyleInfo> = {
         backgroundColor: colorScale(p.data.stackId) as string,
@@ -243,7 +243,9 @@ class StackedBarChart<
 			...remapStackData(data),
 			stackId: data.stackId,
 		}));
+		//@ts-ignore
 		const stackedData = stack().keys(subStackKeys)(remapedSubStacks)
+		//@ts-ignore
 		this.stackedData = stackedData;
 
 		const svg = select(this.graphContainer).append("svg");
@@ -272,6 +274,7 @@ class StackedBarChart<
 		const clickOutside$ = fromEvent(document, "click").pipe(
 			filter((event) => {
 				// Check if the click event target is outside the 'myDiv' element
+				//@ts-ignore
 				return !this.graphContainer.contains(event.target);
 			}),
 		);
@@ -615,8 +618,8 @@ const barChartOrd: Ord<StackedBarChartData<ComborbidityDatum<number>>> = {
 	equals: (x, y) => x === y,
 	compare: (first, second) => {
 
-        const sum = (stack: Record<string, StackItem>) => {
-            Object.values(stack).reduce((sum, x) => sum + x.value, 0)
+        const sum = (stack: ComborbidityDatum<number>) => {
+            return Object.values(stack).reduce((sum, x) => sum + x, 0)
         }
         
         return sum(first.stack) > sum(second.stack) ? 1 : sum(first.stack) < sum(second.stack) ? -1 : 0

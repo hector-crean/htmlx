@@ -329,6 +329,7 @@ class BarChart<
 		const clickOutside$ = fromEvent(document, "click").pipe(
 			filter((event) => {
 				// Check if the click event target is outside the 'myDiv' element
+				// @ts-ignore
 				return !this.graphContainer.contains(event.target);
 			}),
 		);
@@ -357,7 +358,7 @@ class BarChart<
 			.enter()
 			.append("div")
 			.attr('class', 'text-white rounded-lg px-4 py-2 cursor-pointer shadow-lg hover:bg-blue-500 transition-all duration-200')
-			.style('background-color', d => this.combirbidityTypeColorScale(d)!)
+			.style('background-color', d => this.combirbidityTypeColorScale(d) as string)
 			.style('opacity', d => this.kindSelected.includes(d) ? 1 : 0.5)
 			.html(d => d)
 			.on('pointerdown', (event, d) => {
@@ -389,7 +390,7 @@ class BarChart<
 		const refY = markerBoxWidth / 2;
 		const markerWidth = markerBoxHeight / 2;
 		const markerHeight = markerBoxHeight / 2;
-		const arrowPoints = [[0, 0], [0, markerUnit], [markerUnit * 2, markerUnit]];
+		const arrowPoints: Array<[number, number]> = [[0, 0], [0, markerUnit], [markerUnit * 2, markerUnit]];
 
 		defs.append('marker')
 			.attr('id', 'arrow')
@@ -413,6 +414,7 @@ class BarChart<
 		feMerge.append("feMergeNode").attr("in", "SourceGraphic");
 
 		const errorPattern = pattern.lines().size(8).strokeWidth(2);
+		//@ts-ignore
 		const circlePattern = pattern.circles().size(5).complement().lighter()
 
 		this.svg.call(errorPattern);

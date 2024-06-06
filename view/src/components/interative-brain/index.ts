@@ -1,14 +1,11 @@
 import { easeSinInOut } from "d3-ease";
 import { scaleLinear } from "d3-scale";
-import { pointer, select, Selection, selection } from "d3-selection";
+import { pointer, select, Selection } from "d3-selection";
 import { curveNatural, line } from "d3-shape";
 
 import defaultBackground from "./brain-background.jpg";
 
-import selection_interrupt from "../../../node_modules/d3-transition/src/selection/interrupt";
-import selection_transition from "../../../node_modules/d3-transition/src/selection/transition";
-selection.prototype.interrupt = selection_interrupt;
-selection.prototype.transition = selection_transition;
+
 
 
 
@@ -439,5 +436,5 @@ class InteractiveBrain {
 
 export type { Label, Pathway, Pathways, Region, Regions };
 
-export { InteractiveBrain };
+  export { InteractiveBrain };
 

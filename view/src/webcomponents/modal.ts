@@ -1,39 +1,31 @@
 import { LitElement, css, html } from "lit";
-import {
-    customElement,
-    property
-} from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
+import { classMap } from "lit-html/directives/class-map.js";
+import { property } from "lit/decorators.js";
 
-type ModalDialogProps = {
-	open: boolean;
-	title: string;
-	text: string;
-	clickAction: string;
-};
 
-@customElement("modal-dialog")
 export class ModalDialog extends LitElement {
-	@property({ type: Boolean }) open = true;
-    
 
-	clickHandler(e: Event) {
-		this.open = !this.open;
-	}
+	@property({type: Boolean}) open = true;
+	@property({type: String}) title = 'Modal';
+	@property({type: String}) text = '';
+	@property({type: String}) clickAction = '';
 
-	static get styles() {
-		return css`
-      :host {
-        font-family: Arial, Helvetica, sans-serif;
+
+	static styles = css` 
+	    :host {
+        
       }
       .wrapper {
-
+        width: 100%;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
         opacity: 0;
         position: absolute;
-        z-index: 400;
+        z-index: 999;
         transition: opacity 0.25s ease-in;
-        width: 100dvw;
-        height: 100dvh
       }
       .wrapper:not(.open) {
         visibility: hidden;
@@ -42,8 +34,7 @@ export class ModalDialog extends LitElement {
         align-items: center;
         display: flex;
         justify-content: center;
-        width: 580px;
-        height: 580px;
+       
         opacity: 1;
         visibility: visible;
       }
@@ -74,35 +65,48 @@ export class ModalDialog extends LitElement {
         text-decoration: none;
         display: inline-block;
         margin-top: 10px;
-      }`;
-	}
+      }
+      #title {
+        color: red;
+      }
+      #content {
+        color: red;
+      }
+      `;
 
+	
+  
 	render() {
-		return html`
-      <div class="${classMap({ wrapper: true, open: this.open })}">
+	  return html`
+		  <div class="${classMap({wrapper: true, open: this.open})}">
         <div class="overlay" @click="${this.close}"></div>
         <div class="dialog">
           <h1 id="title">${this.title}</h1>
-          <div id="content" class="content">Content Here</div>
-          <button @click=${this.handleClick}>${this.open}</button>
+          <div id="content" class="content">
+            <slot name="content"></slot>
+          </div>
+          <button @click=${this.handleClick}>${this.clickAction}</button>
         </div>
       </div>
-    `;
+	  `;
 	}
 
 	close() {
 		this.open = false;
-	}
-
-	handleClick() {
-		this.dispatchEvent(new CustomEvent("button-click"));
+	  }
+	
+	  handleClick() {
+		this.dispatchEvent(new CustomEvent('button-click'));
 		this.close();
-	}
+	  }
+
 }
+
+customElements.define('modal-dialog', ModalDialog);
+
 
 declare global {
 	interface HTMLElementTagNameMap {
 		"modal-dialog": ModalDialog;
 	}
 }
-

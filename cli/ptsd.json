@@ -3,65 +3,6 @@
     "color": "#8f51f5"
   },
   "nodes": {
-    "ptsd/clinical_presentation/symptoms": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Symptoms",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/clinical_presentation/symptoms/page": {
-      "color": "#260038",
-      "position": {
-        "x": 7,
-        "z": 13
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/clinical_presentation/symptoms/page",
-      "content": {
-        "default": {
-          "label": "ptsd/clinical_presentation/symptoms/page",
-          "html": [
-            "ptsd/clinical_presentation/symptoms/page"
-          ],
-          "requires": [
-            "ptsd/clinical_presentation/symptoms/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
-    "ptsd/clinical_presentation/comorbidities/page": {
-      "color": "#260038",
-      "position": {
-        "x": 3,
-        "z": -12
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/clinical_presentation/comorbidities/page",
-      "content": {
-        "default": {
-          "label": "ptsd/clinical_presentation/comorbidities/page",
-          "html": [
-            "ptsd/clinical_presentation/comorbidities/page"
-          ],
-          "requires": [
-            "ptsd/clinical_presentation/comorbidities/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
     "ptsd/clinical_presentation": {
       "color": "#260038",
       "position": {
@@ -86,6 +27,65 @@
       "connections": {},
       "label": "Ptsd",
       "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/symptoms": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Symptoms",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/symptoms/page": {
+      "color": "#260038",
+      "position": {
+        "x": 2,
+        "z": 12
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/clinical_presentation/symptoms/page",
+      "content": {
+        "default": {
+          "label": "ptsd/clinical_presentation/symptoms/page",
+          "html": [
+            "ptsd/clinical_presentation/symptoms/page"
+          ],
+          "requires": [
+            "ptsd/clinical_presentation/symptoms/js/index.js"
+          ]
+        }
+      },
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/comorbidities/page": {
+      "color": "#260038",
+      "position": {
+        "x": 20,
+        "z": 18
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/clinical_presentation/comorbidities/page",
+      "content": {
+        "default": {
+          "label": "ptsd/clinical_presentation/comorbidities/page",
+          "html": [
+            "ptsd/clinical_presentation/comorbidities/page"
+          ],
+          "requires": [
+            "ptsd/clinical_presentation/comorbidities/js/index.js"
+          ]
+        }
+      },
       "distance": 32
     },
     "ptsd/clinical_presentation/comorbidities": {
