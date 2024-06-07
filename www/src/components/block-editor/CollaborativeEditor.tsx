@@ -129,17 +129,16 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
 
     const zip = new JSZip();
 
-
-
     const blockOrder: Array<string> = []
 
     for await (const block of editor.document) {
-      const html = await editor.blocksToHTMLLossy([block]);
+      // const html = await editor.blocksToHTMLLossy([block]);
+      const blocks = editor.document
       const textEncoder = new TextEncoder();
 
-      const utf8 = textEncoder.encode(html)
+      const utf8 = textEncoder.encode(JSON.stringify(blocks))
 
-      const filename = `${block.id}.html`
+      const filename = `${block.id}.json`
 
       switch (block.type) {
         case 'paragraph':
@@ -156,24 +155,6 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
       }
     }
 
-
-
-    // editor.forEachBlock((block) => {
-
-    //   const html = editor.blocksToHTMLLossy([block]);
-    //   const filename = `${block.id}.html`
-
-    //   switch (block.type) {
-    //     default: {
-    //       blockOrder.push(filename)
-    //       zip.file(filename, html);
-    //     }
-    //   }
-
-
-    //   return true
-
-    // });
     const metadata = { blockOrder: blockOrder, datetime: new Date().getUTCDate() }
 
     zip.file('metadata.json', JSON.stringify(metadata));
@@ -190,8 +171,8 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
 
 
   return (
-    <div className='flex flex-col bg-white absolute top-0 right-0 left-0 bottom-0'>
-      <div className='top-0 right-0 left-0 bottom-0 flex flex-grow-0 flex-shrink-0 justify-between items-start bg-slate-50 p-4 z-50'>
+    <div className='absolute top-0 bottom-0 left-0 right-0 flex flex-col bg-white'>
+      <div className='top-0 bottom-0 left-0 right-0 z-50 flex items-start justify-between flex-grow-0 flex-shrink-0 p-4 bg-slate-50'>
         <Button onClick={handleExport}>
           Export
         </Button>
@@ -210,7 +191,7 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
         <Avatars />
       </div>
       <div className="flex flex-row w-full h-full">
-        <div className='flex flex-col h-full flex-1'>
+        <div className='flex flex-col flex-1 h-full'>
           <BlockNoteView
             editor={editor}
             slashMenu={false}
@@ -283,7 +264,7 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
               )} />
           </BlockNoteView>
         </div>
-        <div className="flex flex-col h-full bg-gray-900  items-start justify-start gap-2 p-2 overflow-y-scroll">
+        <div className="flex flex-col items-start justify-start h-full gap-2 p-2 overflow-y-scroll bg-gray-900">
           <>
             {threads.map((thread) => (
               <ThreadComposer key={thread.id} thread={thread} />

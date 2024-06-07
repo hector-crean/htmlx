@@ -1,6 +1,6 @@
 import { Liveblocks } from "@liveblocks/node";
 
-const LIVEBLOCKS_SECRET_KEY = process.env.LIVEBLOCKS_SECRET_KEY ?? 'sk_dev_DeSgaxOtliASkZ1DiFF_sM3iUhKYVBSDA53LxPZsdC6NiG6zMDF6jrlW4W-8zbkm' as string
+const LIVEBLOCKS_SECRET_KEY = "sk_prod_CaklGs0VI-T7UxGn8LX-RZaJIEcg9YeNHcB416LvHt4wY4z0R6Joo2sAAePxJQpD"
 
 const liveblocks = new Liveblocks({
     secret: LIVEBLOCKS_SECRET_KEY
