@@ -3,13 +3,14 @@ use maud::{Markup, Render};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
-use std::fmt::Write;
+use std::fmt::{format, Write};
+use strum::Display;
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, specta::Type, PartialEq)]
 #[serde(tag = "type", content = "data")]
 pub enum RichText {
     Html(String),
-    Tiptap(JSONContent),
+    Tiptap(BranchNode),
 }
 
 impl Default for RichText {
@@ -31,7 +32,7 @@ impl maud::Render for RichText {
     }
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, specta::Type, PartialEq)]
 pub struct RichTextProps {
     pub text: RichText,
 }
@@ -52,16 +53,64 @@ impl maud::Render for RichTextProps {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-struct Attrs {
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Display, specta::Type)]
+#[serde(rename_all = "lowercase")]
+pub enum BranchTag {
+    Doc,
+    Div,
+    Paragraph,
+    // Add other branch tags as needed
+}
+
+impl BranchTag {
+    fn tag(&self) -> &str {
+        match self {
+            BranchTag::Div => "div",
+            BranchTag::Paragraph => "p",
+            _ => "div",
+        }
+    }
+}
+
+impl Default for BranchTag {
+    fn default() -> Self {
+        BranchTag::Div
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Display, specta::Type)]
+#[serde(rename_all = "lowercase")]
+pub enum LeafTag {
+    Text,
+    // Add other leaf tags as needed
+}
+
+impl Default for LeafTag {
+    fn default() -> Self {
+        LeafTag::Text
+    }
+}
+impl LeafTag {
+    fn tag(&self) -> &str {
+        match self {
+            LeafTag::Text => "text",
+            _ => "span",
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, Default)]
+pub struct Attrs {
     #[serde(flatten)]
     map: HashMap<String, Value>,
 }
+
 impl specta::Type for Attrs {
     fn inline(type_map: &mut specta::TypeMap, generics: specta::Generics) -> specta::DataType {
         specta::DataType::Any
     }
 }
+
 impl Attrs {
     fn new() -> Self {
         Self {
@@ -70,65 +119,229 @@ impl Attrs {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, specta::Type)]
-pub struct JSONContent {
-    pub content_type: Option<String>,
-    pub attrs: Option<Attrs>,
-    pub content: Option<Vec<JSONContent>>,
-    pub marks: Option<Vec<Mark>>,
-    pub text: Option<String>,
-    pub other: Attrs,
-}
-
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, specta::Type)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, specta::Type, Default)]
 pub struct Mark {
-    pub mark_type: String,
+    #[serde(rename = "type")]
+    pub ty: String,
     pub attrs: Option<Attrs>,
-    pub other: Attrs,
-}
-
-impl JSONContent {
-    pub fn new() -> Self {
-        JSONContent {
-            content_type: None,
-            attrs: None,
-            content: None,
-            marks: None,
-            text: None,
-            other: Attrs::new(),
-        }
-    }
 }
 
 impl Mark {
-    pub fn new(mark_type: String) -> Self {
-        Mark {
-            mark_type,
+    pub fn new() -> Self {
+        Self {
+            ty: String::new(),
             attrs: None,
-            other: Attrs::new(),
         }
     }
 }
 
-impl Render for JSONContent {
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, specta::Type, Default, PartialEq)]
+pub struct BranchNode {
+    #[serde(rename = "type")]
+    pub ty: BranchTag,
+    pub attrs: Option<Attrs>,
+    #[serde(rename = "content")]
+    pub children: Option<Vec<TreeNode>>,
+}
+
+impl BranchNode {
+    pub fn new() -> Self {
+        Self {
+            ty: BranchTag::Div,
+            attrs: None,
+            children: None,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, specta::Type, Default)]
+pub struct LeafNode {
+    #[serde(rename = "type")]
+    pub ty: LeafTag,
+    pub text: Option<String>,
+    pub attrs: Option<Attrs>,
+    pub marks: Option<Vec<Mark>>,
+}
+
+impl LeafNode {
+    pub fn new() -> Self {
+        Self {
+            ty: LeafTag::Text,
+            text: None,
+            attrs: None,
+            marks: None,
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, specta::Type, Debug, Clone, PartialEq)]
+#[serde(untagged)]
+pub enum TreeNode {
+    Leaf(LeafNode),
+    Branch(BranchNode),
+}
+
+impl Default for TreeNode {
+    fn default() -> Self {
+        Self::Branch(BranchNode::default())
+    }
+}
+
+impl Render for LeafNode {
     fn render(&self) -> Markup {
-        let tag = self
-            .content_type
-            .clone()
-            .unwrap_or_else(|| "div".to_string());
+        let tag = self.ty.tag();
+
+        let attrs = if let Some(attrs) = &self.attrs {
+            attrs
+                .map
+                .iter()
+                .map(|(key, value)| {
+                    if let Some(value) = value.as_str() {
+                        let attr_str = format!("{:?}={:?}", key.to_string(), value.to_string());
+                        maud::PreEscaped(attr_str)
+                    } else {
+                        maud::PreEscaped("".to_string())
+                    }
+                })
+                .collect::<Vec<maud::PreEscaped<String>>>()
+        } else {
+            vec![]
+        };
 
         html! {
-            (maud::PreEscaped(format!("<{} ", tag)))
-
-            @match &self.content {
-                Some(blocks) => {
-                    @for block in blocks {
-                        (block)
-                    }
+            (maud::PreEscaped(format!("<{}", tag)))
+            @for attr in &attrs {
+                (attr)
+            }
+            (maud::PreEscaped(">"))
+            @match &self.text {
+                Some(text) =>  {
+                    (text)
                 },
-                None => ("")
+                None => {}
             }
             (maud::PreEscaped(format!("</{}>", tag)))
         }
+    }
+}
+
+impl Render for BranchNode {
+    fn render(&self) -> Markup {
+        let tag = self.ty.tag();
+
+        let attrs = if let Some(attrs) = &self.attrs {
+            attrs
+                .map
+                .iter()
+                .map(|(key, value)| {
+                    if let Some(value) = value.as_str() {
+                        let attr_str = format!("{:?}={:?}", key.to_string(), value.to_string());
+                        maud::PreEscaped(attr_str)
+                    } else {
+                        maud::PreEscaped("".to_string())
+                    }
+                })
+                .collect::<Vec<maud::PreEscaped<String>>>()
+        } else {
+            vec![]
+        };
+
+        html! {
+            (maud::PreEscaped(format!("<{}", tag)))
+            @for attr in &attrs {
+                (attr)
+            }
+            (maud::PreEscaped(">"))
+            @match &self.children {
+                Some(blocks) => {
+                    @for block in blocks {
+                       @match block {
+                        TreeNode::Leaf(leaf) => (leaf),
+                        TreeNode::Branch(branch) => (branch)
+                       }
+                    }
+                },
+                None => {}
+            }
+            (maud::PreEscaped(format!("</{}>", tag)))
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use maud::{html, PreEscaped, Render};
+
+    static JSON_DATA: &str = r#"
+    {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "It’s 19871. You can’t t"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "urn on a radio, or go "
+            },
+            {
+              "type": "text",
+              "text": "to a mall without hearing Olivia Newton-John’s hit song, Physical."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Hello,"
+            }
+          ]
+        },
+        {
+          "type": "paragraph"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "how good is this"
+            }
+          ]
+        }
+      ]
+    }
+    "#;
+
+    #[test]
+    fn test_json_content_rendering() {
+        let doc: BranchNode = serde_json::from_str(JSON_DATA).unwrap();
+        println!("{:#?}", doc);
+
+        let serialized = serde_json::to_string_pretty(&doc).unwrap();
+        println!("{}", serialized);
+
+        // assert_eq!(rendered, expected_output);
+    }
+
+    #[test]
+    fn render_json() {
+        let doc: BranchNode = serde_json::from_str(JSON_DATA).unwrap();
+        println!("{:#?}", doc);
+
+        let rendered = doc.render().0.to_string();
+
+        println!("{:?}", &rendered);
     }
 }
