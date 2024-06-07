@@ -1,8 +1,8 @@
 
 import { InteractiveBrain, Pathways, Regions } from '@/components/interative-brain';
+import pathways from '@/components/interative-brain/brain-pathways.json';
+import regions from '@/components/interative-brain/brain-regions.json';
 import tabs from '@/components/tabs';
-import pathways from '@/webcomponents/interative-brain/brain-pathways.json';
-import regions from '@/webcomponents/interative-brain/brain-regions.json';
 import Swiper from 'swiper/bundle';
 
 

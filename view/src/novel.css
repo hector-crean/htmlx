@@ -1,0 +1,95 @@
+@supports (animation-timeline: view()) {
+    @keyframe appear {
+        from {
+            opacity: 0;
+            scale: 0.8
+        }
+        to {
+            opacity: 1;
+            scale: 1;
+        }
+    }
+
+    img {
+        animation: appear linear;
+        animation-timeline: view();
+        animation-range: entry 25% cover 50%;
+    }
+}
+
+
+.spin-on-scroll {
+    animation: spin linear both;
+    animation-timeline: scroll();
+}
+
+
+
+@keyframes fade-in {
+    to { opacity: 1}
+}
+@keyframes shadow-in {
+    to { box-shadow: 0 10px 10px #0003 }
+}
+
+nav {
+    animation:
+        fade-in linear both,
+        shadoow-in linear both
+    ;
+    animation-timeline: scroll();
+}
+
+
+.body_text {
+    text-wrap: pretty;
+    text-wrap: balanced;
+}
+
+#submenu {
+    position-anchor: —submenu;
+    top: anchor(top);
+    Left: anchor(right);
+    margin-left: var(—padding);
+    position-try-options: —bottom;
+    Transition: top 0.25s, left: 0.25s;
+    width: max-content;
+}
+    
+@position-try —bottom {
+    top: anchor(left);
+    left: anchor(bottom);
+    margin-left: var(—padding);
+    }
+
+
+
+.anchor {
+    anchor-name: --my-anchor;
+}
+.positioned {
+    position: absolute;
+    top: anchor(--my-anchor bottom);
+    justify-self: anchor-center;
+}
+
+
+@property --card-bg {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: red;
+}
+
+
+dialog, ::backdrop {
+    opacity: 0;
+    transition: opacity 1s, display 1s allow-discrete, overlay 1s allow-discrete;
+}
+[open], [open]:backdrop {
+    opacity: 1;
+}
+@starting-style {
+    [open], [open]::backdrop {
+        opacity: 0;
+    }
+}
