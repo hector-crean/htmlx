@@ -1,3 +1,6 @@
+pub mod css;
+
+use css::css_to_tailwind;
 use maud::{html, PreEscaped};
 use maud::{Markup, Render};
 use serde::{Deserialize, Serialize};
@@ -5,6 +8,7 @@ use serde_json::Value;
 use std::collections::HashMap;
 use std::fmt::{format, Write};
 use strum::Display;
+use uuid::Uuid;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, specta::Type, PartialEq)]
 #[serde(tag = "type", content = "data")]
@@ -59,6 +63,7 @@ pub enum BranchTag {
     Doc,
     Div,
     Paragraph,
+    Link,
     // Add other branch tags as needed
 }
 
@@ -135,32 +140,54 @@ impl Mark {
     }
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, specta::Type, Default, PartialEq)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default, PartialEq)]
 pub struct BranchNode {
+    id: String,
     #[serde(rename = "type")]
     pub ty: BranchTag,
-    pub attrs: Option<Attrs>,
+    pub props: Attrs,
     #[serde(rename = "content")]
-    pub children: Option<Vec<TreeNode>>,
+    pub children: Vec<TreeNode>,
+    #[serde(rename = "children")]
+    pub children2: Vec<TreeNode>,
+    #[serde(flatten)]
+    pub other: Option<HashMap<String, Value>>,
+}
+
+impl specta::Type for BranchNode {
+    fn inline(type_map: &mut specta::TypeMap, generics: specta::Generics) -> specta::DataType {
+        specta::DataType::Any
+    }
 }
 
 impl BranchNode {
     pub fn new() -> Self {
         Self {
+            id: Uuid::new_v4().to_string(),
             ty: BranchTag::Div,
-            attrs: None,
-            children: None,
+            props: Attrs::new(),
+            children: vec![],
+            children2: vec![],
+            other: None,
         }
     }
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, specta::Type, Default)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, Default)]
 pub struct LeafNode {
     #[serde(rename = "type")]
     pub ty: LeafTag,
     pub text: Option<String>,
-    pub attrs: Option<Attrs>,
-    pub marks: Option<Vec<Mark>>,
+    #[serde(rename = "styles")]
+    pub marks: Attrs,
+    #[serde(flatten)]
+    pub other: Option<HashMap<String, Value>>,
+}
+
+impl specta::Type for LeafNode {
+    fn inline(type_map: &mut specta::TypeMap, generics: specta::Generics) -> specta::DataType {
+        specta::DataType::Any
+    }
 }
 
 impl LeafNode {
@@ -168,8 +195,8 @@ impl LeafNode {
         Self {
             ty: LeafTag::Text,
             text: None,
-            attrs: None,
-            marks: None,
+            other: None,
+            marks: Attrs::new(),
         }
     }
 }
@@ -179,6 +206,17 @@ impl LeafNode {
 pub enum TreeNode {
     Leaf(LeafNode),
     Branch(BranchNode),
+}
+
+impl Render for TreeNode {
+    fn render(&self) -> Markup {
+        html! {
+            @match self {
+                TreeNode::Leaf(leaf) => (leaf),
+                TreeNode::Branch(branch) => (branch)
+               }
+        }
+    }
 }
 
 impl Default for TreeNode {
@@ -191,28 +229,13 @@ impl Render for LeafNode {
     fn render(&self) -> Markup {
         let tag = self.ty.tag();
 
-        let attrs = if let Some(attrs) = &self.attrs {
-            attrs
-                .map
-                .iter()
-                .map(|(key, value)| {
-                    if let Some(value) = value.as_str() {
-                        let attr_str = format!("{:?}={:?}", key.to_string(), value.to_string());
-                        maud::PreEscaped(attr_str)
-                    } else {
-                        maud::PreEscaped("".to_string())
-                    }
-                })
-                .collect::<Vec<maud::PreEscaped<String>>>()
-        } else {
-            vec![]
-        };
+        let class = css_to_tailwind(self.marks.map.clone());
 
         html! {
             (maud::PreEscaped(format!("<{}", tag)))
-            @for attr in &attrs {
-                (attr)
-            }
+            // @for mark in self.marks {
+            // }
+            (maud::PreEscaped(format!(" class={:?}", class)))
             (maud::PreEscaped(">"))
             @match &self.text {
                 Some(text) =>  {
@@ -229,40 +252,18 @@ impl Render for BranchNode {
     fn render(&self) -> Markup {
         let tag = self.ty.tag();
 
-        let attrs = if let Some(attrs) = &self.attrs {
-            attrs
-                .map
-                .iter()
-                .map(|(key, value)| {
-                    if let Some(value) = value.as_str() {
-                        let attr_str = format!("{:?}={:?}", key.to_string(), value.to_string());
-                        maud::PreEscaped(attr_str)
-                    } else {
-                        maud::PreEscaped("".to_string())
-                    }
-                })
-                .collect::<Vec<maud::PreEscaped<String>>>()
-        } else {
-            vec![]
-        };
+        let class = css_to_tailwind(self.props.map.clone());
 
         html! {
             (maud::PreEscaped(format!("<{}", tag)))
-            @for attr in &attrs {
-                (attr)
-            }
+            // @for prop in props {
+            //     (prop)
+            // }
+            (maud::PreEscaped(format!(" class={:?}", class)))
             (maud::PreEscaped(">"))
-            @match &self.children {
-                Some(blocks) => {
-                    @for block in blocks {
-                       @match block {
-                        TreeNode::Leaf(leaf) => (leaf),
-                        TreeNode::Branch(branch) => (branch)
-                       }
-                    }
-                },
-                None => {}
-            }
+            @for node in &self.children {
+                (node)
+              }
             (maud::PreEscaped(format!("</{}>", tag)))
         }
     }
@@ -272,76 +273,33 @@ impl Render for BranchNode {
 mod tests {
     use super::*;
     use maud::{html, PreEscaped, Render};
+    use serde_json::json;
 
-    static JSON_DATA: &str = r#"
-    {
-      "type": "doc",
-      "content": [
-        {
-          "type": "paragraph",
-          "content": [
-            {
-              "type": "text",
-              "text": "It’s 19871. You can’t t"
-            },
-            {
-              "type": "text",
-              "marks": [
-                {
-                  "type": "bold"
-                }
-              ],
-              "text": "urn on a radio, or go "
-            },
-            {
-              "type": "text",
-              "text": "to a mall without hearing Olivia Newton-John’s hit song, Physical."
-            }
-          ]
-        },
-        {
-          "type": "paragraph",
-          "content": [
-            {
-              "type": "text",
-              "text": "Hello,"
-            }
-          ]
-        },
-        {
-          "type": "paragraph"
-        },
-        {
-          "type": "paragraph",
-          "content": [
-            {
-              "type": "text",
-              "text": "how good is this"
-            }
-          ]
-        }
-      ]
-    }
-    "#;
+    static JSON_DATA: &str = include_str!("./rich_text.json");
 
     #[test]
-    fn test_json_content_rendering() {
-        let doc: BranchNode = serde_json::from_str(JSON_DATA).unwrap();
+    fn test_json_content_rendering() -> Result<(), serde_json::Error> {
+        let doc: Vec<TreeNode> = serde_json::from_str(JSON_DATA)?;
         println!("{:#?}", doc);
 
         let serialized = serde_json::to_string_pretty(&doc).unwrap();
         println!("{}", serialized);
 
         // assert_eq!(rendered, expected_output);
+        Ok(())
     }
 
     #[test]
-    fn render_json() {
-        let doc: BranchNode = serde_json::from_str(JSON_DATA).unwrap();
+    fn render_json() -> Result<(), serde_json::Error> {
+        let doc: Vec<BranchNode> = serde_json::from_str(JSON_DATA)?;
         println!("{:#?}", doc);
 
-        let rendered = doc.render().0.to_string();
+        for node in doc {
+            let rendered = node.render().0.to_string();
 
-        println!("{:?}", &rendered);
+            println!("{:?}", &rendered);
+        }
+
+        Ok(())
     }
 }

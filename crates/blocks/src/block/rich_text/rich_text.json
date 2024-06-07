@@ -1,0 +1,101 @@
+[
+  {
+    "id": "initialBlockId",
+    "type": "paragraph",
+    "props": {
+      "textColor": "default",
+      "backgroundColor": "default",
+      "textAlignment": "left"
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "La orquesta ",
+        "styles": {}
+      },
+      {
+        "type": "text",
+        "text": "exigió trabajar con los ",
+        "styles": {
+          "code": true
+        }
+      },
+      {
+        "type": "text",
+        "text": "mayores éxitos de la banda y que no hubiese una jerarquía desigual entre ellos. Por esa razón, Kolonovits arregló varias canciones y ",
+        "styles": {}
+      },
+     
+      {
+        "type": "text",
+        "text": " algunos instrumentos en ",
+        "styles": {}
+      },
+    
+      {
+        "type": "text",
+        "text": " poco usuales para l",
+        "styles": {}
+      },
+      {
+        "type": "text",
+        "text": "a ",
+        "styles": {
+          "underline": true
+        }
+      },
+      {
+        "type": "text",
+        "text": "música clásica, con el fin de no excluir a ningún concertista. Se estima que treinta canciones fueron arregladas, pero solo un tercio figuró en la producción discográfica. La grabación comenzó en enero de 2000 en el Tonstudio Robert Hefner en ",
+        "styles": {
+          "italic": true,
+          "underline": true
+        }
+      },
+     
+      {
+        "type": "text",
+        "text": " (",
+        "styles": {
+          "italic": true,
+          "underline": true
+        }
+      },
+     
+      {
+        "type": "text",
+        "text": ") y se llevó a cabo por fragmentos. ",
+        "styles": {
+          "italic": true,
+          "underline": true
+        }
+      },
+      {
+        "type": "text",
+        "text": "En ese mes",
+        "styles": {
+          "bold": true,
+          "italic": true,
+          "underline": true
+        }
+      },
+      {
+        "type": "text",
+        "text": ", Scorpions y Kolonovits registraron",
+        "styles": {
+          "bold": true,
+          "underline": true
+        }
+      },
+      {
+        "type": "text",
+        "text": " la parte de la banda, mientras que la filarmónica lo hizo en marzo en el es",
+        "styles": {
+          "underline": true
+        }
+      }
+    ],
+    "children": []
+   
+  }
+]
