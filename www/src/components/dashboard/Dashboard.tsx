@@ -16,7 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {
   Table,
@@ -29,6 +29,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CreateRoomParamsType } from "@/lib/client/room/create";
+import { DeleteRoomParamsType } from "@/lib/client/room/delete";
 import { RoomsQueryResultType } from "@/lib/client/room/get";
 import { RoomInfoType } from "@/lib/types";
 import { File, ListFilter, MoreHorizontal } from "lucide-react";
@@ -44,23 +45,21 @@ interface DashboardProps {
   rooms: RoomsQueryResultType;
   filters: Array<DocumentFilter>;
   createRoom: (params: CreateRoomParamsType) => Promise<RoomInfoType>;
+  deleteRoom: (params: DeleteRoomParamsType) => Promise<RoomInfoType>;
 }
-const Dashboard = ({ rooms, filters, createRoom }: DashboardProps) => {
+const Dashboard = ({ rooms, filters, createRoom, deleteRoom }: DashboardProps) => {
   const filter = useMemo(() => filters?.[0] ?? "all", [filters]);
 
-  const filteredRooms = useMemo(
-    () => ({ ...rooms, data: rooms.data }),
-    [rooms, filter]
-  );
+
   const router = useRouter();
 
   return (
     <TooltipProvider>
-      <div className="flex min-h-screen w-full flex-col bg-muted/40">
+      <div className="flex flex-col w-full min-h-screen bg-muted/40">
         {/* <Aside /> */}
         <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
           <Header filter={filter} />
-          <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+          <main className="grid items-start flex-1 gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
             <Tabs defaultValue={"all"} value={filter}>
               <div className="flex items-center">
                 <TabsList>
@@ -68,14 +67,14 @@ const Dashboard = ({ rooms, filters, createRoom }: DashboardProps) => {
                     <TabsTrigger key={key} value={docFilters.all.id}>
                       <Link
                         href={`${key}`}
-                        className="flex h-9 w-12 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                        className="flex items-center justify-center w-12 transition-colors rounded-lg h-9 text-muted-foreground hover:text-foreground md:h-8 md:w-8"
                       >
                         <span>{key}</span>
                       </Link>
                     </TabsTrigger>
                   ))}
                 </TabsList>
-                <div className="ml-auto flex items-center gap-2">
+                <div className="flex items-center gap-2 ml-auto">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="sm" className="h-8 gap-1">
@@ -92,7 +91,7 @@ const Dashboard = ({ rooms, filters, createRoom }: DashboardProps) => {
                         <DropdownMenuCheckboxItem key={f} checked={f === filter}>
                           <Link
                             href={`/documents/${f}`}
-                            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                            className="flex items-center justify-center transition-colors rounded-lg h-9 w-9 text-muted-foreground hover:text-foreground md:h-8 md:w-8"
                           >
                             <span>{f}</span>
                           </Link>
@@ -146,15 +145,13 @@ const Dashboard = ({ rooms, filters, createRoom }: DashboardProps) => {
                         {rooms.data.map((room, idx) => (
                           <TableRow
                             key={`${idx}`}
-                            onClick={() =>
-                              router.push(`/${room.metadata.type}/${room.id}`)
-                            }
+
                             className="hover:bg-slate-400"
                           >
                             <TableCell className="hidden sm:table-cell">
                               <Image
                                 alt={room.id}
-                                className="aspect-square rounded-md object-cover"
+                                className="object-cover rounded-md aspect-square"
                                 height="64"
                                 src="/placeholder.png"
                                 width="64"
@@ -202,23 +199,25 @@ const Dashboard = ({ rooms, filters, createRoom }: DashboardProps) => {
                                     size="icon"
                                     variant="ghost"
                                   >
-                                    <MoreHorizontal className="h-4 w-4" />
+                                    <MoreHorizontal className="w-4 h-4" />
                                     <span className="sr-only">Toggle menu</span>
                                   </Button>
                                 </DropdownMenuTrigger>
+
+
                                 <DropdownMenuContent align="end">
-                                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                  <DropdownMenuItem>
-                                    {/* <form action={handleDeleteRoom}>
-                              <input
-                                name="roomId"
-                                className="hidden"
-                                value={room.id}
-                              />
-                              <button type="submit">Delete</button>
-                            </form> */}
-                                  </DropdownMenuItem>
+                                  {/* <DropdownMenuItem onSelect={(e) => {
+                                    e.preventDefault()
+                                    e.stopPropagation()
+                                    deleteRoom({ id: room.id })
+                                  }}>DeleteRoom</DropdownMenuItem> */}
+                                  <DropdownMenuItem onSelect={(e) => {
+                                    router.push(`/${room.metadata.type}/${room.id}`)
+
+                                  }}>Go to room</DropdownMenuItem>
+
                                 </DropdownMenuContent>
+
                               </DropdownMenu>
                             </TableCell>
                           </TableRow>
@@ -242,7 +241,7 @@ const Dashboard = ({ rooms, filters, createRoom }: DashboardProps) => {
           </main>
         </div>
       </div>
-    </TooltipProvider>
+    </TooltipProvider >
   );
 };
 

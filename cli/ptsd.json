@@ -3,17 +3,27 @@
     "color": "#8f51f5"
   },
   "nodes": {
-    "ptsd/clinical_presentation": {
+    "ptsd/diagnosis/stigma/page": {
       "color": "#260038",
       "position": {
-        "x": -48,
-        "z": 0
+        "x": 15,
+        "z": -2
       },
-      "type": "category",
-      "category": true,
+      "type": "secondary",
+      "category": null,
       "connections": {},
-      "label": "Clinical_presentation",
-      "content": {},
+      "label": "Ptsd/diagnosis/stigma/page",
+      "content": {
+        "default": {
+          "label": "ptsd/diagnosis/stigma/page",
+          "html": [
+            "ptsd/diagnosis/stigma/page"
+          ],
+          "requires": [
+            "ptsd/diagnosis/stigma/js/index.js"
+          ]
+        }
+      },
       "distance": 32
     },
     "ptsd": {
@@ -26,6 +36,19 @@
       "category": true,
       "connections": {},
       "label": "Ptsd",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/comorbidities": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Comorbidities",
       "content": {},
       "distance": 32
     },
@@ -42,11 +65,24 @@
       "content": {},
       "distance": 32
     },
+    "ptsd/clinical_presentation": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Clinical_presentation",
+      "content": {},
+      "distance": 32
+    },
     "ptsd/clinical_presentation/symptoms/page": {
       "color": "#260038",
       "position": {
-        "x": 2,
-        "z": 12
+        "x": 10,
+        "z": 2
       },
       "type": "secondary",
       "category": null,
@@ -68,8 +104,8 @@
     "ptsd/clinical_presentation/comorbidities/page": {
       "color": "#260038",
       "position": {
-        "x": 20,
-        "z": 18
+        "x": 5,
+        "z": 2
       },
       "type": "secondary",
       "category": null,
@@ -88,7 +124,7 @@
       },
       "distance": 32
     },
-    "ptsd/clinical_presentation/comorbidities": {
+    "ptsd/diagnosis": {
       "color": "#260038",
       "position": {
         "x": -48,
@@ -97,7 +133,20 @@
       "type": "category",
       "category": true,
       "connections": {},
-      "label": "Comorbidities",
+      "label": "Diagnosis",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/diagnosis/stigma": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Stigma",
       "content": {},
       "distance": 32
     }

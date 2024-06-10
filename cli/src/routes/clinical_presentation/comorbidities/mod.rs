@@ -1,8 +1,11 @@
+use crate::{rich_text, rich_text_block};
 use blocks::block::{
-    bar_chart::{BarChartProps, BarDatum}, placeholder_container::PlaceholderContainerProps, references::ReferencesProps, rich_text::{RichText, RichTextProps}, Block
+    bar_chart::{BarChartProps, BarDatum},
+    placeholder_container::PlaceholderContainerProps,
+    references::ReferencesProps,
+    rich_text::{BranchNode, RichText, RichTextProps},
+    Block,
 };
-
-use crate::rich_text_block;
 
 fn psychiatric_comborbidities_bars() -> Vec<BarDatum> {
     vec![

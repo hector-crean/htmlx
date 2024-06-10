@@ -1,13 +1,12 @@
-use crate::{rich_text, rich_text_block, PROJECT_ROOT};
 use blocks::block::bar_chart::BarChartProps;
 use blocks::block::definition::{DefinitionListProps, DefinitionProps};
+use blocks::block::icon::IconName;
 use blocks::block::icon::IconProps;
 use blocks::block::interactive_brain::{
     BrainComment, BrainRegion, BrainRegionName, CommentGroup, InteractiveBrainProps,
 };
 use blocks::block::references::ReferencesProps;
-use blocks::block::rich_text::{self, RichText, RichTextProps};
-use  blocks::block::icon::IconName;
+use blocks::block::rich_text::{self, BranchNode, RichText, RichTextProps};
 use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation};
 use blocks::block::{Block, BlocksProps};
 use color_eyre::eyre;
@@ -17,43 +16,51 @@ use std::path::{Path, PathBuf};
 use std::vec;
 use uuid::Uuid;
 
-
+use crate::{rich_text, rich_text_block};
 
 pub fn blocks() -> Vec<Block> {
-
-    let definitions: Vec<DefinitionProps> = vec! [
+    let definitions: Vec<DefinitionProps> = vec![
         DefinitionProps {
             id: String::from("hippocampus"),
             color: Some(String::from("#fcf803")),
             term: RichText::Html(String::from("Hippocampus")),
-            definition: RichText::Html(String::from("involved in memory consolidation and maintenance of long-term memory [1]"))
+            definition: RichText::Html(String::from(
+                "involved in memory consolidation and maintenance of long-term memory [1]",
+            )),
         },
         DefinitionProps {
             id: String::from("prefrontal-cortex"),
             color: Some(String::from("#9C548C")),
             term: RichText::Html(String::from("Prefrontal Cortex")),
-            definition: RichText::Html(String::from("involved in working memory, thinking, cognitive processes, and attention [1]"))
+            definition: RichText::Html(String::from(
+                "involved in working memory, thinking, cognitive processes, and attention [1]",
+            )),
         },
         DefinitionProps {
             id: String::from("amygdala"),
             color: Some(String::from("#3283a8")),
             term: RichText::Html(String::from("Amygdala")),
-            definition: RichText::Html(String::from("involved in emotional and behavioral regulation, regulates fear [1]"))
+            definition: RichText::Html(String::from(
+                "involved in emotional and behavioral regulation, regulates fear [1]",
+            )),
         },
         DefinitionProps {
             id: String::from("striatum"),
             color: Some(String::from("green")),
             term: RichText::Html(String::from("Striatum")),
-            definition: RichText::Html(String::from("plays a central role in the motor and reward systems [2]"))
+            definition: RichText::Html(String::from(
+                "plays a central role in the motor and reward systems [2]",
+            )),
         },
         DefinitionProps {
             id: String::from("anterior-cingulate-cortex"),
             color: Some(String::from("#ed0aff")),
             term: RichText::Html(String::from("Anterior cingulate cortex")),
-            definition: RichText::Html(String::from("involved in decision-making and impulse control [1]"))
-        }
+            definition: RichText::Html(String::from(
+                "involved in decision-making and impulse control [1]",
+            )),
+        },
     ];
-
 
     let tabs = TabsProps {
         id: uuid::Uuid::new_v4(),
@@ -355,33 +362,28 @@ pub fn blocks() -> Vec<Block> {
             }
         ]
     };
-    
 
     vec![
         //Clinical Presentation
         // rich_text_block!(
         //     "../../../input/OTS126_PTSD_Symptoms_Node/6bd35d11-fd3c-4907-a376-841dfb3d6c94.html"
         // ),
-       
+
         //Brain regions involved in PTSD
         // rich_text_block!(
         //     "../../../input/OTS126_PTSD_Symptoms_Node/0b6a292c-bcde-466e-9419-bd620555ed6b.html"
         // ),
-        
-       
+
         // Symptoms of PTSD
         // rich_text_block!(
         //     "../../../input/OTS126_PTSD_Symptoms_Node/89201c17-fefc-4470-997d-494c226ad740.html"
         // ),
-        
         Block::TabsBlock(tabs),
         //References
-        
         Block::ReferencesBlock(Box::new(ReferencesProps {
             references: rich_text_block!(
                 "../../../input/OTS126_PTSD_Symptoms_Node/38c6fe92-2267-4814-ac2a-f4313f037a44.html"
-            )
+            ),
         })),
     ]
 }
-

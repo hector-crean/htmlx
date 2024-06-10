@@ -1,0 +1,264 @@
+{
+    "id":"1b940d14-983a-4c19-be83-2b13819180e9",
+    "type":"paragraph",
+    "props":{
+       "textColor":"default",
+       "backgroundColor":"default",
+       "textAlignment":"left"
+    },
+    "content":[
+       
+    ],
+    "children":[
+       {
+          "id":"293e0b04-6ff2-4fd2-9832-d6faa90296a4",
+          "type":"numberedListItem",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":"Kessler RC, Aguilar-Gaxiola S, Alonso J, et al. Trauma and PTSD in the WHO World Mental Health Surveys. ",
+                "styles":{
+                   
+                }
+             },
+             {
+                "type":"text",
+                "text":"Eur J Psychotraumatol",
+                "styles":{
+                   "italic":true
+                }
+             },
+             {
+                "type":"text",
+                "text":". 2017;8(sup5):1353383. Published 2017 Oct 27. doi:10.1080/20008198.2017.1353383",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"96787b2e-8fd9-4141-b888-ba669b4672f4",
+          "type":"numberedListItem",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":"Benfer N, Howell MK, Lucksted A, Romero EG, Drapalski AL. Self-Stigma and PTSD: Conceptualization and Implications for Research and Treatment. ",
+                "styles":{
+                   
+                }
+             },
+             {
+                "type":"text",
+                "text":"Psychiatr Serv. ",
+                "styles":{
+                   "italic":true
+                }
+             },
+             {
+                "type":"text",
+                "text":"2023;74(10):1081-1083. doi:10.1176/",
+                "styles":{
+                   
+                }
+             },
+             {
+                "type":"link",
+                "href":"http://appi.ps",
+                "content":[
+                   {
+                      "type":"text",
+                      "text":"appi.ps",
+                      "styles":{
+                         
+                      }
+                   }
+                ]
+             },
+             {
+                "type":"text",
+                "text":".20220397",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"72e2a897-2a26-4e4a-a7d0-d867b3e3cd92",
+          "type":"numberedListItem",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":"Lewis C, Zammit S, Jones I, Bisson JI. Prevalence and correlates of self-stigma in Post-Traumatic Stress Disorder (PTSD). ",
+                "styles":{
+                   
+                }
+             },
+             {
+                "type":"text",
+                "text":"Eur J Psychotraumatol.",
+                "styles":{
+                   "italic":true
+                }
+             },
+             {
+                "type":"text",
+                "text":" 2022;13(1):2087967. Published 2022 Jul 22. doi:10.1080/20008198.2022.2087967",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"9a9f9994-b08b-4c70-be79-2437515a7362",
+          "type":"numberedListItem",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"link",
+                "href":"https://www.ptsd.va.gov/understand/related/ptsd_work_community.asp#:~:text=Because%20of%20stigma%20about%20PTSD%2C%20others%20may%20look,race%2C%20sexuality%2C%20gender%20identity%2C%20religion%20and%20disability%20status",
+                "content":[
+                   {
+                      "type":"text",
+                      "text":"https://www.ptsd.va.gov/understand/related/ptsd_work_community.asp#:~:text=Because%20of%20stigma%20about%20PTSD%2C%20others%20may%20look,race%2C%20sexuality%2C%20gender%20identity%2C%20religion%20and%20disability%20status",
+                      "styles":{
+                         
+                      }
+                   }
+                ]
+             },
+             {
+                "type":"text",
+                "text":".",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"57f51f38-07a7-4f15-806c-42fa21c53d4d",
+          "type":"numberedListItem",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":"Kantor V, Knefel M, Lueger-Schuster B. Perceived barriers and facilitators of mental health service utilization in adult trauma survivors: A systematic review. ",
+                "styles":{
+                   
+                }
+             },
+             {
+                "type":"text",
+                "text":"Clin Psychol Rev",
+                "styles":{
+                   "italic":true
+                }
+             },
+             {
+                "type":"text",
+                "text":". 2017;52:52-68. doi:10.1016/j.cpr.2016.12.001",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"08b1285c-e464-4168-8987-9b4dfb767d6d",
+          "type":"numberedListItem",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":"Parrott, S. (2023). PTSD in the News: Media Framing, Stigma, and Myths About Mental Illness. ",
+                "styles":{
+                   
+                }
+             },
+             {
+                "type":"text",
+                "text":"Electronic News",
+                "styles":{
+                   "italic":true
+                }
+             },
+             {
+                "type":"text",
+                "text":", 17(3), 181-197.",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"f74c35b0-1c94-420a-87f4-2fc906202401",
+          "type":"numberedListItem",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":"Ghuloum S, Mahfoud ZR, Al-Amin H, Marji T, Kehyayan V. Healthcare Professionals' Attitudes Toward Patients With Mental Illness: A Cross-Sectional Study in Qatar. Front Psychiatry. 2022;13:884947. Published 2022 May 16. doi:10.3389/fpsyt.2022.884947",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       }
+    ]
+ }

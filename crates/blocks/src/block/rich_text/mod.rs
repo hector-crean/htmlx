@@ -5,16 +5,108 @@ use maud::{html, PreEscaped};
 use maud::{Markup, Render};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+use serde_with::skip_serializing_none;
 use std::collections::HashMap;
 use std::fmt::{format, Write};
-use strum::Display;
+use strum::{AsRefStr, Display};
 use uuid::Uuid;
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, Default)]
+pub struct Attrs {
+    #[serde(flatten)]
+    map: HashMap<String, Value>,
+}
+
+impl specta::Type for Attrs {
+    fn inline(type_map: &mut specta::TypeMap, generics: specta::Generics) -> specta::DataType {
+        specta::DataType::Any
+    }
+}
+
+impl Attrs {
+    fn new() -> Self {
+        Self {
+            map: HashMap::new(),
+        }
+    }
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default, PartialEq)]
+pub struct RichTextNode {
+    id: String,
+    #[serde(flatten)]
+    pub node: RichTextNodeInner,
+    //Any blocks nested inside the block. The nested blocks are also represented using Block objects.
+    pub children: Vec<RichTextNode>,
+    //The block's rich text content, usually represented as an array of InlineContent objects. This does not include content from any nested blocks
+    pub content: Vec<RichTextNode>,
+    #[serde(flatten)]
+    pub other: Option<HashMap<String, Value>>,
+}
+
+impl specta::Type for RichTextNode {
+    fn inline(type_map: &mut specta::TypeMap, generics: specta::Generics) -> specta::DataType {
+        specta::DataType::Any
+    }
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type, AsRefStr)]
+#[serde(tag = "type", content = "props")]
+pub enum RichTextNodeInner {
+    #[strum(serialize = "div")]
+    Doc(Attrs),
+    #[strum(serialize = "div")]
+    Div(Attrs),
+    #[strum(serialize = "p")]
+    Paragraph(Attrs),
+    #[strum(serialize = "a")]
+    Link(Attrs),
+    #[strum(serialize = "li")]
+    BulletListItem(Attrs),
+    #[strum(serialize = "span")]
+    Heading(Attrs),
+    #[strum(serialize = "li")]
+    NumberedListItem(Attrs),
+    #[strum(serialize = "text")]
+    Text(Attrs),
+}
+
+impl Render for RichTextNodeInner {
+    fn render(&self) -> Markup {
+        let tag = self.as_ref();
+
+        let props = match &self {
+            RichTextNodeInner::BulletListItem(li) => li,
+        };
+
+        html! {
+            (maud::PreEscaped(format!("<{}", tag)))
+            // @for mark in self.marks {
+            // }
+            (maud::PreEscaped(format!(" class={:?}", class)))
+            (maud::PreEscaped(">"))
+            @match &self.text {
+                Some(text) =>  {
+                    (text)
+                },
+                None => {}
+            }
+            (maud::PreEscaped(format!("</{}>", tag)))
+        }
+    }
+}
+
+impl Default for RichTextNodeInner {
+    fn default() -> Self {
+        Self::Div(Attrs::new())
+    }
+}
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, specta::Type, PartialEq)]
 #[serde(tag = "type", content = "data")]
 pub enum RichText {
     Html(String),
-    Tiptap(BranchNode),
+    Tiptap(RichTextNode),
 }
 
 impl Default for RichText {
@@ -55,157 +147,6 @@ impl maud::Render for RichTextProps {
             (self.text)
         }
     }
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Display, specta::Type)]
-#[serde(rename_all = "lowercase")]
-pub enum BranchTag {
-    Doc,
-    Div,
-    Paragraph,
-    Link,
-    // Add other branch tags as needed
-}
-
-impl BranchTag {
-    fn tag(&self) -> &str {
-        match self {
-            BranchTag::Div => "div",
-            BranchTag::Paragraph => "p",
-            _ => "div",
-        }
-    }
-}
-
-impl Default for BranchTag {
-    fn default() -> Self {
-        BranchTag::Div
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Display, specta::Type)]
-#[serde(rename_all = "lowercase")]
-pub enum LeafTag {
-    Text,
-    // Add other leaf tags as needed
-}
-
-impl Default for LeafTag {
-    fn default() -> Self {
-        LeafTag::Text
-    }
-}
-impl LeafTag {
-    fn tag(&self) -> &str {
-        match self {
-            LeafTag::Text => "text",
-            _ => "span",
-        }
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, Default)]
-pub struct Attrs {
-    #[serde(flatten)]
-    map: HashMap<String, Value>,
-}
-
-impl specta::Type for Attrs {
-    fn inline(type_map: &mut specta::TypeMap, generics: specta::Generics) -> specta::DataType {
-        specta::DataType::Any
-    }
-}
-
-impl Attrs {
-    fn new() -> Self {
-        Self {
-            map: HashMap::new(),
-        }
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, specta::Type, Default)]
-pub struct Mark {
-    #[serde(rename = "type")]
-    pub ty: String,
-    pub attrs: Option<Attrs>,
-}
-
-impl Mark {
-    pub fn new() -> Self {
-        Self {
-            ty: String::new(),
-            attrs: None,
-        }
-    }
-}
-
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default, PartialEq)]
-pub struct BranchNode {
-    id: String,
-    #[serde(rename = "type")]
-    pub ty: BranchTag,
-    pub props: Attrs,
-    #[serde(rename = "content")]
-    pub children: Vec<TreeNode>,
-    #[serde(rename = "children")]
-    pub children2: Vec<TreeNode>,
-    #[serde(flatten)]
-    pub other: Option<HashMap<String, Value>>,
-}
-
-impl specta::Type for BranchNode {
-    fn inline(type_map: &mut specta::TypeMap, generics: specta::Generics) -> specta::DataType {
-        specta::DataType::Any
-    }
-}
-
-impl BranchNode {
-    pub fn new() -> Self {
-        Self {
-            id: Uuid::new_v4().to_string(),
-            ty: BranchTag::Div,
-            props: Attrs::new(),
-            children: vec![],
-            children2: vec![],
-            other: None,
-        }
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, Default)]
-pub struct LeafNode {
-    #[serde(rename = "type")]
-    pub ty: LeafTag,
-    pub text: Option<String>,
-    #[serde(rename = "styles")]
-    pub marks: Attrs,
-    #[serde(flatten)]
-    pub other: Option<HashMap<String, Value>>,
-}
-
-impl specta::Type for LeafNode {
-    fn inline(type_map: &mut specta::TypeMap, generics: specta::Generics) -> specta::DataType {
-        specta::DataType::Any
-    }
-}
-
-impl LeafNode {
-    pub fn new() -> Self {
-        Self {
-            ty: LeafTag::Text,
-            text: None,
-            other: None,
-            marks: Attrs::new(),
-        }
-    }
-}
-
-#[derive(Serialize, Deserialize, specta::Type, Debug, Clone, PartialEq)]
-#[serde(untagged)]
-pub enum TreeNode {
-    Leaf(LeafNode),
-    Branch(BranchNode),
 }
 
 impl Render for TreeNode {
@@ -261,8 +202,11 @@ impl Render for BranchNode {
             // }
             (maud::PreEscaped(format!(" class={:?}", class)))
             (maud::PreEscaped(">"))
-            @for node in &self.children {
+            @for node in &self.content {
                 (node)
+              }
+              @for nested_node in &self.children {
+                (nested_node)
               }
             (maud::PreEscaped(format!("</{}>", tag)))
         }
@@ -279,26 +223,21 @@ mod tests {
 
     #[test]
     fn test_json_content_rendering() -> Result<(), serde_json::Error> {
-        let doc: Vec<TreeNode> = serde_json::from_str(JSON_DATA)?;
+        let doc: TreeNode = serde_json::from_str(JSON_DATA)?;
         println!("{:#?}", doc);
 
         let serialized = serde_json::to_string_pretty(&doc).unwrap();
         println!("{}", serialized);
 
-        // assert_eq!(rendered, expected_output);
         Ok(())
     }
 
     #[test]
     fn render_json() -> Result<(), serde_json::Error> {
-        let doc: Vec<BranchNode> = serde_json::from_str(JSON_DATA)?;
-        println!("{:#?}", doc);
+        let doc: BranchNode = serde_json::from_str(JSON_DATA)?;
 
-        for node in doc {
-            let rendered = node.render().0.to_string();
-
-            println!("{:?}", &rendered);
-        }
+        let rendered = doc.render().0.to_string();
+        println!("{:?}", &rendered);
 
         Ok(())
     }

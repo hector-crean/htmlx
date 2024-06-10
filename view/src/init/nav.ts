@@ -5,12 +5,16 @@ import { router } from "@/main";
 
 const page = {
     init: () => {
-        document?.querySelector("#ptsd_clinical_presentation_symptoms_page")?.addEventListener("click", () => {
-            router.redirectTo("/ptsd/clinical_presentation/symptoms/page");
+        document?.querySelector("#symptoms")?.addEventListener("click", () => {
+            router.redirectTo("/ptsd/clinical_presentation/symptoms");
         });
 
-        document?.querySelector("#ptsd_clinical_presentation_comorbidities_page")?.addEventListener("click", () => {
-            router.redirectTo("/ptsd/clinical_presentation/comorbidities/page");
+        document?.querySelector("#comorbidities")?.addEventListener("click", () => {
+            router.redirectTo("/ptsd/clinical_presentation/comorbidities");
+        });
+
+        document?.querySelector("#stigma")?.addEventListener("click", () => {
+            router.redirectTo("/ptsd/diagnosis/stigma");
         });
 
 

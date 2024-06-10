@@ -5,15 +5,20 @@ import { Presence, RoomEvent, Storage, UserMeta, useRoom, useSelf, useThreads } 
 import { BlockNoteEditor, filterSuggestionItems, getDefaultSlashMenuItems } from "@blocknote/core";
 import "@blocknote/core/fonts/inter.css";
 import {
+  AddBlockButton,
   BasicTextStyleButton,
   BlockNoteView,
   BlockTypeSelect,
   ColorStyleButton,
+  CreateLinkButton,
+  DragHandleButton,
   FormattingToolbar,
   FormattingToolbarController,
   ImageCaptionButton,
   NestBlockButton,
   ReplaceImageButton,
+  SideMenu,
+  SideMenuController,
   SuggestionMenuController,
   TextAlignButton,
   UnnestBlockButton,
@@ -28,6 +33,7 @@ import * as Y from "yjs";
 import { InboxPopover } from "../inbox/Inbox";
 import { Button } from "../ui/button";
 import { Avatars } from "./Avatars";
+import { BlockUUID } from "./BlockUUID";
 import { ThreadButton, ThreadComposer } from "./ThreadButton";
 import { blocknoteSchema } from "./schema";
 
@@ -133,10 +139,9 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
 
     for await (const block of editor.document) {
       // const html = await editor.blocksToHTMLLossy([block]);
-      const blocks = editor.document
       const textEncoder = new TextEncoder();
 
-      const utf8 = textEncoder.encode(JSON.stringify(blocks))
+      const utf8 = textEncoder.encode(JSON.stringify(block))
 
       const filename = `${block.id}.json`
 
@@ -195,11 +200,21 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
           <BlockNoteView
             editor={editor}
             slashMenu={false}
+            sideMenu={false}
             formattingToolbar={false}
             className='relative min-h-full max-w-[900px]'
             theme={theme}
 
           >
+            <SideMenuController
+              sideMenu={(props) => (
+                <SideMenu {...props}>
+                  <DragHandleButton {...props} />
+                  <AddBlockButton {...props} />
+                  <BlockUUID {...props} />
+                </SideMenu>
+              )}
+            />
             {/* Replaces the default Slash Menu. */}
             <SuggestionMenuController
               triggerCharacter={"/"}
@@ -239,6 +254,8 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
                     key={"codeStyleButton"}
                     basicTextStyle={"code"}
                   />
+
+                  <CreateLinkButton key={"linkButton"} />
 
                   <TextAlignButton
                     textAlignment={"left"}

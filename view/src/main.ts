@@ -7,17 +7,22 @@ import './style/components.css';
 import '@/webcomponents';
 
 import Router from "yourrouter";
-
-
-
-import comborbs_init from '@/init/clinical_presentation/comorbidities';
-import symptoms_init from '@/init/clinical_presentation/symptoms';
-import nav_init from '@/init/nav';
 import { RouterConfig } from 'yourrouter/types';
 
+
+//Init
+import comborbs_init from '@/init/clinical_presentation/comorbidities';
+import symptoms_init from '@/init/clinical_presentation/symptoms';
+import stigma_init from '@/init/diagnosis/stigma';
+import nav_init from '@/init/nav';
+//Templates
 import nav from '@/assets/pages/nav.html?raw';
 import comorbidities_page from '@/assets/pages/ptsd/clinical_presentation/comorbidities/page.html?raw';
 import symptoms_page from '@/assets/pages/ptsd/clinical_presentation/symptoms/page.html?raw';
+
+import stigma_page from '@/assets/pages/ptsd/diagnosis/stigma/page.html?raw';
+
+
 import sandbox_page from '@/assets/pages/sandbox.html?raw';
 
 export const fetchTemplate = async (location: string): Promise<string> => {
@@ -56,18 +61,25 @@ const routes: Array<Route> = [
         scripts: [nav_init.init],
     },
     {
-        path: "/ptsd/clinical_presentation/symptoms/page",
+        path: "/ptsd/clinical_presentation/symptoms",
         title: 'Symptoms',
         template: symptoms_page,
         scripts: [symptoms_init.init],
     },
     {
-        path:  "/ptsd/clinical_presentation/comorbidities/page",
+        path:  "/ptsd/clinical_presentation/comorbidities",
         title: 'Symptoms',
         template: comorbidities_page,
         scripts: [comborbs_init.init],
 
     },
+    {
+      path:  "/ptsd/diagnosis/stigma",
+      title: 'Stigma',
+      template: stigma_page,
+      scripts: [stigma_init.init],
+
+  },
     {
       path:  "/sandbox",
       title: 'Sandbox',

@@ -1,0 +1,228 @@
+{
+    "id":"b182874e-54ed-4b26-b1e0-7df6b7c9ea96",
+    "type":"paragraph",
+    "props":{
+       "textColor":"default",
+       "backgroundColor":"default",
+       "textAlignment":"left"
+    },
+    "content":[
+       
+    ],
+    "children":[
+       {
+          "id":"ef6534c0-f071-4af4-b717-0584cd2d802f",
+          "type":"paragraph",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":"The global lifetime prevalence of PTSD is 4-10% [1][2].",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"a9248b58-b820-4a15-a1f4-f4ba099e18d4",
+          "type":"paragraph",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"f15dc386-3d7e-4438-a60c-1731f8588650",
+          "type":"paragraph",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":"PTSD is one of the most common mental disorders in the US, with 7-8 out of every 100 people experiencing PTSD at some point in their lifetime [3][4].",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"ae0c5b1f-3bc8-492d-b6df-478c6df13406",
+          "type":"paragraph",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"aa085ef4-94f1-4c4d-9849-3d55b7c70161",
+          "type":"paragraph",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":"~13 million adults in the US will experience PTSD during a given year [5].",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"30dbe91a-c7bb-4b23-a5ca-d5008bb5a70a",
+          "type":"paragraph",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"26b60146-ccfd-45cf-8490-fd774e955a29",
+          "type":"paragraph",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":">80% of PTSD patients are in the general population rather than the military population [6].",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"d576e9e2-814b-4d12-bcc4-687166ea1f08",
+          "type":"paragraph",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"59688ca9-c532-4557-bed1-f2b1964301c5",
+          "type":"paragraph",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":"The typical age at which PTSD first appears is during young and middle adulthood. Among adults in the United States, the median age of onset if around 23 years old [7].",
+                "styles":{
+                   
+                }
+             }
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"6cf8f552-541d-478b-8eaf-61f28957d244",
+          "type":"paragraph",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             
+          ],
+          "children":[
+             
+          ]
+       },
+       {
+          "id":"bda32d1c-d6d2-4d0b-962b-db7a1107d65a",
+          "type":"paragraph",
+          "props":{
+             "textColor":"default",
+             "backgroundColor":"default",
+             "textAlignment":"left"
+          },
+          "content":[
+             {
+                "type":"text",
+                "text":"The majority of individuals exposed to trauma do not develop PTSD [1]. However, the type of trauma experienced influences the likelihood of developing PTSD. For more information click ",
+                "styles":{
+                   
+                }
+             },
+             {
+                "type":"link",
+                "href":"/trauma-types",
+                "content":[
+                   {
+                      "type":"text",
+                      "text":"here",
+                      "styles":{
+                         
+                      }
+                   }
+                ]
+             }
+          ],
+          "children":[
+             
+          ]
+       }
+    ]
+ }

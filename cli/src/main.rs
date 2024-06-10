@@ -60,11 +60,11 @@ fn main() -> eyre::Result<()> {
 
             routes.build()?;
 
-            let mut routes_file = fs::File::create(format!("{}/routes.json", PROJECT_ROOT))?;
+            let mut routes_file = fs::File::create(format!("{}/routes.json", TEST_PUBLIC_DIR))?;
 
             routes_file.write(routes_json.as_bytes())?;
 
-            let mut data_file = fs::File::create(format!("{}/ptsd.json", PROJECT_ROOT))?;
+            let mut data_file = fs::File::create(format!("{}/ptsd.json", TEST_PUBLIC_DIR))?;
 
             data_file.write(node_data.as_bytes())?;
 
@@ -72,7 +72,7 @@ fn main() -> eyre::Result<()> {
                 routes: templates.clone(),
             };
 
-            let mut nav_file = fs::File::create(format!("{}/nav.html", PROJECT_ROOT))?;
+            let mut nav_file = fs::File::create(format!("{}/nav.html", TEST_PUBLIC_DIR))?;
 
             nav_file.write(nav.render().0.as_bytes())?;
 

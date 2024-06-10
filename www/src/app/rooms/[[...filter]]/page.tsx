@@ -1,6 +1,7 @@
 "use client";
 import Dashboard from "@/components/dashboard/Dashboard";
 import { createRoom } from "@/lib/client/room/create";
+import { deleteRoom } from "@/lib/client/room/delete";
 import { getRooms } from "@/lib/client/room/get";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -34,6 +35,19 @@ const Page = ({ params }: QueryParams) => {
     },
   });
 
+  const deleteRoomFn = useMutation({
+    mutationFn: deleteRoom,
+    onError: console.log,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        type: "all",
+        queryKey: ["rooms"],
+      });
+    },
+  });
+
+
+
   if (roomInfoQuery.isPending) return "Loading...";
 
   if (roomInfoQuery.error)
@@ -45,6 +59,7 @@ const Page = ({ params }: QueryParams) => {
         rooms={roomInfoQuery.data}
         filters={params.filter}
         createRoom={createRoomMutation.mutateAsync}
+        deleteRoom={deleteRoomFn.mutateAsync}
       />
     );
   } else {

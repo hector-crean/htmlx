@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "build:watch": "tsc --watch",
     "preview": "vite preview",
     "deploy": "dev-deploy ./dist OTS126-dev --clean",
@@ -15,6 +15,7 @@
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
   "devDependencies": {
+    "@random42/dev-deploy": "file:A:/scripts/js/dev-deploy/dist/random42-dev-deploy-0.2.0.tgz",
     "@types/d3-array": "^3.2.1",
     "@types/d3-axis": "^3.0.6",
     "@types/d3-color": "^3.1.3",

@@ -16,7 +16,7 @@ use strum::{AsRefStr, Display, EnumString, EnumVariantNames};
     Deserialize,
 )]
 #[strum(serialize_all = "camelCase")]
-enum CssProperty {
+pub enum CssProperty {
     BackgroundColor,
     TextColor,
     Margin,

@@ -54,7 +54,7 @@ const CreateRoomForm = ({ createRoomQuery }: CreateRoomFormProps) => {
     },
     groupsAccesses: {},
     metadata: {
-      type: "flow",
+      type: 'text',
     },
   };
 

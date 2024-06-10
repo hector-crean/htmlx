@@ -34,141 +34,131 @@ impl App {
     pub fn nav() -> Vec<(String, String)> {
         App::pages()
             .iter()
-            .filter(|(_, node)| match &node.node_type {
-                NodeType::File {
-                    extension,
-                    renderable,
-                } => true,
-                _ => false,
-            })
+            // .filter(|(_, node)| match &node.node_type {
+            //     NodeType::File {
+            //         extension,
+            //         renderable,
+            //     } => true,
+            //     _ => false,
+            // })
             .map(|(path, node)| (path, node.path_segment.clone()))
             .collect::<Vec<(String, String)>>()
     }
     pub fn pages() -> Node<Page> {
-        Node::new("ptsd", NodeType::Folder).add_child(
-            Node::new("clinical_presentation", NodeType::Folder)
-                .add_child(Node::new("symptoms", NodeType::Folder).add_child(Node::new(
-                    "page",
-                    NodeType::File {
-                        extension: FileExtension::Html,
-                        renderable: Page::new(
-                            "Symptoms",
-                            None,
-                            routes::clinical_presentation::symptoms::blocks(),
-                        ),
-                    },
-                )))
-                .add_child(
-                    Node::new("comorbidities", NodeType::Folder).add_child(Node::new(
+        Node::new("ptsd", NodeType::Folder)
+            .add_child(
+                Node::new("clinical_presentation", NodeType::Folder)
+                    .add_child(Node::new("symptoms", NodeType::Folder).add_child(Node::new(
                         "page",
                         NodeType::File {
                             extension: FileExtension::Html,
                             renderable: Page::new(
-                                "Comorbidities",
+                                "Symptoms",
                                 None,
-                                routes::clinical_presentation::comorbidities::blocks(),
+                                routes::clinical_presentation::symptoms::blocks(),
                             ),
                         },
-                    )),
-                ),
-        )
-        // .add_child(
-        //     Node::new("disease", NodeType::Folder)
-        //         .add_child(
-        //             Node::new("trauma_types", NodeType::Folder).add_child(Node::new(
-        //                 "page",
-        //                 NodeType::File {
-        //                     extension: FileExtension::Html,
-        //                     renderable: Page::new(vec![]),
-        //                 },
-        //             )),
-        //         )
-        //         .add_child(
-        //             Node::new("pathophysiology_of_ptsd", NodeType::Folder).add_child(
-        //                 Node::new(
-        //                     "page",
-        //                     NodeType::File {
-        //                         extension: FileExtension::Html,
-        //                         renderable: Page::new(vec![]),
-        //                     },
-        //                 ),
-        //             ),
-        //         ),
-        // )
-        // .add_child(
-        //     Node::new("specific_populations", NodeType::Folder)
-        //         .add_child(
-        //             Node::new("civilian_vs_military", NodeType::Folder).add_child(Node::new(
-        //                 "page",
-        //                 NodeType::File {
-        //                     extension: FileExtension::Html,
-        //                     renderable: Page::new(vec![]),
-        //                 },
-        //             )),
-        //         )
-        //         .add_child(
-        //             Node::new("marginalized_groups", NodeType::Folder).add_child(Node::new(
-        //                 "page",
-        //                 NodeType::File {
-        //                     extension: FileExtension::Html,
-        //                     renderable: Page::new(vec![]),
-        //                 },
-        //             )),
-        //         ),
-        // )
-        // .add_child(
-        //     Node::new("disease_burden", NodeType::Folder)
-        //         .add_child(
-        //             Node::new("personal_burden", NodeType::Folder).add_child(Node::new(
-        //                 "page",
-        //                 NodeType::File {
-        //                     extension: FileExtension::Html,
-        //                     renderable: Page::new(vec![]),
-        //                 },
-        //             )),
-        //         )
-        //         .add_child(Node::new("societal_burden", NodeType::Folder).add_child(
-        //             Node::new(
-        //                 "page",
-        //                 NodeType::File {
-        //                     extension: FileExtension::Html,
-        //                     renderable: Page::new(vec![]),
-        //                 },
-        //             ),
-        //         )),
-        // )
-        // .add_child(
-        //     Node::new("diagnosis", NodeType::Folder)
-        //         .add_child(
-        //             Node::new("assessment_and_diagnosis", NodeType::Folder).add_child(
-        //                 Node::new(
-        //                     "page",
-        //                     NodeType::File {
-        //                         extension: FileExtension::Html,
-        //                         renderable: Page::new(vec![]),
-        //                     },
-        //                 ),
-        //             ),
-        //         )
-        //         .add_child(Node::new("stigma", NodeType::Folder).add_child(Node::new(
-        //             "page",
-        //             NodeType::File {
-        //                 extension: FileExtension::Html,
-        //                 renderable: Page::new(vec![]),
-        //             },
-        //         )))
-        //         .add_child(
-        //             Node::new("interviews_with_clinicians", NodeType::Folder).add_child(
-        //                 Node::new(
-        //                     "page",
-        //                     NodeType::File {
-        //                         extension: FileExtension::Html,
-        //                         renderable: Page::new(vec![]),
-        //                     },
-        //                 ),
-        //             ),
-        //         ),
-        // )
+                    )))
+                    .add_child(
+                        Node::new("comorbidities", NodeType::Folder).add_child(Node::new(
+                            "page",
+                            NodeType::File {
+                                extension: FileExtension::Html,
+                                renderable: Page::new(
+                                    "Comorbidities",
+                                    None,
+                                    routes::clinical_presentation::comorbidities::blocks(),
+                                ),
+                            },
+                        )),
+                    ),
+            )
+            // .add_child(
+            //     Node::new("disease", NodeType::Folder)
+            //         .add_child(
+            //             Node::new("trauma_types", NodeType::Folder).add_child(Node::new(
+            //                 "page",
+            //                 NodeType::File {
+            //                     extension: FileExtension::Html,
+            //                     renderable: Page::new(vec![]),
+            //                 },
+            //             )),
+            //         )
+            //         .add_child(
+            //             Node::new("pathophysiology_of_ptsd", NodeType::Folder).add_child(
+            //                 Node::new(
+            //                     "page",
+            //                     NodeType::File {
+            //                         extension: FileExtension::Html,
+            //                         renderable: Page::new(vec![]),
+            //                     },
+            //                 ),
+            //             ),
+            //         ),
+            // )
+            .add_child(Node::new(
+                "specific_populations",
+                NodeType::File {
+                    extension: FileExtension::Html,
+                    renderable: Page::new(
+                        "Specific Populations",
+                        None,
+                        routes::specific_populations::blocks(),
+                    ),
+                },
+            ))
+            // .add_child(
+            //     Node::new("disease_burden", NodeType::Folder)
+            //         .add_child(
+            //             Node::new("personal_burden", NodeType::Folder).add_child(Node::new(
+            //                 "page",
+            //                 NodeType::File {
+            //                     extension: FileExtension::Html,
+            //                     renderable: Page::new(vec![]),
+            //                 },
+            //             )),
+            //         )
+            //         .add_child(Node::new("societal_burden", NodeType::Folder).add_child(
+            //             Node::new(
+            //                 "page",
+            //                 NodeType::File {
+            //                     extension: FileExtension::Html,
+            //                     renderable: Page::new(vec![]),
+            //                 },
+            //             ),
+            //         )),
+            // )
+            .add_child(
+                Node::new("diagnosis", NodeType::Folder)
+                    // .add_child(
+                    //     Node::new("assessment_and_diagnosis", NodeType::Folder).add_child(
+                    //         Node::new(
+                    //             "page",
+                    //             NodeType::File {
+                    //                 extension: FileExtension::Html,
+                    //                 renderable: Page::new(vec![]),
+                    //             },
+                    //         ),
+                    //     ),
+                    // )
+                    .add_child(Node::new("stigma", NodeType::Folder).add_child(Node::new(
+                        "page",
+                        NodeType::File {
+                            extension: FileExtension::Html,
+                            renderable: Page::new("Stigma", None, diagnosis::stigma::blocks()),
+                        },
+                    ))), // .add_child(
+                         //     Node::new("interviews_with_clinicians", NodeType::Folder).add_child(
+                         //         Node::new(
+                         //             "page",
+                         //             NodeType::File {
+                         //                 extension: FileExtension::Html,
+                         //                 renderable: Page::new(vec![]),
+                         //             },
+                         //         ),
+                         //     ),
+                         // ),
+            )
         // .add_child(
         //     Node::new("clinical_course", NodeType::Folder)
         //         .add_child(Node::new("delayed_onset_ptsd", NodeType::Folder).add_child(

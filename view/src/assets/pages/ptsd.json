@@ -1,0 +1,185 @@
+{
+  "curve": {
+    "color": "#8f51f5"
+  },
+  "nodes": {
+    "ptsd/diagnosis/stigma/page": {
+      "color": "#260038",
+      "position": {
+        "x": -20,
+        "z": -10
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/diagnosis/stigma/page",
+      "content": {
+        "default": {
+          "label": "ptsd/diagnosis/stigma/page",
+          "html": [
+            "ptsd/diagnosis/stigma/page"
+          ],
+          "requires": [
+            "ptsd/diagnosis/stigma/js/index.js"
+          ]
+        }
+      },
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/comorbidities/page": {
+      "color": "#260038",
+      "position": {
+        "x": 1,
+        "z": 9
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/clinical_presentation/comorbidities/page",
+      "content": {
+        "default": {
+          "label": "ptsd/clinical_presentation/comorbidities/page",
+          "html": [
+            "ptsd/clinical_presentation/comorbidities/page"
+          ],
+          "requires": [
+            "ptsd/clinical_presentation/comorbidities/js/index.js"
+          ]
+        }
+      },
+      "distance": 32
+    },
+    "ptsd": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Ptsd",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/comorbidities": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Comorbidities",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/diagnosis": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Diagnosis",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/symptoms/page": {
+      "color": "#260038",
+      "position": {
+        "x": -7,
+        "z": 10
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/clinical_presentation/symptoms/page",
+      "content": {
+        "default": {
+          "label": "ptsd/clinical_presentation/symptoms/page",
+          "html": [
+            "ptsd/clinical_presentation/symptoms/page"
+          ],
+          "requires": [
+            "ptsd/clinical_presentation/symptoms/js/index.js"
+          ]
+        }
+      },
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/symptoms": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Symptoms",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_presentation": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Clinical_presentation",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/diagnosis/stigma": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Stigma",
+      "content": {},
+      "distance": 32
+    }
+  },
+  "map": {
+    "settings": {
+      "node_color": "#ffffff",
+      "selected_node_color": "#ffffff",
+      "connection_color": "#ffffff"
+    },
+    "size": {
+      "min": 400,
+      "preferred": {
+        "x": 0.5,
+        "y": 0.15
+      },
+      "max": 720,
+      "ratio": 0.184
+    },
+    "nodes": {}
+  },
+  "camera": {
+    "reference_width": 1920,
+    "reference_height": 980,
+    "initial_position": {
+      "x": -2,
+      "y": 85,
+      "z": 47
+    },
+    "initial_target": {
+      "x": -2,
+      "y": 0,
+      "z": 5
+    }
+  }
+}
