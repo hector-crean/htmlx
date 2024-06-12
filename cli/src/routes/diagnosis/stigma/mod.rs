@@ -1,20 +1,11 @@
-use crate::{rich_text_block};
-
-
-
-
-
+use crate::rich_text_block;
 
 use blocks::block::references::ReferencesProps;
 
 use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation};
-use blocks::block::{Block};
-
-
-
+use blocks::block::Block;
 
 use std::vec;
-
 
 pub fn blocks() -> Vec<Block> {
     vec![

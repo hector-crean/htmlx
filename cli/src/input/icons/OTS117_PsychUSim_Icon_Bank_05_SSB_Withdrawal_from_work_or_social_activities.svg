@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <g>
+    <circle cx="60" cy="60" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="60" cy="60" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+    <circle cx="60" cy="60" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="60" cy="60" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+  </g>
+  <g>
+    <circle cx="53.32" cy="42.76" r="5.11" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m58.19,59c-4.28,4.03-4.61,6.43-7.08,11.28" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m52.64,51.92c-5.36-3.03-6.41-1.03-7.57,2.52l-2.3,11.02c-1.12,6.84.77,14.56,8.88,11.61,5.17-2.32,9.07-6.01,11.92-10.84l7.65,8.46c4.47,4.63,8.58.56,5.21-4.26l-9.68-11.96" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m52.13,51.67c4.49,2.33,7.66,2.6,13.31,2.28,4.13,0,3.77,4.53,0,4.53-5.78.39-11.1.07-15.82-1.33" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m53.85,58.47c.71,2.94.18,4.35-.53,7.29" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <line x1="86.65" y1="82.32" x2="33.49" y2="82.32" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m37.15,79.43c0-26.55,0-50.58,22.48-50.58,23.71-.4,23.36,24.03,23.36,50.58" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m68.59,35.38c2.29,1.68,3.52,4.47,4.07,6.39" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <line x1="73.6" y1="45.03" x2="73.97" y2="46.41" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <line x1="86.65" y1="85.2" x2="33.49" y2="85.2" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m62.22,68.61l4.96,6.99c2.81,3.33,4.29.65,4.52-.44" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+  </g>
+  <line x1="38.21" y1="88.36" x2="81.79" y2="88.36" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+</svg>

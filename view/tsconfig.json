@@ -8,6 +8,11 @@
       "DOM",
       "DOM.Iterable"
     ],
+    "plugins": [
+      {
+        "name": "ts-lit-plugin"
+      }
+    ],
     "skipLibCheck": true,
     /* Bundler mode */
     "moduleResolution": "bundler",

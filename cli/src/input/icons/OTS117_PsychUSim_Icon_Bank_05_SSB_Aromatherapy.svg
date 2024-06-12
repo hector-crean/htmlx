@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <g>
+    <circle cx="60" cy="60" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="60" cy="60" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+    <circle cx="60" cy="60" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="60" cy="60" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+  </g>
+  <g>
+    <path d="m75.71,80.13H26.85v2.66c0,2.8,2.27,5.07,5.07,5.07h45.54" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m64.31,44.16h10.54c3.27,0,5.93-2.65,5.93-5.93h0c0-1-.81-1.81-1.81-1.81h-39.95c-1,0-1.81.81-1.81,1.81h0c0,3.27,2.65,5.93,5.93,5.93h10.69" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m70.41,80.13v-23.06c0-.96-.79-1.75-1.75-1.75h-19.27c-.96,0-1.75.79-1.75,1.75v23.06" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m64.17,80.13v-9.5c0-.4-.37-.72-.82-.72h-9.02c-.45,0-.82.32-.82.72v9.5" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m39.03,80.03c-8.72-10.65-7.42-26.7,2.85-35.84" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m76.26,44.15c2.05,1.82,3.8,3.96,5.19,6.32" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m59.03,62.03s2.27,2.16,2.27,4c0,1.26-1.02,2.27-2.27,2.27s-2.27-1.02-2.27-2.27c0-.48.15-.98.37-1.45.17.09.38.15.63.15,1.31,0,1.6-1.58.86-2.28.24-.26.41-.42.41-.42m0-1.5c-.37,0-.74.14-1.03.41,0,0-.2.19-.48.5-.42.46-.5,1.12-.25,1.65-.04,0-.09,0-.13,0-.16,0-.31.02-.47.07-.39.13-.72.41-.89.79-.34.73-.51,1.43-.51,2.09,0,2.08,1.69,3.77,3.77,3.77s3.77-1.69,3.77-3.77c0-2.36-2.28-4.65-2.74-5.09-.29-.27-.66-.41-1.03-.41h0Z" style="fill: #fff; stroke-width: 0px;"/>
+    <path d="m56.18,36.42c-3.87-3.72-1.26-9.13,1.82-12.38.82-.87.94-1.42,1.8-.55,1.51,1.53,2.88,3.32,3.7,5.32,1.06,2.59.83,5.45-1.2,7.5" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m62.23,36.37c1.18-1.15,1.94-2.86,1.94-4.47,0-1.49-.53-2.96-1.24-4.27,4-1.26,8.75.49,8.75.49,0,0-1.15,5.67-4.53,8.3" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <path d="m51.12,36.36c-3.48-2.73-4.44-8.24-4.44-8.24,0,0,4.82-1.62,8.69-.49-.68,1.28-1.18,2.74-1.18,4.27s.75,3.29,1.91,4.44" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    <g>
+      <path d="m80.36,62.58h8.12c2.58,0,4.67,2.09,4.67,4.67v18.51c0,1.19-.97,2.16-2.16,2.16h-13.14c-1.19,0-2.16-.97-2.16-2.16v-18.51c0-2.58,2.09-4.67,4.67-4.67Z" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+      <path d="m82.97,62.58h2.91v18.88c0,.69-.56,1.26-1.26,1.26h-.4c-.69,0-1.26-.56-1.26-1.26v-18.88h0Z" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+      <rect x="79" y="58.31" width="10.84" height="4.27" rx=".94" ry=".94" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+      <path d="m84.42,47.15h0c1.6,0,2.9,1.3,2.9,2.9v8.26h-5.8v-8.26c0-1.6,1.3-2.9,2.9-2.9Z" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+      <path d="m85.88,75.77c2.41-.58,4.89-1.14,7.27-.2" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+      <path d="m75.71,78.02c2.63-.26,4.66-.83,7.19-1.54" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"/>
+    </g>
+  </g>
+</svg>

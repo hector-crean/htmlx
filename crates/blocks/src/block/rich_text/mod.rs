@@ -245,11 +245,13 @@ impl Default for RichText {
 impl maud::Render for RichText {
     fn render(&self) -> maud::Markup {
         html! {
-            @match &self {
-                RichText::Html(html) => {
-                    (PreEscaped(html))
-                },
-                RichText::Tiptap(json) => (json)
+            div class="flex flex-col w-full gap-2 mt-2" {
+                @match &self {
+                    RichText::Html(html) => {
+                        (PreEscaped(html))
+                    },
+                    RichText::Tiptap(json) => (json)
+                }
             }
         }
     }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <g>
+    <circle cx="60" cy="60" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="60" cy="60" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+  </g>
+  <path d="m68.47,89.9c0-.94.13-1.9-.02-2.82-.47-2.75.71-3.52,3.32-3.34,3.97.28,7.73-.27,9.37-4.68.43-1.15.52-2.5.48-3.75-.12-3.91-.74-7.84,4.71-9.07,1.47-.33,2.87-2.1,1.01-4.14-.98-1.07-1.71-2.42-2.37-3.74-1.51-3.03-3.41-5.81-3.85-9.39-1.93-15.76-21.12-23.48-35.7-16-14.68,7.52-18.01,25.77-7.58,37.68,4.74,5.42,7.17,11.86,6.16,19.25" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  <g>
+    <g>
+      <line x1="56.02" y1="44.81" x2="56.02" y2="60.7" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <polyline points="52.38 57.37 56.14 61.13 59.93 57.33" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+    </g>
+    <circle cx="56.16" cy="52.97" r="14.2" style="fill: none; stroke: #fff; stroke-dasharray: 0 0 22.3 22.3; stroke-linecap: round; stroke-linejoin: round;"/>
+  </g>
+</svg>

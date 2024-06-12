@@ -1,58 +1,61 @@
 use maud::{html, PreEscaped};
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type, Default)]
-pub enum IconName {
-    #[default]
-    AvoidDistressingThoughts,
-    Disassociation,
-    Hypervigilance,
-    PrologedPsychologicalStress,
-    DistressingDreams,
-    AvoidReminders,
-    IrritbaleBehaviour,
-    PsychologicalReactions,
-    DistressingMemories,
-    SleepDisturbance,
-    ExageratedStartleResponse,
-    Flashbacks,
-}
-
-impl IconName {
-    fn svg(&self) -> &str {
-        use IconName::*;
-        match self {
-            AvoidDistressingThoughts => include_str!("./icons/AvoidDistressingThoughts.svg"),
-            Disassociation => include_str!("./icons/Disassociation.svg"),
-            Hypervigilance => include_str!("./icons/Hypervigilance.svg"),
-            PrologedPsychologicalStress => include_str!("./icons/PrologedPsychologicalStress.svg"),
-            DistressingDreams => include_str!("./icons/DistressingDreams.svg"),
-            AvoidReminders => include_str!("./icons/AvoidReminders.svg"),
-            IrritbaleBehaviour => include_str!("./icons/IrritbaleBehaviour.svg"),
-            PsychologicalReactions => include_str!("./icons/PsychologicalReactions.svg"),
-            DistressingMemories => include_str!("./icons/DistressingMemories.svg"),
-            SleepDisturbance => include_str!("./icons/SleepDisturbance.svg"),
-            ExageratedStartleResponse => include_str!("./icons/ExageratedStartleResponse.svg"),
-            Flashbacks => include_str!("./icons/Flashbacks.svg"),
-        }
-    }
-}
+use crate::SvgName;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 #[serde(rename_all = "camelCase")]
 pub struct IconProps {
-    pub name: IconName,
+    pub name: SvgName,
+    // pub max_width: Option<i32>
 }
 
 impl Default for IconProps {
     fn default() -> Self {
         IconProps {
-            name: IconName::default(),
+            name: SvgName::default(),
+            // max_width: None,
         }
     }
 }
 
 impl maud::Render for IconProps {
     fn render(&self) -> maud::Markup {
-        html!(icon-container style="width:100%;height:100%;" { (PreEscaped(self.name.svg()))})
+        html! {
+            div class="container p-4 mx-auto" {
+                div class="flex flex-wrap justify-center gap-4" {
+                    div class="flex items-center justify-center w-16 h-16 text-white bg-blue-500 rounded-full shadow-lg" {
+                        (PreEscaped(self.name.svg()))
+                    }
+                }
+
+            }
+
+        }
+    }
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[serde(rename_all = "camelCase")]
+pub struct SvgProps {
+    pub name: SvgName,
+    // pub max_width: Option<i32>
+}
+
+impl Default for SvgProps {
+    fn default() -> Self {
+        SvgProps {
+            name: SvgName::default(),
+        }
+    }
+}
+
+impl maud::Render for SvgProps {
+    fn render(&self) -> maud::Markup {
+        html! {
+            div class="flex items-center justify-center w-full h-full gap-4 shadow-lg" {
+                        (PreEscaped(self.name.svg()))
+            }
+
+        }
     }
 }

@@ -1,13 +1,17 @@
 pub mod bar_chart;
 pub mod brain;
 pub mod definition;
+pub mod html;
 pub mod icon;
 pub mod nav;
 pub mod pie_chart;
 pub mod placeholder_container;
 pub mod references;
 pub mod rich_text;
+pub mod table;
 pub mod tabs;
+
+use crate::SvgName;
 
 use self::{
     bar_chart::BarChartProps,
@@ -15,12 +19,15 @@ use self::{
     nav::NavProps,
 };
 use brain::{brain_glossary::BrainGlossaryProps, interactive_brain::InteractiveBrainProps};
+use html::HtmlProps;
+use icon::{IconProps, SvgProps};
 use maud::html;
 use pie_chart::PieChartProps;
 use placeholder_container::PlaceholderContainerProps;
 use references::ReferencesProps;
 use rich_text::{RichText, RichTextProps};
 use std::fmt::{write, Display, Write};
+use table::TableProps;
 use tabs::{Tab, TabsProps};
 use uuid::Uuid;
 
@@ -59,12 +66,25 @@ pub enum Block {
     ReferencesBlock(Box<ReferencesProps>),
     PieChartBlock(PieChartProps),
     BrainGlossaryBlock(BrainGlossaryProps),
+    TableBlock(TableProps),
+    IconBlock(IconProps),
+    HtmlBlock(HtmlProps),
+    SvgBlock(SvgProps),
 }
 
 impl maud::Render for Block {
     fn render(&self) -> maud::Markup {
         html!(
             @match self {
+                Block::SvgBlock(block) => {
+                    (block)
+                }
+                Block::HtmlBlock(block) => {
+                    (block)
+                }
+                Block::IconBlock(block) => {
+                    (block)
+                }
                 Block::ReferencesBlock(block) => {
                     (block)
                 }
@@ -97,6 +117,9 @@ impl maud::Render for Block {
                     (block)
                 }
                 Block::BrainGlossaryBlock(block) => {
+                    (block)
+                }
+                Block::TableBlock(block) => {
                     (block)
                 }
             }

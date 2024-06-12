@@ -1,17 +1,25 @@
 import { ChartSize, Margin } from '@/components/charts/types';
-import { ScaleLinear, scaleLinear } from 'd3-scale';
-import { schemeCategory10 } from 'd3-scale-chromatic';
-import { arc, pie, PieArcDatum } from 'd3-shape';
-import { css, html, LitElement, svg, SVGTemplateResult } from 'lit';
+import { ScaleLinear, scaleLinear, scaleOrdinal } from 'd3-scale';
+import { PieArcDatum, arc, pie } from 'd3-shape';
+import { LitElement, SVGTemplateResult, css, html, svg } from 'lit';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { createRef, ref } from 'lit-html/directives/ref.js';
 import { property } from 'lit/decorators.js';
-import { debounceTime, fromEvent, Observable } from 'rxjs';
+import { Observable, debounceTime, fromEvent } from 'rxjs';
 
 const DEFAULT_ASPECT_RATIO = 1;
 const DEFAULT_HEIGHT = 540;
 const DEFAULT_SIZE = { innerHeight: DEFAULT_HEIGHT, innerWidth: DEFAULT_HEIGHT * DEFAULT_ASPECT_RATIO, outerHeight: DEFAULT_HEIGHT, outerWidth: DEFAULT_HEIGHT * DEFAULT_ASPECT_RATIO };
 
+
+const blues = [
+    '#005178',
+    '#1178a0',
+    '#184ca1',
+    '#4e69b1',
+    '#5b97ca'
+
+]
 
 const drawPie = (
     data: Array<PieChartDatum>,
@@ -25,7 +33,7 @@ const drawPie = (
 ): SVGTemplateResult => {
 
     const pieFn = pie<PieChartDatum>()
-        .padAngle(0.05)
+        .padAngle(0)
         .value(d => d.value);
 
     const pieData = pieFn(data);
@@ -38,6 +46,8 @@ const drawPie = (
         .innerRadius(radius * 0.3)
         .outerRadius(radius); // Adjust as needed
 
+        const colorScale = scaleOrdinal().domain(['0','1','2','3','4','5']).range(blues)
+
     return svg`
         ${pieData.map(d => {
         const isHovered = hoveredRegions.has(d.data.id);
@@ -45,8 +55,8 @@ const drawPie = (
         return svg`
                 <path 
                     d="${arcFn(d)!}" 
-                    fill="${schemeCategory10[d.index % 10]}" 
-                    class="${classMap({ region: true, hovered: isHovered, clicked: isClicked, polygon: true })}" 
+                    fill="${colorScale(`${d.index % 5}`)}" 
+                    class="${classMap({ region: true, hovered: isHovered, clicked: isClicked, path: true })}" 
                     @pointerover="${() => onHoverStart(d.data.id)}" 
                     @pointerout="${() => onHoverEnd(d.data.id)}" 
                     @click="${() => onClick(d.data.id)}"
@@ -58,7 +68,7 @@ const drawPie = (
                     <text 
                         class="${classMap({ hovered: isHovered, clicked: isClicked, label: true })}" 
                         text-anchor="middle" 
-                        font-size="12" 
+                        font-size="10px" 
                         stroke="white"
                     >
                         <tspan x="0" dy="1.2em">${d.data.label}</tspan>
@@ -190,8 +200,9 @@ class PieChart extends LitElement {
                 border-radius: 20px;
                 overflow: hidden;
             }
-            .polygon {
-                opacity: 0.1;
+            .path {
+                filter: brightness(1);
+                opacity: 0.8;
                 transition: opacity 0.5s ease, transform 0.5s ease;
             }
             .label {
@@ -200,11 +211,13 @@ class PieChart extends LitElement {
                 transition: opacity 1s, display 1s allow-discrete, overlay 1s allow-discrete;
             }
            
-            .polygon.hovered {
-                opacity: 0.5;
-            }
-            .polygon.clicked, .label.clicked {
+            .path.hovered {
+                filter: brightness(1.2);
                 opacity: 0.9;
+            }
+            .path.clicked, .label.clicked {
+                opacity: 1;
+                filter: brightness(1.5);
             }
             .centre_label {
                 pointer-events: none;
@@ -260,3 +273,4 @@ class PieChart extends LitElement {
 customElements.define('pie-chart', PieChart);
 
 export { PieChart };
+

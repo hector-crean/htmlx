@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <g>
+    <circle cx="60" cy="60" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="60" cy="60" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+    <circle cx="60" cy="60" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="59.7" cy="60.8" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+  </g>
+  <g>
+    <path d="m72.72,46.86l-14.51-10.86h0l-24.6,19.22c-.79.75-.75,2.01.07,2.71h0c.71.6,1.76.58,2.44-.06l22.09-16.8h0l13.65,10.12c.22-1.41.23-1.94.63-3.31l.23-1.02Z" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+    <line x1="28.08" y1="80.23" x2="91.92" y2="80.23" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+    <path d="m82.6,79.55v-18.09c4.3-.77,7.53-4.94,7.53-10.88,0-6.59-6.81-20.22-8.97-20.22s-8.97,13.61-8.97,20.22c0,5.94,3.26,10.11,7.53,10.88v18.09-18.09c-3.8-1.78-7.2-4.95-7.51-10.11l-14.01-10.53-18.65,14.67v8.97" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+    <rect x="54.62" y="60.88" width="7.17" height="15.04" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+    <rect x="65.38" y="60.88" width="7.17" height="7.16" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+    <polyline points="42.99 64.96 42.99 60.88 50.16 60.88 50.16 68.05" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+    <line x1="31.2" y1="75.15" x2="31.2" y2="79.91" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+    <line x1="45.83" y1="75.15" x2="45.83" y2="79.91" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+  </g>
+  <rect x="26.86" y="65.21" width="23.3" height="9.99" rx="1.54" ry="1.54" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>
+</svg>

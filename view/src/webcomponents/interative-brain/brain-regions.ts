@@ -5292,7 +5292,7 @@ export const regions: Array<Region> = [
   },
   {
     "id": "amyloid-stage-3-severe-region-1",
-    "name": "Severe",
+    "name": "Severe Amyloid Stage 3",
     "fillColor": "#C95353",
     "label": {
       "position": {

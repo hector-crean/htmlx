@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <g>
+    <circle cx="60" cy="60" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="60" cy="60" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+    <circle cx="60" cy="60" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="60" cy="60" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+  </g>
+  <g>
+    <g>
+      <path d="m39.81,43.32l-20.57,21.2c-.59.61-.87,1.51-.62,2.34.13.48.37.83.67,1.12s.66.53,1.02.64l13.25,3.8c.18.06.3.17.42.29h0l4.76,14.97c.13.48.31.77.61,1.07s.72.47,1.08.58l14.93,4.25c.84.23,1.73.03,2.38-.63l20.63-21.26c.59-.61.87-1.51.62-2.34-.13-.83-.8-1.48-1.64-1.71l-13.25-3.8c-.18-.06-.3-.17-.42-.29l-4.76-14.97c-.19-.77-.8-1.36-1.64-1.59l-14.93-4.25c-.9-.28-1.85-.03-2.56.58Zm23.61,22.09c.06.06.18.06.24.12l13.25,3.8c.36.11.54.41.55.53,0,.12.07.42-.23.72l-20.63,21.26c-.18.18-.47.25-.77.19l-14.27-4.08,21.87-22.54Zm-6.03-15.85l4.57,14.32.12.36h0l-21.87,22.54-4.57-14.32-.06-.3-.06-.06q.06.06,0,0l21.87-22.54Zm-16.31-5.01c.18-.18.47-.25.77-.19l14.27,4.08-21.87,22.54c-.06-.06-.18-.06-.24-.12l-13.25-3.8c-.36-.11-.54-.41-.55-.53,0-.12-.07-.42.23-.72,0,0,20.63-21.26,20.63-21.26Z" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10; stroke-width: .5px;"/>
+      <path d="m61.91,63.94l.12.36c0-.12-.12-.24-.12-.36h0Z" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10; stroke-width: .5px;"/>
+      <path d="m35.58,72.04q0,.12,0,0h0Z" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10; stroke-width: .5px;"/>
+    </g>
+    <path d="m35.65,72.45h0l-.06-.3c.12.12.12.24.06.3Z" style="fill: #fff; stroke: #fff; stroke-miterlimit: 10; stroke-width: .5px;"/>
+  </g>
+  <path d="m83.29,57.42c-4.31,4.45-11.11,5.05-15.57.74-4.45-4.31-4.87-11.9-.56-16.35,4.31-4.45,11.41-4.57,15.87-.26,4.45,4.31,4.57,11.41.26,15.87Z" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  <polyline points="67.54 40.81 67.54 26.32 82.55 26.32 82.55 40.81" style="fill: none; stroke: #fff; stroke-linejoin: round; stroke-width: 2px;"/>
+  <path d="m75.03,52.4c-.09-1.25.18-2.42,1.59-3.37,5.02-3.84-3.21-8.58-4.74-2.56" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+  <circle cx="75.05" cy="55.99" r="1.3" style="fill: #fff; stroke-width: 0px;"/>
+  <line x1="67.72" y1="65.83" x2="67.72" y2="58.16" style="fill: none; stroke: #fff; stroke-linejoin: round; stroke-width: 2px;"/>
+  <polyline points="82.73 58.16 82.73 72.65 76.06 72.65" style="fill: none; stroke: #fff; stroke-linejoin: round; stroke-width: 2px;"/>
+</svg>

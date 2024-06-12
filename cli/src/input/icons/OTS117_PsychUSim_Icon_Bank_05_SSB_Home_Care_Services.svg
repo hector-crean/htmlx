@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <g>
+    <circle cx="60" cy="60" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="60" cy="60" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+    <circle cx="60" cy="60" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="60" cy="60" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+  </g>
+  <g>
+    <polygon points="59.97 37.86 34.52 53.18 34.51 79.42 85.34 79.42 85.34 53.27 59.97 37.86" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2px;"/>
+    <polyline points="89.35 51.96 59.97 34.12 30.65 51.77" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2px;"/>
+    <path d="m68.48,58.88h-5.31v-5.31c0-.68-.55-1.23-1.23-1.23h-4c-.68,0-1.23.55-1.23,1.23v5.31h-5.31c-.68,0-1.23.55-1.23,1.23v4c0,.68.55,1.23,1.23,1.23h5.31v5.31c0,.68.55,1.23,1.23,1.23h4c.68,0,1.23-.55,1.23-1.23v-5.31h5.31c.68,0,1.23-.55,1.23-1.23v-4c0-.68-.55-1.23-1.23-1.23Z" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  </g>
+</svg>

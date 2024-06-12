@@ -18,7 +18,7 @@ impl Render for BrainGlossaryProps {
         };
 
         html! {
-            interactive-brain region-names=(region_names_str) {}
+            interactive-brain regions=(region_names_str) {}
         }
     }
 }
