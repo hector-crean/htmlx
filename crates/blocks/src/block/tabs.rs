@@ -40,7 +40,7 @@ impl maud::Render for TabsProps {
 
                         div class="w-full" {
                             @for (index, tab) in self.tabs.iter().enumerate() {
-                                div id="toggable-container" data-group=(self.id) data-slide=(index) {
+                                div id="toggable-container" class="p-4" data-group=(self.id) data-slide=(index) {
                                     @for block in &tab.blocks {
                                         (block)
                                     }

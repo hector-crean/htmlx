@@ -124,22 +124,39 @@ class InteractiveBrain extends LitElement {
   @property({ type: Set }) hoveredRegions: Set<string> = new Set();
   @property({ type: Set }) clickedRegions: Set<string> = new Set();
 
+  // @property({ type: String, attribute: 'regions' }) regionsStr = JSON.stringify(regions);
+  // @property({ type: String, attribute: 'pathways' }) pathswaysStr = JSON.stringify(pathways);
 
+  @property({ type: String, attribute: 'regions' }) regionIdsStr: string = '[]';
+
+  private regions: Array<Region>;
+  private pathways: Array<Pathway>;
   private containerRef = createRef<HTMLDivElement>();
   private margin: Margin;
-  private regions: Regions;
-  private pathways: Pathways;
   private scaleX: ScaleLinear<number, number, never>;
   private scaleY: ScaleLinear<number, number, never>;
   private resizeObservable$: Observable<Event>;
   private size: ChartSize = DEFAULT_SIZE;
+
+  // get regions(): Regions {
+  //   return JSON.parse(this.regionsStr);
+  // }
+  // get pathways(): Pathways {
+  //   return JSON.parse(this.pathswaysStr);
+  // }
+
+  get regionIds(): Array<string> {
+    console.log(this.regionIdsStr)
+    const regionsIds = JSON.parse(this.regionIdsStr);
+    console.log(regionsIds)
+    return regionsIds
+  }
 
   get imageWidth() {
     return this.aspectRatio * this.imageHeight;
   }
 
   onRegionHoverStart(regionId: string) {
-    console.log('add')
     this.hoveredRegions.add(regionId)
     this.requestUpdate();
   }
@@ -160,9 +177,10 @@ class InteractiveBrain extends LitElement {
     super();
     const margin = { left: 0, right: 0, top: 0, bottom: 0 };
 
-    this.margin = margin;
-    this.regions = regions;
+    this.regions = regions.filter(region => this.regionIds.includes(region.id))
     this.pathways = pathways;
+
+    this.margin = margin;
     this.background = defaultBackground;
 
     this.scaleX = scaleLinear().domain([0, this.imageWidth]);
@@ -180,7 +198,7 @@ class InteractiveBrain extends LitElement {
   }
 
   updated(changedProperties: Map<string, any>) {
-    if (changedProperties.has('aspectRatio') || changedProperties.has('imageHeight')) {
+    if (changedProperties.has('aspectRatio') || changedProperties.has('imageHeight') || changedProperties.has('regionIdsStr')) {
       this.requestUpdate();
     }
   }

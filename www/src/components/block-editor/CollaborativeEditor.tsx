@@ -126,24 +126,56 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
 
   const { threads } = useThreads();
 
-
-
-
-
-
-  const handleExport = async () => {
+  const handleBlockExport = async () => {
 
     const zip = new JSZip();
-
     const blockOrder: Array<string> = []
+    let idx = 1;
 
     for await (const block of editor.document) {
       // const html = await editor.blocksToHTMLLossy([block]);
       const textEncoder = new TextEncoder();
-
       const utf8 = textEncoder.encode(JSON.stringify(block))
+      const filename = `${idx}_${block.id}.json`
 
-      const filename = `${block.id}.json`
+      idx += 1;
+
+      switch (block.type) {
+        case 'paragraph':
+          if (block.children.length === 0 && block.content.length === 0) {
+          } else {
+            blockOrder.push(filename)
+            zip.file(filename, utf8);
+          }
+          break;
+        default: {
+          blockOrder.push(filename)
+          zip.file(filename, utf8);
+        }
+      }
+    }
+
+    const metadata = { blockOrder: blockOrder, datetime: new Date().getUTCDate() }
+
+    zip.file('metadata.json', JSON.stringify(metadata));
+    zip.generateAsync({ type: 'blob' }).then((content) => {
+      saveAs(content, `${roomId}.zip`);
+    });
+
+  }
+
+  const handleHtmlexport = async () => {
+
+    const zip = new JSZip();
+    const blockOrder: Array<string> = []
+    let idx = 1;
+
+    for await (const block of editor.document) {
+      const html = await editor.blocksToHTMLLossy([block]);
+      const textEncoder = new TextEncoder();
+      const utf8 = textEncoder.encode(html);
+      const filename = `${idx}_${block.id}.html`
+      idx += 1;
 
       switch (block.type) {
         case 'paragraph':
@@ -170,16 +202,17 @@ function BlockNote({ doc, provider, roomId }: EditorProps) {
       saveAs(content, `${roomId}.zip`);
     });
 
-
-
   }
 
 
   return (
     <div className='absolute top-0 bottom-0 left-0 right-0 flex flex-col bg-white'>
       <div className='top-0 bottom-0 left-0 right-0 z-50 flex items-start justify-between flex-grow-0 flex-shrink-0 p-4 bg-slate-50'>
-        <Button onClick={handleExport}>
-          Export
+        <Button onClick={handleBlockExport}>
+          Export (.json)
+        </Button>
+        <Button onClick={handleHtmlexport}>
+          Export (.html)
         </Button>
         <Button
           variant='default'

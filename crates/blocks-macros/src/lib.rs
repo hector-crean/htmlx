@@ -1,4 +1,4 @@
-use blocks::block::rich_text::{BranchNode, RichText, RichTextProps};
+use blocks::block::rich_text::{RichText, RichTextBlock, RichTextProps};
 use blocks::block::Block;
 use proc_macro::TokenStream;
 use quote::quote;
@@ -21,9 +21,9 @@ pub fn rich_text_block(input: TokenStream) -> TokenStream {
                 .unwrap_or_else(|_| panic!("Unable to read file at {:?}", file_path));
 
             let text = if file_path.extension().map(|s| s == "json").unwrap_or(false) {
-                let branch_node: BranchNode = serde_json::from_str(&content)
+                let rich_text_block: RichTextBlock = serde_json::from_str(&content)
                     .unwrap_or_else(|_| panic!("Invalid JSON content in file {:?}", file_path));
-                RichText::Tiptap(branch_node)
+                RichText::Tiptap(rich_text_block)
             } else {
                 RichText::Html(content)
             };
@@ -51,9 +51,9 @@ pub fn rich_text(input: TokenStream) -> TokenStream {
                 .unwrap_or_else(|_| panic!("Unable to read file at {:?}", file_path));
 
             let text = if file_path.extension().map(|s| s == "json").unwrap_or(false) {
-                let branch_node: BranchNode = serde_json::from_str(&content)
+                let rich_text_block: RichTextBlock = serde_json::from_str(&content)
                     .unwrap_or_else(|_| panic!("Invalid JSON content in file {:?}", file_path));
-                RichText::Tiptap(branch_node)
+                RichText::Tiptap(rich_text_block)
             } else {
                 RichText::Html(content)
             };

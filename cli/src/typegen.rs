@@ -1,7 +1,6 @@
 use std::{fs::File, io::Write, path::Path};
 
 use specta::{
-    export,
     ts::{ExportConfig, ExportError},
     TypeCollection,
 };

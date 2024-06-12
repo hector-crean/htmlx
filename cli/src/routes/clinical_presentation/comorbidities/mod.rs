@@ -1,9 +1,8 @@
-use crate::{rich_text, rich_text_block};
+use crate::{rich_text_block};
 use blocks::block::{
-    bar_chart::{BarChartProps, BarDatum},
+    bar_chart::{BarDatum},
     placeholder_container::PlaceholderContainerProps,
     references::ReferencesProps,
-    rich_text::{BranchNode, RichText, RichTextProps},
     Block,
 };
 
@@ -142,7 +141,7 @@ pub fn blocks() -> Vec<Block> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use serde_json::json;
+    
 
     #[test]
     fn print_psychiatric_comborbidities_bar() -> Result<(), serde_json::Error> {

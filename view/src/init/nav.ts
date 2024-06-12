@@ -1,21 +1,18 @@
 import { router } from "@/main";
 
+import { routes } from '@/main';
 
 
 
 const page = {
     init: () => {
-        document?.querySelector("#symptoms")?.addEventListener("click", () => {
-            router.redirectTo("/ptsd/clinical_presentation/symptoms");
-        });
 
-        document?.querySelector("#comorbidities")?.addEventListener("click", () => {
-            router.redirectTo("/ptsd/clinical_presentation/comorbidities");
-        });
+        routes.forEach(route => {
+            document?.querySelector(`#${route.id}`)?.addEventListener("click", () => {
+                router.redirectTo(route.path);
+            });
+        })
 
-        document?.querySelector("#stigma")?.addEventListener("click", () => {
-            router.redirectTo("/ptsd/diagnosis/stigma");
-        });
 
 
 

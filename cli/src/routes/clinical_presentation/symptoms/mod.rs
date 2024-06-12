@@ -1,24 +1,65 @@
-use blocks::block::bar_chart::BarChartProps;
+
+use blocks::block::brain::brain_glossary::BrainGlossaryProps;
+use blocks::block::brain::brain_region::BrainRegionName;
 use blocks::block::definition::{DefinitionListProps, DefinitionProps};
 use blocks::block::icon::IconName;
 use blocks::block::icon::IconProps;
-use blocks::block::interactive_brain::{
-    BrainComment, BrainRegion, BrainRegionName, CommentGroup, InteractiveBrainProps,
+use blocks::block::brain::interactive_brain::{
+    BrainComment, CommentGroup, InteractiveBrainProps,
 };
+
 use blocks::block::references::ReferencesProps;
-use blocks::block::rich_text::{self, BranchNode, RichText, RichTextProps};
+use blocks::block::rich_text::{RichTextBlock, RichText};
 use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation};
-use blocks::block::{Block, BlocksProps};
-use color_eyre::eyre;
-use std::fs::File;
-use std::io::Write;
-use std::path::{Path, PathBuf};
+use blocks::block::{Block};
+
+
+
+
 use std::vec;
-use uuid::Uuid;
+
 
 use crate::{rich_text, rich_text_block};
 
 pub fn blocks() -> Vec<Block> {
+
+    let brain_region_ids = vec![
+        BrainRegionName::Frontosubcortical,
+    BrainRegionName::Orbitofrontal,
+    BrainRegionName::AnteriorCingulatedGyrus,
+    BrainRegionName::BilateralTemporalCortex,
+    BrainRegionName::ParietalLobe,
+    BrainRegionName::Thalamus,
+    BrainRegionName::Hippocampus,
+    BrainRegionName::Amygdala,
+    BrainRegionName::Hypothalamus,
+    BrainRegionName::AnteriorCingulateCortex,
+    BrainRegionName::PosteriorCingulateCortex,
+    BrainRegionName::Striatum,
+    BrainRegionName::PrefrontalCortex,
+    BrainRegionName::VentralFrontalCortex,
+    BrainRegionName::FrontalLobe,
+    BrainRegionName::Dlpfc,
+    BrainRegionName::Vlpfc,
+    BrainRegionName::NucleusAccumbens,
+    BrainRegionName::BasalForebrain,
+    BrainRegionName::AnteriorCaudate,
+    BrainRegionName::GreyMatter,
+    BrainRegionName::LateralVentricle,
+    BrainRegionName::OccipitalLobe,
+    BrainRegionName::AuditoryCortex,
+    BrainRegionName::SubstantiaNigra,
+    BrainRegionName::NucleusAccumbensArea,
+    BrainRegionName::AmyloidStage1MildRegion1,
+    BrainRegionName::AmyloidStage2ModerateRegion1,
+    BrainRegionName::AmyloidStage2MildRegion1,
+    BrainRegionName::AmyloidStage3SevereRegion1,
+    BrainRegionName::AmyloidStage3ModerateRegion1,
+    BrainRegionName::AmyloidStage3ModerateRegion2,
+    BrainRegionName::LocusCoeruleus,
+    BrainRegionName::Insula,];
+
+
     let definitions: Vec<DefinitionProps> = vec![
         DefinitionProps {
             id: String::from("hippocampus"),
@@ -364,20 +405,8 @@ pub fn blocks() -> Vec<Block> {
     };
 
     vec![
-        //Clinical Presentation
-        // rich_text_block!(
-        //     "../../../input/OTS126_PTSD_Symptoms_Node/6bd35d11-fd3c-4907-a376-841dfb3d6c94.html"
-        // ),
-
-        //Brain regions involved in PTSD
-        // rich_text_block!(
-        //     "../../../input/OTS126_PTSD_Symptoms_Node/0b6a292c-bcde-466e-9419-bd620555ed6b.html"
-        // ),
-
-        // Symptoms of PTSD
-        // rich_text_block!(
-        //     "../../../input/OTS126_PTSD_Symptoms_Node/89201c17-fefc-4470-997d-494c226ad740.html"
-        // ),
+      
+        Block::BrainGlossaryBlock(BrainGlossaryProps { region_names: brain_region_ids }),
         Block::TabsBlock(tabs),
         //References
         Block::ReferencesBlock(Box::new(ReferencesProps {

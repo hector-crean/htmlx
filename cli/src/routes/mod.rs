@@ -8,13 +8,19 @@ pub mod specific_populations;
 pub mod treatment;
 
 use crate::routes;
-use blocks::block::nav::NavProps;
-use blocks::block::Block;
+
+
 use blocks::node::{FileExtension, Node, NodeType};
 use blocks::page::Page;
 
 pub struct App {
     pub root_node: Node<Page>,
+}
+
+impl Default for App {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl App {
@@ -96,38 +102,28 @@ impl App {
             //             ),
             //         ),
             // )
-            .add_child(Node::new(
-                "specific_populations",
-                NodeType::File {
-                    extension: FileExtension::Html,
-                    renderable: Page::new(
-                        "Specific Populations",
-                        None,
-                        routes::specific_populations::blocks(),
-                    ),
-                },
-            ))
-            // .add_child(
-            //     Node::new("disease_burden", NodeType::Folder)
-            //         .add_child(
-            //             Node::new("personal_burden", NodeType::Folder).add_child(Node::new(
-            //                 "page",
-            //                 NodeType::File {
-            //                     extension: FileExtension::Html,
-            //                     renderable: Page::new(vec![]),
-            //                 },
-            //             )),
-            //         )
-            //         .add_child(Node::new("societal_burden", NodeType::Folder).add_child(
-            //             Node::new(
-            //                 "page",
-            //                 NodeType::File {
-            //                     extension: FileExtension::Html,
-            //                     renderable: Page::new(vec![]),
-            //                 },
-            //             ),
-            //         )),
-            // )
+            .add_child(
+                Node::new("specific_populations", NodeType::Folder).add_child(Node::new(
+                    "page",
+                    NodeType::File {
+                        extension: FileExtension::Html,
+                        renderable: Page::new(
+                            "Specific Populations",
+                            None,
+                            routes::specific_populations::blocks(),
+                        ),
+                    },
+                )),
+            )
+            .add_child(
+                Node::new("disease_burden", NodeType::Folder).add_child(Node::new(
+                    "page",
+                    NodeType::File {
+                        extension: FileExtension::Html,
+                        renderable: Page::new("Disease Burden", None, disease_burden::blocks()),
+                    },
+                )),
+            )
             .add_child(
                 Node::new("diagnosis", NodeType::Folder)
                     // .add_child(

@@ -1,8 +1,9 @@
 pub mod bar_chart;
+pub mod brain;
 pub mod definition;
 pub mod icon;
-pub mod interactive_brain;
 pub mod nav;
+pub mod pie_chart;
 pub mod placeholder_container;
 pub mod references;
 pub mod rich_text;
@@ -11,11 +12,11 @@ pub mod tabs;
 use self::{
     bar_chart::BarChartProps,
     definition::{DefinitionListProps, DefinitionProps},
-    interactive_brain::InteractiveBrainProps,
     nav::NavProps,
 };
-use core::fmt;
+use brain::{brain_glossary::BrainGlossaryProps, interactive_brain::InteractiveBrainProps};
 use maud::html;
+use pie_chart::PieChartProps;
 use placeholder_container::PlaceholderContainerProps;
 use references::ReferencesProps;
 use rich_text::{RichText, RichTextProps};
@@ -56,39 +57,47 @@ pub enum Block {
     DefinitionListBlock(DefinitionListProps),
     PlaceholderContainerBlock(PlaceholderContainerProps),
     ReferencesBlock(Box<ReferencesProps>),
+    PieChartBlock(PieChartProps),
+    BrainGlossaryBlock(BrainGlossaryProps),
 }
 
 impl maud::Render for Block {
     fn render(&self) -> maud::Markup {
         html!(
             @match self {
-                Block::ReferencesBlock(references) => {
-                    (references)
+                Block::ReferencesBlock(block) => {
+                    (block)
                 }
-                Block::RichTextBlock(rich_text) => {
-                    (rich_text)
+                Block::RichTextBlock(block) => {
+                    (block)
                 }
-                Block::TabsBlock(tabs) => {
-                    (tabs)
+                Block::TabsBlock(block) => {
+                    (block)
                 }
 
-                Block::InteractiveBrainBlock(interactive_brain) => {
-                   (interactive_brain)
+                Block::InteractiveBrainBlock(block) => {
+                   (block)
                 }
-                Block::BarChartBlock(bar_chart) => {
-                    (bar_chart)
+                Block::BarChartBlock(block) => {
+                    (block)
                 }
-                Block::NavBlock(nav) => {
-                    (nav)
+                Block::NavBlock(block) => {
+                    (block)
                 }
-                Block::DefinitionBlock(def) => {
-                    (def)
+                Block::DefinitionBlock(block) => {
+                    (block)
                 }
-                Block::DefinitionListBlock(dlist) => {
-                    (dlist)
+                Block::DefinitionListBlock(block) => {
+                    (block)
                 }
-                Block::PlaceholderContainerBlock(container) => {
-                    (container)
+                Block::PlaceholderContainerBlock(block) => {
+                    (block)
+                }
+                Block::PieChartBlock(block) => {
+                    (block)
+                }
+                Block::BrainGlossaryBlock(block) => {
+                    (block)
                 }
             }
         )
