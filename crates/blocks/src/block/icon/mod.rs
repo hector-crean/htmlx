@@ -52,7 +52,7 @@ impl Default for SvgProps {
 impl maud::Render for SvgProps {
     fn render(&self) -> maud::Markup {
         html! {
-            div class="flex items-center justify-center w-full h-full gap-4 shadow-lg" {
+            div class="flex items-center justify-center w-full h-full gap-4" {
                         (PreEscaped(self.name.svg()))
             }
 
