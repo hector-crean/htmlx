@@ -23,6 +23,7 @@ impl Page {
 
 impl maud::Render for Page {
     fn render(&self) -> maud::Markup {
+        //text-[#313231] bg-gradient-to-b from-[#aecad8] to-[#89b8dd]
         html!(
             div class="content gradient-lighter" {
                 div class="content-header" {
@@ -36,7 +37,7 @@ impl maud::Render for Page {
                         (self.subtitle.clone().unwrap_or("".into()))
                     }
                 }
-                div class="presentation_wrapper" {
+                div class="presentation_wrapper " {
                     @for block in &self.blocks {
                         (block)
                     }

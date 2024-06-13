@@ -5,10 +5,12 @@ use blocks::block::references::ReferencesProps;
 use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation};
 use blocks::block::{Block};
 use std::vec;
+
+
 pub fn blocks() -> Vec<Block> {
     let tabs = TabsProps {
         id: uuid::Uuid::new_v4(),
-        representation: TabsRepresentation::Standard,
+        representation: TabsRepresentation::TopLevel,
         tabs: vec![
             Tab {
                 name: String::from("Civilan / General Population"),
@@ -62,15 +64,24 @@ pub fn blocks() -> Vec<Block> {
             Tab {
                 name: String::from("LGBTQ+ and marginalized groups"),
                 blocks: vec![
-                    rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/56a8e5cf-321d-45a1-a190-1b5a0f72364c.html"),
-                    rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/9f83dd12-589d-4f98-a74a-ea8766b3e042.html"),
-                    rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/9f05cdb0-a001-4afc-8b3c-04fec47a501c.html"),
 
+                    rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/56a8e5cf-321d-45a1-a190-1b5a0f72364c-1.html"),
                     Block::SvgBlock(SvgProps { name: SvgName::OTS126PTSDWithinLGBTQInfographic}),
-                    Block::SvgBlock(SvgProps { name: SvgName::OTS126TraumaChildhoodStigmaSocialTable}),
 
+                    rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/56a8e5cf-321d-45a1-a190-1b5a0f72364c-2.html"),
+                    rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/56a8e5cf-321d-45a1-a190-1b5a0f72364c-3.html"),
+
+
+                    rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/9f83dd12-589d-4f98-a74a-ea8766b3e042.html"),
+
+                    rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/9f05cdb0-a001-4afc-8b3c-04fec47a501c-1.html"),
                     Block::SvgBlock(SvgProps { name: SvgName::OTS126PTSDRaceInfographic}),
-                    Block::SvgBlock(SvgProps { name: SvgName::OTS1262x8Table}),
+
+                    rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/9f05cdb0-a001-4afc-8b3c-04fec47a501c-2.html"),
+                    rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/9f05cdb0-a001-4afc-8b3c-04fec47a501c-3.html"),
+
+
+
 
                 ],
             },

@@ -11,7 +11,7 @@ pub fn blocks() -> Vec<Block> {
     vec![
         Block::TabsBlock(TabsProps {
             id: uuid::Uuid::new_v4(),
-            representation: TabsRepresentation::Standard,
+            representation: TabsRepresentation::TopLevel,
             tabs: vec![
                 Tab {
                     name: String::from("Personal Stigma"),

@@ -31,7 +31,7 @@ impl Render for TableProps {
                         @for row in &self.rows {
                             tr {
                                 @for cell in row {
-                                    div class="p-4 bg-[#c1daed]" {
+                                    div class="p-4 bg-[#c1daed] text-[#313231]" {
                                         (cell)
                                     }
                                 }

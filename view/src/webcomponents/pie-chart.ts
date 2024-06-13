@@ -38,8 +38,6 @@ const drawPie = (
 
     const pieData = pieFn(data);
 
-    console.log(data)
-
     const radius = 0.5 * Math.min(innerWidth, innerHeight);
 
     const arcFn = arc<PieArcDatum<PieChartDatum>>()

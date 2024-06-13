@@ -96,24 +96,5 @@ table[id='institutionalization-and-healthcare-costs'] table th {
 
 
 
-  .ptsd-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px; /* Adjust gap to fit the border between cells */
-    border: 1px solid #3d5a99;
-  }
 
-  .ptsd-grid > .cell {
-    padding: 16px;
-    border: 1px solid #3d5a99;
-  }
-
-  .ptsd-grid > .cell:nth-child(odd) {
-    background-color: #3d5a99;
-    color: #fff;
-  }
-
-  .ptsd-grid > .cell:nth-child(even) {
-    background-color: #e0eaf5;
-    color: #3d5a99;
-  }
+  .grid-table[data-theme="ptsd"].item:nth-child()

@@ -5,7 +5,7 @@ use blocks::block::pie_chart::{PieChartDatum, PieChartProps};
 use blocks::block::references::ReferencesProps;
 use blocks::block::rich_text::{self, RichTextProps};
 use blocks::block::table::TableProps;
-use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation};
+use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation, TabsTheme};
 use blocks::block::Block;
 use maud::{html, Render};
 use std::vec;
@@ -19,7 +19,7 @@ pub fn blocks() -> Vec<Block> {
     vec![
         Block::TabsBlock(TabsProps {
             id: uuid::Uuid::new_v4(),
-            representation: TabsRepresentation::Standard,
+            representation: TabsRepresentation::TopLevel,
             tabs: vec![
                 Tab {
                     name: String::from("Personal Burden"),
@@ -38,11 +38,7 @@ pub fn blocks() -> Vec<Block> {
                                 Tab {
                                     name: String::from("Family / Caregiver"),
                                     blocks: vec![
-                                        // rich_text_block!("../../input/OTS126_PTSD_Disease_Burden_Node/475fe6d4-5fe5-4d6a-b9e0-a823b48caf42.html"),
-                                        // Block::TableBlock(TableProps {
-                                        //     headers: vec![],
-                                        //     rows: vec![vec![]]
-                                        // }),
+                                        rich_text_block!("../../input/OTS126_PTSD_Disease_Burden_Node/11_475fe6d4-5fe5-4d6a-b9e0-a823b48caf42.html"),
                                         Block::TableBlock(TableProps {
                                             dimension: [7,3],
                                             headers: vec![],
@@ -128,15 +124,17 @@ pub fn blocks() -> Vec<Block> {
                                     ]
                                 }
                             ], 
-                            representation: TabsRepresentation::Standard })
+                            representation: TabsRepresentation::Internal { theme: TabsTheme::new("#d6e5ee", "#3b3e3f"), full_bleed: false } })
                     ],
                 },
                 Tab {
                     name: String::from("Societal Burden"),
                     blocks: vec![
 
+                   
                       rich_text_block!("../../input/OTS126_PTSD_Disease_Burden_Node/48_08cff1ca-fb62-4bef-83be-136fb27d9204.html"),
-                     
+                      Block::SvgBlock(SvgProps { name: SvgName::OST126DiseaseBurdenInfographic011 }),
+
                         Block::TabsBlock(TabsProps {
                             id: uuid::Uuid::new_v4(),
                             representation: TabsRepresentation::Swiper,
@@ -144,53 +142,60 @@ pub fn blocks() -> Vec<Block> {
                                 Tab {
                                     name: String::from("Overal Economic Burden"),
                                     blocks: vec![
-                                        Block::PieChartBlock(PieChartProps {
-                                            title: String::from("Figure 1. Excess Economic Burden of PTSD in the Overall US Population in 2018, Billion USD"),
-                                            slices: vec![
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct health care costs"), value: 32.8 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct non-health care costs"), value: 15.4 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of unemployment"), value: 19.9 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of productivity loss"), value: 15. },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs due to caregiving"), value: 15.8 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of premature mortality"), value: 1.1 }
-                                                ]
-                                        })
-                                        // Block::SvgBlock(SvgProps { name: SvgName::OTS126Icons02MNOST126PTSDAtWorkInfographic13 })
+                                        // Block::PieChartBlock(PieChartProps {
+                                        //     title: String::from("Figure 1. Excess Economic Burden of PTSD in the Overall US Population in 2018, Billion USD"),
+                                        //     slices: vec![
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct health care costs"), value: 32.8 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct non-health care costs"), value: 15.4 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of unemployment"), value: 19.9 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of productivity loss"), value: 15. },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs due to caregiving"), value: 15.8 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of premature mortality"), value: 1.1 }
+                                        //         ]
+                                        // })
+                                        Block::SvgBlock(SvgProps { name: SvgName::OST126PTSDAtWorkInfographic0 }),
+                                        
+                                        rich_text_block!("../../input/OTS126_PTSD_Disease_Burden_Node/48_08cff1ca-fb62-4bef-83be-136fb27d9204-legend.html"),
+
 
                                     ]
                                 },
                                 Tab {
                                     name: String::from("Overal Economic Burden"),
                                     blocks: vec![
-                                        Block::PieChartBlock(PieChartProps {
-                                            title: String::from("Figure 2. Excess Economic Burden of PTSD in the US Civilian Population in 2018, Billion USD"),
-                                            slices: vec![
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct health care costs"), value: 34.8 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct non-health care costs"), value: 8.9 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of unemployment"), value: 22.5 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of productivity loss"), value: 15.4 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs due to caregiving"), value: 17.6 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of premature mortality"), value: 0.7 }
-                                                ]
-                                        })
-                                        // Block::SvgBlock(SvgProps { name: SvgName::OTS126Icons02MNOST126PTSDAtWorkInfographic14 })
+                                        // Block::PieChartBlock(PieChartProps {
+                                        //     title: String::from("Figure 2. Excess Economic Burden of PTSD in the US Civilian Population in 2018, Billion USD"),
+                                        //     slices: vec![
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct health care costs"), value: 34.8 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct non-health care costs"), value: 8.9 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of unemployment"), value: 22.5 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of productivity loss"), value: 15.4 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs due to caregiving"), value: 17.6 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of premature mortality"), value: 0.7 }
+                                        //         ]
+                                        // })
+                                        Block::SvgBlock(SvgProps { name: SvgName::OST126PTSDAtWorkInfographic1 }),
+                                        rich_text_block!("../../input/OTS126_PTSD_Disease_Burden_Node/48_08cff1ca-fb62-4bef-83be-136fb27d9204-legend.html"),
+
                                     ]
                                 },
                                 Tab {
                                     name: String::from("Overal Economic Burden"),
                                     blocks: vec![
-                                        Block::PieChartBlock(PieChartProps {
-                                            title: String::from("Figure 3. Excess Economic Burden of PTSD in the US Military Population in 2018, Billion USD "),
-                                            slices: vec![
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct health care costs"), value: 23.6 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct non-health care costs"), value: 44.0 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of unemployment"), value: 8.3 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of productivity loss"), value: 13.1 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs due to caregiving"), value: 8.0 },
-                                                PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of premature mortality"), value: 2.9 }
-                                                ]
-                                        })
-                                        // Block::SvgBlock(SvgProps { name: SvgName::OTS126Icons02MNOST126PTSDAtWorkInfographic15 })
+                                        // Block::PieChartBlock(PieChartProps {
+                                        //     title: String::from("Figure 3. Excess Economic Burden of PTSD in the US Military Population in 2018, Billion USD "),
+                                        //     slices: vec![
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct health care costs"), value: 23.6 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess direct non-health care costs"), value: 44.0 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of unemployment"), value: 8.3 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of productivity loss"), value: 13.1 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs due to caregiving"), value: 8.0 },
+                                        //         PieChartDatum { id: uuid::Uuid::new_v4(), label: String::from("Excess costs of premature mortality"), value: 2.9 }
+                                        //         ]
+                                        // })
+                                        Block::SvgBlock(SvgProps { name: SvgName::OST126PTSDAtWorkInfographic2 }),
+                                        rich_text_block!("../../input/OTS126_PTSD_Disease_Burden_Node/48_08cff1ca-fb62-4bef-83be-136fb27d9204-legend.html"),
+
 
                                     ]
                                 }
