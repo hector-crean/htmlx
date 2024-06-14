@@ -1,6 +1,7 @@
 pub mod bar_chart;
 pub mod brain;
 pub mod definition;
+pub mod disclosure;
 pub mod html;
 pub mod icon;
 pub mod nav;
@@ -10,7 +11,6 @@ pub mod references;
 pub mod rich_text;
 pub mod table;
 pub mod tabs;
-
 use crate::SvgName;
 
 use self::{
@@ -19,6 +19,7 @@ use self::{
     nav::NavProps,
 };
 use brain::{brain_glossary::BrainGlossaryProps, interactive_brain::InteractiveBrainProps};
+use disclosure::DisclosureProps;
 use html::HtmlProps;
 use icon::{IconProps, SvgProps};
 use maud::html;
@@ -70,12 +71,16 @@ pub enum Block {
     IconBlock(IconProps),
     HtmlBlock(HtmlProps),
     SvgBlock(SvgProps),
+    DisclosureBlock(DisclosureProps),
 }
 
 impl maud::Render for Block {
     fn render(&self) -> maud::Markup {
         html!(
             @match self {
+                Block::DisclosureBlock(block) => {
+                    (block)
+                }
                 Block::SvgBlock(block) => {
                     (block)
                 }

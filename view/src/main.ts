@@ -22,6 +22,7 @@ import specific_populations_init from '@/init/specific_populations';
 import nav from '@/assets/pages/nav.html?raw';
 import clinical_presentation_comorbidities_page from '@/assets/pages/ptsd/clinical_presentation/comorbidities/page.html?raw';
 import clinical_presentation_symptoms_page from '@/assets/pages/ptsd/clinical_presentation/symptoms/page.html?raw';
+import assessment_and_diagnosis_page from '@/assets/pages/ptsd/diagnosis/assessment_and_diagnosis/page.html?raw';
 import diagnosis_stigma_page from '@/assets/pages/ptsd/diagnosis/stigma/page.html?raw';
 
 import disease_burden from '@/assets/pages/ptsd/disease_burden/page.html?raw';
@@ -82,7 +83,12 @@ const routes: Array<Route> = [
     id: 'stigma',
     template: diagnosis_stigma_page,
     scripts: [stigma_init.init],
-
+  },
+  {
+    path: '/ptsd/diagnosis/assessment_and_diagnosis',
+    id: 'assessment_and_diagnosis',
+    template: assessment_and_diagnosis_page,
+    scripts: []
   },
   {
     path: '/ptsd/specific_populations',
@@ -96,6 +102,7 @@ const routes: Array<Route> = [
     template: disease_burden,
     scripts: [disease_burden_init.init]
   },
+  
   {
     path: "/sandbox",
     id: 'sandbox',

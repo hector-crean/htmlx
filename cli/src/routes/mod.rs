@@ -9,7 +9,6 @@ pub mod treatment;
 
 use crate::routes;
 
-
 use blocks::node::{FileExtension, Node, NodeType};
 use blocks::page::Page;
 
@@ -126,17 +125,21 @@ impl App {
             )
             .add_child(
                 Node::new("diagnosis", NodeType::Folder)
-                    // .add_child(
-                    //     Node::new("assessment_and_diagnosis", NodeType::Folder).add_child(
-                    //         Node::new(
-                    //             "page",
-                    //             NodeType::File {
-                    //                 extension: FileExtension::Html,
-                    //                 renderable: Page::new(vec![]),
-                    //             },
-                    //         ),
-                    //     ),
-                    // )
+                    .add_child(
+                        Node::new("assessment_and_diagnosis", NodeType::Folder).add_child(
+                            Node::new(
+                                "page",
+                                NodeType::File {
+                                    extension: FileExtension::Html,
+                                    renderable: Page::new(
+                                        "Assessment and Diagnosis",
+                                        None,
+                                        diagnosis::assessment_and_diagnosis::blocks(),
+                                    ),
+                                },
+                            ),
+                        ),
+                    )
                     .add_child(Node::new("stigma", NodeType::Folder).add_child(Node::new(
                         "page",
                         NodeType::File {

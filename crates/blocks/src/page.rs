@@ -37,7 +37,7 @@ impl maud::Render for Page {
                         (self.subtitle.clone().unwrap_or("".into()))
                     }
                 }
-                div class="presentation_wrapper " {
+                div class="pt-2 presentation_wrapper" {
                     @for block in &self.blocks {
                         (block)
                     }

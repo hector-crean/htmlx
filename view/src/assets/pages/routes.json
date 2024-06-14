@@ -16,6 +16,10 @@
     "template": "/ptsd/disease_burden/page.html"
   },
   {
+    "path": "/ptsd/diagnosis/assessment_and_diagnosis/page",
+    "template": "/ptsd/diagnosis/assessment_and_diagnosis/page.html"
+  },
+  {
     "path": "/ptsd/diagnosis/stigma/page",
     "template": "/ptsd/diagnosis/stigma/page.html"
   }
