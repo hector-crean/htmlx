@@ -6,58 +6,48 @@ use super::{
 };
 use stringcase::{kebab_case, Caser};
 
-#[derive(Debug, Clone)]
-pub struct BarDatum {
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[serde(rename_all = "camelCase")]
+pub struct BarChartDatum {
     pub id: uuid::Uuid,
-    pub short_title: String,
-    pub full_title: String,
-    pub icon: String,
-    pub content: Block,
-    pub percent: f32,
+    pub label: String,
+    pub value: f32,
 }
 
-impl Default for BarDatum {
+impl Default for BarChartDatum {
     fn default() -> Self {
         Self {
             id: uuid::Uuid::new_v4(),
-            short_title: "default-title".to_string(),
-            full_title: "".to_string(),
-            icon: "icon.png".to_string(),
-            content: Block::RichTextBlock(RichTextProps::default()),
-            percent: 0.,
+            label: String::from(""),
+            value: 0.,
         }
     }
 }
 
-#[derive(Debug, Clone)]
-// #[serde(rename_all = "camelCase")]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[serde(rename_all = "camelCase")]
 pub struct BarChartProps {
     pub title: String,
-    pub bars: Vec<BarDatum>,
+    pub slices: Vec<BarChartDatum>,
 }
 
 impl Default for BarChartProps {
     fn default() -> Self {
         BarChartProps {
             title: "default-title".to_string(),
-            bars: vec![BarDatum::default()],
+            slices: vec![BarChartDatum::default()],
         }
     }
 }
 
 impl maud::Render for BarChartProps {
     fn render(&self) -> maud::Markup {
+        let bar_data_str: String = serde_json::to_string(&self.slices).unwrap();
+
         html!(
             div class="panel" {
                 h2 {(self.title)}
-                svg id=(self.title.to_kebab_case()) width="100%" preserveAspectRatio="xMidYMid meet" {}
-                div class="panel" id=(format!("info-{}", self.title.to_kebab_case())) {
-                    @for bar in &self.bars {
-                        div data-bar-id=(bar.id) {
-                            (bar.content)
-                        }
-                    }
-                }
+                bar-chart bardata=(bar_data_str) {}
             }
         )
     }

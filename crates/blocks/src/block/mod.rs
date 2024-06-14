@@ -2,6 +2,7 @@ pub mod bar_chart;
 pub mod brain;
 pub mod definition;
 pub mod disclosure;
+pub mod grid_table;
 pub mod html;
 pub mod icon;
 pub mod nav;
@@ -9,6 +10,7 @@ pub mod pie_chart;
 pub mod placeholder_container;
 pub mod references;
 pub mod rich_text;
+pub mod suggested_node;
 pub mod table;
 pub mod tabs;
 use crate::SvgName;
@@ -20,6 +22,7 @@ use self::{
 };
 use brain::{brain_glossary::BrainGlossaryProps, interactive_brain::InteractiveBrainProps};
 use disclosure::DisclosureProps;
+use grid_table::GridTableProps;
 use html::HtmlProps;
 use icon::{IconProps, SvgProps};
 use maud::{html, Markup};
@@ -28,6 +31,7 @@ use placeholder_container::PlaceholderContainerProps;
 use references::ReferencesProps;
 use rich_text::{RichText, RichTextProps};
 use std::fmt::{write, Display, Write};
+use suggested_node::SuggestedNodeProps;
 use table::TableProps;
 use tabs::{Tab, TabsProps};
 use uuid::Uuid;
@@ -57,6 +61,7 @@ impl BlocksProps {
 // #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 // #[serde(tag = "type", content = "props")]
 pub enum Block {
+    SuggestedNodeBlock(SuggestedNodeProps),
     RichTextBlock(RichTextProps),
     TabsBlock(TabsProps),
     InteractiveBrainBlock(InteractiveBrainProps),
@@ -74,12 +79,19 @@ pub enum Block {
     SvgBlock(SvgProps),
     DisclosureBlock(DisclosureProps),
     Html(Markup),
+    GridTableBlock(GridTableProps),
 }
 
 impl maud::Render for Block {
     fn render(&self) -> maud::Markup {
         html!(
             @match self {
+                Block::GridTableBlock(block) => {
+                    (block)
+                }
+                Block::SuggestedNodeBlock(block) => {
+                    (block)
+                }
                 Block::Html(block) => {
                     (block)
                 }

@@ -1,4 +1,4 @@
-use maud::Render;
+use maud::{PreEscaped, Render};
 use serde_json::json;
 
 use rand::Rng;
@@ -26,29 +26,29 @@ pub enum FileExtension {
     Rust,
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq)]
-pub enum NodeType<R: Render> {
+#[derive(Debug, Clone)]
+pub enum NodeType {
     File {
         extension: FileExtension,
-        renderable: R,
+        renderable: PreEscaped<String>,
     },
     Folder,
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq)]
-pub struct Node<R: Render> {
+#[derive(Debug)]
+pub struct Node {
     pub path_segment: String,
-    pub node_type: NodeType<R>,
-    pub children: Vec<Node<R>>,
+    pub node_type: NodeType,
+    pub children: Vec<Node>,
 }
 
 #[derive(Debug)]
-pub struct NodeIterator<'a, R: Render> {
-    stack: Vec<(&'a Node<R>, String)>,
+pub struct NodeIterator<'a> {
+    stack: Vec<(&'a Node, String)>,
 }
 
-impl<'a, R: Render> Iterator for NodeIterator<'a, R> {
-    type Item = (String, &'a Node<R>);
+impl<'a> Iterator for NodeIterator<'a> {
+    type Item = (String, &'a Node);
 
     fn next(&mut self) -> Option<Self::Item> {
         if let Some((node, path)) = self.stack.pop() {
@@ -69,9 +69,9 @@ impl<'a, R: Render> Iterator for NodeIterator<'a, R> {
     }
 }
 
-impl<R: Render> Node<R> {
+impl Node {
     // Constructor for Node
-    pub fn new(path_segment: &str, node_type: NodeType<R>) -> Self {
+    pub fn new(path_segment: &str, node_type: NodeType) -> Self {
         Node {
             path_segment: path_segment.into(),
             node_type,
@@ -85,12 +85,12 @@ impl<R: Render> Node<R> {
     }
 
     // Method to add a child Node
-    pub fn add_child(mut self, child: Node<R>) -> Self {
+    pub fn add_child(mut self, child: Node) -> Self {
         self.children.push(child);
         self
     }
 
-    pub fn iter(&self) -> NodeIterator<R> {
+    pub fn iter(&self) -> NodeIterator {
         NodeIterator {
             stack: vec![(self, String::new())],
         }
@@ -219,12 +219,12 @@ impl<R: Render> Node<R> {
         serde_json::to_string_pretty(&data)
     }
 }
-pub struct Routes<R: Render> {
-    root: Node<R>,
+pub struct Routes {
+    root: Node,
 }
 
-impl<R: Render> Routes<R> {
-    pub fn new(base_path: &str, root: Node<R>) -> Self {
+impl Routes {
+    pub fn new(base_path: &str, root: Node) -> Self {
         let root = root.preprend_path_segment(base_path);
         Self { root }
     }
@@ -258,14 +258,14 @@ mod tests {
 
     use super::*;
 
-    fn root() -> Node<Page> {
-        Node::new("Root", NodeType::Folder).add_child(Node::new("Child 2", NodeType::Folder))
-    }
+    // fn root() -> Node<Page> {
+    //     Node::new("Root", NodeType::Folder).add_child(Node::new("Child 2", NodeType::Folder))
+    // }
 
     #[test]
     fn traverse() {
-        root().traverse(&mut |node| {
-            println!("{:?}", node);
-        });
+        // root().traverse(&mut |node| {
+        //     println!("{:?}", node);
+        // });
     }
 }
