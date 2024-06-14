@@ -10,7 +10,7 @@ use blocks::block::brain::interactive_brain::{
 };
 
 use blocks::block::references::ReferencesProps;
-use blocks::block::rich_text::{RichTextBlock, RichText};
+use blocks::block::rich_text::{RichText, RichTextBlock, RichTextProps};
 use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation};
 use blocks::block::{Block};
 
@@ -28,6 +28,7 @@ pub fn blocks() -> Vec<Block> {
 
 
     vec![
+        rich_text_block!("../../../input/OTS126_PTSD_Assessment_Diagnosis_Screening_Node/legend.html"),
         Block::DisclosureBlock(DisclosureProps { 
             theme: DisclosureTheme::new("#dae3f3", "#000000"),
             id: uuid::Uuid::new_v4().to_string(),
