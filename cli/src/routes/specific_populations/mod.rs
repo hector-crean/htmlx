@@ -1,5 +1,6 @@
 use crate::{rich_text_block};
 use blocks::block::icon::{IconProps, SvgProps};
+use blocks::span::ref_note::RefNote;
 use blocks::SvgName;
 use blocks::block::references::ReferencesProps;
 use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation, TabsTheme};
@@ -7,7 +8,45 @@ use blocks::block::{Block};
 use maud::{html, Render};
 use std::vec;
 
+
+
+
+
 pub struct Page;
+
+impl Page {
+    fn civilian_and_general_population_tab(&self) -> Vec<Block> {
+        vec![
+            Block::SvgBlock(SvgProps { name: SvgName::OTS126PTSDGlobalUSInfographic}),
+            Block::Html( html! {
+                p {
+                    "The global lifetime prevalence of PTSD is 4-10%"(RefNote::new(1))(RefNote::new(2))
+                }
+                p {
+                    "PTSD is one of the most common mental health disorders in the US, with 7-8 out of every 100 people experiencing PTSD at some point in their lifetime"(RefNote::new(3))(RefNote::new(4))
+                }
+            }),
+            Block::SvgBlock(SvgProps { name: SvgName::OTS12613AdultsPTSDInfographic}),
+            Block::Html( html! {
+                p {
+                    "~13 million adults in the US will experience PTSD during a given year"(RefNote::new(5))
+                }
+               
+            }),
+            Block::SvgBlock(SvgProps { name: SvgName::OTS126TypicalAgePTSDText}),
+            Block::Html( html! {
+                p {
+                    ">80% of PTSD patients are in the general population rather than the military population"(RefNote::new(6))
+                }
+               
+            }),
+
+           
+           
+        
+        ]
+    }
+}
 
 impl maud::Render for Page {
     fn render(&self) -> maud::Markup {
@@ -18,16 +57,7 @@ impl maud::Render for Page {
                 tabs: vec![
                     Tab {
                         name: String::from("Civilan / General Population"),
-                        blocks: vec![
-                            Block::SvgBlock(SvgProps { name: SvgName::OTS126PTSDGlobalUSInfographic}),
-                            Block::SvgBlock(SvgProps { name: SvgName::OTS12613AdultsPTSDInfographic}),
-                            Block::SvgBlock(SvgProps { name: SvgName::OTS126TypicalAgePTSDText}),
-        
-                            rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/74df1483-d108-492c-8d35-5737ba519ac6.html"),
-                            rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/b182874e-54ed-4b26-b1e0-7df6b7c9ea96.html"),
-                           
-                        
-                        ],
+                        blocks: self.civilian_and_general_population_tab(),
                     },
                     Tab {
                         name: String::from("PTSD in Women"),

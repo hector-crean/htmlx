@@ -1,10 +1,9 @@
-use crate::{rich_text_block};
+use crate::rich_text_block;
 use blocks::block::{
-    bar_chart::{BarDatum},
-    placeholder_container::PlaceholderContainerProps,
-    references::ReferencesProps,
-    Block,
+    bar_chart::BarDatum, html, placeholder_container::PlaceholderContainerProps,
+    references::ReferencesProps, Block,
 };
+use maud::{html, Render};
 
 fn psychiatric_comborbidities_bars() -> Vec<BarDatum> {
     vec![
@@ -98,19 +97,23 @@ fn medical_comorbidities_bars() -> Vec<BarDatum> {
         }
     ]
 }
-pub fn blocks() -> Vec<Block> {
-    vec![
+
+pub struct Page;
+
+impl Render for Page {
+    fn render(&self) -> maud::Markup {
+        html! {
         // rich_text_block!("../../../input/clinical_presentation_comorbidities/fc9c5804-9b7a-420c-8e82-a28be4076d56.html"),
         // Block::BarChartBlock(BarChartProps {
         //     title: String::from("Psychiatric Comorbidities"),
         //     bars: psychiatric_comborbidities_bars()
         // }),
-        
-        Block::PlaceholderContainerBlock(PlaceholderContainerProps {
+
+        (Block::PlaceholderContainerBlock(PlaceholderContainerProps {
             id: String::from("ptsd-comorbidities-bar-chart"),
             full_bleed: true,
             class: String::from("round-lg")
-        }),
+        }))
 
         // Block::BarChartBlock(BarChartProps {
         //     title: String::from("Medical Comorbidities"),
@@ -128,38 +131,15 @@ pub fn blocks() -> Vec<Block> {
         // rich_text_block!("../../../input/clinical_presentation_comorbidities/f49aea70-5faa-4d15-9f1f-c461a474f83c.html"),
         // rich_text_block!("../../../input/clinical_presentation_comorbidities/89a0070f-52df-4323-926e-cf76f526ced9.html"),
         // rich_text_block!("../../../input/clinical_presentation_comorbidities/f9f9d6ac-a315-469a-b56c-d61606380c5b.html"),
-        
-        Block::ReferencesBlock(Box::new(ReferencesProps {
+
+        (Block::ReferencesBlock(Box::new(ReferencesProps {
             references: rich_text_block!("../../../input/clinical_presentation_comorbidities/e0c2fb34-6776-4a5e-bc6f-cbaacfc675b2.html")
-        })),
-
-
-
-    ]
+        })))
+        }
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    
-
-    #[test]
-    fn print_psychiatric_comborbidities_bar() -> Result<(), serde_json::Error> {
-        let psychiatric_comborbidities_bars = psychiatric_comborbidities_bars();
-        let json = serde_json::to_string_pretty(&psychiatric_comborbidities_bars)?;
-
-        println!("{}", json);
-
-        Ok(())
-    }
-
-    #[test]
-    fn print_medical_comorbidities_bars() -> Result<(), serde_json::Error> {
-        let medical_comorbidities_bars = medical_comorbidities_bars();
-        let json = serde_json::to_string_pretty(&medical_comorbidities_bars)?;
-
-        println!("{}", json);
-
-        Ok(())
-    }
 }
