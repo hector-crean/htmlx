@@ -22,7 +22,7 @@ use brain::{brain_glossary::BrainGlossaryProps, interactive_brain::InteractiveBr
 use disclosure::DisclosureProps;
 use html::HtmlProps;
 use icon::{IconProps, SvgProps};
-use maud::html;
+use maud::{html, Markup};
 use pie_chart::PieChartProps;
 use placeholder_container::PlaceholderContainerProps;
 use references::ReferencesProps;
@@ -32,7 +32,7 @@ use table::TableProps;
 use tabs::{Tab, TabsProps};
 use uuid::Uuid;
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone)]
 pub struct BlocksProps {
     blocks: Vec<Block>,
 }
@@ -53,8 +53,9 @@ impl BlocksProps {
     }
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
-#[serde(tag = "type", content = "props")]
+#[derive(Debug, Clone)]
+// #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+// #[serde(tag = "type", content = "props")]
 pub enum Block {
     RichTextBlock(RichTextProps),
     TabsBlock(TabsProps),
@@ -72,12 +73,16 @@ pub enum Block {
     HtmlBlock(HtmlProps),
     SvgBlock(SvgProps),
     DisclosureBlock(DisclosureProps),
+    Html(Markup),
 }
 
 impl maud::Render for Block {
     fn render(&self) -> maud::Markup {
         html!(
             @match self {
+                Block::Html(block) => {
+                    (block)
+                }
                 Block::DisclosureBlock(block) => {
                     (block)
                 }

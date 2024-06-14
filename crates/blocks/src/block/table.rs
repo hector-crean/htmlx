@@ -2,7 +2,7 @@ use maud::{html, Markup, Render};
 
 use super::Block;
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone)]
 pub struct TableProps {
     pub dimension: [u32; 2],
     pub headers: Vec<Block>,

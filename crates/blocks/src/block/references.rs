@@ -2,7 +2,7 @@ use maud::html;
 
 use super::{rich_text::RichText, Block};
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone)]
 pub struct ReferencesProps {
     pub references: Block,
 }

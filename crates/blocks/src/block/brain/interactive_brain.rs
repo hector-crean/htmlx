@@ -10,8 +10,7 @@ use strum::IntoStaticStr;
 
 use super::brain_region::BrainRegionName;
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
-#[serde(rename_all = "camelCase")]
+#[derive(Debug, Clone)]
 pub struct BrainComment {
     pub icon: IconProps,
     pub symptom: String,
@@ -90,8 +89,7 @@ impl Default for BrainComment {
     }
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
-#[serde(rename_all = "camelCase")]
+#[derive(Debug, Clone)]
 pub struct CommentGroup {
     pub name: String,
     pub comments: Vec<BrainComment>,
@@ -115,7 +113,7 @@ impl Default for CommentGroup {
     }
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone)]
 pub struct InteractiveBrainProps {
     pub id: String,
     pub description: RichText,

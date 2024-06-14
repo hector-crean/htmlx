@@ -6,8 +6,7 @@ use super::{
 };
 use stringcase::{kebab_case, Caser};
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
-#[serde(rename_all = "camelCase")]
+#[derive(Debug, Clone)]
 pub struct BarDatum {
     pub id: uuid::Uuid,
     pub short_title: String,
@@ -30,8 +29,8 @@ impl Default for BarDatum {
     }
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
-#[serde(rename_all = "camelCase")]
+#[derive(Debug, Clone)]
+// #[serde(rename_all = "camelCase")]
 pub struct BarChartProps {
     pub title: String,
     pub bars: Vec<BarDatum>,

@@ -15,20 +15,20 @@ impl TabsTheme {
         }
     }
 }
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone)]
 pub enum TabsRepresentation {
     TopLevel,
     Internal { theme: TabsTheme, full_bleed: bool },
     Swiper,
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone)]
 pub struct Tab {
     pub name: String,
     pub blocks: Vec<Block>,
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone)]
 pub struct TabsProps {
     pub id: uuid::Uuid,
     pub tabs: Vec<Tab>,
