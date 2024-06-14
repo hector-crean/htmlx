@@ -4,24 +4,24 @@ use maud::{html, Render};
 
 use crate::block::Block;
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
-pub struct Page {
+#[derive(Debug, Clone)]
+pub struct Page<R: maud::Render> {
     pub title: String,
     pub subtitle: Option<String>,
-    pub blocks: Vec<Block>,
+    pub page: R,
 }
 
-impl Page {
-    pub fn new(title: &str, subtitle: Option<&str>, blocks: Vec<Block>) -> Self {
+impl<R: maud::Render> Page<R> {
+    pub fn new(title: &str, subtitle: Option<&str>, page: R) -> Self {
         Self {
-            blocks,
+            page,
             title: title.into(),
             subtitle: subtitle.map(|s| s.into()),
         }
     }
 }
 
-impl maud::Render for Page {
+impl<R: maud::Render> maud::Render for Page<R> {
     fn render(&self) -> maud::Markup {
         //text-[#313231] bg-gradient-to-b from-[#aecad8] to-[#89b8dd]
         html!(
@@ -38,9 +38,7 @@ impl maud::Render for Page {
                     }
                 }
                 div class="pt-2 presentation_wrapper" {
-                    @for block in &self.blocks {
-                        (block)
-                    }
+                    (self.page)
                 }
 
             }
