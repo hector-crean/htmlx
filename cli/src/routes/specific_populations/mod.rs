@@ -222,9 +222,9 @@ impl Page {
             //     title: "Race-PTSD prevalence".to_string(),
             //     bars: vec![],
             // }),
-            Block::SvgBlock(SvgProps {
-                name: SvgName::OTS126PTSDRaceInfographic,
-            }),
+            // Block::SvgBlock(SvgProps {
+            //     name: SvgName::OTS126PTSDRaceInfographic,
+            // }),
             Block::BarChartBlock(BarChartProps {
                 title: "Race-PTSD prevalence".to_string(),
                 slices: vec![
@@ -232,21 +232,25 @@ impl Page {
                         id: uuid::Uuid::new_v4(),
                         label: "Black".to_string(),
                         value: 8.7,
+                        fill: Some("#7A4D3B".to_string()),
                     },
                     BarChartDatum {
                         id: uuid::Uuid::new_v4(),
                         label: "White".to_string(),
                         value: 7.4,
+                        fill: Some("#FFCEA7".to_string()),
                     },
                     BarChartDatum {
                         id: uuid::Uuid::new_v4(),
                         label: "Hispanic".to_string(),
                         value: 7.0,
+                        fill: Some("#DB8C68".to_string()),
                     },
                     BarChartDatum {
                         id: uuid::Uuid::new_v4(),
                         label: "Asian".to_string(),
                         value: 4.0,
+                        fill: Some("#F9DAA6".to_string()),
                     },
                 ],
             }),

@@ -1,6 +1,6 @@
 use maud::html;
 
-use super::rich_text::RichText;
+use super::{rich_text::RichText, Block};
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
 pub struct DisclosureTheme {
@@ -24,12 +24,12 @@ impl Default for DisclosureTheme {
     }
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone)]
 pub struct DisclosureProps {
     pub theme: DisclosureTheme,
     pub id: String,
-    pub summary: RichText,
-    pub longform: Vec<RichText>,
+    pub summary: Vec<Block>,
+    pub longform: Vec<Block>,
 }
 
 impl Default for DisclosureProps {
@@ -37,7 +37,7 @@ impl Default for DisclosureProps {
         Self {
             theme: DisclosureTheme::default(),
             id: String::default(),
-            summary: RichText::default(),
+            summary: vec![],
             longform: vec![],
         }
     }
@@ -55,7 +55,9 @@ impl maud::Render for DisclosureProps {
         html! {
             details class=(container_class) {
                 summary class=(details_class) {
-                    (self.summary)
+                    @for text in &self.summary {
+                        (text)
+                    }
                 }
                 div class=(longform_class) {
                     @for text in &self.longform {

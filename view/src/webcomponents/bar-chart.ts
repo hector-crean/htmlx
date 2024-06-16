@@ -82,7 +82,7 @@ const drawBar = (
         .nice()
         .range([innerHeight, 0]);
 
-    const colorScale = scaleOrdinal().domain(['0', '1', '2', '3', '4', '5']).range(blues);
+    const colorScale = scaleOrdinal().domain([...Array(data.length).keys()].map(n => `${n}`)).range(blues);
 
 
 
@@ -97,7 +97,7 @@ const drawBar = (
                         y="${yScale(d.value)}" 
                         width="${xScale.bandwidth()}" 
                         height="${innerHeight - yScale(d.value)}"
-                        fill="${colorScale(`${data.indexOf(d) % 5}`)}" 
+                        fill="${d.fill ? d.fill : colorScale(`${data.indexOf(d) % 5}`)}" 
                         class="${classMap({ region: true, hovered: isHovered, clicked: isClicked, bar: true })}" 
                         @pointerover="${() => onHoverStart(d.id)}" 
                         @pointerout="${() => onHoverEnd(d.id)}" 
@@ -121,6 +121,7 @@ const drawBar = (
 
 export interface BarChartDatum {
     id: string,
+    fill?: string,
     label: string;
     value: number;
 }
@@ -262,7 +263,7 @@ class BarChart extends LitElement {
 
         return html`
             <div ${ref(this.containerRef)} class=${classMap({ container: true })}>
-                <svg id="interactive-svg" class="rounded-lg shadow" data-interactive="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 ${this.size.innerWidth} ${this.size.innerHeight}">
+                <svg id="interactive-svg" class="rounded-lg shadow" data-interactive="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 ${this.size.outerWidth} ${this.size.outerHeight}">
                     <defs>
                         <filter id="glow">
                             <feGaussianBlur stdDeviation="8" result="coloredBlur"></feGaussianBlur>
@@ -273,9 +274,9 @@ class BarChart extends LitElement {
                         </filter>
                     </defs>
                     <g class="zoomable" cursor="grab">
-                        <g ${ref(this.canvasRef)} class="barchart" transform="translate(${0}, ${this.margin.top})">
-                            ${drawBar(this.data, this.size.innerWidth, this.size.innerHeight, this.hoveredRegions, this.clickedRegions, this.onRegionHoverStart.bind(this), this.onRegionHoverEnd.bind(this), this.onRegionClick.bind(this))}
+                        <g ${ref(this.canvasRef)} class="barchart" transform="translate(${this.margin.left}, ${this.margin.top})">
                             ${drawAxis(this.scaleX, this.scaleY, this.size.innerWidth, this.size.innerHeight)}
+                            ${drawBar(this.data, this.size.innerWidth, this.size.innerHeight, this.hoveredRegions, this.clickedRegions, this.onRegionHoverStart.bind(this), this.onRegionHoverEnd.bind(this), this.onRegionClick.bind(this))}
                         </g>
 
                     </g>

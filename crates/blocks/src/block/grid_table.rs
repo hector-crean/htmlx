@@ -17,11 +17,11 @@ impl Render for GridTableProps {
         html! {
 
         div class="flex flex-col [&>*:nth-child(odd)]:bg-[#c1daed] text-[#6e777e] [&>*:nth-child(even)]:bg-[#ededed] gap-1" {
-            @for row in &self.rows {
+            @for (i, row) in self.rows.iter().enumerate() {
                 div class=(row_class) {
-                    @for (i, cell) in row.iter().enumerate() {
-                        @match i {
-                            0 => {
+                    @for (j, cell) in row.iter().enumerate() {
+                        @match (i,j) {
+                            (_, 0)  => {
                                 div class="col-span-1 p-2 bg-[#0b5079] text-[#eaeded]" { (cell)}
                             }
                             _ => {

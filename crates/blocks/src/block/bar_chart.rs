@@ -12,6 +12,7 @@ pub struct BarChartDatum {
     pub id: uuid::Uuid,
     pub label: String,
     pub value: f32,
+    pub fill: Option<String>,
 }
 
 impl Default for BarChartDatum {
@@ -20,6 +21,7 @@ impl Default for BarChartDatum {
             id: uuid::Uuid::new_v4(),
             label: String::from(""),
             value: 0.,
+            fill: None,
         }
     }
 }
