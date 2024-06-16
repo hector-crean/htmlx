@@ -30,8 +30,8 @@ enum Commands {
     },
 }
 
-const TEST_PUBLIC_DIR: &'static str = r#"C:\Users\Hector.C\rust\htmx\view\src\assets\pages"#;
-// const TEST_PUBLIC_DIR: &str = r#"/Users/hectorcrean/Rust/htmlx/view/src/assets/pages"#;
+// const TEST_PUBLIC_DIR: &'static str = r#"C:\Users\Hector.C\rust\htmx\view\src\assets\pages"#;
+const TEST_PUBLIC_DIR: &str = r#"/Users/hectorcrean/Rust/htmlx/view/src/assets/pages"#;
 
 fn main() -> eyre::Result<()> {
     color_eyre::install()?;

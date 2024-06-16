@@ -1,7 +1,5 @@
 import { ChartSize, Margin } from '@/components/charts/types';
-import { axisBottom, axisLeft } from 'd3-axis';
 import { ScaleBand, ScaleLinear, scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale';
-import { select } from 'd3-selection';
 import { LitElement, SVGTemplateResult, css, html, svg } from 'lit';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { createRef, ref } from 'lit-html/directives/ref.js';
@@ -19,6 +17,49 @@ const blues = [
     '#4e69b1',
     '#5b97ca'
 ];
+
+const drawAxis = (
+    xScale: d3.ScaleBand<string>,
+    yScale: d3.ScaleLinear<number, number>,
+    innerWidth: number,
+    innerHeight: number
+): SVGTemplateResult => {
+    return svg`
+        <g>
+            <!-- X Axis -->
+            <g transform="translate(0, ${innerHeight})" class="x-axis">
+                ${xScale.domain().map(tick => svg`
+                    <text
+                        x="${xScale(tick)! + xScale.bandwidth() / 2}"
+                        y="10"
+                        text-anchor="middle"
+                        font-size="10px"
+                        class="tick"
+                    >
+                        ${tick}
+                    </text>
+                `)}
+            </g>
+            <!-- Y Axis -->
+            <g class="y-axis">
+                ${yScale.ticks().map(tick => svg`
+                    <g transform="translate(0, ${yScale(tick)})">
+                        <line x2="${innerWidth}" stroke="#A1C6DD"></line>
+                        <text
+                            x="-5"
+                            dy="0.32em"
+                            text-anchor="end"
+                            font-size="10px"
+                            class="tick"
+                        >
+                            ${tick}
+                        </text>
+                    </g>
+                `)}
+            </g>
+        </g>
+    `;
+};
 
 const drawBar = (
     data: Array<BarChartDatum>,
@@ -41,16 +82,16 @@ const drawBar = (
         .nice()
         .range([innerHeight, 0]);
 
-    const colorScale = scaleOrdinal().domain(['0','1','2','3','4','5']).range(blues);
+    const colorScale = scaleOrdinal().domain(['0', '1', '2', '3', '4', '5']).range(blues);
 
-   
+
 
     return svg`
         <g>
             ${data.map(d => {
-                const isHovered = hoveredRegions.has(d.id);
-                const isClicked = clickedRegions.has(d.id);
-                return svg`
+        const isHovered = hoveredRegions.has(d.id);
+        const isClicked = clickedRegions.has(d.id);
+        return svg`
                     <rect 
                         x="${xScale(d.id)}" 
                         y="${yScale(d.value)}" 
@@ -73,7 +114,7 @@ const drawBar = (
                         ${d.label} (${d.value}%)
                     </text>
                 `;
-            })}
+    })}
         </g>
     `;
 };
@@ -121,7 +162,7 @@ class BarChart extends LitElement {
 
     constructor() {
         super();
-        this.margin = { left: 40, right: 10, top: 20, bottom: 40 };
+        this.margin = { left: 30, right: 0, top: 40, bottom: 20 };
         this.scaleX = scaleBand().padding(0.1);
         this.scaleY = scaleLinear().domain([0, 100]).nice();
 
@@ -212,29 +253,16 @@ class BarChart extends LitElement {
                 opacity: 1;
                 display: block;
             }
-            .x-axis path,
-            .y-axis path {
-                display: none;
-            }
-            .x-axis line,
-            .y-axis line {
-                stroke: #ddd;
-            }
+          
         `
     ];
 
     render() {
 
-        const xAxis = axisBottom(this.scaleX);
-        const yAxis = axisLeft(this.scaleY).ticks(10).tickFormat(d => `${d}%`);
-
-        if(this.canvasRef.value){
-            const gx = select(this.canvasRef.value).append("g").call(xAxis);
-        }
 
         return html`
             <div ${ref(this.containerRef)} class=${classMap({ container: true })}>
-                <svg id="interactive-svg" class="rounded-lg shadow" preserveAspectRatio="xMidYMid meet" data-interactive="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 ${this.size.innerWidth} ${this.size.innerHeight}">
+                <svg id="interactive-svg" class="rounded-lg shadow" data-interactive="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 ${this.size.innerWidth} ${this.size.innerHeight}">
                     <defs>
                         <filter id="glow">
                             <feGaussianBlur stdDeviation="8" result="coloredBlur"></feGaussianBlur>
@@ -245,9 +273,11 @@ class BarChart extends LitElement {
                         </filter>
                     </defs>
                     <g class="zoomable" cursor="grab">
-                        <g ${ref(this.canvasRef)} class="barchart" transform="translate(${this.margin.left}, ${this.margin.top})">
+                        <g ${ref(this.canvasRef)} class="barchart" transform="translate(${0}, ${this.margin.top})">
                             ${drawBar(this.data, this.size.innerWidth, this.size.innerHeight, this.hoveredRegions, this.clickedRegions, this.onRegionHoverStart.bind(this), this.onRegionHoverEnd.bind(this), this.onRegionClick.bind(this))}
+                            ${drawAxis(this.scaleX, this.scaleY, this.size.innerWidth, this.size.innerHeight)}
                         </g>
+
                     </g>
                 </svg>
             </div>

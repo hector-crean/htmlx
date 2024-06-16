@@ -72,7 +72,9 @@ impl Page {
             }),
             Block::Html(html! {
                 div class="panel"{
-                    ( Block::SvgBlock(SvgProps { name: SvgName::OTS126TypicalAgePTSDText}))
+                    div class="flex flex-col items-center justify-center p-2 rounded-md" {
+                        span class="bg-[#005178] text-[#d2e3ee] text-[40px] p-2" {"23 years old"}
+                    }
                     div class="flex flex-col items-center justify-center p-2 rounded-md" {
                         span {"The typical age at which PTSD first appears is during young and middle adulthood. Among adults in the United States, the " span class="bg-[#005178] text-[#d2e3ee]"{ "median age of onset is around 23 years old"}(RefNote::new(7))}
                     }
