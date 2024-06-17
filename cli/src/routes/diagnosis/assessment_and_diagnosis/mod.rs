@@ -16,7 +16,7 @@ use maud::{html, Render};
 use std::vec;
 
 const BLUES: [&str; 7] = [
-    "#7438C3", "#3576C6", "#CC91D3", "#AFE2DD", "#C0E9DD", "#D2F0E2", "#E4F6EA",
+    "#bcdbff", "#eaeded", "#CC91D3", "#AFE2DD", "#C0E9DD", "#D2F0E2", "#E4F6EA",
 ];
 
 use crate::{rich_text, rich_text_block};
@@ -263,7 +263,7 @@ impl Render for Page {
                     Block::Html(
                         html! {
                             em { "Clinician Related Scale"}
-                            strong { "B_IPF"(RefNote::new(11)) }
+                            strong { "B-IPF"(RefNote::new(11)) }
                         }
                     )
                 ],

@@ -39,8 +39,8 @@ fn main() {
     .expect("Unable to write to project_root.rs");
 
     // Define the directory containing the SVG files
-    // let svg_dir = Path::new(r"C:\Users\Hector.C\rust\htmx\crates\blocks\src\block\icon\icons");
-    let svg_dir = Path::new(r"/Users/hectorcrean/Rust/htmlx/crates/blocks/src/block/icon/icons");
+    let svg_dir = Path::new(r"C:\Users\Hector.C\rust\htmx\crates\blocks\src\block\icon\icons");
+    // let svg_dir = Path::new(r"/Users/hectorcrean/Rust/htmlx/crates/blocks/src/block/icon/icons");
 
     // Path to the output file
     let dest_path = out_dir.join("generated_icons.rs");

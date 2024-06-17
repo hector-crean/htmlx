@@ -161,6 +161,11 @@ impl Render for Page {
                                                 ];
                                                 div class="flex flex-col [&>*:nth-child(odd)]:bg-[#c1daed] text-[#6e777e] [&>*:nth-child(even)]:bg-[#ededed] gap-1" {
                                                     div class="grid grid-cols-[1fr_30px_1fr] gap-y-2 overflow-hidden rounded-md" {
+                                                        div { "Individuals with PTSD"}
+                                                        div {}
+                                                        div { "Partners and family"}
+                                                    }
+                                                    div class="grid grid-cols-[1fr_30px_1fr] gap-y-2 overflow-hidden rounded-md" {
                                                         @for (left_text, right_text) in &data {
                                                             div class="relative flex items-center px-4 py-2 text-white bg-[#005178]" {
                                                                 span { (maud::PreEscaped(left_text)) }
@@ -275,7 +280,7 @@ impl Render for Page {
                                 representation: TabsRepresentation::Internal { theme: TabsTheme::new("#d6e5ee", "#3b3e3f"), full_bleed: false },
                                 tabs: vec![
                                     Tab {
-                                        name: String::from("Overal Economic Burden"),
+                                        name: String::from("Overall Economic Burden"),
                                         blocks: vec![
                                             // Block::PieChartBlock(PieChartProps {
                                             //     title: String::from("Figure 1. Excess Economic Burden of PTSD in the Overall US Population in 2018, Billion USD"),
@@ -315,7 +320,7 @@ impl Render for Page {
                                         ]
                                     },
                                     Tab {
-                                        name: String::from("Overal Economic Burden"),
+                                        name: String::from("Civilian Economic Burden"),
                                         blocks: vec![
                                             // Block::PieChartBlock(PieChartProps {
                                             //     title: String::from("Figure 2. Excess Economic Burden of PTSD in the US Civilian Population in 2018, Billion USD"),
@@ -352,7 +357,7 @@ impl Render for Page {
                                         ]
                                     },
                                     Tab {
-                                        name: String::from("Overal Economic Burden"),
+                                        name: String::from("Military Economic Burden"),
                                         blocks: vec![
                                             // Block::PieChartBlock(PieChartProps {
                                             //     title: String::from("Figure 3. Excess Economic Burden of PTSD in the US Military Population in 2018, Billion USD "),
@@ -395,7 +400,7 @@ impl Render for Page {
                         Block::Html(
                             html! {
                                 p {
-                                    "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the"
+                                    "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the military population"(RefNote::new(26))"."
                                 }
                             }
                            ),

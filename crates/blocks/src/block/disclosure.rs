@@ -46,7 +46,7 @@ impl Default for DisclosureProps {
 impl maud::Render for DisclosureProps {
     fn render(&self) -> maud::Markup {
         let container_class = format!("w-full overflow-hidden bg-[{bg_color}] text-[{text_color}] border border-[{bg_color}] rounded-lg shadow-lg", bg_color=&self.theme.bg_color, text_color=&self.theme.text_color);
-        let details_class = format!("flex items-center justify-between p-3 font-bold text-white transition-colors cursor-pointer brightness-125 hover:brightness-150");
+        let details_class = format!("flex items-center justify-between p-3 font-bold text-[{text_color}] transition-colors cursor-pointer brightness-125 hover:brightness-150", text_color=&self.theme.text_color);
         let longform_class = format!(
             "p-3 border-t border-[{bg_color}]",
             bg_color = &self.theme.bg_color,

@@ -29,49 +29,42 @@ impl Page {
                             span {"PTSD is one of the most common mental health disorders in the " strong { "US" } ", with " span class="bg-[#005178] text-[#d2e3ee]"{"7-8 out of every 100 people"} " experiencing PTSD at some point in their lifetime"(RefNote::new(3))(RefNote::new(4))}
                         }
                     }
-                    (Block::BubbleChartBlock(BubbleChartProps {
-                        title: "Title".to_string(),
-                        data: vec![
-                            BubbleChartNode::Branch {
+                }
+            }),
+            Block::BubbleChartBlock(BubbleChartProps {
+                title: "USA PTSD prevalence".to_string(),
+                data: vec![BubbleChartNode::Branch {
+                    id: uuid::Uuid::new_v4(),
+                    label: "USA".to_string(),
+                    fill: None,
+                    children: vec![
+                        BubbleChartNode::Branch {
                             id: uuid::Uuid::new_v4(),
-                            label: "USA".to_string(),
+                            label: "PTSD".to_string(),
                             fill: None,
                             children: vec![
-                                BubbleChartNode::Branch {
+                                BubbleChartNode::Leaf {
                                     id: uuid::Uuid::new_v4(),
-                                    label: "PTSD".to_string(),
+                                    label: "Civilian".to_string(),
                                     fill: None,
-                                    children: vec![
-                                        BubbleChartNode::Leaf {
-                                            id: uuid::Uuid::new_v4(),
-                                            label: "Civilian".to_string(),
-                                            fill: None,
-                                            value: 10.4,
-                                        },
-                                        BubbleChartNode::Leaf {
-                                            id: uuid::Uuid::new_v4(),
-                                            label: "Military".to_string(),
-                                            fill: None,
-                                            value: 2.6,
-                                        },
-                                    ]
+                                    value: 10.4,
                                 },
                                 BubbleChartNode::Leaf {
                                     id: uuid::Uuid::new_v4(),
-                                    label: "No PTSD".to_string(),
+                                    label: "Military".to_string(),
                                     fill: None,
-                                    value: 320.,
+                                    value: 2.6,
                                 },
-
-
                             ],
-                        }
-                    ]}))
-
-
-
-
-                }
+                        },
+                        BubbleChartNode::Leaf {
+                            id: uuid::Uuid::new_v4(),
+                            label: "No PTSD".to_string(),
+                            fill: None,
+                            value: 320.,
+                        },
+                    ],
+                }],
             }),
             Block::Html(html! {
                 div class="panel" {

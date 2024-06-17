@@ -409,7 +409,7 @@ impl Render for Page {
         };
     
         html!{
-            (Block::BrainGlossaryBlock(BrainGlossaryProps { region_names: brain_region_ids }))
+            // (Block::BrainGlossaryBlock(BrainGlossaryProps { region_names: brain_region_ids }))
             (Block::TabsBlock(tabs))
             //References
             (Block::ReferencesBlock(Box::new(ReferencesProps {
