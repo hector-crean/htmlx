@@ -15,6 +15,16 @@ impl Render for Page {
         //     title: String::from("Psychiatric Comorbidities"),
         //     bars: psychiatric_comborbidities_bars()
         // }),
+        h2 {
+            "Comborbidities associated with PTSD"
+        }
+        div class="panel" {
+            p {
+                span class="text-bold"{"Filter"} " the graph by medical or psychiatric comorbidities. "
+                span class="text-bold"{"Select"}" a comorbidity bar to see more info."
+            }
+
+        }
 
         (Block::PlaceholderContainerBlock(PlaceholderContainerProps {
             id: String::from("ptsd-comorbidities-bar-chart"),

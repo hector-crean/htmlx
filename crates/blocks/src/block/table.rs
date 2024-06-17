@@ -11,9 +11,17 @@ pub struct TableProps {
 
 impl Render for TableProps {
     fn render(&self) -> Markup {
+        let grid_cols_template = match self.dimension[1] {
+            1 => "grid-cols-1".to_string(),
+            2 => "grid-cols-[min-content_1fr]".to_string(),
+            cols @ _ => format!(
+                "grid-cols-[min-content_min-content_1fr_repeat({}, 1fr)]",
+                cols
+            ),
+        };
         let cl = format!(
-            "grid grid-cols-1 gap-4 md:grid-cols-{} grid-container",
-            self.dimension[1]
+            "grid grid-cols-1 gap-4 md:{} grid-container",
+            grid_cols_template
         );
         html! {
             div class="container p-4 mx-auto rounded-sm" {

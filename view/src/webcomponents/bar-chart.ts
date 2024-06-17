@@ -19,8 +19,8 @@ const blues = [
 ];
 
 const drawAxis = (
-    xScale: d3.ScaleBand<string>,
-    yScale: d3.ScaleLinear<number, number>,
+    xScale: ScaleBand<string>,
+    yScale: ScaleLinear<number, number>,
     innerWidth: number,
     innerHeight: number
 ): SVGTemplateResult => {

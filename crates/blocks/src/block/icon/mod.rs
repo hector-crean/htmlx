@@ -21,13 +21,10 @@ impl Default for IconProps {
 impl maud::Render for IconProps {
     fn render(&self) -> maud::Markup {
         html! {
-            div class="container p-4 mx-auto" {
-                div class="flex flex-wrap justify-center gap-4" {
-                    div class="flex items-center justify-center w-16 h-16 text-white rounded-full shadow-lg" {
-                        (PreEscaped(self.name.svg()))
-                    }
+            div class="w-full h-full @container flex items-center justify-center gap-2"{
+                div class="text-white aspect-square w-full max-w-[min(100cqmin,72px)]" {
+                    (PreEscaped(self.name.svg()))
                 }
-
             }
 
         }

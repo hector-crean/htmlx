@@ -44,9 +44,9 @@ impl maud::Render for TabsProps {
                     div data-full-bleed="true" class="flex flex-col items-center justify-center flex-1 gap-2" {
 
                         div class="w-full border-b border-b-4 border-[#4c9be6] " {
-                            div class="flex flex-wrap gap-1 px-1 pt-1 -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400" {
+                            div class="toggable-buttons-container tabbed" {
                                 @for (index, tab) in self.tabs.iter().enumerate() {
-                                    button data-group=(self.id) data-slide=(index) data-toggable-button="true" class="inline-block p-4 border-b-0 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 active:font-bold active:bg-gradient-to-b from-[#3283cf] to-[#4c9be6] hover:bg-gradient-to-b data-[active=true]:bg-gradient-to-b data-[active=true]:border-gray-300 data-[active=true]:text-white hover:border-gray-300" {
+                                    button data-group=(self.id) data-slide=(index) data-toggable-button="true" class="toggable-button" {
                                         (tab.name)
                                     }
                                 }
@@ -70,9 +70,9 @@ impl maud::Render for TabsProps {
                     div data-full-bleed=(full_bleed) class=(class_name) {
 
                         div class="w-full" {
-                            div class="flex flex-row flex-wrap items-center justify-center gap-1 px-1 pt-1 -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400" {
+                            div class="mt-8 mb-4 toggable-buttons-container" {
                                 @for (index, tab) in self.tabs.iter().enumerate() {
-                                    button data-group=(self.id) data-slide=(index) data-toggable-button="true" class="uppercase drop-shadow-md inline-block p-4 border-b-2 border-transparent rounded-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 active:font-bold active:bg-gradient-to-b from-[#3283cf] to-[#4c9be6] hover:bg-gradient-to-b data-[active=true]:bg-gradient-to-b data-[active=true]:border-gray-300 data-[active=true]:text-white hover:border-gray-300" {
+                                    button data-group=(self.id) data-slide=(index) data-toggable-button="true" class="toggable-button padded" {
                                         (tab.name)
                                     }
                                 }

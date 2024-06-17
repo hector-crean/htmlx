@@ -7,6 +7,7 @@ pub mod grid_table;
 pub mod html;
 pub mod icon;
 pub mod nav;
+pub mod partition_chart;
 pub mod pie_chart;
 pub mod placeholder_container;
 pub mod references;
@@ -14,6 +15,7 @@ pub mod rich_text;
 pub mod suggested_node;
 pub mod table;
 pub mod tabs;
+pub mod text_with_icon_list;
 use crate::SvgName;
 
 use self::{
@@ -28,6 +30,7 @@ use grid_table::GridTableProps;
 use html::HtmlProps;
 use icon::{IconProps, SvgProps};
 use maud::{html, Markup};
+use partition_chart::PartitionChartProps;
 use pie_chart::PieChartProps;
 use placeholder_container::PlaceholderContainerProps;
 use references::ReferencesProps;
@@ -83,12 +86,16 @@ pub enum Block {
     Html(Markup),
     GridTableBlock(GridTableProps),
     BubbleChartBlock(BubbleChartProps),
+    PartitionChartBlock(PartitionChartProps),
 }
 
 impl maud::Render for Block {
     fn render(&self) -> maud::Markup {
         html!(
             @match self {
+                Block::PartitionChartBlock(block) => {
+                    (block)
+                }
                 Block::BubbleChartBlock(block) => {
                     (block)
                 }

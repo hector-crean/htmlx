@@ -1,5 +1,5 @@
 import { ChartSize, Margin } from '@/components/charts/types';
-import { hierarchy, pack } from 'd3-hierarchy';
+import { hierarchy, partition } from 'd3-hierarchy';
 import { ScaleOrdinal, scaleOrdinal } from 'd3-scale';
 import { select } from 'd3-selection';
 import { ZoomBehavior, zoom } from 'd3-zoom';
@@ -21,8 +21,6 @@ const colors = [
     '#5b97ca'
 ];
 
-
-
 type UUID = string;
 
 interface Branch {
@@ -30,7 +28,7 @@ interface Branch {
     id: UUID;
     label: string;
     fill?: string;
-    children: BubbleChartNode[];
+    children: PartitionNode[];
 }
 
 interface Leaf {
@@ -41,9 +39,10 @@ interface Leaf {
     value: number;
 }
 
-type BubbleChartNode = Branch | Leaf;
-const drawBubbles = (
-    data: Array<BubbleChartNode>,
+type PartitionNode = Branch | Leaf;
+
+const drawPartition = (
+    data: Array<PartitionNode>,
     size: ChartSize,
     colorScale: ScaleOrdinal<string, string>,
     hoveredRegions: Set<String>,
@@ -53,17 +52,16 @@ const drawBubbles = (
     onClick: (id: string) => void
 ): SVGTemplateResult => {
 
-    const packFn = pack<BubbleChartNode>()
-        .size([size.innerWidth, size.innerHeight])
-        .padding(5);
+    const partitionFn = partition<PartitionNode>()
+        .size([size.innerWidth, size.innerHeight]);
 
     const root = hierarchy({ children: data } as any)
         .sum(d => d.value)
         .sort((a, b) => b.value! - a.value!);
 
-    const hierarchyCircularNode = packFn(root);
+    const hierarchyPartitionNode = partitionFn(root);
 
-    const descendants = hierarchyCircularNode.descendants();
+    const descendants = hierarchyPartitionNode.descendants();
 
     return svg`
         <g>
@@ -72,20 +70,21 @@ const drawBubbles = (
         const isHovered = hoveredRegions.has(node.data.id);
         const isClicked = clickedRegions.has(node.data.id);
         return svg`
-                    <g transform="translate(${node.x}, ${node.y})" 
+                    <g transform="translate(${node.x0}, ${node.y0})" 
                        @pointerover="${() => onHoverStart(node.data.id)}" 
                        @pointerout="${() => onHoverEnd(node.data.id)}" 
                        @click="${() => onClick(node.data.id)}">
-                        <circle 
-                            r="${node.r}" 
+                        <rect 
+                            width="${node.x1 - node.x0}" 
+                            height="${node.y1 - node.y0}" 
                             fill="${isLeaf ? (node.data.fill ? node.data.fill : colorScale(node.data.id)) : 'none'}" 
                             stroke="${isLeaf ? 'none' : colorScale(node.data.id)}"
-                            stroke-dasharray="${isLeaf ? 'none' : '4'}"
-                            class="${classMap({ region: true, hovered: isHovered, clicked: isClicked })}"></circle>
+                            class="${classMap({ region: true, hovered: isHovered, clicked: isClicked })}"></rect>
                         <text 
+                            x="${(node.x1 - node.x0) / 2}" 
+                            y="${(node.y1 - node.y0) / 2}" 
                             text-anchor="middle" 
-                            dy="${isLeaf ? '0.3em' : `${-node.r - 10}px`}" 
-                            font-size="${node.r / 3}px" 
+                            font-size="12px" 
                             class="${classMap({ label: true, hovered: isHovered, clicked: isClicked })}">
                             ${node.data.label}
                         </text>
@@ -96,9 +95,8 @@ const drawBubbles = (
     `;
 };
 
-
-class BubbleChart extends LitElement {
-    @property({ type: String }) bubbledata = "[]";
+class PartitionChart extends LitElement {
+    @property({ type: String }) partitiondata = "[]";
     @property({ type: Number, attribute: 'aspect-ratio' }) aspectRatio = DEFAULT_ASPECT_RATIO;
     @property({ type: Number }) imageHeight = DEFAULT_HEIGHT;
     @property({ type: Set }) hoveredRegions: Set<string> = new Set();
@@ -113,8 +111,8 @@ class BubbleChart extends LitElement {
     get imageWidth() {
         return this.aspectRatio * this.imageHeight;
     }
-    get data(): Array<BubbleChartNode> {
-        return JSON.parse(this.bubbledata);
+    get data(): Array<PartitionNode> {
+        return JSON.parse(this.partitiondata);
     }
 
     onRegionHoverStart(regionId: string) {
@@ -144,7 +142,7 @@ class BubbleChart extends LitElement {
     }
 
     updated(changedProperties: Map<string, any>) {
-        if (changedProperties.has('aspectRatio') || changedProperties.has('imageHeight') || changedProperties.has('bubbledata')) {
+        if (changedProperties.has('aspectRatio') || changedProperties.has('imageHeight') || changedProperties.has('partitiondata')) {
             this.requestUpdate();
         }
     }
@@ -165,7 +163,6 @@ class BubbleChart extends LitElement {
 
         svg.call(zoomBehavior);
     }
-
 
     private calculateSize(containerEl: HTMLElement | undefined, margin: Margin): ChartSize {
         if (containerEl) {
@@ -220,7 +217,6 @@ class BubbleChart extends LitElement {
         `
     ];
 
-
     render() {
         const colorScale = scaleOrdinal<string>().domain(this.data.map(d => d.id)).range(colors);
 
@@ -228,8 +224,8 @@ class BubbleChart extends LitElement {
         <div ${ref(this.containerRef)} class=${classMap({ container: true })}>
         <svg id="interactive-svg" class="rounded-lg shadow" data-interactive="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 ${this.size.outerWidth} ${this.size.outerHeight}">
             <g class="zoomable" cursor="grab">
-                <g ${ref(this.canvasRef)} class="bubblechart" transform="translate(${this.margin.left}, ${this.margin.top})">
-                    ${drawBubbles(this.data, this.size, colorScale, this.hoveredRegions, this.clickedRegions, this.onRegionHoverStart.bind(this), this.onRegionHoverEnd.bind(this), this.onRegionClick.bind(this))}
+                <g ${ref(this.canvasRef)} class="partitionchart" transform="translate(${this.margin.left}, ${this.margin.top})">
+                    ${drawPartition(this.data, this.size, colorScale, this.hoveredRegions, this.clickedRegions, this.onRegionHoverStart.bind(this), this.onRegionHoverEnd.bind(this), this.onRegionClick.bind(this))}
                 </g>
             </g>
         </svg>
@@ -246,7 +242,7 @@ class BubbleChart extends LitElement {
     }
 }
 
-customElements.define('bubble-chart', BubbleChart);
+customElements.define('partition-chart', PartitionChart);
 
-export { BubbleChart };
+export { PartitionChart };
 

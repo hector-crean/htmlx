@@ -23,44 +23,47 @@ impl Render for Page {
                         blocks: vec![
                             Block::Html(
                                 html! {
-                                    p {
-                                        "Some traumas are likely to be systematically under-reported because they are considered embarrassing or culturally sensitive"
-                                        (RefNote::new(1))
-                                        "."
-                                    }
+                                    div class="flex flex-col gap-2 panel" {
 
-                                    p {
-                                        strong { "Self-stigma" }
-                                    }
+                                        p {
+                                            "Some traumas are likely to be systematically under-reported because they are considered embarrassing or culturally sensitive"
+                                            (RefNote::new(1))
+                                            "."
+                                        }
 
-                                    ul class="list" {
-                                        li {
-                                            p {
-                                                "Defined as the internalization of others’ prejudices of mental illness and is a significant issue among patients with PTSD"
-                                                (RefNote::new(2))
-                                                (RefNote::new(3))
-                                                "."
-                                            }
+                                        h2 {
+                                            strong { "Self-stigma" }
                                         }
-                                        li {
-                                            p {
-                                                "Symptoms such as negative thoughts about oneself, feelings of shame, and avoidance may explain co-occurrence and relevance of self-stigma"
-                                                (RefNote::new(4))
-                                                "."
+
+                                        ul class="list" {
+                                            li {
+                                                p {
+                                                    "Defined as the internalization of others’ prejudices of mental illness and is a significant issue among patients with PTSD"
+                                                    (RefNote::new(2))
+                                                    (RefNote::new(3))
+                                                    "."
+                                                }
                                             }
-                                        }
-                                        li {
-                                            p {
-                                                "Is associated with negative outcomes including depression, suicidal ideation, poor recovery, and lower treatment engagement"
-                                                (RefNote::new(2))
-                                                "."
+                                            li {
+                                                p {
+                                                    "Symptoms such as negative thoughts about oneself, feelings of shame, and avoidance may explain co-occurrence and relevance of self-stigma"
+                                                    (RefNote::new(4))
+                                                    "."
+                                                }
                                             }
-                                        }
-                                        li {
-                                            p {
-                                                "Concerns about stigma, shame, and rejection are among the most significant barriers to seeking care for PTSD"
-                                                (RefNote::new(5))
-                                                "."
+                                            li {
+                                                p {
+                                                    "Is associated with negative outcomes including depression, suicidal ideation, poor recovery, and lower treatment engagement"
+                                                    (RefNote::new(2))
+                                                    "."
+                                                }
+                                            }
+                                            li {
+                                                p {
+                                                    "Concerns about stigma, shame, and rejection are among the most significant barriers to seeking care for PTSD"
+                                                    (RefNote::new(5))
+                                                    "."
+                                                }
                                             }
                                         }
                                     }
@@ -73,43 +76,48 @@ impl Render for Page {
                         name: String::from("Community and Societal Stigma"),
                         blocks: vec![
                             Block::Html(html! {
-                                p {
-                                    "Due to the stigma surrounding PTSD, individuals with the condition may be looked down upon by others. People may hold false beliefs about PTSD, causing them to treat those with the condition and their families differently. Unfortunately, stigma can also extend to other aspects of a person's identity, including race, sexuality, gender identity, religion, and disability status"
-                                    (RefNote::new(2))
-                                    (RefNote::new(4))
-                                    "."
-                                }
-                                p {
-                                    "Misconceptions about mental health symptoms and PTSD can lead to stigmatization by families and the broader community. Additionally, society often associates the condition with military veterans and violence, adding further stigma to PTSD, and reinforcing the assumption that it only affects military veterans or those who have experienced violence"
-                                    (RefNote::new(2))
-                                    (RefNote::new(6))
-                                    "."
-                                }
-                                p {
-                                    "Even well-intentioned people may feel uncomfortable upon learning someone has PTSD, making it difficult for that person to find a job or housing"
-                                    (RefNote::new(4))
-                                    "."
-                                }
-                                p {
-                                    "Stigma occurs when others"
-                                    (RefNote::new(4))
-                                    ":"
-                                }
-                                ul class="list" {
-                                    li {
-                                        p { "Don't understand PTSD" }
+                                div class="flex flex-col gap-2 panel" {
+                                    p {
+                                        "Due to the stigma surrounding PTSD, individuals with the condition may be looked down upon by others. People may hold false beliefs about PTSD, causing them to treat those with the condition and their families differently. Unfortunately, stigma can also extend to other aspects of a person's identity, including race, sexuality, gender identity, religion, and disability status"
+                                        (RefNote::new(2))
+                                        (RefNote::new(4))
+                                        "."
                                     }
-                                    li {
-                                        p { "Don't realize PTSD is a treatable illness" }
+                                    p {
+                                        "Misconceptions about mental health symptoms and PTSD can lead to stigmatization by families and the broader community. Additionally, society often associates the condition with military veterans and violence, adding further stigma to PTSD, and reinforcing the assumption that it only affects military veterans or those who have experienced violence"
+                                        (RefNote::new(2))
+                                        (RefNote::new(6))
+                                        "."
                                     }
-                                    li {
-                                        p { "Think mental illness is \"your own fault\" or something you can \"get over\"" }
+                                    p {
+                                        "Even well-intentioned people may feel uncomfortable upon learning someone has PTSD, making it difficult for that person to find a job or housing"
+                                        (RefNote::new(4))
+                                        "."
                                     }
-                                    li {
-                                        p { "Are afraid they might catch what you have" }
+
+                                }
+                                div class="flex flex-col gap-2 panel" {
+                                    p {
+                                        "Stigma occurs when others"
+                                        (RefNote::new(4))
+                                        ":"
                                     }
-                                    li {
-                                        p { "Believe PTSD makes you dangerous" }
+                                    ul class="list" {
+                                        li {
+                                            p { "Don't understand PTSD" }
+                                        }
+                                        li {
+                                            p { "Don't realize PTSD is a treatable illness" }
+                                        }
+                                        li {
+                                            p { "Think mental illness is \"your own fault\" or something you can \"get over\"" }
+                                        }
+                                        li {
+                                            p { "Are afraid they might catch what you have" }
+                                        }
+                                        li {
+                                            p { "Believe PTSD makes you dangerous" }
+                                        }
                                     }
                                 }
                             }
@@ -121,10 +129,11 @@ impl Render for Page {
 
                         blocks: vec![
                             Block::Html(html! {
+                               div class="flex flex-col gap-2 panel" {
                                 p {
                                     "Negative attitudes toward mental illness, including PTSD, among healthcare professionals (HCP) are common globally and can negatively impact patients."
                                 }
-                                h3 {
+                                h2 {
                                       "Impact of HCP Stigma on PTSD Patients"
                                 }
 
@@ -145,13 +154,16 @@ impl Render for Page {
                                         p { "Poor prognosis" }
                                     }
                                 }
-                                p {}
 
                                 p {
                                     "Patients often find mental health professionals the most stigmatizing, which damages the patient-provider relationship and discourages help-seeking behavior"
                                     (RefNote::new(7))
                                     "."
                                 }
+
+                               }
+
+
                             }
                             )
                         ],

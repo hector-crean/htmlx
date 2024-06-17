@@ -23,7 +23,6 @@ impl<R: maud::Render> Page<R> {
 
 impl<R: maud::Render> maud::Render for Page<R> {
     fn render(&self) -> maud::Markup {
-        //text-[#313231] bg-gradient-to-b from-[#aecad8] to-[#89b8dd]
         html!(
             div class="content gradient-lighter" {
                 div class="content-header" {

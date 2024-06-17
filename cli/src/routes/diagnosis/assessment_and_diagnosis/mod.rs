@@ -26,6 +26,12 @@ pub struct Page;
 impl Render for Page {
     fn render(&self) -> maud::Markup {
         html! {
+            h2 {
+                "Clinician and Self Reported Scales"
+            }
+            div class="panel"{
+                p { "Select a tab to see more"}
+            }
             (Block::DisclosureBlock(DisclosureProps {
             theme: DisclosureTheme::new(BLUES[0], "#000000"),
             id: uuid::Uuid::new_v4().to_string(),
@@ -185,7 +191,7 @@ impl Render for Page {
                 summary: vec![
                     Block::Html(
                         html! {
-                            em { "Clinician Related Scale"}
+                            em { "Self Reported Scale"}
                             strong { "PC-PTSD-5"(RefNote::new(5))(RefNote::new(8)) }
                         }
                     )
@@ -262,7 +268,7 @@ impl Render for Page {
                 summary: vec![
                     Block::Html(
                         html! {
-                            em { "Clinician Related Scale"}
+                            em { "Self Reported Scale"}
                             strong { "B-IPF"(RefNote::new(11)) }
                         }
                     )
@@ -287,7 +293,7 @@ impl Render for Page {
                 summary: vec![
                     Block::Html(
                         html! {
-                            em { "Clinician Related Scale"}
+                            em { "Self Reported Scale"}
                             strong { "SF-36"(RefNote::new(12)) }
                         }
                     )

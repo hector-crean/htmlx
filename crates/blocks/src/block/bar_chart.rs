@@ -48,7 +48,7 @@ impl maud::Render for BarChartProps {
 
         html!(
             div class="panel" {
-                h2 {(self.title)}
+                h3 {(self.title)}
                 bar-chart bardata=(bar_data_str) {}
             }
         )

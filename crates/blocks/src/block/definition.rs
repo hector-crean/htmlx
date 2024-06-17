@@ -36,9 +36,9 @@ impl maud::Render for DefinitionProps {
                         }
                         None => {}
                     }
-                    dl class="flex-1 col-span-2 px-2 py-0 text-sm text-left" {
-                        dt class="text-sm font-medium text-gray-900" { (self.term)}
-                        dd class="text-xs text-base text-gray-700" { (self.definition)}
+                    div class="flex-1 col-span-2 px-2 py-0 text-sm text-left" {
+                        div class="text-sm font-medium text-gray-900" { span {(self.term)}}
+                        div class="text-xs text-base text-gray-700" { span { (self.definition)}}
                     }
                 }
             }

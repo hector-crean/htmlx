@@ -2,6 +2,7 @@ use crate::block::{
     definition::DefinitionListProps,
     icon::IconProps,
     rich_text::{RichText, RichTextProps},
+    tabs::{Tab, TabsProps, TabsRepresentation, TabsTheme},
     Block,
 };
 use maud::{html, Markup, PreEscaped};
@@ -36,11 +37,11 @@ impl maud::Render for BrainComment {
     fn render(&self) -> Markup {
         html! {
             button
-                class="flex flex-col items-start w-full symptom"
+                class="flex flex-col items-start w-full h-full symptom"
                 data-symptom="true"
                 data-regions=(self.highlighted_regions_str()) {
-                    div class="w-full grid grid-cols-1 2xl:grid-cols-[min-content_1fr_1fr] grid-rows-1 items-center justify-center" {
-                        div class="flex items-center justify-center w-full h-12 col-span-1 aspect-square" { (self.icon) }
+                    div class="grid items-start justify-center w-full grid-cols-1" {
+                        (self.icon)
                         div class="flex-1 col-span-2 px-1 text-xs text-center text-gray-700 break-words hyphens-auto 2xl:block" { (self.symptom) }
                     }
 
@@ -135,100 +136,93 @@ impl Default for InteractiveBrainProps {
 impl maud::Render for InteractiveBrainProps {
     fn render(&self) -> Markup {
         html! {
-        div id=(self.id) {
-                div class="flex flex-col w-full gap-2 rounded-lg xl:flex-row xl:h-full xl:flex-1" {
+        div id=(self.id)  class="@container" {
+                div class="flex flex-col w-full gap-2 rounded-lg" {
 
-                    div class="w-full swiper" {
-                        // Additional required wrapper
-                        div class="swiper-wrapper" {
+                    (Block::TabsBlock(TabsProps {
+                        id: uuid::Uuid::new_v4(),
+                        tabs: vec![
+                            Tab {
+                                name: "Brain Regions".to_string(),
+                                blocks: vec![
+                                    Block::Html(html! {
+                                        div class="w-full h-full py-2"{
 
-                            div class="mb-12 swiper-slide " {
-                                div class="w-full h-full py-2"{
+                                            div class="@container w-full h-min p-2 rounded-lg" {
 
-                                    div class="@container w-full h-min p-2 rounded-lg" {
+                                                div class="flex flex-col justify-center gap-2 align-center" {
+                                                    div class="flex flex-col items-center col-span-1 p-2 transition duration-500 ease-in-out rounded-lg presentation_wrapper text-md jusify-center" {
+                                                        h2  { "Brain Regions"}
 
-                                        div class="flex flex-col justify-center gap-2 align-center" {
-                                            div class="flex flex-col items-center col-span-1 p-2 transition duration-500 ease-in-out rounded-lg presentation_wrapper text-md jusify-center" {
-                                                h3  { "Brain Regions"}
-
-                                                (self.description)
+                                                        (self.description)
 
 
-                                                @match &self.definitionList {
-                                                    Some(def_list) => {
-                                                        (def_list)
-                                                    }
-                                                    None => {
+                                                        @match &self.definitionList {
+                                                            Some(def_list) => {
+                                                                (def_list)
+                                                            }
+                                                            None => {
 
+                                                            }
+                                                        }
                                                     }
                                                 }
+
                                             }
+
                                         }
+                                     }
+                                    )
+                                ]
+                            },
+                            Tab {
+                                name: "Symptoms".to_string(),
+                                blocks: vec![
+                                    Block::Html(html! {
+                                        div class="w-full h-full py-2"{
+                                            div class="@container w-full h-min  p-2 rounded-lg" {
+                                                div class="flex flex-col justify-center gap-2 align-center presentation_wrapper" {
 
-                                    }
-
-                                }
-                             }
-                            div class="mb-12 swiper-slide" {
-                                div class="w-full h-full py-2"{
-                                    div class="@container w-full h-min  p-2 rounded-lg" {
-                                        div class="flex flex-col justify-center gap-2 align-center presentation_wrapper" {
-
-                                            div class="w-full" {
-                                                h3 class="px-2" { "Symptoms"}
-                                            }
+                                                    div class="w-full" {
+                                                        h2 class="px-2" { "Symptoms"}
+                                                    }
 
 
-                                            div class="flex flex-row w-full p-2 " data-full-bleed="true" {
+                                                    div class="flex flex-row w-full p-2 " data-full-bleed="true" {
 
-                                                @for group in &self.groups {
-                                                    div class="flex flex-row grid-cols-5 gap-2 2xl:grid" {
-                                                        @for comment in &group.comments {
-                                                            (comment)
+                                                        @for group in &self.groups {
+                                                            div class="flex flex-row grid-cols-5 gap-2 2xl:grid" {
+                                                                @for comment in &group.comments {
+                                                                    (comment)
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    div class="flex flex-col items-center justify-center p-2 transition duration-500 ease-in-out" {
+                                                        p id="description-panel" class="text-md"  {
+                                                            "Click on each symptom to learn more about its involvement"
                                                         }
                                                     }
                                                 }
                                             }
-
-                                            div class="flex flex-col items-center justify-center p-2 transition duration-500 ease-in-out" {
-                                                p id="description-panel" class="text-md"  {
-                                                    "Click on each symptom to learn more about its involvement"
-                                                }
-                                            }
                                         }
-                                    }
-                                }
-                             }
 
-                        }
-                        // If we need pagination
-                        div class="p-4 swiper-pagination" {}
-
-                        // If we need navigation buttons
-                        div class="swiper-button-prev" {}
-                        div class="swiper-button-next" {}
-
-                        // If we need scrollbar
-                        div class="swiper-scrollbar" {}
-                    }
+                                    })
+                                ]
+                            }
+                        ],
+                        representation: TabsRepresentation::Internal { theme: TabsTheme::new("#d6e5ee", "#3b3e3f"), full_bleed: true }
+                    }))
 
                     div class="flex flex-col items-center justify-center w-full col-span-2 p-2"{
                         svg id="interactive-svg" class="rounded-lg shadow" width="100%" viewBox="0 0 960 400" preserveAspectRatio="xMidYMid meet" {}
                     }
-
-
-
-
-
-
-
-
-
-
-
                 }
 
             }
+
+
 
 
         }

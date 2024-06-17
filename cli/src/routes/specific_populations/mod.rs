@@ -1,12 +1,13 @@
 use crate::rich_text_block;
 use blocks::block::bar_chart::{BarChartDatum, BarChartProps};
-use blocks::block::bubble_chart::{BubbleChartNode, BubbleChartProps};
 use blocks::block::grid_table::GridTableProps;
 use blocks::block::html::HtmlProps;
 use blocks::block::icon::{IconProps, SvgProps};
+use blocks::block::partition_chart::{PartitionChartNode, PartitionChartProps};
 use blocks::block::references::ReferencesProps;
 use blocks::block::suggested_node::SuggestedNodeProps;
 use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation, TabsTheme};
+use blocks::block::text_with_icon_list::TextWithIconList;
 use blocks::block::{html, Block};
 use blocks::span::ref_note::RefNote;
 use blocks::SvgName;
@@ -19,9 +20,11 @@ impl Page {
     fn civilian_and_general_population_tab(&self) -> Vec<Block> {
         vec![
             Block::Html(html! {
-                div class="panel" {
-                    (Block::SvgBlock(SvgProps { name: SvgName::OTS126PTSDGlobalUSInfographic}))
-                    div class="grid w-full grid-cols-2 gap-2" {
+                div class="flex flex-col gap-12 text-center panel" {
+                    div class="grid w-full grid-cols-2 gap-x-2" {
+                        div class="flex flex-col items-center justify-center col-span-2"{
+                            (Block::SvgBlock(SvgProps { name: SvgName::OTS126PTSDGlobalUSInfographic}))
+                        }
                         div class="flex flex-col items-center justify-center p-2 rounded-md" {
                             span { "The " strong { "global" } " lifetime prevalence of PTSD is " span class="bg-[#005178] text-[#d2e3ee]" { "4-10%"}(RefNote::new(1))(RefNote::new(2))}
                         }
@@ -29,92 +32,64 @@ impl Page {
                             span {"PTSD is one of the most common mental health disorders in the " strong { "US" } ", with " span class="bg-[#005178] text-[#d2e3ee]"{"7-8 out of every 100 people"} " experiencing PTSD at some point in their lifetime"(RefNote::new(3))(RefNote::new(4))}
                         }
                     }
-                }
-            }),
-            Block::BubbleChartBlock(BubbleChartProps {
-                title: "USA PTSD prevalence".to_string(),
-                data: vec![BubbleChartNode::Branch {
-                    id: uuid::Uuid::new_v4(),
-                    label: "USA".to_string(),
-                    fill: None,
-                    children: vec![
-                        BubbleChartNode::Branch {
-                            id: uuid::Uuid::new_v4(),
-                            label: "PTSD".to_string(),
-                            fill: None,
-                            children: vec![
-                                BubbleChartNode::Leaf {
-                                    id: uuid::Uuid::new_v4(),
-                                    label: "Civilian".to_string(),
-                                    fill: None,
-                                    value: 10.4,
-                                },
-                                BubbleChartNode::Leaf {
-                                    id: uuid::Uuid::new_v4(),
-                                    label: "Military".to_string(),
-                                    fill: None,
-                                    value: 2.6,
-                                },
-                            ],
-                        },
-                        BubbleChartNode::Leaf {
-                            id: uuid::Uuid::new_v4(),
-                            label: "No PTSD".to_string(),
-                            fill: None,
-                            value: 320.,
-                        },
-                    ],
-                }],
-            }),
-            Block::Html(html! {
-                div class="panel" {
-                    div class="grid grid-cols-2"{
+                    div class="p-2 bg-[#accbdd]"{
+                        (Block::SvgBlock(SvgProps { name: SvgName::OTS12613PercentAdultsPTSDInfographic}))
+                        div{
+                            span class="bg-[#005178] text-[#d2e3ee]  rounded-sm px-2" {"~13 million"}
+                            span { " adults in the US will experience PTSD during a given year "(RefNote::new(5))}
+                        }
+                    }
+                    div class="p-2" {
+                        (Block::SvgBlock(SvgProps { name: SvgName::OTS12620PercentMilitarty}))
+
                         div class="flex flex-col items-center justify-center p-2 rounded-md" {
-                            span class="bg-[#005178] text-[#d2e3ee] text-4xl rounded-sm p-2"{"~13 million"}
+                            span { span class="bg-[#005178] text-[#d2e3ee]"{">80%"} " of PTSD patients are in the general population rather than the military population"(RefNote::new(6))}
                         }
+                    }
+                    div class="p-2 bg-[#accbdd]" {
+                        (Block::SvgBlock(SvgProps { name: SvgName::OTS12623Transparent}))
+
                         div class="flex flex-col items-center justify-center p-2 rounded-md" {
-                            span { "adults in the US will experience PTSD during a given year "(RefNote::new(5))}
+                            span {"The typical age at which PTSD first appears is during young and middle adulthood. Among adults in the United States, the " span class="bg-[#005178] text-[#d2e3ee]"{ "median age of onset is around 23 years old"}(RefNote::new(7))}
                         }
                     }
                 }
-
-
             }),
-            Block::Html(html! {
-                div class="panel" {
-                    (Block::Html(html! {
-                        div class="grid grid-cols-10"{
-                            @for i in 1..=10{
-                                @match i {
-                                    1..=2 => {
-                                        (Block::SvgBlock(SvgProps { name: SvgName::Military}))
-                                    }
-                                    _ => {
-                                        (Block::SvgBlock(SvgProps { name: SvgName::Hominid}))
-                                    }
-                                }
-
-
-                            }
-                        }
-                    }))
-                    div class="flex flex-col items-center justify-center p-2 rounded-md" {
-                        span { span class="bg-[#005178] text-[#d2e3ee]"{">80%"} " of PTSD patients are in the general population rather than the military population"(RefNote::new(6))}
-                    }
-                }
-
-
-            }),
-            Block::Html(html! {
-                div class="panel"{
-                    div class="flex flex-col items-center justify-center p-2 rounded-md" {
-                        span class="bg-[#005178] text-[#d2e3ee] text-[40px] p-2" {"23 years old"}
-                    }
-                    div class="flex flex-col items-center justify-center p-2 rounded-md" {
-                        span {"The typical age at which PTSD first appears is during young and middle adulthood. Among adults in the United States, the " span class="bg-[#005178] text-[#d2e3ee]"{ "median age of onset is around 23 years old"}(RefNote::new(7))}
-                    }
-                }
-            }),
+            // Block::PartitionChartBlock(PartitionChartProps {
+            //     title: "USA PTSD prevalence".to_string(),
+            //     data: vec![PartitionChartNode::Branch {
+            //         id: uuid::Uuid::new_v4(),
+            //         label: "USA".to_string(),
+            //         fill: None,
+            //         children: vec![
+            //             PartitionChartNode::Branch {
+            //                 id: uuid::Uuid::new_v4(),
+            //                 label: "PTSD".to_string(),
+            //                 fill: None,
+            //                 children: vec![
+            //                     PartitionChartNode::Leaf {
+            //                         id: uuid::Uuid::new_v4(),
+            //                         label: "Civilian".to_string(),
+            //                         fill: None,
+            //                         value: 10.4,
+            //                     },
+            //                     PartitionChartNode::Leaf {
+            //                         id: uuid::Uuid::new_v4(),
+            //                         label: "Military".to_string(),
+            //                         fill: None,
+            //                         value: 2.6,
+            //                     },
+            //                 ],
+            //             },
+            //             PartitionChartNode::Leaf {
+            //                 id: uuid::Uuid::new_v4(),
+            //                 label: "No PTSD".to_string(),
+            //                 fill: None,
+            //                 value: 320.,
+            //             },
+            //         ],
+            //     }],
+            // }),
             Block::Html(html! {
                 div class="panel"{
                    "The majority of individuals exposed to trauma do not develop PTSD"(RefNote::new(1))". However, the type of trauma experience influences the likelihood of developing PTSD."
@@ -127,12 +102,13 @@ impl Page {
     }
     fn ptsd_in_women_tab(&self) -> Vec<Block> {
         vec![Block::Html(html! {
-                h3 { "PTSD in Women "}
-
                 div class="panel" {
+                    h2 { "PTSD in Women "}
+
+                div  {
                     div class="grid w-full grid-cols-2 gap-2" {
                         div class="flex flex-col items-center justify-center p-2 rounded-md " {
-                            (Block::SvgBlock(SvgProps { name: SvgName::Woman}))
+                            (Block::SvgBlock(SvgProps { name: SvgName::OTS126FemaleIcon}))
                         }
                         div class="flex flex-col items-center justify-center p-2 rounded-md" {
                             span {
@@ -141,10 +117,11 @@ impl Page {
                         }
                     }
                 }
-                div class="panel" {
+                div  {
                     p class="py-2" {
                         "Even after adjusting for differences in trauma exposure and prior victimization or abuse history, women still exhibit a significantly elevated risk of developing PTSD compared to men, with a lifetime prevalence of PTSD of 13% in women and 6% in men, suggesting a higher susceptibility among women"(RefNote::new(6))". Generic research suggests a greater heritability risk in women, with genes like adenylate cyclase activating polypeptide 1 (pituitary) receptor (ADCYAP1R1) showing allelic variations linked to PTSD risk"(RefNote::new(1))". Ultimately, the heightened prevalence of PTSD among women likely arises from a combination of increased trauma exposure and inherent vulnerabilities"(RefNote::new(1))". Additionally, females in the general population experience PTSD for a longer duration than males"(RefNote::new(5))". "
                     }
+                }
                 }
 
 
@@ -156,142 +133,150 @@ impl Page {
     fn military_population_tab(&self) -> Vec<Block> {
         vec![
             Block::Html(html! {
-                div {
-                    h3 { "PTSD prevalence within the military"(RefNote::new(4))}
-                    div class="grid items-center justify-center grid-cols-2 bg-[#bbd5e7] text-center overflow-hidden rounded-md" {
+                div class="flex flex-col gap-2 panel" {
+                    h2 { "PTSD prevalence within the military"(RefNote::new(4))}
+                    div class="grid items-center justify-center grid-cols-2 overflow-hidden text-center rounded-md" {
                         div class="flex flex-col items-center justify-center w-full p-2 " {
                             (Block::SvgBlock(SvgProps {
-                                name: SvgName::Hominid,
-                            }))
-                        }
-                        div class="flex flex-col items-center justify-center w-full p-2 " {
-                            (Block::SvgBlock(SvgProps {
-                                name: SvgName::Woman,
+                                name: SvgName::OTS126MaleIcon,
                             }))
                         }
                         div class="text-xl" { "Male war veterans " span class="bg-[#005178] text-[#d2e3ee]" { "7.7%"}}
+                        div class="flex flex-col items-center justify-center w-full p-2 " {
+                            (Block::SvgBlock(SvgProps {
+                                name: SvgName::OTS126FemaleIcon,
+                            }))
+                        }
+
                         div class="text-xl" { "Female war veterans " span class="bg-[#005178] text-[#d2e3ee]" { "13.4%"}}
 
                     }
+                    (  Block::GridTableBlock(GridTableProps {
+                        rows: vec![
+                            vec![
+                                Block::Html(html! { strong {  "Heightened exposure to trauma"}}),
+                                Block::Html(html! {
+                                p {
+                                    "PTSD is a significant issue among U.S military veterans, often stemming from exposure to traumatic events during service"(RefNote::new(4))(RefNote::new(6))}
+                                }),
+                            ],
+                            vec![
+                                Block::Html(html! {  strong { "Gender differences"}}),
+                                Block::Html(html! {
+                                    p {
+                                    "PTSD diagnoses among military personnel vary based on gender, with the prevalence of PTSD higher among female service members"(RefNote::new(4))". "
+                                    "Male veterans reported higher levels of war zone exposure, while female veterans reported experiencing interpersonal violence and military sex trauma (MST)"(RefNote::new(4))(RefNote::new(6))". "
+                                    }
+                                }),
+                            ],
+                            vec![
+                                Block::Html(
+                                    html! { strong { "Peaks in military PTSD incidence over the years"}},
+                                ),
+                                Block::Html(html! {
+                                   p {
+                                    "Increase in PTSD cases align with times of heightened military engagement, such as deployments following the events of 9/11"(RefNote::new(6))". "
+                                    "Among the 2.7 million personnel deployed to Iraq or Afghanistan since 2001, it's estimated that 5-20% have experienced PTSD"(RefNote::new(7))". "
+                                   }
+                                }),
+                            ],
+                        ],
+                    }))
                 }
+
             }),
             // Block::IconBlock(IconProps { name: SvgName::OTS126ExposureGenderPeaksTable}),
-            Block::GridTableBlock(GridTableProps {
-                rows: vec![
-                    vec![
-                        Block::Html(html! { "Heightened exposure to trauma"}),
-                        Block::Html(
-                            html! { "PTSD is a significant issue among U.S military veterans, often stemming from exposure to traumatic events during service"(RefNote::new(4))(RefNote::new(6))},
-                        ),
-                    ],
-                    vec![
-                        Block::Html(html! { "Gender differences"}),
-                        Block::Html(html! {
-                            "PTSD diagnoses among military personnel vary based on gender, with the prevalence of PTSD higher among female service members"(RefNote::new(4))". "
-                            "Male veterans reported higher levels of war zone exposure, while female veterans reported experiencing interpersonal violence and military sex trauma (MST)"(RefNote::new(4))(RefNote::new(6))". "
-                        }),
-                    ],
-                    vec![
-                        Block::Html(html! { "Peaks in military PTSD incidence over the years"}),
-                        Block::Html(html! {
-                            "Increase in PTSD cases align with times of heightened military engagement, such as deployments following the events of 9/11"(RefNote::new(6))". "
-                            "Among the 2.7 million personnel deployed to Iraq or Afghanistan since 2001, it's estimated that 5-20% have experienced PTSD"(RefNote::new(7))". "
-                        }),
-                    ],
-                ],
-            }),
         ]
     }
     fn marginalized_groups_tab(&self) -> Vec<Block> {
         vec![
-            Block::Html(html! { h3 { "LGBTQ+" }}),
             Block::Html(html! {
                 div class="panel" {
-                    (Block::SvgBlock(SvgProps { name: SvgName::OTS126PTSDWithinLGBTQInfographic}))
-                    div class="grid w-full grid-cols-2 gap-2" {
+                    h2 { "LGBTQ+" }
+                    div class="grid w-full grid-cols-2 grid-rows-2 gap-2" {
+                        div class="flex flex-col items-center justify-center p-2 rounded-md" {
+                            (Block::SvgBlock(SvgProps { name: SvgName::OTS126PTSDWithinLGBTQInfographicGAY}))
+                        }
                         div class="flex flex-col items-center justify-center p-2 rounded-md" {
                             span { "Up to " span class="bg-[#005178] text-[#d2e3ee]" { "48%" } " among lesbian, gay and bisexual individuals"(RefNote::new(9))}
+                        }
+
+                        div class="flex flex-col items-center justify-center p-2 rounded-md" {
+                            (Block::SvgBlock(SvgProps { name: SvgName::OTS126PTSDWithinLGBTQInfographicTRANS}))
                         }
                         div class="flex flex-col items-center justify-center p-2 rounded-md" {
                             span {"Up to " span class="bg-[#005178] text-[#d2e3ee]" { "48%" } " among transgender and gender diverse individuals"(RefNote::new(9))}
                         }
                     }
+                    ( Block::GridTableBlock(GridTableProps {
+                        rows: vec![
+                            vec![
+                                Block::Html(html! { strong { "Heightened exposure to trauma"}}),
+                                Block::Html(html! {
+                                span {
+                                "The LGBTQ+ community faces a disproportionately high risk of trauma and PTSD compared to cisgender/heterosexual individuals, primarily due to increased exposure to hate crimes, intimate partner violence, and sexual assaults"(RefNote::new(10))}
+                                }),
+                            ],
+                            vec![
+                                Block::Html(html! { strong { "Childhood abuse"}}),
+                                Block::Html(html! {
+                                span {
+                                "Childhood abuse is more prevalent among sexual minority children, significantly contributing to mental health disparities, particularly in PTSD, and accounting for up to half of the disparities in PTSD based on sexual orientation"(RefNote::new(10))(RefNote::new(11))}
+                                }),
+                            ],
+                            vec![
+                                Block::Html(html! { strong { "Internalized stigma"}}),
+                                Block::Html(html! {
+                                    span {
+                                        "Research suggests that internalized homophobia (IH) predicts the severity of PTSD symptoms in LGBTQ+ minorities with trauma histories"(RefNote::new(10))"."
+                                        "IH in sexual minorities correlates with depression, substance use, and low self-esteem, and reduces the likelihood of recovery from traumatic events such as sexual assault and hate crimes"(RefNote::new(12))"."
+                                    }
+                                }),
+                            ],
+                            vec![
+                                Block::Html(html! { strong { "Social stressors"}}),
+                                Block::Html(html! {
+                                    span {
+                                        "LGBTQ individuals experience elevated levels of discrimination, victimization, and minority stress. These social stressors often prompt feelings of shame and the concealment of their minority identity, contributing to heightened mental and physical health challenges within the LGBTQ+ community"(RefNote::new(9))"."
+                                    }
+                                }),
+                            ],
+                        ],
+                    }))
                 }
-            }),
-            Block::GridTableBlock(GridTableProps {
-                rows: vec![
-                    vec![
-                        Block::Html(html! { span { "Heightened exposure to trauma"}}),
-                        Block::Html(html! {
-                        span {
-                        "The LGBTQ+ community faces a disproportionately high risk of trauma and PTSD compared to cisgender/heterosexual individuals, primarily due to increased exposure to hate crimes, intimate partner violence, and sexual assaults"(RefNote::new(10))}
-                        }),
-                    ],
-                    vec![
-                        Block::Html(html! { span { "Childhood abuse"}}),
-                        Block::Html(html! {
-                        span {
-                        "Childhood abuse is more prevalent among sexual minority children, significantly contributing to mental health disparities, particularly in PTSD, and accounting for up to half of the disparities in PTSD based on sexual orientation"(RefNote::new(10))(RefNote::new(11))}
-                        }),
-                    ],
-                    vec![
-                        Block::Html(html! { span { "Internalized stigma"}}),
-                        Block::Html(html! {
-                            span {
-                                "Research suggests that internalized homophobia (IH) predicts the severity of PTSD symptoms in LGBTQ+ minorities with trauma histories"(RefNote::new(10))"."
-                                "IH in sexual minorities correlates with depression, substance use, and low self-esteem, and reduces the likelihood of recovery from traumatic events such as sexual assault and hate crimes"(RefNote::new(12))"."
-                            }
-                        }),
-                    ],
-                    vec![
-                        Block::Html(html! { span { "Social stressors"}}),
-                        Block::Html(html! {
-                            span {
-                                "LGBTQ individuals experience elevated levels of discrimination, victimization, and minority stress. These social stressors often prompt feelings of shame and the concealment of their minority identity, contributing to heightened mental and physical health challenges within the LGBTQ+ community"(RefNote::new(9))"."
-                            }
-                        }),
-                    ],
-                ],
-            }),
-            Block::Html(html! { h3 { "Race" }}),
-            // Block::BarChartBlock(BarChartProps {
-            //     title: "Race-PTSD prevalence".to_string(),
-            //     bars: vec![],
-            // }),
-            // Block::SvgBlock(SvgProps {
-            //     name: SvgName::OTS126PTSDRaceInfographic,
-            // }),
-            Block::BarChartBlock(BarChartProps {
-                title: "Race-PTSD prevalence".to_string(),
-                slices: vec![
-                    BarChartDatum {
-                        id: uuid::Uuid::new_v4(),
-                        label: "Black".to_string(),
-                        value: 8.7,
-                        fill: Some("#7A4D3B".to_string()),
-                    },
-                    BarChartDatum {
-                        id: uuid::Uuid::new_v4(),
-                        label: "White".to_string(),
-                        value: 7.4,
-                        fill: Some("#FFCEA7".to_string()),
-                    },
-                    BarChartDatum {
-                        id: uuid::Uuid::new_v4(),
-                        label: "Hispanic".to_string(),
-                        value: 7.0,
-                        fill: Some("#DB8C68".to_string()),
-                    },
-                    BarChartDatum {
-                        id: uuid::Uuid::new_v4(),
-                        label: "Asian".to_string(),
-                        value: 4.0,
-                        fill: Some("#F9DAA6".to_string()),
-                    },
-                ],
             }),
             Block::Html(html! {
                div class="panel" {
+                h2 { "Race" }
+                ( Block::BarChartBlock(BarChartProps {
+                    title: "Race-PTSD prevalence".to_string(),
+                    slices: vec![
+                        BarChartDatum {
+                            id: uuid::Uuid::new_v4(),
+                            label: "Black".to_string(),
+                            value: 8.7,
+                            fill: Some("#7A4D3B".to_string()),
+                        },
+                        BarChartDatum {
+                            id: uuid::Uuid::new_v4(),
+                            label: "White".to_string(),
+                            value: 7.4,
+                            fill: Some("#FFCEA7".to_string()),
+                        },
+                        BarChartDatum {
+                            id: uuid::Uuid::new_v4(),
+                            label: "Hispanic".to_string(),
+                            value: 7.0,
+                            fill: Some("#DB8C68".to_string()),
+                        },
+                        BarChartDatum {
+                            id: uuid::Uuid::new_v4(),
+                            label: "Asian".to_string(),
+                            value: 4.0,
+                            fill: Some("#F9DAA6".to_string()),
+                        },
+                    ],
+                }))
                 ul class="list" {
                     li {
                         "Black individuals experience more frequent, severe, and chronic PTSD symptoms compared to White individuals"(RefNote::new(14))"."
@@ -309,29 +294,25 @@ impl Page {
                }
             }),
             Block::Html(html! {
-                h3 {
+               div class="panel" {
+                h2 {
                     "Increased risk of PTSD is associated with a number of demographic and behavioral factors"(RefNote::new(5))(RefNote::new(16))
                 }
-            }),
-            Block::GridTableBlock(GridTableProps {
-                rows: vec![
-                    vec![
-                        Block::Html(html! { span { "Female sex"}}),
-                        Block::Html(html! { span { "Diagnosed mental illness"}}),
-                    ],
-                    vec![
-                        Block::Html(html! { span { "Younger age (<65 years)"}}),
-                        Block::Html(html! { span { "Substance use disorder"}}),
-                    ],
-                    vec![
-                        Block::Html(html! { span { "Being divorced"}}),
-                        Block::Html(html! { span { "Drug use disorder"}}),
-                    ],
-                    vec![
-                        Block::Html(html! { span { "Being of low income"}}),
-                        Block::Html(html! { span { "Alcohol use disorder"}}),
-                    ],
-                ],
+
+                (TextWithIconList { list: vec![
+                    (IconProps { name: SvgName::OTS126FemaleSex}, "Female Sex".to_string()),
+                    (IconProps { name: SvgName::OTS126YoungerAge65Years}, "Younger age (< 65 years)".to_string()),
+                    (IconProps { name: SvgName::OTS126BeingDivorced}, "Being divorced".to_string()),
+                    (IconProps { name: SvgName::OTS126BeingOfLowIncome}, "Being of low income".to_string()),
+                    (IconProps { name: SvgName::OTS126DiagnosedMentalIllness}, "Diagnosed metnal illness".to_string()),
+                    (IconProps { name: SvgName::OTS126SubstanceUseDisorder}, "Substance use disorder".to_string()),
+                    (IconProps { name: SvgName::OTS126DrugUseDisorder}, "Drug use disorder".to_string()),
+                    (IconProps { name: SvgName::OTS126AlcoholUseDisorder}, "Alcohol use disorder".to_string()),
+
+                ]})
+               }
+
+
             }),
         ]
     }
