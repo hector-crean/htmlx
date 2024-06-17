@@ -3,19 +3,6 @@
     "color": "#8f51f5"
   },
   "nodes": {
-    "ptsd/clinical_presentation": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Clinical_presentation",
-      "content": {},
-      "distance": 32
-    },
     "ptsd/diagnosis": {
       "color": "#260038",
       "position": {
@@ -29,10 +16,36 @@
       "content": {},
       "distance": 32
     },
+    "ptsd/clinical_presentation/comorbidities": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Comorbidities",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/symptoms": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Symptoms",
+      "content": {},
+      "distance": 32
+    },
     "ptsd/specific_populations/page": {
       "color": "#260038",
       "position": {
-        "x": 9,
+        "x": 15,
         "z": -17
       },
       "type": "secondary",
@@ -52,24 +65,11 @@
       },
       "distance": 32
     },
-    "ptsd/clinical_presentation/comorbidities": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Comorbidities",
-      "content": {},
-      "distance": 32
-    },
     "ptsd/clinical_presentation/comorbidities/page": {
       "color": "#260038",
       "position": {
-        "x": -16,
-        "z": -10
+        "x": 4,
+        "z": 14
       },
       "type": "secondary",
       "category": null,
@@ -88,53 +88,27 @@
       },
       "distance": 32
     },
-    "ptsd/clinical_presentation/symptoms/page": {
+    "ptsd/disease_burden/page": {
       "color": "#260038",
       "position": {
-        "x": -8,
-        "z": -14
+        "x": 8,
+        "z": 2
       },
       "type": "secondary",
       "category": null,
       "connections": {},
-      "label": "Ptsd/clinical_presentation/symptoms/page",
+      "label": "Ptsd/disease_burden/page",
       "content": {
         "default": {
-          "label": "ptsd/clinical_presentation/symptoms/page",
+          "label": "ptsd/disease_burden/page",
           "html": [
-            "ptsd/clinical_presentation/symptoms/page"
+            "ptsd/disease_burden/page"
           ],
           "requires": [
-            "ptsd/clinical_presentation/symptoms/js/index.js"
+            "ptsd/disease_burden/js/index.js"
           ]
         }
       },
-      "distance": 32
-    },
-    "ptsd/specific_populations": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Specific_populations",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Ptsd",
-      "content": {},
       "distance": 32
     },
     "ptsd/diagnosis/stigma": {
@@ -150,7 +124,7 @@
       "content": {},
       "distance": 32
     },
-    "ptsd/disease_burden": {
+    "ptsd/specific_populations": {
       "color": "#260038",
       "position": {
         "x": -48,
@@ -159,34 +133,11 @@
       "type": "category",
       "category": true,
       "connections": {},
-      "label": "Disease_burden",
+      "label": "Specific_populations",
       "content": {},
       "distance": 32
     },
-    "ptsd/diagnosis/stigma/page": {
-      "color": "#260038",
-      "position": {
-        "x": 2,
-        "z": 16
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/diagnosis/stigma/page",
-      "content": {
-        "default": {
-          "label": "ptsd/diagnosis/stigma/page",
-          "html": [
-            "ptsd/diagnosis/stigma/page"
-          ],
-          "requires": [
-            "ptsd/diagnosis/stigma/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
-    "ptsd/clinical_presentation/symptoms": {
+    "ptsd/diagnosis/assessment_and_diagnosis": {
       "color": "#260038",
       "position": {
         "x": -48,
@@ -195,15 +146,15 @@
       "type": "category",
       "category": true,
       "connections": {},
-      "label": "Symptoms",
+      "label": "Assessment_and_diagnosis",
       "content": {},
       "distance": 32
     },
     "ptsd/diagnosis/assessment_and_diagnosis/page": {
       "color": "#260038",
       "position": {
-        "x": 18,
-        "z": -10
+        "x": -10,
+        "z": -20
       },
       "type": "secondary",
       "category": null,
@@ -222,7 +173,7 @@
       },
       "distance": 32
     },
-    "ptsd/diagnosis/assessment_and_diagnosis": {
+    "ptsd/clinical_presentation": {
       "color": "#260038",
       "position": {
         "x": -48,
@@ -231,28 +182,77 @@
       "type": "category",
       "category": true,
       "connections": {},
-      "label": "Assessment_and_diagnosis",
+      "label": "Clinical_presentation",
       "content": {},
       "distance": 32
     },
-    "ptsd/disease_burden/page": {
+    "ptsd": {
       "color": "#260038",
       "position": {
-        "x": -15,
-        "z": -20
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Ptsd",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/disease_burden": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Disease_burden",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/symptoms/page": {
+      "color": "#260038",
+      "position": {
+        "x": -13,
+        "z": 4
       },
       "type": "secondary",
       "category": null,
       "connections": {},
-      "label": "Ptsd/disease_burden/page",
+      "label": "Ptsd/clinical_presentation/symptoms/page",
       "content": {
         "default": {
-          "label": "ptsd/disease_burden/page",
+          "label": "ptsd/clinical_presentation/symptoms/page",
           "html": [
-            "ptsd/disease_burden/page"
+            "ptsd/clinical_presentation/symptoms/page"
           ],
           "requires": [
-            "ptsd/disease_burden/js/index.js"
+            "ptsd/clinical_presentation/symptoms/js/index.js"
+          ]
+        }
+      },
+      "distance": 32
+    },
+    "ptsd/diagnosis/stigma/page": {
+      "color": "#260038",
+      "position": {
+        "x": -7,
+        "z": 20
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/diagnosis/stigma/page",
+      "content": {
+        "default": {
+          "label": "ptsd/diagnosis/stigma/page",
+          "html": [
+            "ptsd/diagnosis/stigma/page"
+          ],
+          "requires": [
+            "ptsd/diagnosis/stigma/js/index.js"
           ]
         }
       },

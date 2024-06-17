@@ -1,5 +1,6 @@
 pub mod bar_chart;
 pub mod brain;
+pub mod bubble_chart;
 pub mod definition;
 pub mod disclosure;
 pub mod grid_table;
@@ -21,6 +22,7 @@ use self::{
     nav::NavProps,
 };
 use brain::{brain_glossary::BrainGlossaryProps, interactive_brain::InteractiveBrainProps};
+use bubble_chart::BubbleChartProps;
 use disclosure::DisclosureProps;
 use grid_table::GridTableProps;
 use html::HtmlProps;
@@ -80,12 +82,16 @@ pub enum Block {
     DisclosureBlock(DisclosureProps),
     Html(Markup),
     GridTableBlock(GridTableProps),
+    BubbleChartBlock(BubbleChartProps),
 }
 
 impl maud::Render for Block {
     fn render(&self) -> maud::Markup {
         html!(
             @match self {
+                Block::BubbleChartBlock(block) => {
+                    (block)
+                }
                 Block::GridTableBlock(block) => {
                     (block)
                 }

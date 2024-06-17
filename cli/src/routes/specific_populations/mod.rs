@@ -1,5 +1,6 @@
 use crate::rich_text_block;
 use blocks::block::bar_chart::{BarChartDatum, BarChartProps};
+use blocks::block::bubble_chart::{BubbleChartNode, BubbleChartProps};
 use blocks::block::grid_table::GridTableProps;
 use blocks::block::html::HtmlProps;
 use blocks::block::icon::{IconProps, SvgProps};
@@ -28,6 +29,47 @@ impl Page {
                             span {"PTSD is one of the most common mental health disorders in the " strong { "US" } ", with " span class="bg-[#005178] text-[#d2e3ee]"{"7-8 out of every 100 people"} " experiencing PTSD at some point in their lifetime"(RefNote::new(3))(RefNote::new(4))}
                         }
                     }
+                    (Block::BubbleChartBlock(BubbleChartProps {
+                        title: "Title".to_string(),
+                        data: vec![
+                            BubbleChartNode::Branch {
+                            id: uuid::Uuid::new_v4(),
+                            label: "USA".to_string(),
+                            fill: None,
+                            children: vec![
+                                BubbleChartNode::Branch {
+                                    id: uuid::Uuid::new_v4(),
+                                    label: "PTSD".to_string(),
+                                    fill: None,
+                                    children: vec![
+                                        BubbleChartNode::Leaf {
+                                            id: uuid::Uuid::new_v4(),
+                                            label: "Civilian".to_string(),
+                                            fill: None,
+                                            value: 10.4,
+                                        },
+                                        BubbleChartNode::Leaf {
+                                            id: uuid::Uuid::new_v4(),
+                                            label: "Military".to_string(),
+                                            fill: None,
+                                            value: 2.6,
+                                        },
+                                    ]
+                                },
+                                BubbleChartNode::Leaf {
+                                    id: uuid::Uuid::new_v4(),
+                                    label: "No PTSD".to_string(),
+                                    fill: None,
+                                    value: 320.,
+                                },
+
+
+                            ],
+                        }
+                    ]}))
+
+
+
 
                 }
             }),
@@ -122,19 +164,20 @@ impl Page {
         vec![
             Block::Html(html! {
                 div {
-                    div class="grid items-center justify-center grid-cols-2" {
-                        div class="flex flex-col items-center justify-center w-full p-2 bg-[#bbd5e7]" {
+                    h3 { "PTSD prevalence within the military"(RefNote::new(4))}
+                    div class="grid items-center justify-center grid-cols-2 bg-[#bbd5e7] text-center overflow-hidden rounded-md" {
+                        div class="flex flex-col items-center justify-center w-full p-2 " {
                             (Block::SvgBlock(SvgProps {
                                 name: SvgName::Hominid,
                             }))
                         }
-                        div class="flex flex-col items-center justify-center w-full  p-2 bg-[#bbd5e7]" {
+                        div class="flex flex-col items-center justify-center w-full p-2 " {
                             (Block::SvgBlock(SvgProps {
                                 name: SvgName::Woman,
                             }))
                         }
-                        div { "Male war veterans " span class="bg-[#005178] text-[#d2e3ee]" { "7.7%"}}
-                        div { "Female war veterans " span class="bg-[#005178] text-[#d2e3ee]" { "13.4%"}}
+                        div class="text-xl" { "Male war veterans " span class="bg-[#005178] text-[#d2e3ee]" { "7.7%"}}
+                        div class="text-xl" { "Female war veterans " span class="bg-[#005178] text-[#d2e3ee]" { "13.4%"}}
 
                     }
                 }
@@ -272,6 +315,11 @@ impl Page {
                    }
                }
             }),
+            Block::Html(html! {
+                h3 {
+                    "Increased risk of PTSD is associated with a number of demographic and behavioral factors"(RefNote::new(5))(RefNote::new(16))
+                }
+            }),
             Block::GridTableBlock(GridTableProps {
                 rows: vec![
                     vec![
@@ -322,7 +370,111 @@ impl maud::Render for Page {
                 ],
             }))
         (Block::ReferencesBlock(Box::new(ReferencesProps {
-            references: rich_text_block!("../../input/OTS126_PTSD_Specific_Populations_Node/958c48d1-9ddb-4c8d-a301-d7ccd9c6c104.html"),
+            references: Block::Html(
+                html! {
+                    ol class="list" {
+                        li {
+                            p {
+                                "Yehuda R, Hoge CW, McFarlane AC, et al. Post-traumatic stress disorder. " em { "Nat Rev Dis Primers" }
+                                ". 2015;1:15057. Published 2015 Oct 8. doi:10.1038/nrdp.2015.57"
+                            }
+                        }
+                        li {
+                            p {
+                                "Kilpatrick DG, Resnick HS, Milanak ME, Miller MW, Keyes KM, Friedman MJ. National estimates of exposure to traumatic events and PTSD prevalence using DSM-IV and DSM-5 criteria. " em { "J Trauma Stress" }
+                                ". 2013;26(5):537-547. doi:10.1002/jts.21848"
+                            }
+                        }
+                        li {
+                            p {
+                                "Koenen KC, Sumner JA, Gilsanz P, et al. Post-traumatic stress disorder and cardiometabolic disease: improving causal inference to inform practice. " em { "Psychol Med" }
+                                ". 2017;47(2):209-225. doi:10.1017/S0033291716002294"
+                            }
+                        }
+                        li {
+                            p {
+                                "Lehavot K, Katon JG, Chen JA, Fortney JC, Simpson TL. Post-traumatic Stress Disorder by Gender and Veteran Status [published correction appears in Am J Prev Med. 2019 Oct;57(4):573]. " em { "Am J Prev Med" }
+                                ". 2018;54(1):e1-e9. doi:10.1016/j.amepre.2017.09.008"
+                            }
+                        }
+                        li {
+                            p {
+                                a href="http://5.Otsuka" target="_blank" rel="noopener noreferrer nofollow" { "Otsuka" }
+                                " data on file, DSE Module 1"
+                            }
+                        }
+                        li {
+                            p {
+                                "Judkins JL, Moore BA, Collette TL, Hale WJ, Peterson AL, Morissette SB. Incidence Rates of Posttraumatic Stress Disorder Over a 17-Year Period in Active Duty Military Service Members. " em { "J Trauma Stress" }
+                                ". 2020;33(6):994-1006. doi:10.1002/jts.22558"
+                            }
+                        }
+                        li {
+                            p {
+                                "What Predicts Persistent Posttraumatic Stress Disorder Among Military Personnel? PsychU. Published October 15, 2018. Accessed April 12, 2024. "
+                                a href="https://psychu.org/predicts-persistent-posttraumatic-stress-disorder-among-military-personnel/" target="_blank" rel="noopener noreferrer nofollow" { "https://psychu.org/predicts-persistent-posttraumatic-stress-disorder-among-military-personnel/" }
+                            }
+                        }
+                        li {
+                            p {
+                                "62% Of Military Discharged For Misconduct Were Diagnosed With Mental Illness Or Traumatic Brain Injury. PsychU. Published June 16, 2017. Accessed April 12, 2024. "
+                                a href="https://psychu.org/62-military-discharged-misconduct-diagnosed-mental-illness-traumatic-brain-injury/" target="_blank" rel="noopener noreferrer nofollow" { "https://psychu.org/62-military-discharged-misconduct-diagnosed-mental-illness-traumatic-brain-injury/" }
+                            }
+                        }
+                        li {
+                            p {
+                                "Livingston NA, Berke D, Scholl J, Ruben M, Shipherd JC. Addressing Diversity in PTSD Treatment: Clinical Considerations and Guidance for the Treatment of PTSD in LGBTQ Populations. " em { "Curr Treat Options Psychiatry" }
+                                ". 2020;7(2):53-69. doi:10.1007/s40501-020-00204-0"
+                            }
+                        }
+                        li {
+                            p {
+                                "Marchi M, Travascio A, Uberti D, et al. Post-traumatic stress disorder among LGBTQ people: a systematic review and meta-analysis. " em { "Epidemiol Psychiatr Sci" }
+                                ". 2023;32:e44. Published 2023 Jul 11. doi:10.1017/S2045796023000586"
+                            }
+                        }
+                        li {
+                            p {
+                                "Roberts AL, Rosario M, Corliss HL, Koenen KC, Austin SB. Elevated risk of posttraumatic stress in sexual minority youths: mediation by childhood abuse and gender nonconformity. " em { "Am J Public Health" }
+                                ". 2012;102(8):1587-1593. doi:10.2105/AJPH.2011.300530"
+                            }
+                        }
+                        li {
+                            p {
+                                a href="http://12.Gold" target="_blank" rel="noopener noreferrer nofollow" { "Gold" }
+                                " SD, Feinstein BA, Skidmore WC, Marx BP. Childhood physical abuse, internalized homophobia, and experiential avoidance among lesbians and gay men. " em { "Psychological Trauma: Theory, Research, Practice, and Policy" }
+                                ". 2011;3(1):50-60. doi: "
+                                a href="https://doi.org/10.1037/a0020487" target="_blank" rel="noopener noreferrer nofollow" { "https://doi.org/10.1037/a0020487" }
+                            }
+                        }
+                        li {
+                            p {
+                                "Roberts AL, Gilman SE, Breslau J, Breslau N, Koenen KC. Race/ethnic differences in exposure to traumatic events, development of post-traumatic stress disorder, and treatment-seeking for post-traumatic stress disorder in the United States. " em { "Psychol Med" }
+                                ". 2011;41(1):71-83. doi:10.1017/S0033291710000401"
+                            }
+                        }
+                        li {
+                            p {
+                                "Mekawi Y, Carter S, Brown B, et al. Interpersonal Trauma and Posttraumatic Stress Disorder among Black Women: Does Racial Discrimination Matter?. " em { "J Trauma Dissociation" }
+                                ". 2021;22(2):154-169. doi:10.1080/15299732.2020.1869098"
+                            }
+                        }
+                        li {
+                            p {
+                                "Brooks Holliday S, Dubowitz T, Haas A, Ghosh-Dastidar B, DeSantis A, Troxel WM. The association between discrimination and PTSD in African Americans: exploring the role of gender. " em { "Ethn Health" }
+                                ". 2020;25(5):717-731. doi:10.1080/13557858.2018.1444150"
+                            }
+                        }
+                        li {
+                            p {
+                                "Kessler RC, Chiu WT, Demler O, Merikangas KR, Walters EE. Prevalence, severity, and comorbidity of 12-month DSM-IV disorders in the National Comorbidity Survey Replication [published correction appears in Arch Gen Psychiatry. 2005 Jul;62(7):709. Merikangas, Kathleen R [added]]. " em { "Arch Gen Psychiatry" }
+                                ". 2005;62(6):617-627. doi:10.1001/archpsyc.62.6.617"
+                            }
+                        }
+                    }
+                }
+
+            )
         })))
         }
     }

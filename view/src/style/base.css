@@ -108,3 +108,16 @@ a:focus {
 .draft {
   border: 4px solid green;
 }
+
+h1, h2 {
+  @apply text-xl text-center my-4 font-black;
+  color: #005077;
+}
+
+h3 {
+  @apply text-lg my-2 font-bold;
+}
+
+h4 {
+  @apply my-1 font-bold;
+}
