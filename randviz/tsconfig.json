@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "target": "ES2020",
+    "useDefineForClassFields": false,
+    "module": "ESNext",
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "plugins": [
+      {
+        "name": "ts-lit-plugin"
+      }
+    ],
+    "skipLibCheck": true,
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    // "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    // "noEmit": true,
+    "experimentalDecorators": true,
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
+    "baseUrl": "./src",
+    "sourceMap": false,
+    "outDir": "dist"
+  },
+  "include": [
+    "src",
+    "./src/vite-env.d.ts"
+  ],
+}

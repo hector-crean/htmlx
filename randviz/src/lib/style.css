@@ -1,0 +1,82 @@
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  font-size: 12px;
+}
+
+#app {
+  height: 100vh;
+  overflow-y: scroll;  
+}
+
+body,
+text {
+  font-family: "Exo", sans-serif;
+}
+
+
+
+
+@screen sm {
+  html {
+    font-size: 14px;
+  }
+}
+@screen md {
+  html {
+    font-size: 15px;
+  }
+}
+@screen lg {
+  html {
+    font-size: 15px;
+  }
+}
+
+
+
+
+
+
+
+
+.presentation_wrapper {
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr min(60ch, calc(100% - 64px)) 1fr;
+  grid-column-gap: 32px;
+  /* padding-top: 2rem; */
+
+  & > * {
+    grid-column: 2;
+  }
+
+  & > [data-full-bleed=true] {
+    grid-column: 1 / -1;
+  }
+}
+
+
+
+
