@@ -9,7 +9,7 @@ pub mod treatment;
 
 use crate::routes;
 
-use blocks::node::{FileExtension, Node, NodeType};
+use blocks::node::{FileExtension, Node, NodeType, RouteStatus};
 use blocks::page::Page;
 use maud::Render;
 
@@ -30,6 +30,7 @@ impl App {
         //     "home",
         //     NodeType::File {
         //         extension: FileExtension::Html,
+        // status: RouteStatus::NotStarted,
         //         renderable: Page::new(vec![Block::NavBlock(NavProps::new(Self::nav()))]),
         //     },
         // ));
@@ -59,6 +60,7 @@ impl App {
                             "page",
                             NodeType::File {
                                 extension: FileExtension::Html,
+                                status: RouteStatus::UnderDevelopment,
                                 renderable: Page::new(
                                     "Symptoms",
                                     None,
@@ -73,6 +75,7 @@ impl App {
                             "page",
                             NodeType::File {
                                 extension: FileExtension::Html,
+                                status: RouteStatus::UnderDevelopment,
                                 renderable: Page::new(
                                     "Comorbidities",
                                     None,
@@ -84,43 +87,11 @@ impl App {
                     ),
             )
             .add_child(
-                Node::new("disease", NodeType::Folder)
-                    .add_child(
-                        Node::new("trauma_types", NodeType::Folder).add_child(Node::new(
-                            "page",
-                            NodeType::File {
-                                extension: FileExtension::Html,
-                                renderable: Page::new(
-                                    "Trauma Types",
-                                    None,
-                                    routes::disease::trauma_types::Page,
-                                )
-                                .render(),
-                            },
-                        )),
-                    )
-                    .add_child(
-                        Node::new("pathophysiology_of_ptsd", NodeType::Folder).add_child(
-                            Node::new(
-                                "page",
-                                NodeType::File {
-                                    extension: FileExtension::Html,
-                                    renderable: Page::new(
-                                        "Pathophysiology of PTSD",
-                                        None,
-                                        routes::disease::pathophysiology_of_ptsd::Page,
-                                    )
-                                    .render(),
-                                },
-                            ),
-                        ),
-                    ),
-            )
-            .add_child(
                 Node::new("specific_populations", NodeType::Folder).add_child(Node::new(
                     "page",
                     NodeType::File {
                         extension: FileExtension::Html,
+                        status: RouteStatus::UnderDevelopment,
                         renderable: Page::new(
                             "Specific Populations",
                             None,
@@ -135,6 +106,7 @@ impl App {
                     "page",
                     NodeType::File {
                         extension: FileExtension::Html,
+                        status: RouteStatus::UnderDevelopment,
                         renderable: Page::new("Disease Burden", None, disease_burden::Page)
                             .render(),
                     },
@@ -148,6 +120,7 @@ impl App {
                                 "page",
                                 NodeType::File {
                                     extension: FileExtension::Html,
+                                    status: RouteStatus::UnderDevelopment,
                                     renderable: Page::new(
                                         "Assessment and Diagnosis",
                                         None,
@@ -162,6 +135,7 @@ impl App {
                         "page",
                         NodeType::File {
                             extension: FileExtension::Html,
+                            status: RouteStatus::UnderDevelopment,
                             renderable: Page::new("Stigma", None, diagnosis::stigma::Page).render(),
                         },
                     )))
@@ -171,6 +145,7 @@ impl App {
                                 "page",
                                 NodeType::File {
                                     extension: FileExtension::Html,
+                                    status: RouteStatus::NotStarted,
                                     renderable: Page::new(
                                         "Interviews with Clinicians",
                                         None,
@@ -189,6 +164,7 @@ impl App {
                             "page",
                             NodeType::File {
                                 extension: FileExtension::Html,
+                                status: RouteStatus::NotStarted,
                                 renderable: Page::new(
                                     "Delayed onset PTSD",
                                     None,
@@ -203,6 +179,7 @@ impl App {
                             "page",
                             NodeType::File {
                                 extension: FileExtension::Html,
+                                status: RouteStatus::NotStarted,
                                 renderable: Page::new(
                                     "Chronic PTSD",
                                     None,
@@ -217,6 +194,7 @@ impl App {
                             "page",
                             NodeType::File {
                                 extension: FileExtension::Html,
+                                status: RouteStatus::NotStarted,
                                 renderable: Page::new(
                                     "Underdiagnosis",
                                     None,
@@ -234,6 +212,7 @@ impl App {
                             "page",
                             NodeType::File {
                                 extension: FileExtension::Html,
+                                status: RouteStatus::NotStarted,
                                 renderable: Page::new(
                                     "Guidelines",
                                     None,
@@ -249,6 +228,7 @@ impl App {
                                 "page",
                                 NodeType::File {
                                     extension: FileExtension::Html,
+                                    status: RouteStatus::NotStarted,
                                     renderable: Page::new(
                                         "Unmet needs and barriers",
                                         None,
@@ -264,6 +244,7 @@ impl App {
                             "page",
                             NodeType::File {
                                 extension: FileExtension::Html,
+                                status: RouteStatus::NotStarted,
                                 renderable: Page::new(
                                     "Trauma informed care",
                                     None,
@@ -281,6 +262,7 @@ impl App {
                             "page",
                             NodeType::File {
                                 extension: FileExtension::Html,
+                                status: RouteStatus::NotStarted,
                                 renderable: Page::new(
                                     "Intermedate Recovery",
                                     None,
@@ -296,10 +278,46 @@ impl App {
                                 "page",
                                 NodeType::File {
                                     extension: FileExtension::Html,
+                                    status: RouteStatus::NotStarted,
                                     renderable: Page::new(
                                         "Long term reconstruction",
                                         None,
                                         routes::recovery::long_term_reconstruction::Page,
+                                    )
+                                    .render(),
+                                },
+                            ),
+                        ),
+                    ),
+            )
+            .add_child(
+                Node::new("disease", NodeType::Folder)
+                    .add_child(
+                        Node::new("trauma_types", NodeType::Folder).add_child(Node::new(
+                            "page",
+                            NodeType::File {
+                                extension: FileExtension::Html,
+                                status: RouteStatus::NotStarted,
+                                renderable: Page::new(
+                                    "Trauma Types",
+                                    None,
+                                    routes::disease::trauma_types::Page,
+                                )
+                                .render(),
+                            },
+                        )),
+                    )
+                    .add_child(
+                        Node::new("pathophysiology_of_ptsd", NodeType::Folder).add_child(
+                            Node::new(
+                                "page",
+                                NodeType::File {
+                                    extension: FileExtension::Html,
+                                    status: RouteStatus::NotStarted,
+                                    renderable: Page::new(
+                                        "Pathophysiology of PTSD",
+                                        None,
+                                        routes::disease::pathophysiology_of_ptsd::Page,
                                     )
                                     .render(),
                                 },

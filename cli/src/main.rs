@@ -28,11 +28,14 @@ enum Commands {
     JsToTs {
         root_directory_path: String,
     },
+    TsToJs {
+        root_directory_path: String,
+    },
     CreateJsInitFiles,
 }
 
-const TEST_PUBLIC_DIR: &'static str = r#"C:\Users\Hector.C\rust\htmx\view\src\assets\pages"#;
-// const TEST_PUBLIC_DIR: &str = r#"/Users/hectorcrean/Rust/htmlx/view/src/assets/pages"#;
+const TEST_PUBLIC_DIR: &'static str = r#"C:\Users\Hector.C\rust\htmx\view\src\pages"#;
+// const TEST_PUBLIC_DIR: &str = r#"/Users/hectorcrean/Rust/htmlx/view/src/pages/pages"#;
 
 fn main() -> eyre::Result<()> {
     color_eyre::install()?;
@@ -104,6 +107,12 @@ fn main() -> eyre::Result<()> {
             root_directory_path,
         } => {
             file_ops::js_to_ts(root_directory_path)?;
+            Ok(())
+        }
+        Commands::TsToJs {
+            root_directory_path,
+        } => {
+            file_ops::ts_to_js(root_directory_path)?;
             Ok(())
         }
     }

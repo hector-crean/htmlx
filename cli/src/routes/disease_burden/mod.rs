@@ -329,6 +329,9 @@ impl Render for Page {
                                                             }
                                                         }
                                                     }
+                                                    p {
+                                                        "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the military population"(RefNote::new(26))"."
+                                                    }
                                                 }),
 
 
@@ -369,6 +372,9 @@ impl Render for Page {
                                                             }
                                                         }
                                                     }
+                                                    p {
+                                                        "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the military population"(RefNote::new(26))"."
+                                                    }
                                                 }),
 
                                             ]
@@ -408,6 +414,9 @@ impl Render for Page {
                                                             }
                                                         }
                                                     }
+                                                    p {
+                                                        "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the military population"(RefNote::new(26))"."
+                                                    }
                                                 }),
 
 
@@ -419,16 +428,14 @@ impl Render for Page {
                             Block::Html(
                                 html! {
                                     div class="panel" {
-                                        p {
-                                            "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the military population"(RefNote::new(26))"."
-                                        }
+
                                         ( Block::GridTableBlock(GridTableProps {
 
                                             rows: vec![
                                                 vec![
-                                                    Block::IconBlock(IconProps { name: SvgName::OTS126Icons02MNOTS126TimingOfIndexTrauma}),
+                                                    Block::IconBlock(IconProps { name: SvgName::OTS126NonmedicalDirectCost}),
                                                     Block::Html(html! {
-                                                        span { "Nonmedical direct costs"(RefNote::new(26))}
+                                                        strong { "Nonmedical direct costs"(RefNote::new(26))}
                                                     }),
                                                     Block::Html(html! {
                                                        p {
@@ -448,9 +455,9 @@ impl Render for Page {
 
                                                 ],
                                                 vec![
-                                                    Block::IconBlock(IconProps { name: SvgName::OTS126Icons02MNOTS126TimingOfIndexTrauma}),
+                                                    Block::IconBlock(IconProps { name: SvgName::OTS126MedicalCosts}),
                                                     Block::Html(html! {
-                                                        span { "Medical costs"}
+                                                        strong { "Medical costs"}
                                                     }),
                                                     Block::Html(html! {
                                                         ul class="list" {
@@ -462,9 +469,9 @@ impl Render for Page {
 
                                                 ],
                                                 vec![
-                                                    Block::IconBlock(IconProps { name: SvgName::OTS126Icons02MNOTS126TimingOfIndexTrauma}),
+                                                    Block::IconBlock(IconProps { name: SvgName::OTS126UntreatedPatients}),
                                                     Block::Html(html! {
-                                                        span { "Untreated patients"(RefNote::new(27))}
+                                                        strong { "Untreated patients"(RefNote::new(27))}
                                                     }),
                                                     Block::Html(html! {
 

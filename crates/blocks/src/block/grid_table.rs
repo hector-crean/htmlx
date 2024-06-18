@@ -21,13 +21,13 @@ impl Render for GridTableProps {
         let grid_cols_template = match &COLS {
             0 | 1 => "grid-cols-1".to_string(),
             2 => "grid-cols-[100px_1fr]".to_string(),
-            cols @ _ => format!("grid-cols-[100px_100px_repeat({}, 1fr)]", cols - 2),
+            cols @ _ => format!("grid-cols-[100px_100px_repeat({},1fr)]", cols - 2),
         };
 
-        let row_class = format!("grid grid-cols-1 md:{}", grid_cols_template);
+        let row_class = format!("grid grid-cols-1 @md:{}", grid_cols_template);
         html! {
 
-        div class="flex flex-col gap-y-1 text-[#6e777e] gap-x-1" {
+        div class="@container flex flex-col gap-y-1 text-[#6e777e] gap-x-1" {
             @for (row_idx, row) in self.rows.iter().enumerate() {
                 div class=(row_class) {
                     @for (col_idx, cell) in row.iter().enumerate() {

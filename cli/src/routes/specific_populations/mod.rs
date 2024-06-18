@@ -33,7 +33,7 @@ impl Page {
                         }
                     }
                     div class="p-2 bg-[#accbdd]"{
-                        (Block::SvgBlock(SvgProps { name: SvgName::OTS12613PercentAdultsPTSDInfographic}))
+                        (Block::SvgBlock(SvgProps { name: SvgName::OTS12649Infographic}))
                         div{
                             span class="bg-[#005178] text-[#d2e3ee]  rounded-sm px-2" {"~13 million"}
                             span { " adults in the US will experience PTSD during a given year "(RefNote::new(5))}
@@ -138,13 +138,13 @@ impl Page {
                     div class="grid items-center justify-center grid-cols-2 overflow-hidden text-center rounded-md" {
                         div class="flex flex-col items-center justify-center w-full p-2 " {
                             (Block::SvgBlock(SvgProps {
-                                name: SvgName::OTS126MaleIcon,
+                                name: SvgName::OTS126WarVeteranIcon,
                             }))
                         }
                         div class="text-xl" { "Male war veterans " span class="bg-[#005178] text-[#d2e3ee]" { "7.7%"}}
                         div class="flex flex-col items-center justify-center w-full p-2 " {
                             (Block::SvgBlock(SvgProps {
-                                name: SvgName::OTS126FemaleIcon,
+                                name: SvgName::OTS126FemaleWarVeteranIcon,
                             }))
                         }
 
@@ -248,35 +248,37 @@ impl Page {
             Block::Html(html! {
                div class="panel" {
                 h2 { "Race" }
-                ( Block::BarChartBlock(BarChartProps {
-                    title: "Race-PTSD prevalence".to_string(),
-                    slices: vec![
-                        BarChartDatum {
-                            id: uuid::Uuid::new_v4(),
-                            label: "Black".to_string(),
-                            value: 8.7,
-                            fill: Some("#7A4D3B".to_string()),
-                        },
-                        BarChartDatum {
-                            id: uuid::Uuid::new_v4(),
-                            label: "White".to_string(),
-                            value: 7.4,
-                            fill: Some("#FFCEA7".to_string()),
-                        },
-                        BarChartDatum {
-                            id: uuid::Uuid::new_v4(),
-                            label: "Hispanic".to_string(),
-                            value: 7.0,
-                            fill: Some("#DB8C68".to_string()),
-                        },
-                        BarChartDatum {
-                            id: uuid::Uuid::new_v4(),
-                            label: "Asian".to_string(),
-                            value: 4.0,
-                            fill: Some("#F9DAA6".to_string()),
-                        },
-                    ],
-                }))
+                // ( Block::BarChartBlock(BarChartProps {
+                //     title: "Race-PTSD prevalence".to_string(),
+                //     slices: vec![
+                //         BarChartDatum {
+                //             id: uuid::Uuid::new_v4(),
+                //             label: "Black".to_string(),
+                //             value: 8.7,
+                //             fill: Some("#7A4D3B".to_string()),
+                //         },
+                //         BarChartDatum {
+                //             id: uuid::Uuid::new_v4(),
+                //             label: "White".to_string(),
+                //             value: 7.4,
+                //             fill: Some("#FFCEA7".to_string()),
+                //         },
+                //         BarChartDatum {
+                //             id: uuid::Uuid::new_v4(),
+                //             label: "Hispanic".to_string(),
+                //             value: 7.0,
+                //             fill: Some("#DB8C68".to_string()),
+                //         },
+                //         BarChartDatum {
+                //             id: uuid::Uuid::new_v4(),
+                //             label: "Asian".to_string(),
+                //             value: 4.0,
+                //             fill: Some("#F9DAA6".to_string()),
+                //         },
+                //     ],
+                // }))
+                h3 { "PTSD Prevalence"(RefNote::new(13))}
+                (SvgProps { name: SvgName::OTS126PTSDRaceInfographicCopy})
                 ul class="list" {
                     li {
                         "Black individuals experience more frequent, severe, and chronic PTSD symptoms compared to White individuals"(RefNote::new(14))"."

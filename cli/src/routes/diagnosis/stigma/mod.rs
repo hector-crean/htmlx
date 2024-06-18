@@ -146,7 +146,7 @@ impl Render for Page {
                                     }
                                     li {
                                         p { "Longer waiting times" }
-                                    }p
+                                    }
                                     li {
                                         p { "Substandard treatment" }
                                     }

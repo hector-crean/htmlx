@@ -18,14 +18,14 @@ import disease_burden_init from '@/init/disease_burden';
 import nav_init from '@/init/nav';
 import specific_populations_init from '@/init/specific_populations';
 //Templates
-import nav from '@/assets/pages/nav.html?raw';
-import clinical_presentation_comorbidities_page from '@/assets/pages/ptsd/clinical_presentation/comorbidities/page.html?raw';
-import clinical_presentation_symptoms_page from '@/assets/pages/ptsd/clinical_presentation/symptoms/page.html?raw';
-import assessment_and_diagnosis_page from '@/assets/pages/ptsd/diagnosis/assessment_and_diagnosis/page.html?raw';
-import diagnosis_stigma_page from '@/assets/pages/ptsd/diagnosis/stigma/page.html?raw';
+import nav from '@/pages/nav.html?raw';
+import clinical_presentation_comorbidities_page from '@/pages/ptsd/clinical_presentation/comorbidities/page.html?raw';
+import clinical_presentation_symptoms_page from '@/pages/ptsd/clinical_presentation/symptoms/page.html?raw';
+import assessment_and_diagnosis_page from '@/pages/ptsd/diagnosis/assessment_and_diagnosis/page.html?raw';
+import diagnosis_stigma_page from '@/pages/ptsd/diagnosis/stigma/page.html?raw';
 
-import disease_burden from '@/assets/pages/ptsd/disease_burden/page.html?raw';
-import specific_populations from '@/assets/pages/ptsd/specific_populations/page.html?raw';
+import disease_burden from '@/pages/ptsd/disease_burden/page.html?raw';
+import specific_populations from '@/pages/ptsd/specific_populations/page.html?raw';
 
 
 export const fetchTemplate = async (location: string): Promise<string> => {
@@ -109,11 +109,7 @@ const routerConfig: RouterConfig = { path404: '/', renderId: HTML_IDS.APP }
 const router = Router.create(routerConfig);
 
 
-
-
-
 for (const route of routes) {
-
   router.addRoute(route.path, () => {
     renderHtml(route.template, HTML_IDS.APP)
     route.scripts?.forEach(script => script())

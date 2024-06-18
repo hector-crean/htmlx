@@ -1,0 +1,87 @@
+[
+  {
+    "path": "/ptsd/clinical_presentation/symptoms/page",
+    "template": "/ptsd/clinical_presentation/symptoms/page.html",
+    "status": "UnderDevelopment"
+  },
+  {
+    "path": "/ptsd/clinical_presentation/comorbidities/page",
+    "template": "/ptsd/clinical_presentation/comorbidities/page.html",
+    "status": "UnderDevelopment"
+  },
+  {
+    "path": "/ptsd/specific_populations/page",
+    "template": "/ptsd/specific_populations/page.html",
+    "status": "UnderDevelopment"
+  },
+  {
+    "path": "/ptsd/disease_burden/page",
+    "template": "/ptsd/disease_burden/page.html",
+    "status": "UnderDevelopment"
+  },
+  {
+    "path": "/ptsd/diagnosis/assessment_and_diagnosis/page",
+    "template": "/ptsd/diagnosis/assessment_and_diagnosis/page.html",
+    "status": "UnderDevelopment"
+  },
+  {
+    "path": "/ptsd/diagnosis/stigma/page",
+    "template": "/ptsd/diagnosis/stigma/page.html",
+    "status": "UnderDevelopment"
+  },
+  {
+    "path": "/ptsd/diagnosis/interviews_with_clinicians/page",
+    "template": "/ptsd/diagnosis/interviews_with_clinicians/page.html",
+    "status": "NotStarted"
+  },
+  {
+    "path": "/ptsd/clinical_course/delayed_onset_ptsd/page",
+    "template": "/ptsd/clinical_course/delayed_onset_ptsd/page.html",
+    "status": "NotStarted"
+  },
+  {
+    "path": "/ptsd/clinical_course/chronic_ptsd/page",
+    "template": "/ptsd/clinical_course/chronic_ptsd/page.html",
+    "status": "NotStarted"
+  },
+  {
+    "path": "/ptsd/clinical_course/underdiagnosis/page",
+    "template": "/ptsd/clinical_course/underdiagnosis/page.html",
+    "status": "NotStarted"
+  },
+  {
+    "path": "/ptsd/treatment/guidelines/page",
+    "template": "/ptsd/treatment/guidelines/page.html",
+    "status": "NotStarted"
+  },
+  {
+    "path": "/ptsd/treatment/unmet_needs_and_barriers/page",
+    "template": "/ptsd/treatment/unmet_needs_and_barriers/page.html",
+    "status": "NotStarted"
+  },
+  {
+    "path": "/ptsd/treatment/trauma_informed_care/page",
+    "template": "/ptsd/treatment/trauma_informed_care/page.html",
+    "status": "NotStarted"
+  },
+  {
+    "path": "/ptsd/recovery/intermediate_recovery/page",
+    "template": "/ptsd/recovery/intermediate_recovery/page.html",
+    "status": "NotStarted"
+  },
+  {
+    "path": "/ptsd/recovery/long_term_reconstruction/page",
+    "template": "/ptsd/recovery/long_term_reconstruction/page.html",
+    "status": "NotStarted"
+  },
+  {
+    "path": "/ptsd/disease/trauma_types/page",
+    "template": "/ptsd/disease/trauma_types/page.html",
+    "status": "NotStarted"
+  },
+  {
+    "path": "/ptsd/disease/pathophysiology_of_ptsd/page",
+    "template": "/ptsd/disease/pathophysiology_of_ptsd/page.html",
+    "status": "NotStarted"
+  }
+]

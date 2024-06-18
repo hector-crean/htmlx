@@ -20,20 +20,31 @@ impl Render for DefaultInitJs {
             r#"
         import tabs from '@/components/tabs';
 
-        export default {
+        const page = {
             init: () => {
                 tabs.init()
             }
-        }"#
+        };
+        
+        export default page;
+        "#
             .to_string(),
         )
     }
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, specta::Type, PartialEq)]
+pub enum RouteStatus {
+    Finished,
+    UnderDevelopment,
+    NotStarted,
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, specta::Type, PartialEq)]
 pub struct RouteTemplate {
     pub path: String,
     pub template: String,
+    pub status: RouteStatus,
 }
 
 #[derive(AsRefStr, Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
@@ -49,6 +60,7 @@ pub enum NodeType {
     File {
         extension: FileExtension,
         renderable: PreEscaped<String>,
+        status: RouteStatus,
     },
     Folder,
 }
@@ -126,11 +138,18 @@ impl Node {
         let mut routes = Vec::<RouteTemplate>::new();
 
         for (path, node) in self.iter() {
-            if let NodeType::File { extension, .. } = &node.node_type {
+            if let NodeType::File {
+                extension, status, ..
+            } = &node.node_type
+            {
                 let template = format!("/{}.{}", path, extension.as_ref());
                 let path = format!("/{}", path);
 
-                routes.push(RouteTemplate { path, template });
+                routes.push(RouteTemplate {
+                    path,
+                    template,
+                    status: status.clone(),
+                });
             }
         }
 
@@ -150,6 +169,7 @@ impl Node {
                 NodeType::File {
                     extension,
                     renderable,
+                    ..
                 } => {
                     let mut content = HashMap::new();
 
@@ -252,6 +272,7 @@ impl Routes {
                 NodeType::File {
                     renderable,
                     extension,
+                    ..
                 } => {
                     let mut file = File::create(format!("{}.{}", path, extension.as_ref()))?;
 
@@ -273,6 +294,7 @@ impl Routes {
                 NodeType::File {
                     renderable,
                     extension,
+                    ..
                 } => match extension.as_ref() {
                     "html" => {
                         let mut file = File::create(format!("{}.js", path))?;
