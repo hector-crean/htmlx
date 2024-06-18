@@ -83,29 +83,39 @@ impl App {
                         )),
                     ),
             )
-            // .add_child(
-            //     Node::new("disease", NodeType::Folder)
-            //         .add_child(
-            //             Node::new("trauma_types", NodeType::Folder).add_child(Node::new(
-            //                 "page",
-            //                 NodeType::File {
-            //                     extension: FileExtension::Html,
-            //                     renderable: Page::new(vec![]),
-            //                 },
-            //             )),
-            //         )
-            //         .add_child(
-            //             Node::new("pathophysiology_of_ptsd", NodeType::Folder).add_child(
-            //                 Node::new(
-            //                     "page",
-            //                     NodeType::File {
-            //                         extension: FileExtension::Html,
-            //                         renderable: Page::new(vec![]),
-            //                     },
-            //                 ),
-            //             ),
-            //         ),
-            // )
+            .add_child(
+                Node::new("disease", NodeType::Folder)
+                    .add_child(
+                        Node::new("trauma_types", NodeType::Folder).add_child(Node::new(
+                            "page",
+                            NodeType::File {
+                                extension: FileExtension::Html,
+                                renderable: Page::new(
+                                    "Trauma Types",
+                                    None,
+                                    routes::disease::trauma_types::Page,
+                                )
+                                .render(),
+                            },
+                        )),
+                    )
+                    .add_child(
+                        Node::new("pathophysiology_of_ptsd", NodeType::Folder).add_child(
+                            Node::new(
+                                "page",
+                                NodeType::File {
+                                    extension: FileExtension::Html,
+                                    renderable: Page::new(
+                                        "Pathophysiology of PTSD",
+                                        None,
+                                        routes::disease::pathophysiology_of_ptsd::Page,
+                                    )
+                                    .render(),
+                                },
+                            ),
+                        ),
+                    ),
+            )
             .add_child(
                 Node::new("specific_populations", NodeType::Folder).add_child(Node::new(
                     "page",
@@ -154,102 +164,148 @@ impl App {
                             extension: FileExtension::Html,
                             renderable: Page::new("Stigma", None, diagnosis::stigma::Page).render(),
                         },
-                    ))), // .add_child(
-                         //     Node::new("interviews_with_clinicians", NodeType::Folder).add_child(
-                         //         Node::new(
-                         //             "page",
-                         //             NodeType::File {
-                         //                 extension: FileExtension::Html,
-                         //                 renderable: Page::new(vec![]),
-                         //             },
-                         //         ),
-                         //     ),
-                         // ),
+                    )))
+                    .add_child(
+                        Node::new("interviews_with_clinicians", NodeType::Folder).add_child(
+                            Node::new(
+                                "page",
+                                NodeType::File {
+                                    extension: FileExtension::Html,
+                                    renderable: Page::new(
+                                        "Interviews with Clinicians",
+                                        None,
+                                        routes::diagnosis::interviews_with_clinicians::Page,
+                                    )
+                                    .render(),
+                                },
+                            ),
+                        ),
+                    ),
             )
-        // .add_child(
-        //     Node::new("clinical_course", NodeType::Folder)
-        //         .add_child(Node::new("delayed_onset_ptsd", NodeType::Folder).add_child(
-        //             Node::new(
-        //                 "page",
-        //                 NodeType::File {
-        //                     extension: FileExtension::Html,
-        //                     renderable: Page::new(vec![]),
-        //                 },
-        //             ),
-        //         ))
-        //         .add_child(
-        //             Node::new("chronic_ptsd", NodeType::Folder).add_child(Node::new(
-        //                 "page",
-        //                 NodeType::File {
-        //                     extension: FileExtension::Html,
-        //                     renderable: Page::new(vec![]),
-        //                 },
-        //             )),
-        //         )
-        //         .add_child(
-        //             Node::new("underdiagnosis", NodeType::Folder).add_child(Node::new(
-        //                 "page",
-        //                 NodeType::File {
-        //                     extension: FileExtension::Html,
-        //                     renderable: Page::new(vec![]),
-        //                 },
-        //             )),
-        //         ),
-        // )
-        // .add_child(
-        //     Node::new("treatment", NodeType::Folder)
-        //         .add_child(
-        //             Node::new("guidelines", NodeType::Folder).add_child(Node::new(
-        //                 "page",
-        //                 NodeType::File {
-        //                     extension: FileExtension::Html,
-        //                     renderable: Page::new(vec![]),
-        //                 },
-        //             )),
-        //         )
-        //         .add_child(
-        //             Node::new("unmet_needs_and_barriers", NodeType::Folder).add_child(
-        //                 Node::new(
-        //                     "page",
-        //                     NodeType::File {
-        //                         extension: FileExtension::Html,
-        //                         renderable: Page::new(vec![]),
-        //                     },
-        //                 ),
-        //             ),
-        //         )
-        //         .add_child(
-        //             Node::new("trauma_informed_care", NodeType::Folder).add_child(Node::new(
-        //                 "page",
-        //                 NodeType::File {
-        //                     extension: FileExtension::Html,
-        //                     renderable: Page::new(vec![]),
-        //                 },
-        //             )),
-        //         ),
-        // )
-        // .add_child(
-        //     Node::new("recovery", NodeType::Folder)
-        //         .add_child(
-        //             Node::new("intermediate_recovery", NodeType::Folder).add_child(Node::new(
-        //                 "page",
-        //                 NodeType::File {
-        //                     extension: FileExtension::Html,
-        //                     renderable: Page::new(vec![]),
-        //                 },
-        //             )),
-        //         )
-        //         .add_child(
-        //             Node::new("long_term_reconstruction", NodeType::Folder).add_child(
-        //                 Node::new(
-        //                     "page",
-        //                     NodeType::File {
-        //                         extension: FileExtension::Html,
-        //                         renderable: Page::new(vec![]),
-        //                     },
-        //                 ),
-        //             ),
-        //         ),
-        // )
+            .add_child(
+                Node::new("clinical_course", NodeType::Folder)
+                    .add_child(
+                        Node::new("delayed_onset_ptsd", NodeType::Folder).add_child(Node::new(
+                            "page",
+                            NodeType::File {
+                                extension: FileExtension::Html,
+                                renderable: Page::new(
+                                    "Delayed onset PTSD",
+                                    None,
+                                    routes::clinical_course::delayed_onset_ptsd::Page,
+                                )
+                                .render(),
+                            },
+                        )),
+                    )
+                    .add_child(
+                        Node::new("chronic_ptsd", NodeType::Folder).add_child(Node::new(
+                            "page",
+                            NodeType::File {
+                                extension: FileExtension::Html,
+                                renderable: Page::new(
+                                    "Chronic PTSD",
+                                    None,
+                                    routes::clinical_course::chronic_ptsd::Page,
+                                )
+                                .render(),
+                            },
+                        )),
+                    )
+                    .add_child(
+                        Node::new("underdiagnosis", NodeType::Folder).add_child(Node::new(
+                            "page",
+                            NodeType::File {
+                                extension: FileExtension::Html,
+                                renderable: Page::new(
+                                    "Underdiagnosis",
+                                    None,
+                                    routes::clinical_course::underdiagnosis::Page,
+                                )
+                                .render(),
+                            },
+                        )),
+                    ),
+            )
+            .add_child(
+                Node::new("treatment", NodeType::Folder)
+                    .add_child(
+                        Node::new("guidelines", NodeType::Folder).add_child(Node::new(
+                            "page",
+                            NodeType::File {
+                                extension: FileExtension::Html,
+                                renderable: Page::new(
+                                    "Guidelines",
+                                    None,
+                                    routes::treatment::guidelines::Page,
+                                )
+                                .render(),
+                            },
+                        )),
+                    )
+                    .add_child(
+                        Node::new("unmet_needs_and_barriers", NodeType::Folder).add_child(
+                            Node::new(
+                                "page",
+                                NodeType::File {
+                                    extension: FileExtension::Html,
+                                    renderable: Page::new(
+                                        "Unmet needs and barriers",
+                                        None,
+                                        routes::treatment::unmet_needs_and_barriers::Page,
+                                    )
+                                    .render(),
+                                },
+                            ),
+                        ),
+                    )
+                    .add_child(
+                        Node::new("trauma_informed_care", NodeType::Folder).add_child(Node::new(
+                            "page",
+                            NodeType::File {
+                                extension: FileExtension::Html,
+                                renderable: Page::new(
+                                    "Trauma informed care",
+                                    None,
+                                    routes::treatment::trauma_informed_care::Page,
+                                )
+                                .render(),
+                            },
+                        )),
+                    ),
+            )
+            .add_child(
+                Node::new("recovery", NodeType::Folder)
+                    .add_child(
+                        Node::new("intermediate_recovery", NodeType::Folder).add_child(Node::new(
+                            "page",
+                            NodeType::File {
+                                extension: FileExtension::Html,
+                                renderable: Page::new(
+                                    "Intermedate Recovery",
+                                    None,
+                                    routes::recovery::intermediate_recovery::Page,
+                                )
+                                .render(),
+                            },
+                        )),
+                    )
+                    .add_child(
+                        Node::new("long_term_reconstruction", NodeType::Folder).add_child(
+                            Node::new(
+                                "page",
+                                NodeType::File {
+                                    extension: FileExtension::Html,
+                                    renderable: Page::new(
+                                        "Long term reconstruction",
+                                        None,
+                                        routes::recovery::long_term_reconstruction::Page,
+                                    )
+                                    .render(),
+                                },
+                            ),
+                        ),
+                    ),
+            )
     }
 }

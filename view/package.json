@@ -12,7 +12,9 @@
     "publish": "npm run build && npm run deploy",
     "lint:eslint": "eslint . --ext .ts",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
-    "lint-and-fix": "eslint . --ext .ts --fix"
+    "lint-and-fix": "eslint . --ext .ts --fix",
+    "format:html": "prettier --write \"src/**/*.html\""
+
   },
   "devDependencies": {
     "@random42/dev-deploy": "file:A:/scripts/js/dev-deploy/dist/random42-dev-deploy-0.2.0.tgz",
@@ -32,6 +34,7 @@
     "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
     "postcss": "^8.4.38",
+    "prettier": "^3.3.2",
     "tailwindcss": "^3.4.3",
     "ts-lit-plugin": "^2.0.2",
     "typescript": "^5.2.2",

@@ -28,6 +28,7 @@ enum Commands {
     JsToTs {
         root_directory_path: String,
     },
+    CreateJsInitFiles,
 }
 
 const TEST_PUBLIC_DIR: &'static str = r#"C:\Users\Hector.C\rust\htmx\view\src\assets\pages"#;
@@ -50,6 +51,15 @@ fn main() -> eyre::Result<()> {
             }
             Ok(())
         }
+        Commands::CreateJsInitFiles {} => {
+            let app = App::new();
+
+            let routes = Routes::new(TEST_PUBLIC_DIR, app.root_node);
+
+            routes.traverse_and_generate_js_default()?;
+
+            Ok(())
+        }
         Commands::RenderHtml {} => {
             let app = App::new();
 
@@ -59,7 +69,7 @@ fn main() -> eyre::Result<()> {
 
             let routes = Routes::new(TEST_PUBLIC_DIR, app.root_node);
 
-            routes.build()?;
+            routes.traverse_and_write()?;
 
             let mut routes_file = fs::File::create(format!("{}/routes.json", TEST_PUBLIC_DIR))?;
 

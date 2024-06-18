@@ -16,7 +16,6 @@ import symptoms_init from '@/init/clinical_presentation/symptoms';
 import stigma_init from '@/init/diagnosis/stigma';
 import disease_burden_init from '@/init/disease_burden';
 import nav_init from '@/init/nav';
-import sandbox_init from '@/init/sandbox';
 import specific_populations_init from '@/init/specific_populations';
 //Templates
 import nav from '@/assets/pages/nav.html?raw';
@@ -28,7 +27,6 @@ import diagnosis_stigma_page from '@/assets/pages/ptsd/diagnosis/stigma/page.htm
 import disease_burden from '@/assets/pages/ptsd/disease_burden/page.html?raw';
 import specific_populations from '@/assets/pages/ptsd/specific_populations/page.html?raw';
 
-import sandbox_page from '@/assets/pages/sandbox.html?raw';
 
 export const fetchTemplate = async (location: string): Promise<string> => {
   const response = await fetch(location);
@@ -103,12 +101,7 @@ const routes: Array<Route> = [
     scripts: [disease_burden_init.init]
   },
   
-  {
-    path: "/sandbox",
-    id: 'sandbox',
-    template: sandbox_page,
-    scripts: [sandbox_init.init],
-  },
+ 
 ]
 
 

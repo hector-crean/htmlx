@@ -12,6 +12,24 @@ use strum::AsRefStr;
 
 use crate::node_map::{self, to_sentence_case};
 
+pub struct DefaultInitJs;
+
+impl Render for DefaultInitJs {
+    fn render(&self) -> maud::Markup {
+        PreEscaped(
+            r#"
+        import tabs from '@/components/tabs';
+
+        export default {
+            init: () => {
+                tabs.init()
+            }
+        }"#
+            .to_string(),
+        )
+    }
+}
+
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, specta::Type, PartialEq)]
 pub struct RouteTemplate {
     pub path: String,
@@ -228,7 +246,7 @@ impl Routes {
         let root = root.preprend_path_segment(base_path);
         Self { root }
     }
-    pub fn build(&self) -> Result<(), std::io::Error> {
+    pub fn traverse_and_write(&self) -> Result<(), std::io::Error> {
         for (path, node) in self.root.iter() {
             match &node.node_type {
                 NodeType::File {
@@ -241,6 +259,28 @@ impl Routes {
 
                     file.write(rendered.0.as_bytes())?;
                 }
+                NodeType::Folder => {
+                    std::fs::create_dir_all(path)?;
+                }
+            }
+        }
+
+        Ok(())
+    }
+    pub fn traverse_and_generate_js_default(&self) -> Result<(), std::io::Error> {
+        for (path, node) in self.root.iter() {
+            match &node.node_type {
+                NodeType::File {
+                    renderable,
+                    extension,
+                } => match extension.as_ref() {
+                    "html" => {
+                        let mut file = File::create(format!("{}.js", path))?;
+
+                        file.write(DefaultInitJs.render().0.as_bytes())?;
+                    }
+                    _ => {}
+                },
                 NodeType::Folder => {
                     std::fs::create_dir_all(path)?;
                 }

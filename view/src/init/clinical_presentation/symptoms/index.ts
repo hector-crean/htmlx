@@ -3,7 +3,6 @@ import { InteractiveBrain, Pathways, Regions } from '@/components/interative-bra
 import pathways from '@/components/interative-brain/brain-pathways.json';
 import regions from '@/components/interative-brain/brain-regions.json';
 import tabs from '@/components/tabs';
-import Swiper from 'swiper/bundle';
 
 
 
@@ -119,16 +118,7 @@ const initTabbedBrain = (containerId: string, regions: Regions, pathways: Pathwa
 export default {
   init: () => {
     // init Swiper:
-    const swiper = new Swiper('.swiper', {
-      // configure Swiper to use modules
-      pagination: {
-        el: ".swiper-pagination",
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-    });
+   
     tabs.init()
     CONTAINER_IDS.forEach(id => initTabbedBrain(id, regions, pathways))
 

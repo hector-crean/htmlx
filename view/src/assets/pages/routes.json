@@ -8,6 +8,14 @@
     "template": "/ptsd/clinical_presentation/comorbidities/page.html"
   },
   {
+    "path": "/ptsd/disease/trauma_types/page",
+    "template": "/ptsd/disease/trauma_types/page.html"
+  },
+  {
+    "path": "/ptsd/disease/pathophysiology_of_ptsd/page",
+    "template": "/ptsd/disease/pathophysiology_of_ptsd/page.html"
+  },
+  {
     "path": "/ptsd/specific_populations/page",
     "template": "/ptsd/specific_populations/page.html"
   },
@@ -22,5 +30,41 @@
   {
     "path": "/ptsd/diagnosis/stigma/page",
     "template": "/ptsd/diagnosis/stigma/page.html"
+  },
+  {
+    "path": "/ptsd/diagnosis/interviews_with_clinicians/page",
+    "template": "/ptsd/diagnosis/interviews_with_clinicians/page.html"
+  },
+  {
+    "path": "/ptsd/clinical_course/delayed_onset_ptsd/page",
+    "template": "/ptsd/clinical_course/delayed_onset_ptsd/page.html"
+  },
+  {
+    "path": "/ptsd/clinical_course/chronic_ptsd/page",
+    "template": "/ptsd/clinical_course/chronic_ptsd/page.html"
+  },
+  {
+    "path": "/ptsd/clinical_course/underdiagnosis/page",
+    "template": "/ptsd/clinical_course/underdiagnosis/page.html"
+  },
+  {
+    "path": "/ptsd/treatment/guidelines/page",
+    "template": "/ptsd/treatment/guidelines/page.html"
+  },
+  {
+    "path": "/ptsd/treatment/unmet_needs_and_barriers/page",
+    "template": "/ptsd/treatment/unmet_needs_and_barriers/page.html"
+  },
+  {
+    "path": "/ptsd/treatment/trauma_informed_care/page",
+    "template": "/ptsd/treatment/trauma_informed_care/page.html"
+  },
+  {
+    "path": "/ptsd/recovery/intermediate_recovery/page",
+    "template": "/ptsd/recovery/intermediate_recovery/page.html"
+  },
+  {
+    "path": "/ptsd/recovery/long_term_reconstruction/page",
+    "template": "/ptsd/recovery/long_term_reconstruction/page.html"
   }
 ]
