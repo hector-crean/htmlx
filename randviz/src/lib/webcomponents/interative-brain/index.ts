@@ -1,4 +1,3 @@
-import { ChartSize, Margin } from "@/webcomponents/chart.types";
 import { ScaleLinear, scaleLinear } from "d3-scale";
 import { curveNatural, line } from "d3-shape";
 import { LitElement, SVGTemplateResult, css, html, svg } from "lit";
@@ -8,9 +7,11 @@ import { property } from "lit/decorators.js";
 import { map } from "lit/directives/map.js";
 import { Observable, debounceTime, fromEvent } from "rxjs";
 /*@ts-ignore*/
-import defaultBackground from "./brain-background.jpg";
+import { ChartSize, Margin } from "../chart.types";
 import { pathways } from "./brain-pathways";
 import { regions } from "./brain-regions";
+import { brain_background } from './brian-background.json';
+
 
 class BrainRegion extends LitElement {
 	@property({ type: Boolean })
@@ -186,7 +187,7 @@ class InteractiveBrain extends LitElement {
 	@property({ type: Number, attribute: "aspect-ratio" }) aspectRatio =
 		DEFAULT_ASPECT_RATIO;
 	@property({ type: Number }) imageHeight = DEFAULT_HEIGHT;
-	@property({ type: String }) background: string = defaultBackground;
+	@property({ type: String }) background: string = brain_background;
 	@property({ type: Set }) hoveredRegions: Set<string> = new Set();
 	@property({ type: Set }) clickedRegions: Set<string> = new Set();
 
@@ -247,7 +248,7 @@ class InteractiveBrain extends LitElement {
 		this.pathways = pathways;
 
 		this.margin = margin;
-		this.background = defaultBackground;
+		this.background = brain_background;
 
 		this.scaleX = scaleLinear().domain([0, this.imageWidth]);
 		this.scaleY = scaleLinear().domain([0, this.imageHeight]);
@@ -431,4 +432,6 @@ customElements.define("interactive-brain", InteractiveBrain);
 
 export { InteractiveBrain };
 export type { Label, Pathway, Pathways, Region, Regions };
+
+
 

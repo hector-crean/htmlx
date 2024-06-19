@@ -1,4 +1,4 @@
-import { ChartSize, Margin } from '@/webcomponents/chart.types';
+import { ChartSize, Margin } from '@/lib/webcomponents/chart.types';
 import { ScaleBand, ScaleLinear, scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale';
 import { LitElement, SVGTemplateResult, css, html, svg } from 'lit';
 import { classMap } from 'lit-html/directives/class-map.js';

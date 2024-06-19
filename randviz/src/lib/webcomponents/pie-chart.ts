@@ -1,4 +1,4 @@
-import { ChartSize, Margin } from '@/webcomponents/chart.types';
+import { ChartSize, Margin } from '@/lib/webcomponents/chart.types';
 import { ScaleLinear, scaleLinear, scaleOrdinal } from 'd3-scale';
 import { PieArcDatum, arc, pie } from 'd3-shape';
 import { LitElement, SVGTemplateResult, css, html, svg } from 'lit';

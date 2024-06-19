@@ -1,4 +1,4 @@
-import { ChartSize, Margin } from '@/webcomponents/chart.types';
+import { ChartSize, Margin } from '@/lib/webcomponents/chart.types';
 import { hierarchy, partition } from 'd3-hierarchy';
 import { ScaleOrdinal, scaleOrdinal } from 'd3-scale';
 import { select } from 'd3-selection';

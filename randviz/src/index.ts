@@ -1,1 +1,2 @@
-export { BarChart, InteractiveBrain, tabs } from './lib';
+export { BarChart, InteractiveBrain, barChartOrd, tabs } from './lib';
+
