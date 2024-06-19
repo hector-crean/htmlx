@@ -1,11 +1,10 @@
 
-        import tabs from '@/components/tabs';
+import tabs from '@/lib/components/tabs';
 
-        const page = {
-            init: () => {
-                tabs.init()
-            }
-        };
-        
-        export default page;
-        
+const page = {
+    init: () => {
+        tabs.init()
+    }
+};
+
+export default page;
