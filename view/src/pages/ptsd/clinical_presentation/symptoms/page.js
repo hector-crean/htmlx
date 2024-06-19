@@ -14,8 +14,7 @@ const CONTAINER_IDS = [
 
 
 const initTabbedBrain = (containerId, regions, pathways) => {
-    console.log(containerId)
-    const containerEl = document.querySelector < HTMLElement > (`#${containerId}`);
+    const containerEl = document.querySelector(`#${containerId}`);
 
     if (!containerEl) return;
 

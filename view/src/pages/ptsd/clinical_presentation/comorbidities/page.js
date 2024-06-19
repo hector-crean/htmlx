@@ -1,5 +1,5 @@
 
-import { BarChart, barChartOrd } from '@/lib/components/charts/bar-chart-interval';
+import { BarChart, barChartOrd } from '@/lib/components/bar-chart-interval';
 import { comorbidities } from './comorbidities';
 
 const page = {

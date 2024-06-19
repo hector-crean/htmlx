@@ -77,11 +77,11 @@
   {
     "path": "/ptsd/disease/trauma_types/page",
     "template": "/ptsd/disease/trauma_types/page.html",
-    "status": "NotStarted"
+    "status": "UnderDevelopment"
   },
   {
     "path": "/ptsd/disease/pathophysiology_of_ptsd/page",
     "template": "/ptsd/disease/pathophysiology_of_ptsd/page.html",
-    "status": "NotStarted"
+    "status": "UnderDevelopment"
   }
 ]
