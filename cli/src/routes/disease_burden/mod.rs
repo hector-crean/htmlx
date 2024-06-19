@@ -6,7 +6,6 @@ use blocks::block::pie_chart::{PieChartDatum, PieChartProps};
 use blocks::block::references::ReferencesProps;
 use blocks::block::rich_text::{self, RichTextProps};
 use blocks::block::suggested_node::SuggestedNodeProps;
-use blocks::block::table::TableProps;
 use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation, TabsTheme};
 use blocks::block::Block;
 use blocks::span::ref_note::RefNote;
@@ -57,6 +56,7 @@ impl Render for Page {
                                                     div class="flex flex-col gap-4" {
                                                         h2 { "PTSD symptoms can negatively affect the relationships between patients and their partners"(RefNote::new(7))"." }
                                                        (Block::GridTableBlock(GridTableProps {
+                                                        headers: vec![],
                                                         rows: vec![
                                                             vec![
                                                                 Block::IconBlock(IconProps { name: SvgName::OTS126Icons02MNOTS126TimingOfIndexTrauma}),
@@ -430,7 +430,7 @@ impl Render for Page {
                                     div class="panel" {
 
                                         ( Block::GridTableBlock(GridTableProps {
-
+                                            headers: vec![],
                                             rows: vec![
                                                 vec![
                                                     Block::IconBlock(IconProps { name: SvgName::OTS126NonmedicalDirectCost}),

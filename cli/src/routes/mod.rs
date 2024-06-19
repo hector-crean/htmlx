@@ -297,7 +297,7 @@ impl App {
                             "page",
                             NodeType::File {
                                 extension: FileExtension::Html,
-                                status: RouteStatus::NotStarted,
+                                status: RouteStatus::UnderDevelopment,
                                 renderable: Page::new(
                                     "Trauma Types",
                                     None,
@@ -313,7 +313,7 @@ impl App {
                                 "page",
                                 NodeType::File {
                                     extension: FileExtension::Html,
-                                    status: RouteStatus::NotStarted,
+                                    status: RouteStatus::UnderDevelopment,
                                     renderable: Page::new(
                                         "Pathophysiology of PTSD",
                                         None,

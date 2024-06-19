@@ -50,7 +50,7 @@ impl Page {
                         (Block::SvgBlock(SvgProps { name: SvgName::OTS12623Transparent}))
 
                         div class="flex flex-col items-center justify-center p-2 rounded-md" {
-                            span {"The typical age at which PTSD first appears is during young and middle adulthood. Among adults in the United States, the " span class="bg-[#005178] text-[#d2e3ee]"{ "median age of onset is around 23 years old"}(RefNote::new(7))}
+                            span {"Typically PTSD first appears during young and middle adulthood. Among adults in the United States, the " span class="bg-[#005178] text-[#d2e3ee]"{ "median age of onset is around 23 years old"}(RefNote::new(7))}
                         }
                     }
                 }
@@ -152,6 +152,7 @@ impl Page {
 
                     }
                     (  Block::GridTableBlock(GridTableProps {
+                        headers: vec![],
                         rows: vec![
                             vec![
                                 Block::Html(html! { strong {  "Heightened exposure to trauma"}}),
@@ -209,6 +210,7 @@ impl Page {
                         }
                     }
                     ( Block::GridTableBlock(GridTableProps {
+                        headers: vec![],
                         rows: vec![
                             vec![
                                 Block::Html(html! { strong { "Heightened exposure to trauma"}}),

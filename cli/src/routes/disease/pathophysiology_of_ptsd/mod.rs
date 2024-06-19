@@ -1,4 +1,8 @@
-use blocks::block::tabs::{Tab, TabsProps, TabsRepresentation};
+use blocks::block::{
+    brain::{brain_glossary::BrainGlossaryProps, brain_region::BrainRegionName},
+    tabs::{Tab, TabsProps, TabsRepresentation},
+    Block,
+};
 use maud::{html, Render};
 
 pub struct Page;
@@ -11,9 +15,15 @@ impl Page {
         }
     }
     fn brain_model_tab(&self) -> Tab {
+        let brain_regions = vec![
+            BrainRegionName::Frontosubcortical,
+            BrainRegionName::Orbitofrontal,
+        ];
         Tab {
             name: "Brain model".to_string(),
-            blocks: vec![],
+            blocks: vec![Block::BrainGlossaryBlock(BrainGlossaryProps {
+                region_names: brain_regions,
+            })],
         }
     }
 }
