@@ -1,6 +1,7 @@
 import './style.css';
 import './style/components.css';
 
+import "@/lib/webcomponents";
 
 // core version + navigation, pagination modules:
 // import '@/components/modal';
@@ -25,6 +26,12 @@ import diagnosis_stigma_page from '@/pages/ptsd/diagnosis/stigma/page.html?raw';
 
 import disease_burden from '@/pages/ptsd/disease_burden/page.html?raw';
 import specific_populations from '@/pages/ptsd/specific_populations/page.html?raw';
+
+import pathophysiology_of_ptsd_init from '@/pages/ptsd/disease/pathophysiology_of_ptsd/page';
+import pathophysiology_of_ptsd from '@/pages/ptsd/disease/pathophysiology_of_ptsd/page.html?raw';
+
+import trauma_types_init from '@/pages/ptsd/disease/trauma_types/page';
+import trauma_types from '@/pages/ptsd/disease/trauma_types/page.html?raw';
 
 
 export const fetchTemplate = async (location: string): Promise<string> => {
@@ -98,6 +105,18 @@ const routes: Array<Route> = [
     id: 'disease_burden',
     template: disease_burden,
     scripts: [disease_burden_init.init]
+  },
+  {
+    path: '/ptsd/disease/pathophysiology_of_ptsd',
+    id: 'pathophysiology_of_ptsd',
+    template: pathophysiology_of_ptsd,
+    scripts: [pathophysiology_of_ptsd_init.init]
+  },
+  {
+    path: '/ptsd/disease/trauma_types',
+    id: 'trauma_types',
+    template: trauma_types,
+    scripts: [trauma_types_init.init]
   },
   
  
