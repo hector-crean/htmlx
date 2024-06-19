@@ -4,19 +4,18 @@ import './style/components.css';
 
 // core version + navigation, pagination modules:
 // import '@/components/modal';
-import '@/webcomponents';
 
 import Router from "yourrouter";
 import { RouterConfig } from 'yourrouter/types';
 
 
 //Init
-import comborbs_init from '@/init/clinical_presentation/comorbidities';
-import symptoms_init from '@/init/clinical_presentation/symptoms';
-import stigma_init from '@/init/diagnosis/stigma';
-import disease_burden_init from '@/init/disease_burden';
-import nav_init from '@/init/nav';
-import specific_populations_init from '@/init/specific_populations';
+import nav_init from '@/nav';
+import comborbs_init from '@/pages/ptsd/clinical_presentation/comorbidities/page';
+import symptoms_init from '@/pages/ptsd/clinical_presentation/symptoms/page';
+import stigma_init from '@/pages/ptsd/diagnosis/stigma/page';
+import disease_burden_init from '@/pages/ptsd/disease_burden/page';
+import specific_populations_init from '@/pages/ptsd/specific_populations/page';
 //Templates
 import nav from '@/pages/nav.html?raw';
 import clinical_presentation_comorbidities_page from '@/pages/ptsd/clinical_presentation/comorbidities/page.html?raw';
