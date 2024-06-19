@@ -1,53 +1,78 @@
+use std::ops::Range;
+
 use maud::{html, Markup, Render};
 
 use super::Block;
 
-#[derive(Debug, Clone)]
-pub struct TableProps {
-    pub dimension: [u32; 2],
-    pub headers: Vec<Block>,
-    pub rows: Vec<Vec<Block>>,
+// #[derive(Debug)]
+pub struct Table<'rows, const ROW: usize, const COL: usize> {
+    headers: Option<[&'rows (dyn Render + 'rows); COL]>,
+    rows: [[&'rows (dyn Render + 'rows); COL]; ROW],
 }
 
-impl Render for TableProps {
-    fn render(&self) -> Markup {
-        let grid_cols_template = match self.dimension[1] {
-            1 => "grid-cols-1".to_string(),
+impl<'rows, const ROW: usize, const COL: usize> Table<'rows, ROW, COL> {
+    // Creates a new Table with given headers and rows
+    pub fn new(
+        headers: Option<[&'rows (dyn Render + 'rows); COL]>,
+        rows: [[&'rows (dyn Render + 'rows); COL]; ROW],
+    ) -> Self {
+        Table { headers, rows }
+    }
+}
+
+impl<'rows, const ROW: usize, const COL: usize> Render for Table<'rows, ROW, COL> {
+    fn render(&self) -> maud::Markup {
+        let COLS = self.rows[0].len();
+
+        let grid_cols_template = match &COLS {
+            0 | 1 => "grid-cols-1".to_string(),
             2 => "grid-cols-[min-content_1fr]".to_string(),
             cols @ _ => format!(
-                "grid-cols-[min-content_min-content_1fr_repeat({}, 1fr)]",
-                cols
+                "grid-cols-[min-content_min-content_repeat({},1fr)]",
+                cols - 2
             ),
         };
-        let cl = format!(
-            "grid grid-cols-1 gap-4 md:{} grid-container",
-            grid_cols_template
-        );
+
+        let grid_class = format!("grid grid-cols-1 @md:{}", grid_cols_template);
+
         html! {
-            div class="container p-4 mx-auto rounded-sm" {
-                div class=(cl) {
-                    thead {
-                        tr class="bg-gray-200" {
-                            @for header in &self.headers {
-                                div class="p-4 font-bold bg-gray-200" {
-                                    (header)
-                                }
-                            }
+
+        div class="@container flex flex-col gap-y-1 text-[#6e777e] gap-x-1" {
+            div class=(grid_class) {
+            @match self.headers {
+                Some(headers) => {
+                    @for (header_idx, header) in headers.iter().enumerate() {
+                            div class="col-span-1 p-2 bg-[#0b5079] text-[#eaeded] flex flex-col items-center justify-center" { (header)}
                         }
-                    }
-                    tbody {
-                        @for row in &self.rows {
-                            tr {
-                                @for cell in row {
-                                    div class="p-4 bg-[#c1daed] text-[#313231]" {
-                                        (cell)
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
+                None => {}
             }
+            @for (row_idx, row) in self.rows.iter().enumerate() {
+
+                    @for (col_idx, cell) in row.iter().enumerate() {
+                        @match (row_idx , col_idx) {
+                            // (_, 0)  => {
+                            //     div class="col-span-1 p-2 bg-[#0b5079] text-[#eaeded] flex flex-col items-center justify-center" { (cell)}
+                            // }
+                            (_,_) if row_idx % 2 == 0 => {
+                                div class="col-span-1 p-2 bg-[#c1daed] flex flex-col items-center justify-center" { (cell)}
+                            }
+                            (_,_) if row_idx % 2 == 1 => {
+                                div class="flex flex-col items-center justify-center col-span-1 p-2 bg-[#d5e5f0]" { (cell)}
+                            }
+                            _ => {
+                                div class="col-span-1 p-2 bg-[#c1daed]" { (cell)}
+
+                            }
+
+                        }
+
+                    }
+
+            }
+        }
+        }
+
         }
     }
 }

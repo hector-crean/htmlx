@@ -15,6 +15,17 @@ pub struct BarChartDatum {
     pub fill: Option<String>,
 }
 
+impl BarChartDatum {
+    pub fn new(label: &str, value: f32, fill: Option<&str>) -> Self {
+        Self {
+            id: uuid::Uuid::new_v4(),
+            label: label.into(),
+            value,
+            fill: fill.map(|s| s.into()),
+        }
+    }
+}
+
 impl Default for BarChartDatum {
     fn default() -> Self {
         Self {

@@ -10,6 +10,7 @@ enum GridTableRepresentation {
 
 #[derive(Debug, Clone)]
 pub struct GridTableProps {
+    pub headers: Vec<Block>,
     pub rows: Vec<Vec<Block>>,
     // pub representation: GridTableRepresentation
 }
@@ -25,9 +26,15 @@ impl Render for GridTableProps {
         };
 
         let row_class = format!("grid grid-cols-1 @md:{}", grid_cols_template);
+
         html! {
 
         div class="@container flex flex-col gap-y-1 text-[#6e777e] gap-x-1" {
+            div class=(row_class) {
+                @for (header_idx, header) in self.headers.iter().enumerate() {
+                    div class="col-span-1 p-2 bg-[#0b5079] text-[#eaeded] flex flex-col items-center justify-center" { (header)}
+                }
+            }
             @for (row_idx, row) in self.rows.iter().enumerate() {
                 div class=(row_class) {
                     @for (col_idx, cell) in row.iter().enumerate() {

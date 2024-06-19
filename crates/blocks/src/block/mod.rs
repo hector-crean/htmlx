@@ -37,7 +37,6 @@ use references::ReferencesProps;
 use rich_text::{RichText, RichTextProps};
 use std::fmt::{write, Display, Write};
 use suggested_node::SuggestedNodeProps;
-use table::TableProps;
 use tabs::{Tab, TabsProps};
 use uuid::Uuid;
 
@@ -78,7 +77,6 @@ pub enum Block {
     ReferencesBlock(Box<ReferencesProps>),
     PieChartBlock(PieChartProps),
     BrainGlossaryBlock(BrainGlossaryProps),
-    TableBlock(TableProps),
     IconBlock(IconProps),
     HtmlBlock(HtmlProps),
     SvgBlock(SvgProps),
@@ -154,9 +152,7 @@ impl maud::Render for Block {
                 Block::BrainGlossaryBlock(block) => {
                     (block)
                 }
-                Block::TableBlock(block) => {
-                    (block)
-                }
+
             }
         )
     }
