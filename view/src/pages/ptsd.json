@@ -3,50 +3,65 @@
     "color": "#8f51f5"
   },
   "nodes": {
-    "ptsd/clinical_presentation/comorbidities/page": {
+    "ptsd/treatment/unmet_needs_and_barriers/page": {
       "color": "#260038",
       "position": {
-        "x": 4,
-        "z": -14
+        "x": -20,
+        "z": 16
       },
       "type": "secondary",
       "category": null,
       "connections": {},
-      "label": "Ptsd/clinical_presentation/comorbidities/page",
+      "label": "Ptsd/treatment/unmet_needs_and_barriers/page",
       "content": {
         "default": {
-          "label": "ptsd/clinical_presentation/comorbidities/page",
+          "label": "ptsd/treatment/unmet_needs_and_barriers/page",
           "html": [
-            "ptsd/clinical_presentation/comorbidities/page"
+            "ptsd/treatment/unmet_needs_and_barriers/page"
           ],
           "requires": [
-            "ptsd/clinical_presentation/comorbidities/js/index.js"
+            "common/tabs.js",
+            "ptsd/treatment/unmet_needs_and_barriers/page.js"
           ]
         }
       },
       "distance": 32
     },
-    "ptsd/recovery/intermediate_recovery/page": {
+    "ptsd/specific_populations/page": {
       "color": "#260038",
       "position": {
-        "x": 3,
-        "z": -17
+        "x": -14,
+        "z": -10
       },
       "type": "secondary",
       "category": null,
       "connections": {},
-      "label": "Ptsd/recovery/intermediate_recovery/page",
+      "label": "Ptsd/specific_populations/page",
       "content": {
         "default": {
-          "label": "ptsd/recovery/intermediate_recovery/page",
+          "label": "ptsd/specific_populations/page",
           "html": [
-            "ptsd/recovery/intermediate_recovery/page"
+            "ptsd/specific_populations/page"
           ],
           "requires": [
-            "ptsd/recovery/intermediate_recovery/js/index.js"
+            "common/tabs.js",
+            "ptsd/specific_populations/page.js"
           ]
         }
       },
+      "distance": 32
+    },
+    "ptsd/disease_burden": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Disease_burden",
+      "content": {},
       "distance": 32
     },
     "ptsd/recovery/long_term_reconstruction": {
@@ -62,34 +77,24 @@
       "content": {},
       "distance": 32
     },
-    "ptsd/clinical_presentation/symptoms/page": {
+    "ptsd/diagnosis/stigma": {
       "color": "#260038",
       "position": {
-        "x": -7,
-        "z": -8
+        "x": -48,
+        "z": 0
       },
-      "type": "secondary",
-      "category": null,
+      "type": "category",
+      "category": true,
       "connections": {},
-      "label": "Ptsd/clinical_presentation/symptoms/page",
-      "content": {
-        "default": {
-          "label": "ptsd/clinical_presentation/symptoms/page",
-          "html": [
-            "ptsd/clinical_presentation/symptoms/page"
-          ],
-          "requires": [
-            "ptsd/clinical_presentation/symptoms/js/index.js"
-          ]
-        }
-      },
+      "label": "Stigma",
+      "content": {},
       "distance": 32
     },
     "ptsd/diagnosis/assessment_and_diagnosis/page": {
       "color": "#260038",
       "position": {
-        "x": -19,
-        "z": -5
+        "x": 13,
+        "z": 2
       },
       "type": "secondary",
       "category": null,
@@ -102,13 +107,14 @@
             "ptsd/diagnosis/assessment_and_diagnosis/page"
           ],
           "requires": [
-            "ptsd/diagnosis/assessment_and_diagnosis/js/index.js"
+            "common/tabs.js",
+            "ptsd/diagnosis/assessment_and_diagnosis/page.js"
           ]
         }
       },
       "distance": 32
     },
-    "ptsd/diagnosis/assessment_and_diagnosis": {
+    "ptsd/clinical_course": {
       "color": "#260038",
       "position": {
         "x": -48,
@@ -117,96 +123,59 @@
       "type": "category",
       "category": true,
       "connections": {},
-      "label": "Assessment_and_diagnosis",
+      "label": "Clinical_course",
       "content": {},
       "distance": 32
     },
-    "ptsd/disease/trauma_types": {
+    "ptsd/disease_burden/page": {
       "color": "#260038",
       "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Trauma_types",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/disease/pathophysiology_of_ptsd/page": {
-      "color": "#260038",
-      "position": {
-        "x": 16,
-        "z": -7
+        "x": 8,
+        "z": 8
       },
       "type": "secondary",
       "category": null,
       "connections": {},
-      "label": "Ptsd/disease/pathophysiology_of_ptsd/page",
+      "label": "Ptsd/disease_burden/page",
       "content": {
         "default": {
-          "label": "ptsd/disease/pathophysiology_of_ptsd/page",
+          "label": "ptsd/disease_burden/page",
           "html": [
-            "ptsd/disease/pathophysiology_of_ptsd/page"
+            "ptsd/disease_burden/page"
           ],
           "requires": [
-            "ptsd/disease/pathophysiology_of_ptsd/js/index.js"
+            "common/tabs.js",
+            "ptsd/disease_burden/page.js"
           ]
         }
       },
       "distance": 32
     },
-    "ptsd/clinical_presentation": {
+    "ptsd/recovery/long_term_reconstruction/page": {
       "color": "#260038",
       "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Clinical_presentation",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/clinical_presentation/comorbidities": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Comorbidities",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/diagnosis/interviews_with_clinicians/page": {
-      "color": "#260038",
-      "position": {
-        "x": -13,
-        "z": 3
+        "x": -2,
+        "z": 12
       },
       "type": "secondary",
       "category": null,
       "connections": {},
-      "label": "Ptsd/diagnosis/interviews_with_clinicians/page",
+      "label": "Ptsd/recovery/long_term_reconstruction/page",
       "content": {
         "default": {
-          "label": "ptsd/diagnosis/interviews_with_clinicians/page",
+          "label": "ptsd/recovery/long_term_reconstruction/page",
           "html": [
-            "ptsd/diagnosis/interviews_with_clinicians/page"
+            "ptsd/recovery/long_term_reconstruction/page"
           ],
           "requires": [
-            "ptsd/diagnosis/interviews_with_clinicians/js/index.js"
+            "common/tabs.js",
+            "ptsd/recovery/long_term_reconstruction/page.js"
           ]
         }
       },
       "distance": 32
     },
-    "ptsd/clinical_course/chronic_ptsd": {
+    "ptsd/diagnosis": {
       "color": "#260038",
       "position": {
         "x": -48,
@@ -215,7 +184,7 @@
       "type": "category",
       "category": true,
       "connections": {},
-      "label": "Chronic_ptsd",
+      "label": "Diagnosis",
       "content": {},
       "distance": 32
     },
@@ -232,413 +201,73 @@
       "content": {},
       "distance": 32
     },
-    "ptsd/disease_burden": {
+    "ptsd/recovery/intermediate_recovery/page": {
       "color": "#260038",
       "position": {
-        "x": -48,
-        "z": 0
+        "x": 7,
+        "z": -19
       },
-      "type": "category",
-      "category": true,
+      "type": "secondary",
+      "category": null,
       "connections": {},
-      "label": "Disease_burden",
-      "content": {},
+      "label": "Ptsd/recovery/intermediate_recovery/page",
+      "content": {
+        "default": {
+          "label": "ptsd/recovery/intermediate_recovery/page",
+          "html": [
+            "ptsd/recovery/intermediate_recovery/page"
+          ],
+          "requires": [
+            "common/tabs.js",
+            "ptsd/recovery/intermediate_recovery/page.js"
+          ]
+        }
+      },
       "distance": 32
     },
-    "ptsd/recovery/intermediate_recovery": {
+    "ptsd/diagnosis/interviews_with_clinicians/page": {
       "color": "#260038",
       "position": {
-        "x": -48,
-        "z": 0
+        "x": -18,
+        "z": -12
       },
-      "type": "category",
-      "category": true,
+      "type": "secondary",
+      "category": null,
       "connections": {},
-      "label": "Intermediate_recovery",
-      "content": {},
+      "label": "Ptsd/diagnosis/interviews_with_clinicians/page",
+      "content": {
+        "default": {
+          "label": "ptsd/diagnosis/interviews_with_clinicians/page",
+          "html": [
+            "ptsd/diagnosis/interviews_with_clinicians/page"
+          ],
+          "requires": [
+            "common/tabs.js",
+            "ptsd/diagnosis/interviews_with_clinicians/page.js"
+          ]
+        }
+      },
       "distance": 32
     },
-    "ptsd/disease/trauma_types/page": {
+    "ptsd/clinical_presentation/symptoms/page": {
       "color": "#260038",
       "position": {
-        "x": 4,
+        "x": -8,
         "z": 7
       },
       "type": "secondary",
       "category": null,
       "connections": {},
-      "label": "Ptsd/disease/trauma_types/page",
+      "label": "Ptsd/clinical_presentation/symptoms/page",
       "content": {
         "default": {
-          "label": "ptsd/disease/trauma_types/page",
+          "label": "ptsd/clinical_presentation/symptoms/page",
           "html": [
-            "ptsd/disease/trauma_types/page"
+            "ptsd/clinical_presentation/symptoms/page"
           ],
           "requires": [
-            "ptsd/disease/trauma_types/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
-    "ptsd/specific_populations/page": {
-      "color": "#260038",
-      "position": {
-        "x": -11,
-        "z": 9
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/specific_populations/page",
-      "content": {
-        "default": {
-          "label": "ptsd/specific_populations/page",
-          "html": [
-            "ptsd/specific_populations/page"
-          ],
-          "requires": [
-            "ptsd/specific_populations/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
-    "ptsd/disease_burden/page": {
-      "color": "#260038",
-      "position": {
-        "x": -6,
-        "z": 18
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/disease_burden/page",
-      "content": {
-        "default": {
-          "label": "ptsd/disease_burden/page",
-          "html": [
-            "ptsd/disease_burden/page"
-          ],
-          "requires": [
-            "ptsd/disease_burden/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
-    "ptsd/diagnosis/stigma/page": {
-      "color": "#260038",
-      "position": {
-        "x": -9,
-        "z": 1
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/diagnosis/stigma/page",
-      "content": {
-        "default": {
-          "label": "ptsd/diagnosis/stigma/page",
-          "html": [
-            "ptsd/diagnosis/stigma/page"
-          ],
-          "requires": [
-            "ptsd/diagnosis/stigma/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
-    "ptsd/clinical_course/chronic_ptsd/page": {
-      "color": "#260038",
-      "position": {
-        "x": -13,
-        "z": 1
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/clinical_course/chronic_ptsd/page",
-      "content": {
-        "default": {
-          "label": "ptsd/clinical_course/chronic_ptsd/page",
-          "html": [
-            "ptsd/clinical_course/chronic_ptsd/page"
-          ],
-          "requires": [
-            "ptsd/clinical_course/chronic_ptsd/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
-    "ptsd/specific_populations": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Specific_populations",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/clinical_course/underdiagnosis/page": {
-      "color": "#260038",
-      "position": {
-        "x": -8,
-        "z": -18
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/clinical_course/underdiagnosis/page",
-      "content": {
-        "default": {
-          "label": "ptsd/clinical_course/underdiagnosis/page",
-          "html": [
-            "ptsd/clinical_course/underdiagnosis/page"
-          ],
-          "requires": [
-            "ptsd/clinical_course/underdiagnosis/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
-    "ptsd/treatment/guidelines": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Guidelines",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/recovery": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Recovery",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/recovery/long_term_reconstruction/page": {
-      "color": "#260038",
-      "position": {
-        "x": -13,
-        "z": 16
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/recovery/long_term_reconstruction/page",
-      "content": {
-        "default": {
-          "label": "ptsd/recovery/long_term_reconstruction/page",
-          "html": [
-            "ptsd/recovery/long_term_reconstruction/page"
-          ],
-          "requires": [
-            "ptsd/recovery/long_term_reconstruction/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
-    "ptsd/diagnosis/stigma": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Stigma",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/clinical_course/underdiagnosis": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Underdiagnosis",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/clinical_course/delayed_onset_ptsd": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Delayed_onset_ptsd",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/treatment/guidelines/page": {
-      "color": "#260038",
-      "position": {
-        "x": 4,
-        "z": -9
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/treatment/guidelines/page",
-      "content": {
-        "default": {
-          "label": "ptsd/treatment/guidelines/page",
-          "html": [
-            "ptsd/treatment/guidelines/page"
-          ],
-          "requires": [
-            "ptsd/treatment/guidelines/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
-    "ptsd/treatment/trauma_informed_care": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Trauma_informed_care",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/disease": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Disease",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/disease/pathophysiology_of_ptsd": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Pathophysiology_of_ptsd",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/diagnosis": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Diagnosis",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/treatment/unmet_needs_and_barriers": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Unmet_needs_and_barriers",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/clinical_course": {
-      "color": "#260038",
-      "position": {
-        "x": -48,
-        "z": 0
-      },
-      "type": "category",
-      "category": true,
-      "connections": {},
-      "label": "Clinical_course",
-      "content": {},
-      "distance": 32
-    },
-    "ptsd/clinical_course/delayed_onset_ptsd/page": {
-      "color": "#260038",
-      "position": {
-        "x": -16,
-        "z": -15
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/clinical_course/delayed_onset_ptsd/page",
-      "content": {
-        "default": {
-          "label": "ptsd/clinical_course/delayed_onset_ptsd/page",
-          "html": [
-            "ptsd/clinical_course/delayed_onset_ptsd/page"
-          ],
-          "requires": [
-            "ptsd/clinical_course/delayed_onset_ptsd/js/index.js"
-          ]
-        }
-      },
-      "distance": 32
-    },
-    "ptsd/treatment/unmet_needs_and_barriers/page": {
-      "color": "#260038",
-      "position": {
-        "x": 9,
-        "z": 11
-      },
-      "type": "secondary",
-      "category": null,
-      "connections": {},
-      "label": "Ptsd/treatment/unmet_needs_and_barriers/page",
-      "content": {
-        "default": {
-          "label": "ptsd/treatment/unmet_needs_and_barriers/page",
-          "html": [
-            "ptsd/treatment/unmet_needs_and_barriers/page"
-          ],
-          "requires": [
-            "ptsd/treatment/unmet_needs_and_barriers/js/index.js"
+            "common/tabs.js",
+            "ptsd/clinical_presentation/symptoms/page.js"
           ]
         }
       },
@@ -657,7 +286,55 @@
       "content": {},
       "distance": 32
     },
-    "ptsd/diagnosis/interviews_with_clinicians": {
+    "ptsd/treatment/trauma_informed_care/page": {
+      "color": "#260038",
+      "position": {
+        "x": -17,
+        "z": -2
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/treatment/trauma_informed_care/page",
+      "content": {
+        "default": {
+          "label": "ptsd/treatment/trauma_informed_care/page",
+          "html": [
+            "ptsd/treatment/trauma_informed_care/page"
+          ],
+          "requires": [
+            "common/tabs.js",
+            "ptsd/treatment/trauma_informed_care/page.js"
+          ]
+        }
+      },
+      "distance": 32
+    },
+    "ptsd/disease/pathophysiology_of_ptsd/page": {
+      "color": "#260038",
+      "position": {
+        "x": 11,
+        "z": -15
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/disease/pathophysiology_of_ptsd/page",
+      "content": {
+        "default": {
+          "label": "ptsd/disease/pathophysiology_of_ptsd/page",
+          "html": [
+            "ptsd/disease/pathophysiology_of_ptsd/page"
+          ],
+          "requires": [
+            "common/tabs.js",
+            "ptsd/disease/pathophysiology_of_ptsd/page.js"
+          ]
+        }
+      },
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/comorbidities": {
       "color": "#260038",
       "position": {
         "x": -48,
@@ -666,7 +343,46 @@
       "type": "category",
       "category": true,
       "connections": {},
-      "label": "Interviews_with_clinicians",
+      "label": "Comorbidities",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/recovery/intermediate_recovery": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Intermediate_recovery",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_presentation": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Clinical_presentation",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/treatment/guidelines": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Guidelines",
       "content": {},
       "distance": 32
     },
@@ -683,24 +399,238 @@
       "content": {},
       "distance": 32
     },
-    "ptsd/treatment/trauma_informed_care/page": {
+    "ptsd/recovery": {
       "color": "#260038",
       "position": {
-        "x": 7,
-        "z": -11
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Recovery",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/disease": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Disease",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/treatment/unmet_needs_and_barriers": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Unmet_needs_and_barriers",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/specific_populations": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Specific_populations",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/disease/pathophysiology_of_ptsd": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Pathophysiology_of_ptsd",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_course/page": {
+      "color": "#260038",
+      "position": {
+        "x": 4,
+        "z": 13
       },
       "type": "secondary",
       "category": null,
       "connections": {},
-      "label": "Ptsd/treatment/trauma_informed_care/page",
+      "label": "Ptsd/clinical_course/page",
       "content": {
         "default": {
-          "label": "ptsd/treatment/trauma_informed_care/page",
+          "label": "ptsd/clinical_course/page",
           "html": [
-            "ptsd/treatment/trauma_informed_care/page"
+            "ptsd/clinical_course/page"
           ],
           "requires": [
-            "ptsd/treatment/trauma_informed_care/js/index.js"
+            "common/tabs.js",
+            "ptsd/clinical_course/page.js"
+          ]
+        }
+      },
+      "distance": 32
+    },
+    "ptsd/diagnosis/interviews_with_clinicians": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Interviews_with_clinicians",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/clinical_presentation/comorbidities/page": {
+      "color": "#260038",
+      "position": {
+        "x": -4,
+        "z": -1
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/clinical_presentation/comorbidities/page",
+      "content": {
+        "default": {
+          "label": "ptsd/clinical_presentation/comorbidities/page",
+          "html": [
+            "ptsd/clinical_presentation/comorbidities/page"
+          ],
+          "requires": [
+            "common/tabs.js",
+            "ptsd/clinical_presentation/comorbidities/page.js"
+          ]
+        }
+      },
+      "distance": 32
+    },
+    "ptsd/treatment/trauma_informed_care": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Trauma_informed_care",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/disease/trauma_types": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Trauma_types",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/disease/trauma_types/page": {
+      "color": "#260038",
+      "position": {
+        "x": 16,
+        "z": 9
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/disease/trauma_types/page",
+      "content": {
+        "default": {
+          "label": "ptsd/disease/trauma_types/page",
+          "html": [
+            "ptsd/disease/trauma_types/page"
+          ],
+          "requires": [
+            "common/tabs.js",
+            "ptsd/disease/trauma_types/page.js"
+          ]
+        }
+      },
+      "distance": 32
+    },
+    "ptsd/diagnosis/assessment_and_diagnosis": {
+      "color": "#260038",
+      "position": {
+        "x": -48,
+        "z": 0
+      },
+      "type": "category",
+      "category": true,
+      "connections": {},
+      "label": "Assessment_and_diagnosis",
+      "content": {},
+      "distance": 32
+    },
+    "ptsd/diagnosis/stigma/page": {
+      "color": "#260038",
+      "position": {
+        "x": -7,
+        "z": -15
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/diagnosis/stigma/page",
+      "content": {
+        "default": {
+          "label": "ptsd/diagnosis/stigma/page",
+          "html": [
+            "ptsd/diagnosis/stigma/page"
+          ],
+          "requires": [
+            "common/tabs.js",
+            "ptsd/diagnosis/stigma/page.js"
+          ]
+        }
+      },
+      "distance": 32
+    },
+    "ptsd/treatment/guidelines/page": {
+      "color": "#260038",
+      "position": {
+        "x": 15,
+        "z": -4
+      },
+      "type": "secondary",
+      "category": null,
+      "connections": {},
+      "label": "Ptsd/treatment/guidelines/page",
+      "content": {
+        "default": {
+          "label": "ptsd/treatment/guidelines/page",
+          "html": [
+            "ptsd/treatment/guidelines/page"
+          ],
+          "requires": [
+            "common/tabs.js",
+            "ptsd/treatment/guidelines/page.js"
           ]
         }
       },

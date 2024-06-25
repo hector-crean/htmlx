@@ -12,6 +12,7 @@ import { RouterConfig } from 'yourrouter/types';
 
 //Init
 import nav_init from '@/nav';
+import clinical_course_init from '@/pages/ptsd/clinical_course/page';
 import comborbs_init from '@/pages/ptsd/clinical_presentation/comorbidities/page';
 import symptoms_init from '@/pages/ptsd/clinical_presentation/symptoms/page';
 import stigma_init from '@/pages/ptsd/diagnosis/stigma/page';
@@ -23,6 +24,8 @@ import clinical_presentation_comorbidities_page from '@/pages/ptsd/clinical_pres
 import clinical_presentation_symptoms_page from '@/pages/ptsd/clinical_presentation/symptoms/page.html?raw';
 import assessment_and_diagnosis_page from '@/pages/ptsd/diagnosis/assessment_and_diagnosis/page.html?raw';
 import diagnosis_stigma_page from '@/pages/ptsd/diagnosis/stigma/page.html?raw';
+
+import clinical_course_page from '@/pages/ptsd/clinical_course/page.html?raw';
 
 import disease_burden from '@/pages/ptsd/disease_burden/page.html?raw';
 import specific_populations from '@/pages/ptsd/specific_populations/page.html?raw';
@@ -118,6 +121,12 @@ const routes: Array<Route> = [
     template: trauma_types,
     scripts: [trauma_types_init.init]
   },
+  {
+    path: '/ptsd/clinical_course',
+    id: 'clinical_course',
+    template: clinical_course_page,
+    scripts: [clinical_course_init.init]
+  }
   
  
 ]

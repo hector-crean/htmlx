@@ -35,19 +35,9 @@
     "status": "NotStarted"
   },
   {
-    "path": "/ptsd/clinical_course/delayed_onset_ptsd/page",
-    "template": "/ptsd/clinical_course/delayed_onset_ptsd/page.html",
-    "status": "NotStarted"
-  },
-  {
-    "path": "/ptsd/clinical_course/chronic_ptsd/page",
-    "template": "/ptsd/clinical_course/chronic_ptsd/page.html",
-    "status": "NotStarted"
-  },
-  {
-    "path": "/ptsd/clinical_course/underdiagnosis/page",
-    "template": "/ptsd/clinical_course/underdiagnosis/page.html",
-    "status": "NotStarted"
+    "path": "/ptsd/clinical_course/page",
+    "template": "/ptsd/clinical_course/page.html",
+    "status": "UnderDevelopment"
   },
   {
     "path": "/ptsd/treatment/guidelines/page",
