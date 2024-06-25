@@ -1,15 +1,19 @@
 import { ChartSize, Margin } from "@/lib/types/chart";
 import { ScaleBand, ScaleLinear, scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale';
-import { LitElement, SVGTemplateResult, css, html, svg } from 'lit';
+import { LitElement, SVGTemplateResult, css, html, nothing, svg } from 'lit';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { createRef, ref } from 'lit-html/directives/ref.js';
+import { when } from "lit-html/directives/when.js";
 import { property } from 'lit/decorators.js';
 import { Observable, debounceTime, filter, fromEvent } from 'rxjs';
 
 const DEFAULT_ASPECT_RATIO = 1;
 const DEFAULT_HEIGHT = 540;
 const DEFAULT_SIZE = { innerHeight: DEFAULT_HEIGHT, innerWidth: DEFAULT_HEIGHT * DEFAULT_ASPECT_RATIO, outerHeight: DEFAULT_HEIGHT, outerWidth: DEFAULT_HEIGHT * DEFAULT_ASPECT_RATIO };
+const BLUES = ['#005178', '#1178a0', '#184ca1', '#4e69b1', '#5b97ca'];
 
+
+//utility functions:
 const splitText = (text: string, maxLength: number): string[] => {
     const words = text.split(' ');
     const lines: string[] = [];
@@ -30,8 +34,8 @@ const splitText = (text: string, maxLength: number): string[] => {
     return lines;
 };
 
-const blues = ['#005178', '#1178a0', '#184ca1', '#4e69b1', '#5b97ca'];
 
+//Render functions
 const drawVerticalLine = (
     value: number | null,
     innerWidth: number,
@@ -86,48 +90,82 @@ const drawAxis = (
     `;
 };
 
+
+function rightHandedRectanglePath(x: number, y: number, width: number, height: number, radius: number): string {
+    return (
+        `M${x},${y}h${(width - radius)}a${radius},${radius} 0 0 1 ${radius},${radius}v${(height - 2 * radius)}a${radius},${radius} 0 0 1 ${-radius},${radius}h${(radius - width)}z`
+    );
+}
+
 const drawBar = (
     data: Array<BarChartDatum>,
     innerWidth: number,
     innerHeight: number,
+    margin: Margin,
     yScale: ScaleBand<string>,
     xScale: ScaleLinear<number, number, never>,
-    hoveredRegions: Set<string>,
-    clickedRegions: Set<string>,
+    hoveredBars: Set<string>,
+    clickedBars: Set<string>,
     onHoverStart: (id: string) => void,
     onHoverEnd: (id: string) => void,
     onClick: (id: string) => void
 ): SVGTemplateResult => {
 
-    const colorScale = scaleOrdinal().domain([...Array(data.length).keys()].map(n => `${n}`)).range(blues);
+    const colorScale = scaleOrdinal().domain([...Array(data.length).keys()].map(n => `${n}`)).range(BLUES);
 
     return svg`
         <g>
             ${data.map(d => {
-        const isHovered = hoveredRegions.has(d.id);
-        const isClicked = clickedRegions.has(d.id);
+        // const isHovered = hoveredBars.has(d.id);
+        const isClicked = clickedBars.has(d.id);
+        console.log(Boolean(d.end))
         return svg`
                     <rect 
                         y="${yScale(d.id)}" 
-                        x="0"
+                        x="${-margin.left}"
                         height="${yScale.bandwidth()}" 
-                        width="${xScale(d.value)}"
-                        fill="${d.fill ? d.fill : colorScale(`${data.indexOf(d) % 5}`)}" 
-                        class="${classMap({ bar: true, hovered: isHovered, clicked: isClicked })}" 
-                        @pointerover="${() => onHoverStart(d.id)}" 
-                        @pointerout="${() => onHoverEnd(d.id)}" 
+                        width="${innerWidth + margin.left}"
+                        fill="${d.fill ? d.fill : colorScale(`${data.indexOf(d) % 5}`)}"
+                        opacity="${isClicked ? 1 : 0.1}"
                         @click="${() => onClick(d.id)}"
+                        @pointerover="${() => onHoverStart(d.id)}" 
+                        @pointerout="${() => onHoverEnd(d.id)}"
                         data-interactive="true"
                     ></rect>
+                    
+                    ${when(
+                        typeof d.end === 'number',
+                        () => svg`<path 
+                        d="${rightHandedRectanglePath(0, yScale(d.id)!,xScale(d.end!), yScale.bandwidth(),yScale.bandwidth()/2)}"
+                        fill="${d.fill ? d.fill : colorScale(`${data.indexOf(d) % 5}`)}" 
+                        class="${classMap({ bar: true, clicked: isClicked })}" 
+                        data-interactive="true"
+                        @click="${() => onClick(d.id)}"
+                        @pointerover="${() => onHoverStart(d.id)}" 
+                        @pointerout="${() => onHoverEnd(d.id)}" 
+                    ></path>`,
+                        () => nothing
+                    )}
+                    <path 
+                        d="${rightHandedRectanglePath(0, yScale(d.id)!,xScale(d.start), yScale.bandwidth(),yScale.bandwidth()/2)}"
+                        fill="#97bfde" 
+                        class="${classMap({ bar: true, clicked: isClicked })}" 
+                        data-interactive="true"
+                        @click="${() => onClick(d.id)}"
+                        @pointerover="${() => onHoverStart(d.id)}" 
+                        @pointerout="${() => onHoverEnd(d.id)}" 
+
+                    ></path>
+                    
                     <text 
-                        x="${xScale(d.value) + 5}" 
+                        x="${xScale(d.start) + 5}" 
                         y="${yScale(d.id)! + yScale.bandwidth() / 2}" 
                         dy="0.32em"
                         text-anchor="start" 
                         font-size="10px" 
-                        class="${classMap({ hovered: isHovered, clicked: isClicked, label: true })}"
+                        class="${classMap({ clicked: isClicked, label: true })}"
                     >
-                        ${d.value}%
+                        ${d.start}%
                     </text>
                 `;
     })}
@@ -139,15 +177,21 @@ export interface BarChartDatum {
     id: string,
     fill?: string,
     label: string;
-    value: number;
+    start: number;
+    end?: number;
+}
+
+interface PanelElement extends HTMLElement {
+    slot: string;
+    id: string;
 }
 
 class BarChart extends LitElement {
     @property({ type: Array }) bardata: Array<BarChartDatum> = []
     @property({ type: Number, attribute: 'aspect-ratio' }) aspectRatio = DEFAULT_ASPECT_RATIO;
     @property({ type: Number }) imageHeight = DEFAULT_HEIGHT;
-    @property({ type: Set }) hoveredRegions: Set<string> = new Set();
-    @property({ type: Set }) clickedRegions: Set<string> = new Set();
+    @property({ type: Set }) hoveredBars: Set<string> = new Set();
+    @property({ type: Set }) clickedBars: Set<string> = new Set();
     @property({ type: Number }) clickedValue: number | null = null;
 
     private containerRef = createRef<HTMLDivElement>();
@@ -156,6 +200,7 @@ class BarChart extends LitElement {
     private resizeObservable$: Observable<Event>;
     private clickOutside$: Observable<Event>;
     private size: ChartSize = DEFAULT_SIZE;
+    private panels: Array<PanelElement>;
 
     constructor() {
         super();
@@ -179,28 +224,44 @@ class BarChart extends LitElement {
         this.clickOutside$.subscribe(() => {
 			// this.onBackgroundClick()
 		})
+
+        this.panels = Array.from(this.querySelectorAll("[slot=panel][id]"));
     }
 
     
 
-    onRegionHoverStart(regionId: string) {
-        this.hoveredRegions.add(regionId)
+    onBarHoverStart(barId: string) {
+        this.hoveredBars.add(barId)
         this.requestUpdate();
     }
-    onRegionHoverEnd(regionId: string) {
-        this.hoveredRegions.delete(regionId)
+    onBarHoverEnd(barId: string) {
+        this.hoveredBars.delete(barId)
         this.requestUpdate();
     }
-    onRegionClick(regionId: string) {
-        const clickedDatum = this.bardata.find(d => d.id === regionId);
-        this.clickedValue = clickedDatum ? clickedDatum.value : null;
-        this.clickedRegions = new Set([regionId]);
+
+    
+    onBarClick(barId: string) {
+        const clickedDatum = this.bardata.find(d => d.id === barId);
+        this.clickedValue = clickedDatum ? clickedDatum.start : null;
+        this.clickedBars = new Set([barId]);
+
+        this.panels.forEach((panel) => panel.removeAttribute("selected"));
+
+        this.clickedBars.forEach(barId => {
+            const panel = this.panels.find(panel => panel.id === barId);
+            if(panel){
+                panel.setAttribute("selected", "");
+            }
+        })
+
         this.requestUpdate();
     }
 
     onBackgroundClick(){
-        this.clickedRegions = new Set([]);
+        this.clickedBars = new Set([]);
         this.clickedValue = null;
+        this.panels.forEach((panel) => panel.removeAttribute("selected"));
+
         this.requestUpdate();
     }
 
@@ -211,7 +272,7 @@ class BarChart extends LitElement {
             .range([0, this.size.innerHeight])
             .padding(0.1);
 
-        const xs = this.bardata.map(d => d.value)
+        const xs = this.bardata.map(d => d.start)
         const xScale = scaleLinear()
             .domain([Math.min(0, ...xs), Math.max(...xs)])
             .nice()
@@ -273,7 +334,7 @@ class BarChart extends LitElement {
             opacity: 1;
             transition: opacity 1s, display 1s allow-discrete, overlay 1s allow-discrete;
         }
-        .bar.hovered {
+        .bar:hover {
             filter: brightness(1.2);
             opacity: 0.9;
         }
@@ -281,6 +342,17 @@ class BarChart extends LitElement {
             opacity: 1;
             filter: brightness(1.5);
         }
+        ::slotted([slot="panel"]) {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        ::slotted([slot="panel"][selected]) {
+            display: block;
+            opacity: 1;
+            
+        }
+        
         
     `;
 
@@ -288,6 +360,7 @@ class BarChart extends LitElement {
         const { yScale, xScale } = this.getScales();
 
         return html`
+        <nav>
             <div ${ref(this.containerRef)} class=${classMap({ container: true })}>
                 <svg id="interactive-svg" class="rounded-lg shadow" data-interactive="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 ${this.size.outerWidth} ${this.size.outerHeight}">
                     <defs>
@@ -298,17 +371,21 @@ class BarChart extends LitElement {
                                 <feMergeNode in="SourceGraphic"></feMergeNode>
                             </feMerge>
                         </filter>
+                        <pattern id="error-margin" patternUnits="userSpaceOnUse" width="8" height="8"><path d="M 0,8 l 8,-8 M -2,2 l 4,-4 M 6,10 l 4,-4" stroke-width="2" shape-rendering="auto" stroke="#343434" stroke-linecap="square"></path></pattern>
                     </defs>
+                   
                     <g class="zoomable" cursor="grab">
                         <rect width="${this.size.outerWidth}" height="${this.size.outerHeight}" fill="transparent" @click="${this.onBackgroundClick}"></rect>
                         <g ${ref(this.canvasRef)} class="barchart" transform="translate(${this.margin.left}, ${this.margin.top})">
+                            ${drawBar(this.bardata, this.size.innerWidth, this.size.innerHeight, this.margin,yScale, xScale, this.hoveredBars, this.clickedBars, this.onBarHoverStart.bind(this), this.onBarHoverEnd.bind(this), this.onBarClick.bind(this))}
                             ${drawAxis(this.bardata, this.size.innerWidth, this.size.innerHeight, yScale, xScale)}
-                            ${drawBar(this.bardata, this.size.innerWidth, this.size.innerHeight, yScale, xScale, this.hoveredRegions, this.clickedRegions, this.onRegionHoverStart.bind(this), this.onRegionHoverEnd.bind(this), this.onRegionClick.bind(this))}
                             ${drawVerticalLine(this.clickedValue, this.size.innerWidth, this.size.innerHeight, xScale)}
                         </g>
                     </g>
                 </svg>
             </div>
+            <slot name="panel"></slot>
+        </nav>
         `;
     }
 
