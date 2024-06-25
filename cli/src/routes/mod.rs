@@ -158,52 +158,19 @@ impl App {
                     ),
             )
             .add_child(
-                Node::new("clinical_course", NodeType::Folder)
-                    .add_child(
-                        Node::new("delayed_onset_ptsd", NodeType::Folder).add_child(Node::new(
-                            "page",
-                            NodeType::File {
-                                extension: FileExtension::Html,
-                                status: RouteStatus::NotStarted,
-                                renderable: Page::new(
-                                    "Delayed onset PTSD",
-                                    None,
-                                    routes::clinical_course::delayed_onset_ptsd::Page,
-                                )
-                                .render(),
-                            },
-                        )),
-                    )
-                    .add_child(
-                        Node::new("chronic_ptsd", NodeType::Folder).add_child(Node::new(
-                            "page",
-                            NodeType::File {
-                                extension: FileExtension::Html,
-                                status: RouteStatus::NotStarted,
-                                renderable: Page::new(
-                                    "Chronic PTSD",
-                                    None,
-                                    routes::clinical_course::chronic_ptsd::Page,
-                                )
-                                .render(),
-                            },
-                        )),
-                    )
-                    .add_child(
-                        Node::new("underdiagnosis", NodeType::Folder).add_child(Node::new(
-                            "page",
-                            NodeType::File {
-                                extension: FileExtension::Html,
-                                status: RouteStatus::NotStarted,
-                                renderable: Page::new(
-                                    "Underdiagnosis",
-                                    None,
-                                    routes::clinical_course::underdiagnosis::Page,
-                                )
-                                .render(),
-                            },
-                        )),
-                    ),
+                Node::new("clinical_course", NodeType::Folder).add_child(Node::new(
+                    "page",
+                    NodeType::File {
+                        extension: FileExtension::Html,
+                        status: RouteStatus::UnderDevelopment,
+                        renderable: Page::new(
+                            "Clinical Course",
+                            None,
+                            routes::clinical_course::Page,
+                        )
+                        .render(),
+                    },
+                )),
             )
             .add_child(
                 Node::new("treatment", NodeType::Folder)
