@@ -180,7 +180,7 @@ impl Node {
                         node_map::Content::new(
                             Some(path.clone()),
                             vec![path.clone()],
-                            vec![format!("{}/js/index.js", base)],
+                            vec!["common/tabs.js".to_string(), format!("{}/page.js", base)],
                         ),
                     );
 
