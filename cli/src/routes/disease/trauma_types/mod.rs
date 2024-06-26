@@ -65,22 +65,22 @@ impl Page {
                             (BarChartProps {
                                 title: "Highest proportion of PTSD cases (%)".to_string(),
                                 bars: vec! [
-                                    BarChartDatum::new("Unexpected death of a loved one", 31.4, None,None),
-                                    BarChartDatum::new("Direct exposure to death or serious injury", 23.7, None,None),
+                                    BarChartDatum::new("group1", "Unexpected death of a loved one", 31.4, None,None, None),
+                                    BarChartDatum::new("group1", "Direct exposure to death or serious injury", 23.7, None,None, None),
                                 ]
                             })
                             (BarChartProps {
                                 title: "Risk of developing PTSD after trauma exposure (%)".to_string(),
                                 bars: vec! [
-                                    BarChartDatum::new("Rape", 19., None,  None),
-                                    BarChartDatum::new("Physical abuse by a partner", 11.7,Some(13.), None),
-                                    BarChartDatum::new("Physical abuse by a partner", 11.7, None,None),
-                                    BarChartDatum::new("Being kidnapped", 11., None,None),
-                                    BarChartDatum::new("Sexual assault", 10.5, None, None),
-                                    BarChartDatum::new("Saw war-related atrocities", 5.4, None,None),
-                                    BarChartDatum::new("Childhood physical abuse", 5., None,None),
-                                    BarChartDatum::new("Combat experience", 3.6, None,None),
-                                    BarChartDatum::new("Natural disasters", 0.3, None,None),
+                                    BarChartDatum::new("group1", "Rape", 19., None, None, None),
+                                    BarChartDatum::new("group1", "Physical abuse by a partner", 11.7,Some(13.), None, None),
+                                    BarChartDatum::new("group1", "Physical abuse by a partner", 11.7, None, None ,None),
+                                    BarChartDatum::new("group1", "Being kidnapped", 11., None,None, None),
+                                    BarChartDatum::new("group1", "Sexual assault", 10.5, None, None,None),
+                                    BarChartDatum::new("group1", "Saw war-related atrocities", 5.4, None,None,None),
+                                    BarChartDatum::new("group1", "Childhood physical abuse", 5., None,None,None),
+                                    BarChartDatum::new("group1", "Combat experience", 3.6, None,None,None),
+                                    BarChartDatum::new("group1", "Natural disasters", 0.3, None,None,None),
 
 
                                 ]

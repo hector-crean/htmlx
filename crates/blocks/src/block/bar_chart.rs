@@ -1,4 +1,4 @@
-use maud::{html, Render};
+use maud::{html, Markup, PreEscaped, Render};
 
 use super::{
     rich_text::{RichText, RichTextProps},
@@ -8,25 +8,40 @@ use crate::block::icon::IconProps;
 use crate::SvgName;
 use stringcase::{kebab_case, Caser};
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone, serde::Serialize, specta::Type)]
 #[serde(rename_all = "camelCase")]
 pub struct BarChartDatum {
     pub id: uuid::Uuid,
+    pub group_id: String,
     pub label: String,
     pub start: f32,
     pub end: Option<f32>,
     pub fill: Option<String>,
+    #[serde(skip_serializing)]
+    pub description: Option<Block>,
 }
 
 impl BarChartDatum {
-    pub fn new(label: &str, start: f32, end: Option<f32>, fill: Option<&str>) -> Self {
+    pub fn new(
+        group_id: &str,
+        label: &str,
+        start: f32,
+        end: Option<f32>,
+        fill: Option<&str>,
+        description: Option<Block>,
+    ) -> Self {
         Self {
             id: uuid::Uuid::new_v4(),
+            group_id: group_id.into(),
             label: label.into(),
             start,
             end,
             fill: fill.map(|s| s.into()),
+            description,
         }
+    }
+    pub fn fill(&self) -> String {
+        self.fill.clone().unwrap_or("RED".to_string())
     }
 }
 
@@ -34,15 +49,17 @@ impl Default for BarChartDatum {
     fn default() -> Self {
         Self {
             id: uuid::Uuid::new_v4(),
-            label: String::from(""),
+            group_id: "DEFAULT_GROUP".to_string(),
+            label: "DEFAULT_LABEL".to_string(),
             start: 0.,
             end: None,
             fill: None,
+            description: None,
         }
     }
 }
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone, serde::Serialize, specta::Type)]
 #[serde(rename_all = "camelCase")]
 pub struct BarChartProps {
     pub title: String,
@@ -63,43 +80,91 @@ impl maud::Render for BarChartProps {
         let bar_data_str: String = serde_json::to_string(&self.bars).unwrap();
 
         html!(
-            div class="round-lg grid grid-cols-1 p-4 bg-black-900 items-start justify-between bg-[#d4e4ee] rounded-lg mt-2 mx-2" {
+            div data-full-bleed="true" class="round-lg grid grid-cols-1 p-4 bg-black-900 items-start justify-between bg-[#d4e4ee] rounded-lg mt-2 mx-2" {
 
                 h3 {(self.title)}
                 div class="relative flex flex-col items-center justify-center flex-1 w-full"{
                     bar-chart bardata=(bar_data_str) {
                         @for bar in &self.bars {
-                            section slot="panel" id=(bar.id) {
-                                "Panel"(bar.id)
+                            @match &bar.description {
+                                Some(desc) => {
+                                    section slot="panel" id=(bar.id) {
+                                        (desc)
+                                    }
+                                }
+                                None => {
+
+                                }
                             }
                         }
                     }
                 }
 
-                div class="presentation_wrapper"{
-                    (BarChartInfo)
-                }
+
             }
         )
     }
 }
 
-pub struct BarChartInfo;
+#[derive(Debug, Clone)]
+pub struct PtsdComborbiditiesLayout {
+    pub increased_risk_scale: Option<(String, Markup)>,
+    pub increased_risk_percentage: Option<(String, Markup)>,
+    pub overview: Markup,
+    pub fill: String,
+}
 
-impl Render for BarChartInfo {
+impl Render for PtsdComborbiditiesLayout {
     fn render(&self) -> maud::Markup {
         html! {
                 div class="flex flex-col gap-4 rounded-lg bg-[#e6f0f6] p-8" {
-                    div class="col-span-1" {
-                        (IconProps {
-                            name: SvgName::UpArrow
-                        })
+                    @match &self.increased_risk_scale {
+                        Some((scale, markup)) => {
+                            div class="flex flex-row items-center justify-start" {
+                                div class="w-12 text-black" {
+                                    (IconProps {
+                                        name: SvgName::UpArrow
+                                    })
+                                }
+                                span class="px-1 text-3xl" {(scale) }
+                                div {
+                                        span class="w-8 h-8" {
+                                            (IconProps {
+                                                name: SvgName::Cross
+                                            })
+                                        }
+                                    }
+                            }
+                            div class="mt-4" {
+                                (markup)
+                            }
+                        }
+                        None => {}
                     }
-                    div class="col-span-1" {
-                        (IconProps {
-                            name: SvgName::Stats
-                        })
+                    @match &self.increased_risk_percentage {
+                        Some((scale, markup)) => {
+                            div class="flex flex-row items-center justify-start" {
+                                div class="w-12 text-black" {
+                                    (IconProps {
+                                        name: SvgName::Stats
+                                    })}
+                                    span class="px-1 text-3xl" {(scale)"%" }
+                            }
+                            div class="mt-4" {
+                                (markup)
+                            }
+
+                        }
+                        None => {}
                     }
+
+                    div class="flex flex-col items-center justify-center col-span-1" {
+                        div class=(format!("pl-2 border-l-4 border-[{}]", self.fill)) {
+                            (self.overview)
+                        }
+                    }
+
+
                 }
 
         }

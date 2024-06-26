@@ -26,12 +26,10 @@ impl<'rows, const ROW: usize, const COL: usize> Render for Table<'rows, ROW, COL
 
         let grid_cols_template = match &COLS {
             0 | 1 => "grid-cols-1".to_string(),
-            2 => "grid-cols-[min-content_1fr]".to_string(),
-            cols @ _ => format!(
-                "grid-cols-[min-content_min-content_repeat({},1fr)]",
-                cols - 2
-            ),
+            cols @ _ => format!("grid-cols-[repeat({},1fr)]", cols),
         };
+
+        // let grid_cols_template = "grid-cols-[repeat(auto-fit,minmax(50px,1fr))]";
 
         let grid_class = format!("grid grid-cols-1 @md:{}", grid_cols_template);
 

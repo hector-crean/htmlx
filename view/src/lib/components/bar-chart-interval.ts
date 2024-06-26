@@ -1,3 +1,4 @@
+import { icons } from "@/assets/icons";
 import { ComborbidityKind, PtsdComorbidities } from "@/data/comborbidities";
 import { ChartSize, Margin } from "@/lib/types/chart";
 import { axisBottom, axisLeft } from "d3-axis";
@@ -21,8 +22,6 @@ import { Observable, fromEvent } from "rxjs";
 import { debounceTime, filter } from "rxjs/operators";
 import { Ord } from "./ord";
 import pattern from "./textures";
-
-import { icons } from "@/assets/icons";
 
 const iconsMap = (comorbidity: string) => {
 	switch(comorbidity){

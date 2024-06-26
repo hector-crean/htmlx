@@ -63,7 +63,7 @@ impl App {
                                 status: RouteStatus::UnderDevelopment,
                                 renderable: Page::new(
                                     "Symptoms",
-                                    None,
+                                    Some("PTSD Symptom Domains"),
                                     routes::clinical_presentation::symptoms::Page,
                                 )
                                 .render(),

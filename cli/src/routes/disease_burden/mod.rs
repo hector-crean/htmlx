@@ -329,8 +329,10 @@ impl Render for Page {
                                                             }
                                                         }
                                                     }
-                                                    p {
-                                                        "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the military population"(RefNote::new(26))"."
+                                                    div class="panel" {
+                                                        strong {
+                                                            "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the military population"(RefNote::new(26))"."
+                                                        }
                                                     }
                                                 }),
 
@@ -372,8 +374,10 @@ impl Render for Page {
                                                             }
                                                         }
                                                     }
-                                                    p {
-                                                        "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the military population"(RefNote::new(26))"."
+                                                    div class="panel" {
+                                                        strong {
+                                                            "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the military population"(RefNote::new(26))"."
+                                                        }
                                                     }
                                                 }),
 
@@ -414,8 +418,10 @@ impl Render for Page {
                                                             }
                                                         }
                                                     }
-                                                    p {
-                                                        "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the military population"(RefNote::new(26))"."
+                                                    div class="panel" {
+                                                        strong {
+                                                            "In 2018, PTSD-related costs for the US civilian population were almost five times the cost for the military population"(RefNote::new(26))"."
+                                                        }
                                                     }
                                                 }),
 

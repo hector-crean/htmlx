@@ -2,7 +2,8 @@ use std::borrow::Cow;
 
 use maud::{html, Render};
 
-use crate::block::Block;
+use crate::block::{icon::IconProps, Block};
+use crate::SvgName;
 
 #[derive(Debug, Clone)]
 pub struct Page<R: maud::Render> {
@@ -27,7 +28,11 @@ impl<R: maud::Render> maud::Render for Page<R> {
             div class="content gradient-lighter" {
                 div class="content-header" {
                     div class="container" {
-                        button id="button-back" {}
+                        button id="button-back" {
+                            (IconProps {
+                                name: SvgName::ArrowLeft
+                            })
+                        }
                         div class="title" {
                             (self.title)
                         }

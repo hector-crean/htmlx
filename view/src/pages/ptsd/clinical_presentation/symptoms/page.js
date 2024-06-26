@@ -73,21 +73,23 @@ const initTabbedBrain = (containerId, regions, pathways) => {
 
     buttons.forEach((button) => {
         const descriptionContainer = button.querySelector('[data-kind="description"]');
-        const overviewContainer = button.querySelector('[data-kind="overview"]');
+        // const overviewContainer = button.querySelector('[data-kind="overview"]');
 
-        if (!descriptionContainer || !overviewContainer) return;
+        // if (descriptionContainer || !overviewContainer) return;
 
         const description = descriptionContainer.innerHTML;
         descriptionContainer.style.display = "none";
 
-        const overview = overviewContainer.innerHTML;
-        overviewContainer.style.display = "none";
+
+
+        // const overview = overviewContainer.innerHTML;
+        // overviewContainer.style.display = "none";
 
         button.addEventListener("click", () => {
             buttons.forEach((btn) => btn.classList.remove("active"));
             button.classList.add("active");
             if (descriptionPanel) descriptionPanel.innerHTML = description;
-            if (overviewPanel) overviewPanel.innerHTML = overview;
+            // if (overviewPanel) overviewPanel.innerHTML = overview;
 
             const regions = button.getAttribute("data-regions");
             if (regions) {

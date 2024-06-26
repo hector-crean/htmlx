@@ -1628,7 +1628,7 @@
   },
   "amygdala": {
     "name": "Amygdala",
-    "fillColor": "#3283a8",
+    "fillColor": "red",
     "label": {
       "position": {
         "x": 630.4950561523438,

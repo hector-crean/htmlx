@@ -1,13 +1,13 @@
-use maud::html;
+use maud::{html, Markup};
 
 use super::rich_text::RichText;
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone)]
 pub struct DefinitionProps {
     pub color: Option<String>,
     pub id: String,
-    pub term: RichText,
-    pub definition: RichText,
+    pub term: Markup,
+    pub definition: Markup,
 }
 
 impl Default for DefinitionProps {
@@ -15,8 +15,8 @@ impl Default for DefinitionProps {
         Self {
             color: None,
             id: String::default(),
-            term: RichText::default(),
-            definition: RichText::default(),
+            term: Markup::default(),
+            definition: Markup::default(),
         }
     }
 }
@@ -47,7 +47,7 @@ impl maud::Render for DefinitionProps {
         }
     }
 }
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[derive(Debug, Clone)]
 pub struct DefinitionListProps {
     pub definitions: Vec<DefinitionProps>,
 }

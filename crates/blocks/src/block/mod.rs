@@ -23,6 +23,7 @@ use self::{
     definition::{DefinitionListProps, DefinitionProps},
     nav::NavProps,
 };
+use bar_chart::PtsdComborbiditiesLayout;
 use brain::{brain_glossary::BrainGlossaryProps, interactive_brain::InteractiveBrainProps};
 use bubble_chart::BubbleChartProps;
 use disclosure::DisclosureProps;
@@ -85,12 +86,16 @@ pub enum Block {
     GridTableBlock(GridTableProps),
     BubbleChartBlock(BubbleChartProps),
     PartitionChartBlock(PartitionChartProps),
+    PtsdComborbiditiesLayoutBlock(PtsdComborbiditiesLayout),
 }
 
 impl maud::Render for Block {
     fn render(&self) -> maud::Markup {
         html!(
             @match self {
+                Block::PtsdComborbiditiesLayoutBlock(block) => {
+                    (block)
+                }
                 Block::PartitionChartBlock(block) => {
                     (block)
                 }

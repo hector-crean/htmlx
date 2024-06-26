@@ -14,10 +14,10 @@ use super::brain_region::BrainRegionName;
 #[derive(Debug, Clone)]
 pub struct BrainComment {
     pub icon: IconProps,
-    pub symptom: String,
+    pub symptom: Markup,
     pub highlighted_regions: Vec<BrainRegionName>,
-    pub overview: Vec<Block>,
-    pub description: Vec<Block>,
+    pub overview: Option<Markup>,
+    pub description: Markup,
 }
 
 impl BrainComment {
@@ -46,13 +46,16 @@ impl maud::Render for BrainComment {
                     }
 
                     div data-kind="description" {
-                        @for block in &self.description {
-                            (block)
-                        }
+                       (self.description)
                     }
-                    div data-kind="overview" {
-                        @for block in &self.overview {
-                            (block)
+                    @match &self.overview {
+                        Some(overview) => {
+                            div data-kind="overview" {
+                                (overview)
+                             }
+                        }
+                        None => {
+
                         }
                     }
             }
@@ -63,10 +66,10 @@ impl maud::Render for BrainComment {
 impl BrainComment {
     pub fn new<S: Into<String>>(
         icon: IconProps,
-        symptom: S,
+        symptom: Markup,
         highlighted_regions: Vec<BrainRegionName>,
-        overview: Vec<Block>,
-        description: Vec<Block>,
+        overview: Option<Markup>,
+        description: Markup,
     ) -> Self {
         Self {
             icon: icon.into(),
@@ -82,10 +85,10 @@ impl Default for BrainComment {
     fn default() -> Self {
         BrainComment {
             icon: IconProps::default(),
-            symptom: String::from(""),
+            symptom: Markup::default(),
             highlighted_regions: vec![],
-            overview: vec![],
-            description: vec![],
+            overview: None,
+            description: Markup::default(),
         }
     }
 }
@@ -117,7 +120,7 @@ impl Default for CommentGroup {
 #[derive(Debug, Clone)]
 pub struct InteractiveBrainProps {
     pub id: String,
-    pub description: RichText,
+    pub description: Markup,
     pub definitionList: Option<DefinitionListProps>,
     pub groups: Vec<CommentGroup>,
 }
@@ -126,7 +129,7 @@ impl Default for InteractiveBrainProps {
     fn default() -> Self {
         InteractiveBrainProps {
             id: uuid::Uuid::new_v4().to_string(),
-            description: RichText::default(),
+            description: Markup::default(),
             definitionList: None,
             groups: vec![CommentGroup::default()],
         }

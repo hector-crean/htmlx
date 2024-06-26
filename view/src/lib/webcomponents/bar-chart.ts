@@ -2,15 +2,16 @@ import { ChartSize, Margin } from "@/lib/types/chart";
 import { ScaleBand, ScaleLinear, scaleBand, scaleLinear, scaleOrdinal } from 'd3-scale';
 import { LitElement, SVGTemplateResult, css, html, nothing, svg } from 'lit';
 import { classMap } from 'lit-html/directives/class-map.js';
+import { map } from "lit-html/directives/map.js";
 import { createRef, ref } from 'lit-html/directives/ref.js';
 import { when } from "lit-html/directives/when.js";
 import { property } from 'lit/decorators.js';
 import { Observable, debounceTime, filter, fromEvent } from 'rxjs';
 
-const DEFAULT_ASPECT_RATIO = 1;
+const DEFAULT_ASPECT_RATIO = 2;
 const DEFAULT_HEIGHT = 540;
 const DEFAULT_SIZE = { innerHeight: DEFAULT_HEIGHT, innerWidth: DEFAULT_HEIGHT * DEFAULT_ASPECT_RATIO, outerHeight: DEFAULT_HEIGHT, outerWidth: DEFAULT_HEIGHT * DEFAULT_ASPECT_RATIO };
-const BLUES = ['#005178', '#1178a0', '#184ca1', '#4e69b1', '#5b97ca'];
+const BLUES = ['#3576c6', '#7438c3'];
 
 
 //utility functions:
@@ -48,6 +49,16 @@ const drawVerticalLine = (
 
     return svg`
         <line x1="${xPosition}" y1="0" x2="${xPosition}" y2="${innerHeight}" stroke="#000" stroke-dasharray="4" />
+        <g transform="translate(${xPosition}, ${innerHeight - 4})">
+            <rect 
+                y="-12"
+                x="0"
+                height="14" 
+                width="25"
+                fill="#b9b9b9"
+            ></rect>
+            <text x="0" y="0" text-anchor="start" font-size="10px" fill="white">${value}%</text>
+        </g>
     `;
 };
 
@@ -64,31 +75,52 @@ const drawAxis = (
         const datum = data.find(d => d.id === tick);
         const label = datum ? datum.label : tick;
         const lines = splitText(label.trim(), 10);
-        return lines.map((line, index) => svg`
-            <tspan x="-10" dy="${index === 0 ? 0 : 1.2}em">${line}</tspan>
-        `);
+        // return lines.map((line, index) => svg`
+        //     <tspan x="-10" dy="${index === 0 ? 0 : 1.2}em">${line}</tspan>
+        // `);
+        return svg`<tspan>${label}</tspan>`
     };
 
     return svg`
         <g>
-            <g transform="translate(0, ${innerHeight})" class="x-axis">
+            <g class="x-axis" transform="translate(0, ${innerHeight})">
+                <line x1="0" x2="${innerWidth}" stroke="#5d6978" stroke-width="1" ></line>
                 ${xScale.ticks().map(tick => svg`
                     <g transform="translate(${xScale(tick)}, 0)">
-                        <line y2="-${innerHeight}" stroke="#A1C6DD"></line>
+                        <line y1="0" y2="5" stroke="#5d6978" stroke-width="1" ></line>
                         <text y="20" text-anchor="middle" font-size="10px" class="tick">${tick}</text>
                     </g>
                 `)}
             </g>
             <g class="y-axis">
                 ${yScale.domain().map(tick => svg`
-                    <text x="-10" y="${yScale(tick)! + yScale.bandwidth() / 2}" text-anchor="end" dy="0.32em" font-size="10px" class="tick">
+                <g transform="translate(-10, ${yScale(tick)! + yScale.bandwidth() / 2})">
+                    <!-- <line x1="0" x2="2" stroke="#000"></line>  -->
+                    <text x="0" y="0" text-anchor="end" dy="0.32em" font-size="10px" class="tick">
                         ${drawTickLabel(tick)}
                     </text>
+                    </g>
                 `)}
             </g>
         </g>
     `;
 };
+
+const drawLegend = (): SVGTemplateResult => {
+
+    return svg`
+        <g transform="translate(0, 0)">
+            <rect 
+                fill="url(#error-margin)" 
+                x="0"
+                y="0"
+                height="20" 
+                width="20"
+            ></rect>
+            <text x="24" y="15" text-anchor="start" font-size="10px">Range</text>
+        </g>
+    `
+}
 
 
 function rightHandedRectanglePath(x: number, y: number, width: number, height: number, radius: number): string {
@@ -112,13 +144,13 @@ const drawBar = (
 ): SVGTemplateResult => {
 
     const colorScale = scaleOrdinal().domain([...Array(data.length).keys()].map(n => `${n}`)).range(BLUES);
+    // const groupColorScale = scaleOrdinal().domain([...Array(data.length).keys()].map(n => `${n}`)).range(BLUES);
 
     return svg`
         <g>
             ${data.map(d => {
         // const isHovered = hoveredBars.has(d.id);
         const isClicked = clickedBars.has(d.id);
-        console.log(Boolean(d.end))
         return svg`
                     <rect 
                         y="${yScale(d.id)}" 
@@ -137,7 +169,9 @@ const drawBar = (
                         typeof d.end === 'number',
                         () => svg`<path 
                         d="${rightHandedRectanglePath(0, yScale(d.id)!,xScale(d.end!), yScale.bandwidth(),yScale.bandwidth()/2)}"
-                        fill="${d.fill ? d.fill : colorScale(`${data.indexOf(d) % 5}`)}" 
+                        fill="url(#error-margin)" 
+                        stroke="${colorScale(`${d.groupId}`)}" 
+                        stroke-width="2"
                         class="${classMap({ bar: true, clicked: isClicked })}" 
                         data-interactive="true"
                         @click="${() => onClick(d.id)}"
@@ -148,7 +182,8 @@ const drawBar = (
                     )}
                     <path 
                         d="${rightHandedRectanglePath(0, yScale(d.id)!,xScale(d.start), yScale.bandwidth(),yScale.bandwidth()/2)}"
-                        fill="#97bfde" 
+                        fill="${colorScale(`${d.groupId}`)}" 
+                        
                         class="${classMap({ bar: true, clicked: isClicked })}" 
                         data-interactive="true"
                         @click="${() => onClick(d.id)}"
@@ -157,7 +192,7 @@ const drawBar = (
 
                     ></path>
                     
-                    <text 
+                    <!-- <text 
                         x="${xScale(d.start) + 5}" 
                         y="${yScale(d.id)! + yScale.bandwidth() / 2}" 
                         dy="0.32em"
@@ -166,15 +201,24 @@ const drawBar = (
                         class="${classMap({ clicked: isClicked, label: true })}"
                     >
                         ${d.start}%
-                    </text>
+                    </text> -->
                 `;
     })}
         </g>
     `;
 };
 
+const drawFilterButtons = (barGroupIds: Array<string>, selectedBarGroupIds: Array<string>) => {
+    return html`
+    <ul>
+      ${map(barGroupIds, (i) => html`<li>${i}</li>`)}
+    </ul>
+  `;
+}
+
 export interface BarChartDatum {
     id: string,
+    groupId: string,
     fill?: string,
     label: string;
     start: number;
@@ -193,6 +237,8 @@ class BarChart extends LitElement {
     @property({ type: Set }) hoveredBars: Set<string> = new Set();
     @property({ type: Set }) clickedBars: Set<string> = new Set();
     @property({ type: Number }) clickedValue: number | null = null;
+    @property({type: Array}) barGroupIds: Array<string>
+    @property({type: Array}) selectedBarGroupIds: Array<string>
 
     private containerRef = createRef<HTMLDivElement>();
     private canvasRef = createRef<SVGAElement>();
@@ -201,10 +247,11 @@ class BarChart extends LitElement {
     private clickOutside$: Observable<Event>;
     private size: ChartSize = DEFAULT_SIZE;
     private panels: Array<PanelElement>;
+    
 
     constructor() {
         super();
-        this.margin = { left: 80, right: 0, top: 40, bottom: 20 };
+        this.margin = { left: 150, right: 40, top: 40, bottom: 20 };
 
         this.resizeObservable$ = fromEvent(window, "resize").pipe(
             debounceTime(200),
@@ -226,6 +273,10 @@ class BarChart extends LitElement {
 		})
 
         this.panels = Array.from(this.querySelectorAll("[slot=panel][id]"));
+
+        const groupsIds = [...new Set(this.bardata.map(bar => bar.groupId))]
+        this.barGroupIds = groupsIds
+        this.selectedBarGroupIds = groupsIds
     }
 
     
@@ -274,7 +325,7 @@ class BarChart extends LitElement {
 
         const xs = this.bardata.map(d => d.start)
         const xScale = scaleLinear()
-            .domain([Math.min(0, ...xs), Math.max(...xs)])
+            .domain([Math.min(0, ...xs), Math.max(...xs, 100)])
             .nice()
             .range([0, this.size.innerWidth]);
 
@@ -312,21 +363,10 @@ class BarChart extends LitElement {
         :host {
             display: block;
         }
-        .container {
-            width: 100%;
-            height: 100%;
-            min-height: 40vh;
-            max-height: 80vh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 20px;
-            overflow: hidden;
-        }
+       
         .bar {
             filter: brightness(1);
-            opacity: 0.8;
+            opacity: 1;
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
         .label {
@@ -335,10 +375,13 @@ class BarChart extends LitElement {
             transition: opacity 1s, display 1s allow-discrete, overlay 1s allow-discrete;
         }
         .bar:hover {
-            filter: brightness(1.2);
-            opacity: 0.9;
+            /* filter: brightness(1.2); */
+            /* opacity: 0.9; */
         }
-        .bar.clicked, .label.clicked {
+        .bar.clicked {
+
+        }
+        .label.clicked {
             opacity: 1;
             filter: brightness(1.5);
         }
@@ -352,6 +395,35 @@ class BarChart extends LitElement {
             opacity: 1;
             
         }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-rows: min-content 400px min-content;
+            padding: 1rem; /* Adjust this based on your actual requirement, 1rem = 16px */
+            background-color: #d4e4ee;
+            border-radius: 0.5rem; /* This value approximates 'rounded-lg' */
+            gap: 20px;
+       
+        }
+
+        .filter_container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 4; 
+        }
+
+        .graph_container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
         
         
     `;
@@ -359,9 +431,14 @@ class BarChart extends LitElement {
     render() {
         const { yScale, xScale } = this.getScales();
 
+        const sortedData = this.bardata.sort((a, b) => a.start > b.start ? -1 : a.start < b.start ? 1 :  0)
+
         return html`
-        <nav>
-            <div ${ref(this.containerRef)} class=${classMap({ container: true })}>
+        <nav data-full-bleed="true" class="${classMap({container: true})}" >
+            <div class="${classMap({filter_container: true})}">
+            ${drawFilterButtons(this.barGroupIds, this.selectedBarGroupIds)}
+            </div>
+            <div class="${classMap({graph_container: true})}" ${ref(this.containerRef)} >
                 <svg id="interactive-svg" class="rounded-lg shadow" data-interactive="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 ${this.size.outerWidth} ${this.size.outerHeight}">
                     <defs>
                         <filter id="glow">
@@ -373,12 +450,12 @@ class BarChart extends LitElement {
                         </filter>
                         <pattern id="error-margin" patternUnits="userSpaceOnUse" width="8" height="8"><path d="M 0,8 l 8,-8 M -2,2 l 4,-4 M 6,10 l 4,-4" stroke-width="2" shape-rendering="auto" stroke="#343434" stroke-linecap="square"></path></pattern>
                     </defs>
-                   
+                    ${drawLegend()}
                     <g class="zoomable" cursor="grab">
                         <rect width="${this.size.outerWidth}" height="${this.size.outerHeight}" fill="transparent" @click="${this.onBackgroundClick}"></rect>
                         <g ${ref(this.canvasRef)} class="barchart" transform="translate(${this.margin.left}, ${this.margin.top})">
-                            ${drawBar(this.bardata, this.size.innerWidth, this.size.innerHeight, this.margin,yScale, xScale, this.hoveredBars, this.clickedBars, this.onBarHoverStart.bind(this), this.onBarHoverEnd.bind(this), this.onBarClick.bind(this))}
-                            ${drawAxis(this.bardata, this.size.innerWidth, this.size.innerHeight, yScale, xScale)}
+                            ${drawBar(sortedData, this.size.innerWidth, this.size.innerHeight, this.margin,yScale, xScale, this.hoveredBars, this.clickedBars, this.onBarHoverStart.bind(this), this.onBarHoverEnd.bind(this), this.onBarClick.bind(this))}
+                            ${drawAxis(sortedData, this.size.innerWidth, this.size.innerHeight, yScale, xScale)}
                             ${drawVerticalLine(this.clickedValue, this.size.innerWidth, this.size.innerHeight, xScale)}
                         </g>
                     </g>
