@@ -42,7 +42,7 @@
   {
     "path": "/ptsd/treatment/guidelines/page",
     "template": "/ptsd/treatment/guidelines/page.html",
-    "status": "NotStarted"
+    "status": "UnderDevelopment"
   },
   {
     "path": "/ptsd/treatment/unmet_needs_and_barriers/page",

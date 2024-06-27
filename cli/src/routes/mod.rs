@@ -179,7 +179,7 @@ impl App {
                             "page",
                             NodeType::File {
                                 extension: FileExtension::Html,
-                                status: RouteStatus::NotStarted,
+                                status: RouteStatus::UnderDevelopment,
                                 renderable: Page::new(
                                     "Guidelines",
                                     None,

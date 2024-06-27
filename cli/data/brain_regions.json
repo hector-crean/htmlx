@@ -1,23 +1,5 @@
 [
     {
-
-        "id": "thalamus",
-        "fillColor": "#526047",
-        "name": "Thalamus",
-        "label": {
-            "position": {
-                "x": 698.2,
-                "y": 51.6
-            },
-            "altDrawMode": false
-        },
-        "centroid": {
-            "x": 609.1,
-            "y": 126.1
-        },
-        "points": []
-    },
-    {
         "id": "fronto-subcortical",
         "fillColor": "#526047",
         "name": "Frontal Subcortical",

@@ -1,7 +1,7 @@
 use crate::rich_text_block;
 use blocks::{
     block::{
-        bar_chart::{BarChartDatum, BarChartProps, PtsdComborbiditiesLayout},
+        bar_chart::{BarChartDatum, BarChartProps, Margin, PtsdComborbiditiesLayout},
         html,
         placeholder_container::PlaceholderContainerProps,
         references::ReferencesProps,
@@ -17,7 +17,7 @@ impl Page {
     fn bars(&self) -> Vec<BarChartDatum> {
         vec![
             BarChartDatum::new(
-                "PSYCHIATRIC",
+                0,
                 "Substance use",
                 46.,
                 None,
@@ -44,7 +44,7 @@ impl Page {
                 )),
             ),
             BarChartDatum::new(
-                "PSYCHIATRIC",
+                0,
                 "Alcohol use",
                 46.,
                 None,
@@ -72,7 +72,7 @@ impl Page {
                 )),
             ),
             BarChartDatum::new(
-                "PSYCHIATRIC",
+                0,
                 "Major Depressive Disorder",
                 50.,
                 None,
@@ -98,7 +98,7 @@ impl Page {
                 )),
             ),
             BarChartDatum::new(
-                "PSYCHIATRIC",
+                0,
                 "Anxiety",
                 10.,
                 None,
@@ -129,7 +129,7 @@ impl Page {
                 )),
             ),
             BarChartDatum::new(
-                "PSYCHIATRIC",
+                0,
                 "Self-harm",
                 5.,
                 Some(19.),
@@ -156,7 +156,7 @@ impl Page {
             ),
             //
             BarChartDatum::new(
-                "MEDICAL",
+                1,
                 "Sleep dysfunction",
                 70.,
                 Some(87.),
@@ -189,7 +189,7 @@ impl Page {
                 )),
             ),
             BarChartDatum::new(
-                "MEDICAL",
+                1,
                 "Chronic Pain",
                 20.,
                 None,
@@ -221,7 +221,7 @@ impl Page {
                 )),
             ),
             BarChartDatum::new(
-                "MEDICAL",
+                1,
                 "Cardiometabolic disorders",
                 25.,
                 None,
@@ -248,7 +248,7 @@ impl Page {
                 )),
             ),
             BarChartDatum::new(
-                "MEDICAL",
+                1,
                 "Dementia",
                 4.7,
                 Some(7.8),
@@ -306,6 +306,8 @@ impl Render for Page {
         (Block::BarChartBlock(BarChartProps {
             title: String::from("Medical Comorbidities"),
             bars: self.bars(),
+            margin: Margin::new(40., 20., 150., 40.),
+            aspect_ratio: 2.
 
         }))
 

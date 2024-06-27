@@ -18,12 +18,14 @@ import symptoms_init from '@/pages/ptsd/clinical_presentation/symptoms/page';
 import stigma_init from '@/pages/ptsd/diagnosis/stigma/page';
 import disease_burden_init from '@/pages/ptsd/disease_burden/page';
 import specific_populations_init from '@/pages/ptsd/specific_populations/page';
+import treatment_guidelines_init from '@/pages/ptsd/treatment/guidelines/page';
 //Templates
 import nav from '@/pages/nav.html?raw';
 import clinical_presentation_comorbidities_page from '@/pages/ptsd/clinical_presentation/comorbidities/page.html?raw';
 import clinical_presentation_symptoms_page from '@/pages/ptsd/clinical_presentation/symptoms/page.html?raw';
 import assessment_and_diagnosis_page from '@/pages/ptsd/diagnosis/assessment_and_diagnosis/page.html?raw';
 import diagnosis_stigma_page from '@/pages/ptsd/diagnosis/stigma/page.html?raw';
+import treatment_guidelines_page from '@/pages/ptsd/treatment/guidelines/page.html?raw';
 
 import clinical_course_page from '@/pages/ptsd/clinical_course/page.html?raw';
 
@@ -126,6 +128,12 @@ const routes: Array<Route> = [
     id: 'clinical_course',
     template: clinical_course_page,
     scripts: [clinical_course_init.init]
+  },
+  {
+    path: '/ptsd/treatment/guidelines',
+    id: 'guidelines',
+    template: treatment_guidelines_page,
+    scripts: [treatment_guidelines_init.init]
   }
   
  

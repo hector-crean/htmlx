@@ -7,19 +7,11 @@ import { createRef, ref } from "lit-html/directives/ref.js";
 import { property } from "lit/decorators.js";
 import { map } from "lit/directives/map.js";
 import { Observable, debounceTime, fromEvent } from "rxjs";
-import defaultBackground from "./brain-background.jpg";
-import { pathways } from "./brain-pathways";
-import { regions } from "./brain-regions";
+import { brainBgDefs } from "./brain";
 
-class BrainRegion extends LitElement {
-	@property({ type: Boolean })
-	visible = false;
-
-	protected render() {
-		return svg`
-    
-    `;
-	}
+interface PanelElement extends HTMLElement {
+    slot: string;
+    id: string;
 }
 
 const drawRegion = (
@@ -105,7 +97,6 @@ const drawLabel = (
 
 	return svg`
   <circle class="${classMap({
-		
 		clicked,
 		hovered,
 		label: true,
@@ -113,7 +104,6 @@ const drawLabel = (
 		region.centroid.y,
 	)}" r="5" fill="white"></circle>
     <path class="${classMap({
-			
 			clicked,
 			hovered,
 			label: true,
@@ -129,12 +119,12 @@ const drawLabel = (
 		region.label.position.y - 15,
 	)}" opacity="1" fill="white"></rect>
     <text class="${classMap({
-			
 			clicked,
 			hovered,
 			label: true,
-		})}"  x="${scaleX(region.label.position.x)}" y="${scaleY(
-		region.label.position.y) + 5}" text-anchor="middle" opacity="1" font-size="10px" >${region.name}</text>
+		})}"  x="${scaleX(region.label.position.x)}" y="${
+		scaleY(region.label.position.y) + 5
+	}" text-anchor="middle" opacity="1" font-size="10px" >${region.name}</text>
   `;
 };
 
@@ -181,23 +171,22 @@ const DEFAULT_SIZE = {
 	outerWidth: DEFAULT_HEIGHT * DEFAULT_ASPECT_RATIO,
 };
 
-class InteractiveBrain extends LitElement {
+class InteractiveImage extends LitElement {
+	@property({ type: String }) src = "";
 	@property({ type: Number, attribute: "aspect-ratio" }) aspectRatio =
 		DEFAULT_ASPECT_RATIO;
 	@property({ type: Number }) imageHeight = DEFAULT_HEIGHT;
-	@property({ type: String }) background: string = defaultBackground;
-	@property({ type: Set }) hoveredRegions: Set<string> = new Set();
-	@property({ type: Set }) clickedRegions: Set<string> = new Set();
+	@property({type: Array}) regions: Array<Region> = [];
+	@property({type: Array}) pathways: Array<Pathway> = [];
+	@property({type: Object}) margin: Margin = { top: 0, left: 0, bottom: 0, right: 0};
 
-	// @property({ type: String, attribute: 'regions' }) regionsStr = JSON.stringify(regions);
-	// @property({ type: String, attribute: 'pathways' }) pathswaysStr = JSON.stringify(pathways);
 
-	@property({ type: String, attribute: "regions" }) regionIdsStr = "[]";
+	
+	private hoveredRegions: Set<string> = new Set();
+	private clickedRegions: Set<string> = new Set();
+    private panels: Array<PanelElement>;
 
-	private regions: Array<Region>;
-	private pathways: Array<Pathway>;
 	private containerRef = createRef<HTMLDivElement>();
-	private margin: Margin;
 	private scaleX: ScaleLinear<number, number, never>;
 	private scaleY: ScaleLinear<number, number, never>;
 	private resizeObservable$: Observable<Event>;
@@ -210,10 +199,7 @@ class InteractiveBrain extends LitElement {
 	//   return JSON.parse(this.pathswaysStr);
 	// }
 
-	get regionIds(): Array<string> {
-		const regionsIds = JSON.parse(this.regionIdsStr);
-		return regionsIds;
-	}
+
 
 	get imageWidth() {
 		return this.aspectRatio * this.imageHeight;
@@ -233,20 +219,21 @@ class InteractiveBrain extends LitElement {
 		} else {
 			this.clickedRegions.add(regionId);
 		}
+
+		this.panels.forEach((panel) => panel.removeAttribute("selected"));
+		this.clickedRegions.forEach(regionId => {
+            const panel = this.panels.find(panel => panel.id === regionId);
+            if(panel){
+                panel.setAttribute("selected", "");
+            }
+        })
+
 		this.requestUpdate();
 	}
 
 	constructor() {
 		super();
-		const margin = { left: 0, right: 0, top: 0, bottom: 0 };
-
-		this.regions = regions.filter((region) =>
-			this.regionIds.includes(region.id),
-		);
-		this.pathways = pathways;
-
-		this.margin = margin;
-		this.background = defaultBackground;
+        this.panels = Array.from(this.querySelectorAll("[slot=panel][id]"));
 
 		this.scaleX = scaleLinear().domain([0, this.imageWidth]);
 		this.scaleY = scaleLinear().domain([0, this.imageHeight]);
@@ -260,23 +247,24 @@ class InteractiveBrain extends LitElement {
 			this.onResize();
 			this.requestUpdate();
 		});
+
+		this.onResize();
 	}
 
-	updated(changedProperties: Map<string, any>) {
-    if(changedProperties.has('regionIdsStr')) {
-      this.regions = regions.filter((region) =>
-				this.regionIds.includes(region.id),
-			);
-    }
-		if (
-			changedProperties.has("aspectRatio") ||
-			changedProperties.has("imageHeight") ||
-			changedProperties.has("regionIdsStr")
-		) {
-			
-			this.requestUpdate();
-		}
-	}
+	// updated(changedProperties: Map<string, any>) {
+	// 	if (changedProperties.has("regionIdsStr")) {
+	// 		this.regions = regions.filter((region) =>
+	// 			this.regionIds.includes(region.id),
+	// 		);
+	// 	}
+	// 	if (
+	// 		changedProperties.has("aspectRatio") ||
+	// 		changedProperties.has("imageHeight") ||
+	// 		changedProperties.has("regionIdsStr")
+	// 	) {
+	// 		this.requestUpdate();
+	// 	}
+	// }
 
 	firstUpdated() {
 		const containerEl = this.containerRef.value!;
@@ -310,10 +298,24 @@ class InteractiveBrain extends LitElement {
 		css`
     :host {
       display: block;
+	  width: 100%;
+	  height: 100%;
     }
-    .container {
+
+	.outer_container {
+	height: 100%;
       width: 100%;
-      height: 100%;
+     
+      display: flex;
+	  flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+	}
+
+    .container {
+		flex: 1;
+      width: 100%;
       position: relative;
       display: flex;
       align-items: center;
@@ -324,8 +326,9 @@ class InteractiveBrain extends LitElement {
 
 
     .polygon {
-      opacity: 0.1;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+		cursor: pointer;
+      /* opacity: 0.1;
+      transition: opacity 0.5s ease, transform 0.5s ease; */
     }
     .label {
       opacity: 0;
@@ -347,38 +350,45 @@ class InteractiveBrain extends LitElement {
 
     }
 
+	::slotted([slot="panel"]) {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        ::slotted([slot="panel"][selected]) {
+            display: block;
+            opacity: 1;
+            
+        }
+
     
   `,
 	];
 
 	render() {
 		return html`
+		<div class=${classMap({ outer_container: true })}>
       <div ${ref(this.containerRef)} class=${classMap({ container: true })}>      
-        <modal-dialog>
-        <div slot="title">
-        <p>Title</p>
-       </div>
-          <div slot="content">
-           <p> Hover / Click regions of the brain to see descriptions</p>
-          </div>
-        </modal-dialog>
         <svg id="interactive-svg" class="rounded-lg shadow" preserveAspectRatio="xMidYMid meet" data-interactive="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 ${
 					this.size.innerWidth
-				} ${this.size.innerHeight}">
-          <defs>
+				} ${this.size.innerHeight}" fill="none">
+        <defs>
             <filter id="glow">
               <feGaussianBlur stdDeviation="8" result="coloredBlur"></feGaussianBlur>
               <feMerge>
                 <feMergeNode in="coloredBlur"></feMergeNode>
                 <feMergeNode in="SourceGraphic"></feMergeNode>
               </feMerge>
-            </filter>
-          </defs>
+            </filter>	
+		</defs>
+		${brainBgDefs()}
+
           <g class="zoomable" cursor="grab">
             <g class="bg-images">
-              <image x="0" y="0" width="${this.size.innerWidth}" height="${
+				<rect xmlns="http://www.w3.org/2000/svg" width="${this.size.innerWidth}" height="${
 			this.size.innerHeight
-		}" xlink:href="/brain-background.jpg" />
+		}" fill="url(#bg_img)"/>
+             
             </g>
             <g class="regions">
               ${map(this.regions, (region) =>
@@ -412,6 +422,8 @@ class InteractiveBrain extends LitElement {
           </g>
         </svg>
       </div>
+	  <slot name="panel"></slot>
+		</div>
     `;
 	}
 
@@ -426,8 +438,8 @@ class InteractiveBrain extends LitElement {
 	}
 }
 
-customElements.define("interactive-brain", InteractiveBrain);
+customElements.define("interactive-image", InteractiveImage);
 
-export { InteractiveBrain };
+export { InteractiveImage };
 export type { Label, Pathway, Pathways, Region, Regions };
 

@@ -24,7 +24,7 @@ use self::{
     nav::NavProps,
 };
 use bar_chart::PtsdComborbiditiesLayout;
-use brain::{brain_glossary::BrainGlossaryProps, interactive_brain::InteractiveBrainProps};
+use brain::{interactive_brain::InteractiveBrainProps, interactive_image::InteractiveImageProps};
 use bubble_chart::BubbleChartProps;
 use disclosure::DisclosureProps;
 use grid_table::GridTableProps;
@@ -77,7 +77,7 @@ pub enum Block {
     PlaceholderContainerBlock(PlaceholderContainerProps),
     ReferencesBlock(Box<ReferencesProps>),
     PieChartBlock(PieChartProps),
-    BrainGlossaryBlock(BrainGlossaryProps),
+    InteractiveImage(InteractiveImageProps),
     IconBlock(IconProps),
     HtmlBlock(HtmlProps),
     SvgBlock(SvgProps),
@@ -154,7 +154,7 @@ impl maud::Render for Block {
                 Block::PieChartBlock(block) => {
                     (block)
                 }
-                Block::BrainGlossaryBlock(block) => {
+                Block::InteractiveImage(block) => {
                     (block)
                 }
 

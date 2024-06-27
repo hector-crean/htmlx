@@ -1,4 +1,3 @@
-use blocks::block::brain::brain_glossary::BrainGlossaryProps;
 use blocks::block::brain::brain_region::BrainRegionName;
 use blocks::block::brain::interactive_brain::{BrainComment, CommentGroup, InteractiveBrainProps};
 use blocks::block::definition::{DefinitionListProps, DefinitionProps};

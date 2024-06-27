@@ -1,29 +1,30 @@
-use brain_region::BrainRegionName;
+pub use brain_region::BrainRegionName;
 
-pub mod brain_glossary;
 pub mod brain_region;
 pub mod interactive_brain;
+pub mod interactive_image;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct Vec2 {
-    x: f32,
-    y: f32,
+    pub x: f32,
+    pub y: f32,
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct BrainRegionLabel {
-    position: Vec2,
-    alt_draw_mode: bool,
+    pub position: Vec2,
+    pub alt_draw_mode: bool,
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct BrainRegion {
-    name: BrainRegionName,
-    fill_color: String,
-    label: BrainRegionLabel,
-    centroid: Vec2,
-    points: Vec<Vec2>,
+    pub id: BrainRegionName,
+    pub name: String,
+    pub fill_color: String,
+    pub label: BrainRegionLabel,
+    pub centroid: Vec2,
+    pub points: Vec<Vec2>,
 }

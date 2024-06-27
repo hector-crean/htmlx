@@ -10,9 +10,31 @@ import { Observable, debounceTime, filter, fromEvent } from 'rxjs';
 
 const DEFAULT_ASPECT_RATIO = 2;
 const DEFAULT_HEIGHT = 540;
+const BLUES = [
+    "#7da7ca",
+    "#3576C6", 
+    "#4567C5", 
+    "#5557C5", 
+    "#6448C4", 
+    "#7438C3",
+];
 const DEFAULT_SIZE = { innerHeight: DEFAULT_HEIGHT, innerWidth: DEFAULT_HEIGHT * DEFAULT_ASPECT_RATIO, outerHeight: DEFAULT_HEIGHT, outerWidth: DEFAULT_HEIGHT * DEFAULT_ASPECT_RATIO };
-const BLUES = ['#3576c6', '#7438c3'];
 
+const DEFAULT_MARGIN: Margin = { left: 150, right: 40, top: 40, bottom: 20 }
+
+const RAINBOW_COLORS = [
+    "#FF0000", // Red
+    "#FF5500", // Reddish Orange
+    "#FFAA00", // Orange
+    "#FFFF00", // Yellow
+    "#AAFF00", // Yellowish Green
+    "#55FF00", // Green
+    "#00FF00", // Green
+    "#00FF55", // Greenish Cyan
+    "#00FFAA", // Cyan
+
+ 
+];
 
 //utility functions:
 const splitText = (text: string, maxLength: number): string[] => {
@@ -93,10 +115,11 @@ const drawAxis = (
                 `)}
             </g>
             <g class="y-axis">
+                <line y1="0" y2="${innerHeight}" stroke="#5d6978" stroke-width="1" ></line>
                 ${yScale.domain().map(tick => svg`
-                <g transform="translate(-10, ${yScale(tick)! + yScale.bandwidth() / 2})">
-                    <!-- <line x1="0" x2="2" stroke="#000"></line>  -->
-                    <text x="0" y="0" text-anchor="end" dy="0.32em" font-size="10px" class="tick">
+                <g transform="translate(0, ${yScale(tick)! + yScale.bandwidth() / 2})">
+                    <line x1="0" x2="-5" stroke="#000"></line> 
+                    <text x="-10" y="0" text-anchor="end" dy="0.32em" font-size="10px" class="tick">
                         ${drawTickLabel(tick)}
                     </text>
                     </g>
@@ -124,10 +147,14 @@ const drawLegend = (): SVGTemplateResult => {
 
 
 function rightHandedRectanglePath(x: number, y: number, width: number, height: number, radius: number): string {
+    // Ensure the radius is not greater than half the width or half the height
+    radius = Math.min(radius, width / 2, height / 2);
+
     return (
-        `M${x},${y}h${(width - radius)}a${radius},${radius} 0 0 1 ${radius},${radius}v${(height - 2 * radius)}a${radius},${radius} 0 0 1 ${-radius},${radius}h${(radius - width)}z`
+        `M${x},${y}h${width - radius}a${radius},${radius} 0 0 1 ${radius},${radius}v${height - 2 * radius}a${radius},${radius} 0 0 1 ${-radius},${radius}h${radius - width}v${-height}z`  // Close the path
     );
 }
+
 
 const drawBar = (
     data: Array<BarChartDatum>,
@@ -143,21 +170,25 @@ const drawBar = (
     onClick: (id: string) => void
 ): SVGTemplateResult => {
 
-    const colorScale = scaleOrdinal().domain([...Array(data.length).keys()].map(n => `${n}`)).range(BLUES);
+    const individualColorScale = scaleOrdinal().domain([...Array(data.length).keys()].map(n => `${n}`)).range(RAINBOW_COLORS);
+
+    const groupColorScale = scaleOrdinal().domain([...Array(data.length).keys()].map(n => `${n}`)).range(BLUES);
     // const groupColorScale = scaleOrdinal().domain([...Array(data.length).keys()].map(n => `${n}`)).range(BLUES);
 
     return svg`
         <g>
-            ${data.map(d => {
+            ${data.map((d, i) => {
         // const isHovered = hoveredBars.has(d.id);
         const isClicked = clickedBars.has(d.id);
+
+        
         return svg`
                     <rect 
                         y="${yScale(d.id)}" 
                         x="${-margin.left}"
                         height="${yScale.bandwidth()}" 
                         width="${innerWidth + margin.left}"
-                        fill="${d.fill ? d.fill : colorScale(`${data.indexOf(d) % 5}`)}"
+                        fill="${isClicked ? d.fill ? d.fill : "#0b5079" : "#bdd5e8"}"
                         opacity="${isClicked ? 1 : 0.1}"
                         @click="${() => onClick(d.id)}"
                         @pointerover="${() => onHoverStart(d.id)}" 
@@ -168,9 +199,10 @@ const drawBar = (
                     ${when(
                         typeof d.end === 'number',
                         () => svg`<path 
+                        fill-rule="evenodd"
                         d="${rightHandedRectanglePath(0, yScale(d.id)!,xScale(d.end!), yScale.bandwidth(),yScale.bandwidth()/2)}"
                         fill="url(#error-margin)" 
-                        stroke="${colorScale(`${d.groupId}`)}" 
+                        stroke="${groupColorScale(`${d.groupId}`)}" 
                         stroke-width="2"
                         class="${classMap({ bar: true, clicked: isClicked })}" 
                         data-interactive="true"
@@ -182,7 +214,7 @@ const drawBar = (
                     )}
                     <path 
                         d="${rightHandedRectanglePath(0, yScale(d.id)!,xScale(d.start), yScale.bandwidth(),yScale.bandwidth()/2)}"
-                        fill="${colorScale(`${d.groupId}`)}" 
+                        fill="${groupColorScale(`${d.groupId}`)}" 
                         
                         class="${classMap({ bar: true, clicked: isClicked })}" 
                         data-interactive="true"
@@ -208,7 +240,7 @@ const drawBar = (
     `;
 };
 
-const drawFilterButtons = (barGroupIds: Array<string>, selectedBarGroupIds: Array<string>) => {
+const drawFilterButtons = (barGroupIds: Array<number>, selectedBarGroupIds: Array<number>) => {
     return html`
     <ul>
       ${map(barGroupIds, (i) => html`<li>${i}</li>`)}
@@ -218,7 +250,7 @@ const drawFilterButtons = (barGroupIds: Array<string>, selectedBarGroupIds: Arra
 
 export interface BarChartDatum {
     id: string,
-    groupId: string,
+    groupId: number,
     fill?: string,
     label: string;
     start: number;
@@ -231,18 +263,18 @@ interface PanelElement extends HTMLElement {
 }
 
 class BarChart extends LitElement {
+    @property({ type: Object }) margin: Margin =  DEFAULT_MARGIN
     @property({ type: Array }) bardata: Array<BarChartDatum> = []
-    @property({ type: Number, attribute: 'aspect-ratio' }) aspectRatio = DEFAULT_ASPECT_RATIO;
+    @property({ type: Number }) aspect = DEFAULT_ASPECT_RATIO;
     @property({ type: Number }) imageHeight = DEFAULT_HEIGHT;
     @property({ type: Set }) hoveredBars: Set<string> = new Set();
     @property({ type: Set }) clickedBars: Set<string> = new Set();
     @property({ type: Number }) clickedValue: number | null = null;
-    @property({type: Array}) barGroupIds: Array<string>
-    @property({type: Array}) selectedBarGroupIds: Array<string>
+    @property({type: Array}) barGroupIds: Array<number>
+    @property({type: Array}) selectedBarGroupIds: Array<number>
 
     private containerRef = createRef<HTMLDivElement>();
     private canvasRef = createRef<SVGAElement>();
-    private margin: Margin;
     private resizeObservable$: Observable<Event>;
     private clickOutside$: Observable<Event>;
     private size: ChartSize = DEFAULT_SIZE;
@@ -251,7 +283,6 @@ class BarChart extends LitElement {
 
     constructor() {
         super();
-        this.margin = { left: 150, right: 40, top: 40, bottom: 20 };
 
         this.resizeObservable$ = fromEvent(window, "resize").pipe(
             debounceTime(200),
@@ -277,6 +308,8 @@ class BarChart extends LitElement {
         const groupsIds = [...new Set(this.bardata.map(bar => bar.groupId))]
         this.barGroupIds = groupsIds
         this.selectedBarGroupIds = groupsIds
+
+        this.onResize();
     }
 
     
@@ -324,8 +357,10 @@ class BarChart extends LitElement {
             .padding(0.1);
 
         const xs = this.bardata.map(d => d.start)
+        const xsEnd = this.bardata.map(d => d.end).filter(d => !!d).map(d => Number(d));
+        
         const xScale = scaleLinear()
-            .domain([Math.min(0, ...xs), Math.max(...xs, 100)])
+            .domain([Math.min(0, ...xs), Math.max(...xs, ...xsEnd)])
             .nice()
             .range([0, this.size.innerWidth]);
 
@@ -333,7 +368,7 @@ class BarChart extends LitElement {
     }
 
     updated(changedProperties: Map<string, any>) {
-        if (changedProperties.has('aspectRatio') || changedProperties.has('imageHeight') || changedProperties.has('bardata')) {
+        if (changedProperties.has('aspect') || changedProperties.has('imageHeight') || changedProperties.has('bardata')) {
             this.requestUpdate();
         }
     }
@@ -347,6 +382,8 @@ class BarChart extends LitElement {
             const rect = containerEl.getBoundingClientRect();
             const innerWidth = rect.width - margin.left - margin.right;
             const innerHeight = rect.height - margin.top - margin.bottom;
+
+
 
             return {
                 innerWidth,
@@ -362,13 +399,21 @@ class BarChart extends LitElement {
     static styles = css`
         :host {
             display: block;
+            width: 100%;
+            height: 100%;
         }
        
         .bar {
             filter: brightness(1);
             opacity: 1;
             transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
         }
+
+        text { 
+            pointer-events: none;
+        }
+        
         .label {
             pointer-events: none;
             opacity: 1;
@@ -397,9 +442,12 @@ class BarChart extends LitElement {
         }
 
         .container {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            grid-template-rows: min-content 400px min-content;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 1rem; /* Adjust this based on your actual requirement, 1rem = 16px */
             background-color: #d4e4ee;
             border-radius: 0.5rem; /* This value approximates 'rounded-lg' */
@@ -408,6 +456,8 @@ class BarChart extends LitElement {
         }
 
         .filter_container {
+            width: 100%;
+            height: min-content;
             display: flex;
             flex-direction: row;
             align-items: flex-start;
@@ -416,8 +466,9 @@ class BarChart extends LitElement {
         }
 
         .graph_container {
+            flex: 1;
             width: 100%;
-            height: 100%;
+            min-height: 150px;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -434,11 +485,9 @@ class BarChart extends LitElement {
         const sortedData = this.bardata.sort((a, b) => a.start > b.start ? -1 : a.start < b.start ? 1 :  0)
 
         return html`
-        <nav data-full-bleed="true" class="${classMap({container: true})}" >
-            <div class="${classMap({filter_container: true})}">
-            ${drawFilterButtons(this.barGroupIds, this.selectedBarGroupIds)}
-            </div>
-            <div class="${classMap({graph_container: true})}" ${ref(this.containerRef)} >
+        <nav data-full-bleed="true" class="${classMap({container: true})}">
+           
+            <div class="${classMap({graph_container: true})}" ${ref(this.containerRef)} style="aspect-ratio:${this.aspect}">
                 <svg id="interactive-svg" class="rounded-lg shadow" data-interactive="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 ${this.size.outerWidth} ${this.size.outerHeight}">
                     <defs>
                         <filter id="glow">
@@ -450,7 +499,6 @@ class BarChart extends LitElement {
                         </filter>
                         <pattern id="error-margin" patternUnits="userSpaceOnUse" width="8" height="8"><path d="M 0,8 l 8,-8 M -2,2 l 4,-4 M 6,10 l 4,-4" stroke-width="2" shape-rendering="auto" stroke="#343434" stroke-linecap="square"></path></pattern>
                     </defs>
-                    ${drawLegend()}
                     <g class="zoomable" cursor="grab">
                         <rect width="${this.size.outerWidth}" height="${this.size.outerHeight}" fill="transparent" @click="${this.onBackgroundClick}"></rect>
                         <g ${ref(this.canvasRef)} class="barchart" transform="translate(${this.margin.left}, ${this.margin.top})">

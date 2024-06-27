@@ -2,14 +2,16 @@ use std::ops::Range;
 
 use blocks::{
     block::{
-        bar_chart::{BarChartDatum, BarChartProps},
+        bar_chart::{BarChartDatum, BarChartProps, Margin},
         grid_table::GridTableProps,
+        icon::{IconProps, SvgProps},
         references::ReferencesProps,
         table::Table,
         Block,
     },
     layout::tabs::{Tab, TabsProps, TabsRepresentation, TabsTheme},
     span::ref_note::RefNote,
+    SvgName,
 };
 use maud::{html, Render};
 
@@ -65,25 +67,33 @@ impl Page {
                             (BarChartProps {
                                 title: "Highest proportion of PTSD cases (%)".to_string(),
                                 bars: vec! [
-                                    BarChartDatum::new("group1", "Unexpected death of a loved one", 31.4, None,None, None),
-                                    BarChartDatum::new("group1", "Direct exposure to death or serious injury", 23.7, None,None, None),
-                                ]
+                                    BarChartDatum::new(0, "Unexpected death of a loved one", 31.4, None,None, None),
+                                    BarChartDatum::new(0, "Direct exposure to death or serious injury", 23.7, None,None, None),
+                                ],
+                                margin: Margin::new(40., 20., 250., 40.),
+                                aspect_ratio: 1.0,
+                            })
+                            (SvgProps {
+                                name: SvgName::OTS126HighestPTSDProportion
                             })
                             (BarChartProps {
                                 title: "Risk of developing PTSD after trauma exposure (%)".to_string(),
                                 bars: vec! [
-                                    BarChartDatum::new("group1", "Rape", 19., None, None, None),
-                                    BarChartDatum::new("group1", "Physical abuse by a partner", 11.7,Some(13.), None, None),
-                                    BarChartDatum::new("group1", "Physical abuse by a partner", 11.7, None, None ,None),
-                                    BarChartDatum::new("group1", "Being kidnapped", 11., None,None, None),
-                                    BarChartDatum::new("group1", "Sexual assault", 10.5, None, None,None),
-                                    BarChartDatum::new("group1", "Saw war-related atrocities", 5.4, None,None,None),
-                                    BarChartDatum::new("group1", "Childhood physical abuse", 5., None,None,None),
-                                    BarChartDatum::new("group1", "Combat experience", 3.6, None,None,None),
-                                    BarChartDatum::new("group1", "Natural disasters", 0.3, None,None,None),
-
-
-                                ]
+                                    BarChartDatum::new(0, "Rape", 19., None, None, None),
+                                    BarChartDatum::new(0, "Physical abuse by a partner", 11.7,None, None, None),
+                                    BarChartDatum::new(0, "Physical abuse by a partner", 11.7, None, None ,None),
+                                    BarChartDatum::new(0, "Being kidnapped", 11., None,None, None),
+                                    BarChartDatum::new(0, "Sexual assault", 10.5, None, None,None),
+                                    BarChartDatum::new(0, "Saw war-related atrocities", 5.4, None,None,None),
+                                    BarChartDatum::new(0, "Childhood physical abuse", 5., None,None,None),
+                                    BarChartDatum::new(0, "Combat experience", 3.6, None,None,None),
+                                    BarChartDatum::new(0, "Natural disasters", 0.3, None,None,None),
+                                ],
+                                margin: Margin::new(40., 20., 150., 40.),
+                                aspect_ratio: 1.0,
+                            })
+                            (SvgProps {
+                                name: SvgName::OTS126RiskOfDevelopingPTSDTrauma1
                             })
 
                         }),
@@ -91,6 +101,9 @@ impl Page {
                     Tab {
                         name: "Other trauma types in PTSD".to_string(),
                         renderable: Box::new(html! {
+                            (SvgProps {
+                                name: SvgName::OTS126RiskOfDevelopingPTSDTrauma2
+                            })
                             p {
                                 "While combat and violence are often associated with PTSD, it's crucial to recognize that trauma can stem from various sources"
                             (RefNote(7))(RefNote(8))(RefNote(9))(RefNote(10))". "
@@ -106,6 +119,11 @@ impl Page {
                     Tab {
                         name: "Individual Risk Factors".to_string(),
                         renderable: Box::new(html! {
+                            h3 { "PTSD Prevalence"}
+                            (SvgProps {
+                                name: SvgName::OTS126PTSDRaceInfographicCopy
+                            })
+                            h3 { "Several factors were significantly associated with an increased risk for PTSD"}
                             (Table::new(
                                 None,
                                 [

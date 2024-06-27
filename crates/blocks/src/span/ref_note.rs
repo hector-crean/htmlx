@@ -11,3 +11,15 @@ impl maud::Render for RefNote {
         html!(a aria-describedby="ref-marker" { (self.0)})
     }
 }
+
+pub struct FootNote(pub String);
+impl FootNote {
+    pub fn new(mark: &str) -> Self {
+        Self(mark.into())
+    }
+}
+impl maud::Render for FootNote {
+    fn render(&self) -> maud::Markup {
+        html!(a aria-describedby="ref-marker" { (self.0)})
+    }
+}

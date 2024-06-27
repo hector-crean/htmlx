@@ -12,7 +12,7 @@ use stringcase::{kebab_case, Caser};
 #[serde(rename_all = "camelCase")]
 pub struct BarChartDatum {
     pub id: uuid::Uuid,
-    pub group_id: String,
+    pub group_id: u32,
     pub label: String,
     pub start: f32,
     pub end: Option<f32>,
@@ -23,7 +23,7 @@ pub struct BarChartDatum {
 
 impl BarChartDatum {
     pub fn new(
-        group_id: &str,
+        group_id: u32,
         label: &str,
         start: f32,
         end: Option<f32>,
@@ -32,7 +32,7 @@ impl BarChartDatum {
     ) -> Self {
         Self {
             id: uuid::Uuid::new_v4(),
-            group_id: group_id.into(),
+            group_id: group_id,
             label: label.into(),
             start,
             end,
@@ -49,7 +49,7 @@ impl Default for BarChartDatum {
     fn default() -> Self {
         Self {
             id: uuid::Uuid::new_v4(),
-            group_id: "DEFAULT_GROUP".to_string(),
+            group_id: 0,
             label: "DEFAULT_LABEL".to_string(),
             start: 0.,
             end: None,
@@ -61,9 +61,41 @@ impl Default for BarChartDatum {
 
 #[derive(Debug, Clone, serde::Serialize, specta::Type)]
 #[serde(rename_all = "camelCase")]
+pub struct Margin {
+    top: f32,
+    bottom: f32,
+    left: f32,
+    right: f32,
+}
+impl Default for Margin {
+    fn default() -> Self {
+        Self {
+            top: 0.,
+            left: 0.,
+            bottom: 0.,
+            right: 0.,
+        }
+    }
+}
+
+impl Margin {
+    pub fn new(top: f32, bottom: f32, left: f32, right: f32) -> Self {
+        Self {
+            top,
+            bottom,
+            left,
+            right,
+        }
+    }
+}
+
+#[derive(Debug, Clone, serde::Serialize, specta::Type)]
+#[serde(rename_all = "camelCase")]
 pub struct BarChartProps {
     pub title: String,
+    pub margin: Margin,
     pub bars: Vec<BarChartDatum>,
+    pub aspect_ratio: f32,
 }
 
 impl Default for BarChartProps {
@@ -71,6 +103,8 @@ impl Default for BarChartProps {
         BarChartProps {
             title: "default-title".to_string(),
             bars: vec![BarChartDatum::default()],
+            margin: Margin::default(),
+            aspect_ratio: 2.0,
         }
     }
 }
@@ -78,13 +112,14 @@ impl Default for BarChartProps {
 impl maud::Render for BarChartProps {
     fn render(&self) -> maud::Markup {
         let bar_data_str: String = serde_json::to_string(&self.bars).unwrap();
+        let margin: String = serde_json::to_string(&self.margin).unwrap();
 
         html!(
             div data-full-bleed="true" class="round-lg grid grid-cols-1 p-4 bg-black-900 items-start justify-between bg-[#d4e4ee] rounded-lg mt-2 mx-2" {
 
                 h3 {(self.title)}
                 div class="relative flex flex-col items-center justify-center flex-1 w-full"{
-                    bar-chart bardata=(bar_data_str) {
+                    bar-chart bardata=(bar_data_str) margin=(margin) aspect-ratio=(self.aspect_ratio) {
                         @for bar in &self.bars {
                             @match &bar.description {
                                 Some(desc) => {
