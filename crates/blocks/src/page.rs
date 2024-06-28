@@ -25,7 +25,7 @@ impl<R: maud::Render> Page<R> {
 impl<R: maud::Render> maud::Render for Page<R> {
     fn render(&self) -> maud::Markup {
         html!(
-            div class="content gradient-lighter" {
+            div class="pb-8 content gradient-lighter" {
                 div class="content-header" {
                     div class="container" {
                         button id="button-back" {

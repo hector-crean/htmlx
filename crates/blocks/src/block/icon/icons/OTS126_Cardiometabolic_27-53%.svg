@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_18" data-name="Layer 18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 297.94 196.12">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #5a97cb;
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-4 {
+        stroke-width: 3px;
+      }
+
+      .cls-4, .cls-5, .cls-6 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-4, .cls-6 {
+        fill: none;
+        stroke: #fff;
+      }
+
+      .cls-7 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-8 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-9 {
+        font-family: Exo-Bold, Exo;
+        font-size: 23px;
+        font-weight: 700;
+      }
+
+      .cls-9, .cls-10, .cls-11 {
+        fill: #005178;
+      }
+
+      .cls-10 {
+        font-size: 14px;
+      }
+
+      .cls-10, .cls-11 {
+        font-family: Exo-Regular, Exo;
+      }
+
+      .cls-11 {
+        font-size: 15px;
+      }
+
+      .cls-5 {
+        stroke: #005178;
+        stroke-width: 6px;
+      }
+
+      .cls-5, .cls-12, .cls-13 {
+        fill: #fff;
+      }
+
+      .cls-12 {
+        font-family: Exo-Medium, Exo;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .cls-6 {
+        stroke-linecap: round;
+        stroke-width: 2px;
+      }
+
+      .cls-14 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-13 {
+        font-family: Exo-SemiBold, Exo;
+        font-size: 18.68px;
+        font-weight: 600;
+      }
+    </style>
+  </defs>
+  <text class="cls-9" transform="translate(62.87 58.92)"><tspan x="0" y="0">2</tspan><tspan class="cls-8" x="13.48" y="0">7</tspan><tspan x="25.53" y="0">-53%</tspan></text>
+  <text class="cls-10" transform="translate(55.21 78.5)"><tspan x="0" y="0">increased risk </tspan><tspan x="0" y="16.8">of d</tspan><tspan class="cls-3" x="25.06" y="16.8">e</tspan><tspan class="cls-14" x="32.5" y="16.8">v</tspan><tspan x="39.72" y="16.8">eloping</tspan></text>
+  <g>
+    <rect class="cls-1" x="27.65" y="102.95" width="119.41" height="34.16"/>
+    <text class="cls-12" transform="translate(30.26 116.7)"><tspan x="0" y="0">CARDI</tspan><tspan class="cls-7" x="36.32" y="0">OM</tspan><tspan x="55.82" y="0">E</tspan><tspan class="cls-2" x="63.49" y="0">T</tspan><tspan x="70.29" y="0">ABOLIC</tspan><tspan x="0" y="15.6">DISORDERS</tspan></text>
+  </g>
+  <text class="cls-11" transform="translate(27.38 153.54)"><tspan x="0" y="0">if diagnosed with PTSD [11]</tspan></text>
+  <path class="cls-1" d="m41.76,39.34l-16.47,20.07h10.31v38.64h12.61v-38.64h10.07s-16.48-20.04-16.51-20.07Z"/>
+  <g>
+    <g>
+      <circle class="cls-5" cx="210.52" cy="79.02" r="55.41"/>
+      <circle class="cls-1" cx="210.52" cy="79.02" r="48.69"/>
+    </g>
+    <g>
+      <path class="cls-4" d="m224.69,56.51c-10.59,0-14.17,9.4-14.17,9.4,0,0-3.57-9.4-14.17-9.4s-16.97,10.1-16.97,18.42c0,13.95,31.13,35.2,31.13,35.2,0,0,31.13-21.25,31.13-35.2,0-8.32-6.38-18.42-16.97-18.42Z"/>
+      <polyline class="cls-6" points="181.75 83.05 194.47 83.05 200.06 71.01 207.96 89.81 211.58 78.64 221.18 78.64"/>
+      <text class="cls-13" transform="translate(223.87 82.82)"><tspan x="0" y="0">!</tspan></text>
+    </g>
+  </g>
+</svg>

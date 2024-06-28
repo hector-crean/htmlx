@@ -1,6 +1,7 @@
 use maud::{html, Markup, PreEscaped, Render};
 
 use super::{
+    icon::{SvgFragment, SvgProps},
     rich_text::{RichText, RichTextProps},
     Block,
 };
@@ -19,6 +20,8 @@ pub struct BarChartDatum {
     pub fill: Option<String>,
     #[serde(skip_serializing)]
     pub description: Option<Block>,
+    #[serde(skip_serializing)]
+    pub icon: Option<SvgFragment>,
 }
 
 impl BarChartDatum {
@@ -29,6 +32,7 @@ impl BarChartDatum {
         end: Option<f32>,
         fill: Option<&str>,
         description: Option<Block>,
+        icon: Option<SvgFragment>,
     ) -> Self {
         Self {
             id: uuid::Uuid::new_v4(),
@@ -38,6 +42,7 @@ impl BarChartDatum {
             end,
             fill: fill.map(|s| s.into()),
             description,
+            icon,
         }
     }
     pub fn fill(&self) -> String {
@@ -55,6 +60,7 @@ impl Default for BarChartDatum {
             end: None,
             fill: None,
             description: None,
+            icon: None,
         }
     }
 }
@@ -125,6 +131,16 @@ impl maud::Render for BarChartProps {
                                 Some(desc) => {
                                     section slot="panel" id=(bar.id) {
                                         (desc)
+                                    }
+                                }
+                                None => {
+
+                                }
+                            }
+                            @match &bar.icon {
+                                Some(icon) => {
+                                    div slot="icon" id=(bar.id) {
+                                        (icon)
                                     }
                                 }
                                 None => {

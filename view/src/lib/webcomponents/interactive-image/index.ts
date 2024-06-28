@@ -1,7 +1,7 @@
 import { ChartSize, Margin } from "@/lib/types/chart";
 import { ScaleLinear, scaleLinear } from "d3-scale";
 import { curveNatural, line } from "d3-shape";
-import { LitElement, SVGTemplateResult, css, html, svg } from "lit";
+import { LitElement, SVGTemplateResult, css, html, nothing, svg } from "lit";
 import { classMap } from "lit-html/directives/class-map.js";
 import { createRef, ref } from "lit-html/directives/ref.js";
 import { property } from "lit/decorators.js";
@@ -9,9 +9,13 @@ import { map } from "lit/directives/map.js";
 import { Observable, debounceTime, fromEvent } from "rxjs";
 import { brainBgDefs } from "./brain";
 
+const closeIcon = () => svg`
+<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.8536 2.85355C13.0488 2.65829 13.0488 2.34171 12.8536 2.14645C12.6583 1.95118 12.3417 1.95118 12.1464 2.14645L7.5 6.79289L2.85355 2.14645C2.65829 1.95118 2.34171 1.95118 2.14645 2.14645C1.95118 2.34171 1.95118 2.65829 2.14645 2.85355L6.79289 7.5L2.14645 12.1464C1.95118 12.3417 1.95118 12.6583 2.14645 12.8536C2.34171 13.0488 2.65829 13.0488 2.85355 12.8536L7.5 8.20711L12.1464 12.8536C12.3417 13.0488 12.6583 13.0488 12.8536 12.8536C13.0488 12.6583 13.0488 12.3417 12.8536 12.1464L8.20711 7.5L12.8536 2.85355Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>`
+
+
 interface PanelElement extends HTMLElement {
-    slot: string;
-    id: string;
+	slot: string;
+	id: string;
 }
 
 const drawRegion = (
@@ -28,15 +32,44 @@ const drawRegion = (
 		.map(({ x, y }) => `${scaleX(x)},${scaleY(y)}`)
 		.join(" ");
 
-	return svg`<polygon id="${regionId}" popovertarget="${regionId}-popover" @pointerover="${() =>
-		onHoverStart(regionId)}"  @pointerout="${() =>
-		onHoverEnd(regionId)}" @click="${() =>
-		onClick(regionId)}" class="${classMap({
-		region: true,
-		hovered,
-		clicked,
-		polygon: true,
-	})}" data-interactive="true" points="${pointsStr}" fill="${fillColor}" filter="url(#glow)" opacity="0.45"></polygon>`;
+	return svg`
+	<polygon  
+		id="${regionId}" 
+		points="${pointsStr}" 
+		fill="url(#dense_crosshatch)" 
+		opacity="0.45" 
+		class="${classMap({
+			flashing_glow: clicked,
+			region: true,
+			hovered,
+			clicked,
+			polygon: true,
+		})}" 
+	></polygon>
+	<polygon  
+		id="${regionId}" 
+		popovertarget="${regionId}-popover" 
+		@pointerover="${() => onHoverStart(regionId)}" 
+		@pointerout="${() => onHoverEnd(regionId)}" 
+		@click="${() => onClick(regionId)}" 
+		class="${classMap({
+			flashing_glow: clicked,
+			region: true,
+			hovered,
+			clicked,
+			polygon: true,
+		})}" 
+		data-interactive="true" 
+		points="${pointsStr}" 
+		fill="${fillColor}" 
+		filter="url(#glow)" 
+		opacity="0.45" 
+		stroke="black" 
+        stroke-width="2" 
+        stroke-dasharray="2,3"
+	></polygon>
+		  
+		   `;
 };
 
 const drawPathway = (
@@ -107,7 +140,7 @@ const drawLabel = (
 			clicked,
 			hovered,
 			label: true,
-		})}"  data-interactive="true" d="${d}" stroke-width="2" stroke="white" fill="none" stroke-dasharray="" stroke-dashoffset="0"></path>
+		})}" data-interactive="true" d="${d}" stroke-width="2" stroke="white" fill="none" stroke-dasharray="" stroke-dashoffset="0" ></path>
     <rect class="${classMap({
 			region: true,
 			clicked,
@@ -117,14 +150,16 @@ const drawLabel = (
 		scaleY(30) - scaleY(0)
 	}" x="${scaleX(region.label.position.x - 125)}" y="${scaleY(
 		region.label.position.y - 15,
-	)}" opacity="1" fill="white"></rect>
+	)}" opacity="1" fill="white" rx="1em" ry="1em"></rect>
     <text class="${classMap({
 			clicked,
 			hovered,
 			label: true,
 		})}"  x="${scaleX(region.label.position.x)}" y="${
 		scaleY(region.label.position.y) + 5
-	}" text-anchor="middle" opacity="1" font-size="10px" >${region.name}</text>
+	}" text-anchor="middle" opacity="1" font-size="10px" fill="black">${
+		region.name
+	}</text>
   `;
 };
 
@@ -176,15 +211,19 @@ class InteractiveImage extends LitElement {
 	@property({ type: Number, attribute: "aspect-ratio" }) aspectRatio =
 		DEFAULT_ASPECT_RATIO;
 	@property({ type: Number }) imageHeight = DEFAULT_HEIGHT;
-	@property({type: Array}) regions: Array<Region> = [];
-	@property({type: Array}) pathways: Array<Pathway> = [];
-	@property({type: Object}) margin: Margin = { top: 0, left: 0, bottom: 0, right: 0};
+	@property({ type: Array }) regions: Array<Region> = [];
+	@property({ type: Array }) pathways: Array<Pathway> = [];
+	@property({ type: Object }) margin: Margin = {
+		top: 0,
+		left: 0,
+		bottom: 0,
+		right: 0,
+	};
+	@property({ type: Boolean }) modalOpen = false;
 
-
-	
 	private hoveredRegions: Set<string> = new Set();
 	private clickedRegions: Set<string> = new Set();
-    private panels: Array<PanelElement>;
+	private panels: Array<PanelElement>;
 
 	private containerRef = createRef<HTMLDivElement>();
 	private scaleX: ScaleLinear<number, number, never>;
@@ -199,8 +238,6 @@ class InteractiveImage extends LitElement {
 	//   return JSON.parse(this.pathswaysStr);
 	// }
 
-
-
 	get imageWidth() {
 		return this.aspectRatio * this.imageHeight;
 	}
@@ -213,27 +250,42 @@ class InteractiveImage extends LitElement {
 		this.hoveredRegions.delete(regionId);
 		this.requestUpdate();
 	}
+
+	handleOpenModal() {
+		this.modalOpen = true;
+		this.requestUpdate()
+
+	}
+	handleCloseModal() {
+		this.modalOpen = false;
+		console.log(this.modalOpen)
+		this.requestUpdate()
+	}
+
 	onRegionClick(regionId: string) {
-		if (this.clickedRegions.has(regionId)) {
-			this.clickedRegions.delete(regionId);
-		} else {
-			this.clickedRegions.add(regionId);
-		}
+		// if (this.clickedRegions.has(regionId)) {
+		// 	this.clickedRegions.delete(regionId);
+		// } else {
+		// 	this.clickedRegions.add(regionId);
+		// }
+		this.clickedRegions.clear();
+		this.clickedRegions.add(regionId);
 
 		this.panels.forEach((panel) => panel.removeAttribute("selected"));
-		this.clickedRegions.forEach(regionId => {
-            const panel = this.panels.find(panel => panel.id === regionId);
-            if(panel){
-                panel.setAttribute("selected", "");
-            }
-        })
+		this.clickedRegions.forEach((regionId) => {
+			const panel = this.panels.find((panel) => panel.id === regionId);
+			if (panel) {
+				panel.setAttribute("selected", "");
+			}
+		});
+		this.modalOpen = true;
 
 		this.requestUpdate();
 	}
 
 	constructor() {
 		super();
-        this.panels = Array.from(this.querySelectorAll("[slot=panel][id]"));
+		this.panels = Array.from(this.querySelectorAll("[slot=panel][id]"));
 
 		this.scaleX = scaleLinear().domain([0, this.imageWidth]);
 		this.scaleY = scaleLinear().domain([0, this.imageHeight]);
@@ -300,45 +352,61 @@ class InteractiveImage extends LitElement {
       display: block;
 	  width: 100%;
 	  height: 100%;
+	  padding: 0 2px;
     }
 
 	.outer_container {
-	height: 100%;
-      width: 100%;
-     
-      display: flex;
-	  flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border-radius: 20px;
+		position: relative;
+      	width: 100%;
+		height: 100%;
+      	display: flex;
+	  	flex-direction: column;
+      	align-items: center;
+      	justify-content: center;
+      	border-radius: 2px;
+	}
+	@media only screen and (max-width: 650px) {
+		.outer_container {
+			height: 50dvh;
+			background-color: #383f44;
+		}
+	}
+	@media only screen and (max-width: 550px) {
+		.outer_container {
+			height: 75dvh;
+			background-color: #383f44;
+
+		}
 	}
 
+
     .container {
-		flex: 1;
-      width: 100%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 20px;
-      overflow: hidden;
+      	display: flex;
+      	align-items: center;
+      	justify-content: center;
+      	border-radius: 20px;
+		width: min(100%, 1000px);
     }
 
 
     .polygon {
 		cursor: pointer;
-      /* opacity: 0.1;
-      transition: opacity 0.5s ease, transform 0.5s ease; */
     }
     .label {
+		pointer-events: none;
       opacity: 0;
       display: hidden;
       transition: opacity 1s, display 1s allow-discrete, overlay 1s allow-discrete;
     }
-    .label.hovered {
-      opacity: 0.5;
-      display: block;
+	.label.hovered {
+      opacity: 1;
     }
+    
+
+	.region_label {
+		border-radius: 20em;
+
+	}
     
     
     .polygon.hovered {
@@ -346,20 +414,82 @@ class InteractiveImage extends LitElement {
     }
     .polygon.clicked, .label.clicked {
       display: block;
-      opacity: 0.9;
-
+      opacity: 0.7;
     }
+	.modal {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		right: 0;
+		bottom: 0;
+		background-color: #1e1e1e;
+		color: white;
+		width: min(100%, 1000px);
+		transform: translate(-50%, 0);
+		backdrop-filter: blur(10px);
+		opacity: 0.8;   
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;    
+		
+	}
+	.modal_inner {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		overflow-y: scroll;
+		scrollbar-width: none; /* Disables scrollbar in Firefox */
+
+	}
+	.modal_inner::-webkit-scrollbar {
+  		display: none;	
+	}
+
+	.close_modal_btn {
+		mix-blend-mode: hard-light;
+		background-color: black;
+		cursor: pointer;
+		color: white;
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		z-index: 200;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 12px;
+		opacity: 0.5;
+	}
+	.close_modal_btn:hover {
+		filter: brightness(1.2);
+	}
 
 	::slotted([slot="panel"]) {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s;
-        }
-        ::slotted([slot="panel"][selected]) {
-            display: block;
-            opacity: 1;
-            
-        }
+        display: none;
+        opacity: 0;
+        transition: opacity 1s;
+    }
+    ::slotted([slot="panel"][selected]) {
+        display: block;
+        opacity: 0.8;    
+		padding: 0px 20px;    
+    }
+
+	@keyframes flash {
+            0%, 100% {
+                filter:brightness(0.8);
+            }
+            50% {
+                filter: brightness(1.2);
+            }
+    }
+
+    /* Apply the animation to the polygon */
+    .flashing_glow {
+        animation: flash 1s infinite alternate;
+    }
 
     
   `,
@@ -368,7 +498,9 @@ class InteractiveImage extends LitElement {
 	render() {
 		return html`
 		<div class=${classMap({ outer_container: true })}>
-      <div ${ref(this.containerRef)} class=${classMap({ container: true })}>      
+      <div ${ref(this.containerRef)} class=${classMap({
+			container: true,
+		})} style="aspect-ratio:${this.aspectRatio}">      
         <svg id="interactive-svg" class="rounded-lg shadow" preserveAspectRatio="xMidYMid meet" data-interactive="true" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 ${
 					this.size.innerWidth
 				} ${this.size.innerHeight}" fill="none">
@@ -379,15 +511,17 @@ class InteractiveImage extends LitElement {
                 <feMergeNode in="coloredBlur"></feMergeNode>
                 <feMergeNode in="SourceGraphic"></feMergeNode>
               </feMerge>
-            </filter>	
+            </filter>
+			<pattern id="dense_crosshatch" patternUnits="userSpaceOnUse" width="4" height="4"><path d="M 0,4 l 4,-4 M -1,1 l 2,-2 M 3,5 l 2,-2" stroke-width="1" shape-rendering="auto" stroke="#343434" stroke-linecap="square"></path></pattern>
+			<pattern id="dense_circle" patternUnits="userSpaceOnUse" width="5" height="5"><circle cx="2.5" cy="2.5" r="2" fill="#343434" stroke="#343434" stroke-width="0"></circle></pattern>	
 		</defs>
 		${brainBgDefs()}
 
           <g class="zoomable" cursor="grab">
             <g class="bg-images">
-				<rect xmlns="http://www.w3.org/2000/svg" width="${this.size.innerWidth}" height="${
-			this.size.innerHeight
-		}" fill="url(#bg_img)"/>
+				<rect xmlns="http://www.w3.org/2000/svg" width="${
+					this.size.innerWidth
+				}" height="${this.size.innerHeight}" fill="url(#bg_img)"/>
              
             </g>
             <g class="regions">
@@ -421,9 +555,24 @@ class InteractiveImage extends LitElement {
             <g class="info-area"></g>
           </g>
         </svg>
-      </div>
-	  <slot name="panel"></slot>
+	  ${
+			this.modalOpen
+				? html`
+		<div class="${classMap({ modal: true })}">
+			<div class="${classMap({ modal_inner: true })}" >
+				<div class="${classMap({ close_modal_btn: true })}" @click="${
+						this.handleCloseModal
+				  }">${closeIcon()}</div>
+				<slot name="panel"></slot>
+			</div>
 		</div>
+		</div>
+	  `
+				: nothing
+		}
+	  </div>
+
+	 
     `;
 	}
 

@@ -6,7 +6,7 @@ use blocks::{
         grid_table::GridTableProps,
         icon::{IconProps, SvgProps},
         references::ReferencesProps,
-        table::Table,
+        table::{Table, TableConfig},
         Block,
     },
     layout::tabs::{Tab, TabsProps, TabsRepresentation, TabsTheme},
@@ -42,8 +42,18 @@ impl Page {
                     Tab {
                         name: "Trauma Type and PTD risk".to_string(),
                         renderable: Box::new(html! {
-                            p { "Several types of traumatic events can be considered key drivers"(RefNote(5)) }
+                            p {
+                                "Research indicates that the type and nature of the traumatic experience play a significant role in determining the likelihood of developing PTSD"
+                                (RefNote(2))(RefNote(3))(RefNote(4))". "
+                                "A World Health Organization analysis of trauma exposure revealed that witnessing death or serious injury, and the unexpected death of a loved one, were linked to the highest proportion of PTSD cases"
+                                (RefNote(3))". "
+                                "While the average risk of developing PTSD after trauma exposure is around 4%, it can reach up to 30% depending on the specific type of trauma"
+                                (RefNote(2))(RefNote(3))(RefNote(4))(RefNote(6))". "
+                            }
+
+                            strong { "Several types of traumatic events can be considered key drivers"(RefNote(5)) }
                             (Table::new(
+                                TableConfig::default(),
                                 Some([
                                     &"PTSD Key Drivers".to_string(), &"Odds ratio".to_string()
                                 ]),
@@ -56,26 +66,23 @@ impl Page {
                                 [&"Traumatic brain injury".to_string(), &"1.5 - 1.8".to_string()]
                             ]
                             ))
-                            p {
-                                "Research indicates that the type and nature of the traumatic experience play a significant role in determining the likelihood of developing PTSD"
-                                (RefNote(2))(RefNote(3))(RefNote(4))". "
-                                "A World Health Organization analysis of trauma exposure revealed that witnessing death or serious injury, and the unexpected death of a loved one, were linked to the highest proportion of PTSD cases"
-                                (RefNote(3))". "
-                                "While the average risk of developing PTSD after trauma exposure is around 4%, it can reach up to 30% depending on the specific type of trauma"
-                                (RefNote(2))(RefNote(3))(RefNote(4))(RefNote(6))". "
-                            }
-                            (BarChartProps {
-                                title: "Highest proportion of PTSD cases (%)".to_string(),
-                                bars: vec! [
-                                    BarChartDatum::new(0, "Unexpected death of a loved one", 31.4, None,None, None),
-                                    BarChartDatum::new(0, "Direct exposure to death or serious injury", 23.7, None,None, None),
-                                ],
-                                margin: Margin::new(40., 20., 250., 40.),
-                                aspect_ratio: 1.0,
-                            })
+
+                                /*
+                                (BarChartProps {
+                                    title: "Highest proportion of PTSD cases (%)".to_string(),
+                                    bars: vec! [
+                                        BarChartDatum::new(0, "Unexpected death of a loved one", 31.4, None,None, None),
+                                        BarChartDatum::new(0, "Direct exposure to death or serious injury", 23.7, None,None, None),
+                                    ],
+                                    margin: Margin::new(40., 20., 250., 40.),
+                                    aspect_ratio: 1.0,
+                                })
+                                 */
+                            h3 {  "Highest proportion of PTSD cases (%)"}
                             (SvgProps {
                                 name: SvgName::OTS126HighestPTSDProportion
                             })
+                           /*
                             (BarChartProps {
                                 title: "Risk of developing PTSD after trauma exposure (%)".to_string(),
                                 bars: vec! [
@@ -92,6 +99,10 @@ impl Page {
                                 margin: Margin::new(40., 20., 150., 40.),
                                 aspect_ratio: 1.0,
                             })
+                             */
+                            h3 {
+                                "Risk of developing PTSD after trauma exposure (%)"
+                            }
                             (SvgProps {
                                 name: SvgName::OTS126RiskOfDevelopingPTSDTrauma1
                             })
@@ -119,12 +130,22 @@ impl Page {
                     Tab {
                         name: "Individual Risk Factors".to_string(),
                         renderable: Box::new(html! {
-                            h3 { "PTSD Prevalence"}
-                            (SvgProps {
-                                name: SvgName::OTS126PTSDRaceInfographicCopy
-                            })
+                            p {
+                                "Beyond the nature of the traumatic event itself, certain individual characteristics can also influence the likelihood of developing PTSD"
+                                (RefNote(5))(RefNote(6))(RefNote(13))". "
+                                "This includes:"
+                            }
+
+                            h3 { "Sexual Orientation and Gender Identity"}
+                            p {
+                                "Research suggests that LGBTQ+ individuals are at an increased risk of developing PTSD compared to heterosexual individuals"(RefNote(14))". "
+                                "This may be due to experiences of discrimination, violence, and social stigma"(RefNote(14))". "
+
+                            }
+
                             h3 { "Several factors were significantly associated with an increased risk for PTSD"}
                             (Table::new(
+                                TableConfig::default(),
                                 None,
                                 [
                                     [&html! {"Sociodemographic factors" },&html!{ ul class="w-full list" { li { "Female"} li { "Indigenous American"}}}],
@@ -132,23 +153,19 @@ impl Page {
                                     [&html! {"Peri-trauma factors" },&html!{ ul class="w-full list" { li { "Cumulative exposure to potentially truamatic experiences"} li { "Trauma severity"}}}]
                                 ]
                             ))
-                            p {
-                                "Beyond the nature of the traumatic event itself, certain individual characteristics can also influence the likelihood of developing PTSD"
-                                (RefNote(5))(RefNote(6))(RefNote(13))". "
-                                "This includes:"
-                            }
-                            h3 { "Sexual Orientation and Gender Identity"}
-                            p {
-                                "Research suggests that LGBTQ+ individuals are at an increased risk of developing PTSD compared to heterosexual individuals"(RefNote(14))". "
-                                "This may be due to experiences of discrimination, violence, and social stigma"(RefNote(14))". "
 
-                            }
+
                             h3 { "Race"}
                             p {
                                 "Studies have shown that Black individuals face a higher risk of developing PTSD compared to White individuals"(RefNote(15))". "
                                 "This disparity may be linked to systemic racism, exposure to community violence, and historical trauma"(RefNote(15))". "
 
                             }
+
+                            h3 { "PTSD Prevalence"}
+                            (SvgProps {
+                                name: SvgName::OTS126PTSDRaceInfographicCopy
+                            })
 
                         }),
                     },

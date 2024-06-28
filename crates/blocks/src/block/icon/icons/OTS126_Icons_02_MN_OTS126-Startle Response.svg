@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_11" data-name="Layer 11" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 137.98 141.69">
+  <g>
+    <circle cx="69.99" cy="71.33" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="69.99" cy="71.33" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+    <g>
+      <line x1="53.32" y1="87.09" x2="53.32" y2="68.9" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <polygon points="61.42 80.52 59.97 79.17 53.33 86.33 46.68 79.17 45.23 80.52 53.33 89.23 61.42 80.52" style="fill: #fff; stroke-width: 0px;"/>
+    </g>
+    <g>
+      <line x1="84.61" y1="104.55" x2="84.61" y2="88.24" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+      <line x1="78.72" y1="101.03" x2="90.49" y2="101.03" style="fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2px;"/>
+    </g>
+    <circle cx="69.99" cy="71.33" r="55.41" style="fill: #fff; stroke: #005178; stroke-miterlimit: 10; stroke-width: 6px;"/>
+    <circle cx="69.99" cy="71.33" r="48.69" style="fill: #5a97cb; stroke-width: 0px;"/>
+  </g>
+  <g>
+    <g>
+      <rect x="85.69" y="41.73" width="1.87" height="5.23" rx=".5" ry=".5" style="fill: #fff; stroke-width: 0px;"/>
+      <circle cx="86.62" cy="48.83" r=".93" style="fill: #fff; stroke-width: 0px;"/>
+    </g>
+    <polygon points="86.62 33.43 89.43 40.55 96.76 38.31 92.94 44.95 99.26 49.28 91.69 50.43 92.25 58.07 86.62 52.88 81 58.07 81.55 50.43 73.98 49.28 80.3 44.95 76.48 38.31 83.81 40.55 86.62 33.43" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: .56px;"/>
+  </g>
+  <g>
+    <path d="m79.72,45.39c-7.43-8.53-20.93-12-32.26-6.19-15.54,7.97-19.07,27.28-8.02,39.9,5.02,5.74,7.59,12.56,6.53,20.39" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>
+    <path d="m71.88,99.49c0-1,.14-2.02-.03-2.99-.5-2.91.75-3.73,3.52-3.54,4.2.29,8.19-.29,9.92-4.96.45-1.22.55-2.65.51-3.97-.13-4.15-.78-8.3,4.98-9.61,1.56-.35,3.04-2.23,1.07-4.38-1.04-1.14-1.81-2.57-2.51-3.96-1.59-3.21-1.76-9.08-3.4-12.53" style="fill: none; stroke: #fff; stroke-miterlimit: 10; stroke-width: 2px;"/>
+  </g>
+  <path d="m73.25,55.96c.06-.59.8-.83,1.39-.84,1.78-.04,3.52.64,5.05,1.56,1.53.92,2.91,2.07,4.37,3.09.61.43,1.25.84,1.97,1s1.55.04,2.08-.49c.8-.81.58-2.15.27-3.25" style="fill: none; stroke-width: 0px;"/>
+</svg>

@@ -2,7 +2,7 @@ use blocks::{
     block::{
         html,
         references::ReferencesProps,
-        table::Table,
+        table::{Table, TableConfig},
         tabs::{Tab, TabsProps, TabsRepresentation},
         Block,
     },
@@ -23,6 +23,7 @@ impl Page {
                 h2 { "Summary of US Guidelines for Pharmacotherapy"(RefNote(1)) }
 
                 (Table::new(
+                    TableConfig::default(),
                     Some([
                         &html! { span { "Drug/Class"} },
                         &html! { span { "FDA Approved"} },

@@ -56,3 +56,28 @@ impl maud::Render for SvgProps {
         }
     }
 }
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq, specta::Type)]
+#[serde(rename_all = "camelCase")]
+pub struct SvgFragment {
+    pub name: SvgName,
+    // pub max_width: Option<i32>
+}
+
+impl Default for SvgFragment {
+    fn default() -> Self {
+        SvgFragment {
+            name: SvgName::default(),
+            // max_width: None,
+        }
+    }
+}
+
+impl maud::Render for SvgFragment {
+    fn render(&self) -> maud::Markup {
+        html! {
+            (PreEscaped(self.name.svg()))
+
+        }
+    }
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_12" data-name="Layer 12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 137.98 141.69">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke-width: 1.6px;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill: none;
+        stroke: #fff;
+      }
+
+      .cls-1, .cls-2, .cls-4 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-3 {
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .cls-5 {
+        fill: #5a97cb;
+        stroke-width: 0px;
+      }
+
+      .cls-4 {
+        fill: #fff;
+        stroke: #005178;
+        stroke-width: 6px;
+      }
+    </style>
+  </defs>
+  <g>
+    <circle class="cls-4" cx="70.55" cy="71.33" r="55.41"/>
+    <circle class="cls-5" cx="70.55" cy="71.33" r="48.69"/>
+  </g>
+  <path class="cls-1" d="m81.45,104.25c0-1.04.15-2.11-.03-3.13-.52-3.04.79-3.9,3.68-3.7,4.4.31,8.57-.3,10.38-5.19.47-1.28.58-2.77.53-4.16-.13-4.34-.81-8.69,5.22-10.06,1.63-.37,3.18-2.33,1.12-4.59-1.09-1.19-1.9-2.69-2.62-4.15-1.67-3.36-3.78-6.44-4.27-10.41-2.14-17.47-23.41-26.02-39.57-17.74-16.27,8.34-19.96,28.56-8.4,41.77,5.26,6.01,7.94,13.14,6.83,21.34"/>
+  <circle class="cls-2" cx="69.23" cy="67.11" r="14.58"/>
+  <polyline class="cls-3" points="62.16 58.2 68.79 67.7 76.37 68.73"/>
+  <g>
+    <path class="cls-3" d="m78.01,49.91s9.66,2.73,9.53,14.08"/>
+    <polyline class="cls-3" points="80.22 48.7 77.61 49.59 78.73 52.35"/>
+  </g>
+  <g>
+    <path class="cls-3" d="m61.13,83.88s-9.66-2.73-9.53-14.08"/>
+    <polyline class="cls-3" points="58.92 85.09 61.53 84.19 60.42 81.44"/>
+  </g>
+</svg>

@@ -31,7 +31,7 @@ impl Render for InteractiveImageProps {
         };
 
         html! {
-            interactive-image regions=(regions) src=(self.src) {
+            interactive-image regions=(regions) src=(self.src) data-full-bleed="true" {
                 @for (id, desc) in &self.descriptions {
                     section slot="panel" id=(id.as_ref()) {
                         (desc)

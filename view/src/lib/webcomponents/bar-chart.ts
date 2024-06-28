@@ -4,6 +4,7 @@ import { LitElement, SVGTemplateResult, css, html, nothing, svg } from 'lit';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { map } from "lit-html/directives/map.js";
 import { createRef, ref } from 'lit-html/directives/ref.js';
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { when } from "lit-html/directives/when.js";
 import { property } from 'lit/decorators.js';
 import { Observable, debounceTime, filter, fromEvent } from 'rxjs';
@@ -195,6 +196,15 @@ const drawBar = (
                         @pointerout="${() => onHoverEnd(d.id)}"
                         data-interactive="true"
                     ></rect>
+                    <rect 
+                        stroke="red"
+                        fill="url(#${d.id}-icon)"
+                        y="${yScale(d.id)}" 
+                        x="${-margin.left}"
+                        height="${yScale.bandwidth()}" 
+                        width="${yScale.bandwidth()}"
+                    >
+                    </rect>
                     
                     ${when(
                         typeof d.end === 'number',
@@ -262,6 +272,11 @@ interface PanelElement extends HTMLElement {
     id: string;
 }
 
+interface IconElement extends HTMLElement {
+    slot: string;
+    id: string;
+}
+
 class BarChart extends LitElement {
     @property({ type: Object }) margin: Margin =  DEFAULT_MARGIN
     @property({ type: Array }) bardata: Array<BarChartDatum> = []
@@ -279,7 +294,8 @@ class BarChart extends LitElement {
     private clickOutside$: Observable<Event>;
     private size: ChartSize = DEFAULT_SIZE;
     private panels: Array<PanelElement>;
-    
+    private icons: Array<IconElement>;
+
 
     constructor() {
         super();
@@ -304,6 +320,8 @@ class BarChart extends LitElement {
 		})
 
         this.panels = Array.from(this.querySelectorAll("[slot=panel][id]"));
+        this.icons = Array.from(this.querySelectorAll("[slot=icon][id]"));
+
 
         const groupsIds = [...new Set(this.bardata.map(bar => bar.groupId))]
         this.barGroupIds = groupsIds
@@ -498,6 +516,18 @@ class BarChart extends LitElement {
                             </feMerge>
                         </filter>
                         <pattern id="error-margin" patternUnits="userSpaceOnUse" width="8" height="8"><path d="M 0,8 l 8,-8 M -2,2 l 4,-4 M 6,10 l 4,-4" stroke-width="2" shape-rendering="auto" stroke="#343434" stroke-linecap="square"></path></pattern>
+                        ${map(this.icons, icon => {
+
+                            const svgIcon = icon.querySelector('svg');
+
+                            if(!svgIcon) return nothing;
+
+                            const viewBox = svgIcon.getAttribute('viewBox');
+                       
+
+
+                            return svg`<pattern id="${icon.id}-icon" width="1" height="1" viewBox="${viewBox}" patternUnits="objectBoundingBox">${unsafeHTML(icon.querySelector('svg')?.innerHTML)}</pattern>`
+                        })}
                     </defs>
                     <g class="zoomable" cursor="grab">
                         <rect width="${this.size.outerWidth}" height="${this.size.outerHeight}" fill="transparent" @click="${this.onBackgroundClick}"></rect>

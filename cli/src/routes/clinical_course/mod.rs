@@ -4,7 +4,7 @@ use blocks::{
         nav::NavProps,
         references::ReferencesProps,
         suggested_node::SuggestedNodeProps,
-        table::Table,
+        table::{Table, TableConfig},
         tabs::{Tab, TabsProps, TabsRepresentation},
         Block,
     },
@@ -141,6 +141,7 @@ impl Page {
                         " (e.g., depressive, bipolar, anxiety, or substance use disorders)"(RefNote(2))"."
                     }
                     (Table::new(
+                        TableConfig::default(),
                         Some([&html! { "Misdiagnosis"}, &html! { "Underdiagnosis"}]),
                         [
                             [
@@ -211,6 +212,7 @@ impl Page {
                         "These tools are recommended in guidelines based on a systematic evidence-based review by the US Department of Veterans Affairs and the Department of Defense"(RefNote(24))
                     }
                     (Table::new(
+                        TableConfig::default(),
                         Some(
                             [
                             &html!{ span {"PC-PTSD-5"(RefNote(24))}},

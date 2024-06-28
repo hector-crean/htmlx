@@ -4,19 +4,36 @@ use maud::{html, Markup, Render};
 
 use super::Block;
 
+pub struct TableConfig {
+    column_one_highlighted: bool,
+}
+impl Default for TableConfig {
+    fn default() -> Self {
+        Self {
+            column_one_highlighted: false,
+        }
+    }
+}
+
 // #[derive(Debug)]
 pub struct Table<'rows, const ROW: usize, const COL: usize> {
     headers: Option<[&'rows (dyn Render + 'rows); COL]>,
     rows: [[&'rows (dyn Render + 'rows); COL]; ROW],
+    config: TableConfig,
 }
 
 impl<'rows, const ROW: usize, const COL: usize> Table<'rows, ROW, COL> {
     // Creates a new Table with given headers and rows
     pub fn new(
+        config: TableConfig,
         headers: Option<[&'rows (dyn Render + 'rows); COL]>,
         rows: [[&'rows (dyn Render + 'rows); COL]; ROW],
     ) -> Self {
-        Table { headers, rows }
+        Table {
+            config,
+            headers,
+            rows,
+        }
     }
 }
 
@@ -52,6 +69,9 @@ impl<'rows, const ROW: usize, const COL: usize> Render for Table<'rows, ROW, COL
                             // (_, 0)  => {
                             //     div class="col-span-1 p-2 bg-[#0b5079] text-[#eaeded] flex flex-col items-center justify-center" { (cell)}
                             // }
+                            (_, 0) if self.config.column_one_highlighted == true => {
+                                div class="col-span-1 p-2 bg-[#0b5079] flex flex-col items-center justify-center" { (cell)}
+                            }
                             (_,_) if row_idx % 2 == 0 => {
                                 div class="col-span-1 p-2 bg-[#c1daed] flex flex-col items-center justify-center" { (cell)}
                             }

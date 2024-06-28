@@ -3,11 +3,13 @@ use blocks::{
     block::{
         bar_chart::{BarChartDatum, BarChartProps, Margin, PtsdComborbiditiesLayout},
         html,
+        icon::{SvgFragment, SvgProps},
         placeholder_container::PlaceholderContainerProps,
         references::ReferencesProps,
         Block,
     },
     span::ref_note::RefNote,
+    SvgName,
 };
 use maud::{html, Render};
 
@@ -42,6 +44,9 @@ impl Page {
                         },
                     },
                 )),
+                Some(SvgFragment {
+                    name: SvgName::OTS126Icons02MNOTS126Dimentia,
+                }),
             ),
             BarChartDatum::new(
                 0,
@@ -70,6 +75,9 @@ impl Page {
                         },
                     },
                 )),
+                Some(SvgFragment {
+                    name: SvgName::OTS126Icons02MNOTS126Dimentia,
+                }),
             ),
             BarChartDatum::new(
                 0,
@@ -96,6 +104,9 @@ impl Page {
                         },
                     },
                 )),
+                Some(SvgFragment {
+                    name: SvgName::OTS126Icons02MNOTS126Dimentia,
+                }),
             ),
             BarChartDatum::new(
                 0,
@@ -127,6 +138,9 @@ impl Page {
                         },
                     },
                 )),
+                Some(SvgFragment {
+                    name: SvgName::OTS126Icons02MNOTS126Dimentia,
+                }),
             ),
             BarChartDatum::new(
                 0,
@@ -153,6 +167,9 @@ impl Page {
                         },
                     },
                 )),
+                Some(SvgFragment {
+                    name: SvgName::OTS126Icons02MNOTS126Dimentia,
+                }),
             ),
             //
             BarChartDatum::new(
@@ -187,6 +204,9 @@ impl Page {
                         },
                     },
                 )),
+                Some(SvgFragment {
+                    name: SvgName::OTS126Icons02MNOTS126Dimentia,
+                }),
             ),
             BarChartDatum::new(
                 1,
@@ -219,6 +239,9 @@ impl Page {
                         },
                     },
                 )),
+                Some(SvgFragment {
+                    name: SvgName::OTS126Icons02MNOTS126Dimentia,
+                }),
             ),
             BarChartDatum::new(
                 1,
@@ -246,6 +269,9 @@ impl Page {
                         },
                     },
                 )),
+                Some(SvgFragment {
+                    name: SvgName::OTS126Icons02MNOTS126Dimentia,
+                }),
             ),
             BarChartDatum::new(
                 1,
@@ -273,6 +299,9 @@ impl Page {
                         },
                     },
                 )),
+                Some(SvgFragment {
+                    name: SvgName::OTS126Icons02MNOTS126Dimentia,
+                }),
             ),
         ]
     }
@@ -306,7 +335,7 @@ impl Render for Page {
         (Block::BarChartBlock(BarChartProps {
             title: String::from("Medical Comorbidities"),
             bars: self.bars(),
-            margin: Margin::new(40., 20., 150., 40.),
+            margin: Margin::new(40., 20., 200., 40.),
             aspect_ratio: 2.
 
         }))

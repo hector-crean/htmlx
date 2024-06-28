@@ -48,6 +48,7 @@
     "vite": "^5.2.0"
   },
   "dependencies": {
+    "@lit-labs/motion": "^1.0.7",
     "@tailwindcss/container-queries": "^0.1.1",
     "d3-array": "^3.2.4",
     "d3-axis": "^3.0.0",

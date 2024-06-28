@@ -45,6 +45,7 @@ impl Render for BrainModelTab {
         let encoded_href = base64::encode(BRAIN_BG_HREF);
 
         html! {
+           div class="panel"  {
             p {
                 "Post-traumatic stress disorder (PTSD) is a dynamic disorder involving fluctuations between contrasting forms of emotional dysregulation"(RefNote(1))"."
             }
@@ -52,29 +53,37 @@ impl Render for BrainModelTab {
                 "Emotional dysregulation may be due to a complex interplay of key brain regions—namely, the amygdala, hippocampus, prefrontal cortex (PFC), and striatum"(RefNote(2))(RefNote(3))(RefNote(4))". "
                 "PTSD often presents with symptoms that develop following traumatic experiences and are associated with structural deficits in stress-regulating brain regions"(RefNote(1))(RefNote(5))". "
             }
+           }
+           div class="panel"  {
+            p {
+                "Click on the brain regions to reveal more"
+            }
+           }
             (InteractiveImageProps {
                 regions: self.brain_regions().unwrap(),
                 src: encoded_href.into(),
                 descriptions: vec![
                     (BrainRegionName::Striatum, html!{
-                        h3 { "Striatum" }
+                        div  {
+                            h3 { "Striatum" }
 
-                        p {
-                            "The striatum is a crucial brain component involved in reward processing, decision-making, "
-                            "and the reinforcement of behaviors through dopaminergic pathways"(RefNote(1))(RefNote(2))"."
-                            "In the context of PTSD, the striatum exhibits significant dysfunction"(RefNote(3))(RefNote(4))". "
-                            "Research has shown decreased striatal activation in individuals with PTSD during reward processing compared to healthy controls"(RefNote(5))". "
-                            "This hypoactivity disrupts the reward circuits, contributing to the negative alterations in mood and cognition observed in PTSD"(RefNote(6))". "
-                            "Dysfunctional dopamine levels in the striatum enhance the processing of aversive stimuli and disrupt reward processing, leading to avoidant behavior"(RefNote(6))". "
-                        }
-
-                        p {
-                            "Consequently, striatal dysfunction plays a key role in the development of PTSD symptoms related to anhedonia and emotional numbing, "
-                            "underscoring the importance of reward processing abnormalities in the disorder"(RefNote(7))(RefNote(8))". "
+                            p {
+                                "The striatum is a crucial brain component involved in reward processing, decision-making, "
+                                "and the reinforcement of behaviors through dopaminergic pathways"(RefNote(1))(RefNote(2))"."
+                                "In the context of PTSD, the striatum exhibits significant dysfunction"(RefNote(3))(RefNote(4))". "
+                                "Research has shown decreased striatal activation in individuals with PTSD during reward processing compared to healthy controls"(RefNote(5))". "
+                                "This hypoactivity disrupts the reward circuits, contributing to the negative alterations in mood and cognition observed in PTSD"(RefNote(6))". "
+                                "Dysfunctional dopamine levels in the striatum enhance the processing of aversive stimuli and disrupt reward processing, leading to avoidant behavior"(RefNote(6))". "
+                            }
+                            p {
+                                "Consequently, striatal dysfunction plays a key role in the development of PTSD symptoms related to anhedonia and emotional numbing, "
+                                "underscoring the importance of reward processing abnormalities in the disorder"(RefNote(7))(RefNote(8))". "
+                            }
                         }
                     }),
                     (BrainRegionName::Hippocampus, html!{
-                        h3  { "Hippocampus" }
+                        div  {
+                            h3  { "Hippocampus" }
 
                         p {
                             "The hippocampus plays a vital role in memory formation, spatial navigation, and context processing"
@@ -97,9 +106,11 @@ impl Render for BrainModelTab {
                             "environments"(RefNote(3))(RefNote(4))(RefNote(10))". "
                             "This inability to contextualize fear responses perpetuates the hypervigilance and anxiety characteristic of PTSD"(RefNote(2))(RefNote(7))(RefNote(10))". "
                         }
+                        }
                     }),
                     (BrainRegionName::Amygdala, html!{
-                        h3 { "Amygdala"}
+                        div  {
+                            h3 { "Amygdala"}
                         p {
                             "The amygdala plays a central role in fear conditioning and fear extinction"
                             (RefNote(1)) (RefNote(2))". "
@@ -128,10 +139,12 @@ impl Render for BrainModelTab {
                             " affecting emotional regulation and stress responses, and contributes to mood disturbances and arousal symptoms in PTSD"
                             (RefNote(2)) (RefNote(14))". "
                         }
+                        }
                     }),
                     (BrainRegionName::PrefrontalCortex,
                     html!{
-                        h3 { "Prefrontal cortex"}
+                        div  {
+                            h3 { "Prefrontal cortex"}
 
                         p {
                             "The prefrontal cortex (PFC) provides executive regulation of emotion and can inhibit fear responses produced by the amygdala. "
@@ -155,25 +168,28 @@ impl Render for BrainModelTab {
                             (RefNote(12))(RefNote(13)) ". This dysfunction of the PFC in PTSD may bias processing toward aversive stimuli and promote avoidant behavior. "
                             (RefNote(1)) "."
                         }
+                        }
                     }),
                     (
                         BrainRegionName::Hypothalamus,
                         html!{
-                            h3 {
-                                "Hypothalamic-pituitary-adrenal axis"
-                            }
+                            div  {
+                                h3 {
+                                    "Hypothalamic-pituitary-adrenal axis"
+                                }
 
-                            p {
-                                "The hypothalamic-pituitary-adrenal (HPA) axis is crucial for the body's response to stress, regulating cortisol levels and maintaining homeostasis. "
-                                (RefNote(1)) "."
-                            }
-                            p {
-                                "In PTSD, there is significant dysregulation of the HPA axis, characterized by abnormal feedback regulation and altered cortisol levels. This dysregulation exacerbates stress responses and contributes to the chronic stress and anxiety seen in PTSD. "
-                                (RefNote(1))(RefNote(2))". HPA axis dysfunction plays a role in the persistence of PTSD symptoms by maintaining a heightened state of physiological arousal."
-                            }
-                            p {
-                                "The chronic dysregulation of the HPA axis underscores the physiological basis of PTSD and its impact on stress-related symptoms. "
-                                (RefNote(1))(RefNote(3))"."
+                                p {
+                                    "The hypothalamic-pituitary-adrenal (HPA) axis is crucial for the body's response to stress, regulating cortisol levels and maintaining homeostasis. "
+                                    (RefNote(1)) "."
+                                }
+                                p {
+                                    "In PTSD, there is significant dysregulation of the HPA axis, characterized by abnormal feedback regulation and altered cortisol levels. This dysregulation exacerbates stress responses and contributes to the chronic stress and anxiety seen in PTSD. "
+                                    (RefNote(1))(RefNote(2))". HPA axis dysfunction plays a role in the persistence of PTSD symptoms by maintaining a heightened state of physiological arousal."
+                                }
+                                p {
+                                    "The chronic dysregulation of the HPA axis underscores the physiological basis of PTSD and its impact on stress-related symptoms. "
+                                    (RefNote(1))(RefNote(3))"."
+                                }
                             }
                         }
                     )
@@ -204,7 +220,7 @@ impl Page {
         Tab {
             name: "Monoamine Dysfunction in PTSD".to_string(),
             blocks: vec![Block::Html(html! {
-                div class="panel" {
+                div  {
                     p {
                         "Monoamine dysfunction in PTSD involves abnormalities in the regulation of neurotransmitters like serotonin, norepinephrine, and dopamine"(RefNote(1))"."
                         "These imbalances disrupt the normal functioning of brain circuits involved in fear processing, stress response, and emotional regulation, "
